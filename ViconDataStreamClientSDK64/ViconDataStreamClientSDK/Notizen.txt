@@ -1,0 +1,5 @@
+um das Projekt zum Laufen zu bringen muss folgende gemacht werden:
+
+1- bei (.i) File - Eigenschaften - Bentzurdefinitiertes Buildtools - Befehlszeile - bie (-Outdir) den Pfad anpassen 
+2-  bei Eigenschaften vom Projekt - c++ - Zusätzliche Includeverzeichnisse - den pfad anpassen
+3-  bei Eigenschaften vom Projekt - Linker - Eingabe - zusätzliche Abhängigkeit - den Pfad anpassen
