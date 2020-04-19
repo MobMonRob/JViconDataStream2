@@ -1,1 +1,1 @@
-in the folder the code would be generated
+in the folder the java files would be generated
