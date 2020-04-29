@@ -229,13 +229,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DataStreamClient.h" />
-    <ClInclude Include="DataStreamRetimingClient.h" />
-    <ClInclude Include="IDataStreamClientBase.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -258,10 +251,17 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl -o $(ProjectName)_wrap.cpp %(Identity)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SWIG</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)$(ProjectName)_wrap.cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl -outdir "D:\Arbeit\DHBW\vicon\ViconDataStreamClientSDK64\ViconDataStreamClientSDK\swig"  -o $(ProjectName)_wrap.cpp %(Identity) </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl  -outdir "D:\Arbeit\DHBW\vicon\ViconDataStreamClientSDK64\ViconDataStreamClientSDK\swig" -o $(ProjectName)_wrap.cpp %(Identity) </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SWIG</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(ProjectName)_wrap.cpp</Outputs>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\DataStreamClient.h" />
+    <ClInclude Include="lib\DataStreamRetimingClient.h" />
+    <ClInclude Include="lib\IDataStreamClientBase.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
