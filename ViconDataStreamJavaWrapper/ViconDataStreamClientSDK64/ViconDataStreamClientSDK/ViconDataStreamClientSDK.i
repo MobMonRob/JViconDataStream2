@@ -97,9 +97,6 @@ void operator delete(void *v) {
 }
 %}
 
-
-
-
 %include "IDataStreamClientBase.h"
 %include "DataStreamClient.h"
 %include "DataStreamRetimingClient.h"
