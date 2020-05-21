@@ -32,15 +32,6 @@
     <CustomBuild Include="ViconDataStreamClientSDK.i" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\DataStreamClient.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\DataStreamRetimingClient.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\IDataStreamClientBase.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
