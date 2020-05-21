@@ -1,4 +1,5 @@
 /* File : ViconDataStreamSDK.i */
+
 %module ViconDataStreamClientSDK
 %begin 
 %{
@@ -14,14 +15,9 @@
 %javaconst(1);
 
 
-%{
-
-#include "Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h"
-
-#include "Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h"
-#include "Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h"
-
-%}
+%include "Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h"
+%include "Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h"
+%include "Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h"
 
 %{
 #include <new>
@@ -97,9 +93,3 @@ void operator delete(void *v) {
 }
 %}
 
-
-
-
-%include "\Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h"
-%include "\Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h"
-%include "\Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h"
