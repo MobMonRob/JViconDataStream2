@@ -11,19 +11,19 @@ Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API.
 	* Entpacken an einen beliebigen Ort
 
 # Notwendige lokale Anpassungen
-* Rechts in Visual Studio im “Solution Explorer” Rechtsklick auf das Projekt: `Properties` > `C/C++` > `Additional Include Directories`.  
+* Rechts in Visual Studio im “Solution Explorer” Rechtsklick auf das Projekt: `Properties` > `C/C++` > `Additional Include Directories`.\
 Die dort eingetragenen Pfade zur eigenen Java Installation umbiegen. (Z.B. `C:\Program Files\Java\jdk-14.0.1\include` und `[...]include\win`)
 
 * In die Systemvariable `PATH` den Pfad der SWIG Installation hinzufügen. (Z.B. `C:\Users\<username>\Desktop\Arbeit\swigwin-4.0.1`)
 
 # Dateien generieren
-Projekt in git pullen.  
+Projekt in git pullen.\
 Mit Klick auf die `[...].sln` Datei im Projektverzeichnis Visual Studio öffnen.
 
-In der Menüleitste: `Build` > `Build Solution` erzeugt alle benötigten Dateien.  
+In der Menüleitste: `Build` > `Build Solution` erzeugt alle benötigten Dateien.\
 Ein sauberer Rebuild ist möglich mit `Rebuild Solution`.
 
-> Anmerkung: Dafür müssen in den `Properties` der `[...].i` Datei in `Outputs` dieselben Pfade, wie in `Command Line` übergeben, angeben sein.
+> Anmerkung: Dafür müssen in den `Properties` der `[...].i` Datei in `Outputs` dieselben Pfade wie in `Command Line` übergeben, angeben sein.
 
 > Alternativ kann man `Local Windows Debugger` ausführen. Daraufhin wird jedoch die Fehlermeldung `Unable to start program [...].dll` angezeigt. Diese kann man aber ignorieren. Das heißt nur, dass der Debugger die dll nicht ausführen kann und hat nichts damit zu tun, ob alles korrekt gebaut wurde.
 
