@@ -241,9 +241,6 @@
     <ClCompile Include="ViconDataStreamClientSDK.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ViconDataStreamClientSDK_wrap.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ViconDataStreamClientSDK.i">
@@ -251,7 +248,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl -o $(ProjectName)_wrap.cpp %(Identity)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SWIG</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)$(ProjectName)_wrap.cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl  -outdir "$(ProjectDir)swig" -o $(ProjectName)_wrap.cpp %(Identity) </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl  -outdir "$(ProjectDir)java_class_generated" -o "$(ProjectDir)Wrapcode\$(ProjectName)_wrap.cpp" %(Identity) </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">SWIG</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)$(ProjectName)_wrap.cpp</Outputs>
     </CustomBuild>

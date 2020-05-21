@@ -1,3 +1,4 @@
-/swig/*.java
+/java_class_generated/*.java
 /.vs
 /x64
+/Wrapcode/*.cpp
