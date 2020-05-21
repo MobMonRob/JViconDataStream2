@@ -20,8 +20,11 @@ Die dort eingetragenen Pfade zur eigenen Java Installation umbiegen. (Z.B. `C:\P
 Projekt in git pullen
 Mit Klick auf die `[...].sln` Datei im Projektverzeichnis Visual Studio öffnen.
 
-"Local Windows Debugger” ausführen.
-Daraufhin wird momentan noch die Fehlermeldung `Unable to start program [...].dll` angezeigt. Diese kann man ignorieren.
+In der Menüleitste: `Build > Build Solution` erzeugt alle benötigten Dateien.
+Ein sauberer Rebuild ist möglich mit `Rebuild Solution`.
+> Anmerkung: Dafür muss in den `Properties` der `[...].i` Datei als `Outputs` die selben Pfade wie in `Command Line` übergeben angeben sein.
+
+Alternativ kann man `Local Windows Debugger` ausführen. Daraufhin wird jedoch noch die Fehlermeldung `Unable to start program [...].dll` angezeigt. Diese kann man ignorieren.
 
 Die gewünschten Dateien befinden sich jetzt in den Verzeichnissen {`java_class_generated`, `x64/Debug`}.
 
