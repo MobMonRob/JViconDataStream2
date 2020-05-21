@@ -858,10 +858,10 @@ static jdoubleArray SWIG_JavaArrayOutDouble (JNIEnv *jenv, double *result, jsize
 
 
 
-#include "IDataStreamClientBase.h"
+#include "Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h"
 
-#include "DataStreamClient.h"
-#include "DataStreamRetimingClient.h"
+#include "Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h"
+#include "Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h"
 
 
 
