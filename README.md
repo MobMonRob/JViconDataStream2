@@ -11,9 +11,6 @@ Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API.
 	* Entpacken an einen beliebigen Ort
 
 # Notwendige lokale Anpassungen
-* Rechts in Visual Studio im “Solution Explorer” Rechtsklick auf das Projekt: `Properties` > `C/C++` > `Additional Include Directories`.\
-Die dort eingetragenen Pfade zur eigenen Java Installation umbiegen. (Z.B. `C:\Program Files\Java\jdk-14.0.1\include` und `[...]include\win`)
-
 * In die Systemvariable `PATH` den Pfad der SWIG Installation hinzufügen. (Z.B. `C:\Users\<username>\Desktop\Arbeit\swigwin-4.0.1`)
 
 # Dateien generieren
