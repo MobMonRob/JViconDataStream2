@@ -1,7 +1,7 @@
 # Beschreibung
 Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API.
 
-# Software
+# Software needed
 * Windows 10 x64
 * Visual Studio Community 2019 x64 (Version 2017 does not work)
 * [(empfohlen) Git für Windows x64](https://git-scm.com/download/win)
