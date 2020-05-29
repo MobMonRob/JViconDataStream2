@@ -160,11 +160,11 @@ private:
 };
 
 // Streaming operator for String
-/*inline std::ostream & operator<<( std::ostream & io_rStream, const String & i_rString )
+inline std::ostream & go( std::ostream & io_rStream, const String & i_rString )
 {
   io_rStream << std::string( i_rString );
   return io_rStream;
-}*/
+}
 
 //namespace Direction
 //{

@@ -163,7 +163,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>"$(ProjectDir)Vicon_DataStream SDK_Win64_CPP_1.8\ViconDataStreamSDK_CPP.lib";%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>"$(ProjectDir)Vicon_DataStream SDK_Win64_CPP_1.10\ViconDataStreamSDK_CPP.lib";%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -256,6 +256,9 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.10\DataStreamClient.h" />
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.10\DataStreamRetimingClient.h" />
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.10\IDataStreamClientBase.h" />
     <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h" />
     <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h" />
     <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h" />
