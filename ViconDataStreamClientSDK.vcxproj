@@ -256,6 +256,9 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h" />
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h" />
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,6 +7,7 @@
 %}
 
 %rename (CString) String;
+
 %include "std_string.i"
 %include "arrays_java.i";
 %include "typemaps.i"

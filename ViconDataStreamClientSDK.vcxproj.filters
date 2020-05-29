@@ -35,5 +35,14 @@
     <ClInclude Include="targetver.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

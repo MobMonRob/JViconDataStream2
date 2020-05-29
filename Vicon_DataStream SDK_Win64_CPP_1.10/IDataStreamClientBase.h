@@ -76,7 +76,7 @@ public:
   }
 
   // Copy constructor
-  /*inline
+  inline
   String( const String & i_rString )
   {
     m_pConstString = i_rString.m_pConstString;
@@ -92,7 +92,7 @@ public:
   }
 
   inline
-  String & operator=( const String & i_rString )
+  String & assign=( const String & i_rString )
   {
     m_pConstString = i_rString.m_pConstString;
     m_pStringFactory = i_rString.m_pStringFactory;
@@ -107,21 +107,6 @@ public:
     return *this;
   }
 
-  String & replaceBy( const String & i_rString )
-  {
-  m_pConstString = i_rString.m_pConstString;
-  m_pStringFactory = i_rString.m_pStringFactory;
-  if ( m_pStringFactory )
-  {
-  m_pString = m_pStringFactory->AllocAndCopyString( i_rString.m_pString );
-  }
-  else
-  {
-  m_pString = 0;
-  }
-  return *this;
-  }
-
   inline
   ~String()
   {
@@ -129,46 +114,6 @@ public:
     {
       m_pStringFactory->FreeString( m_pString );
     }
-  }*/
-
-  //old version
-  inline
-	  String(const String & i_rString)
-  {
-	  m_pConstString = i_rString.m_pConstString;
-	  m_pStringFactory = i_rString.m_pStringFactory;
-	  if (m_pStringFactory)
-	  {
-		  m_pString = m_pStringFactory->AllocAndCopyString(i_rString.m_pString);
-	  }
-	  else
-	  {
-		  m_pString = 0;
-	  }
-  }
-  inline 
-  String & assign(const String & i_rString)
-  {
-	  m_pConstString = i_rString.m_pConstString;
-	  m_pStringFactory = i_rString.m_pStringFactory;
-	  if (m_pStringFactory)
-	  {
-		  m_pString = m_pStringFactory->AllocAndCopyString(i_rString.m_pString);
-	  }
-	  else
-	  {
-		  m_pString = 0;
-	  }
-	  return *this;
-  }
-
-  inline
-	  ~String()
-  {
-	  if (m_pStringFactory)
-	  {
-		  m_pStringFactory->FreeString(m_pString);
-	  }
   }
 
   // A string which we are responsible for deallocating
@@ -179,8 +124,8 @@ public:
     m_pStringFactory = &i_rStringFactory;
     m_pConstString = 0;
   }
-
- /* inline
+  /*
+  inline
   operator std::string() const
   {
     if( m_pStringFactory )
@@ -191,17 +136,21 @@ public:
     {
       return std::string( m_pConstString );
     }
-  }*/
+  }
+  
+  
+  
+  */
   const char* toString() const
   {
-	  if (m_pStringFactory)
-	  {
-		  return m_pString;
-	  }
-	  else
-	  {
-		  return m_pConstString;
-	  }
+      if (m_pStringFactory)
+      {
+          return m_pString;
+      }
+      else
+      {
+          return m_pConstString;
+      }
   }
 
 private:
@@ -219,7 +168,7 @@ private:
 
 //namespace Direction
 //{
-enum Direction_Enum
+  enum Direction_Enum
   {
     Up,
     Down,
@@ -232,9 +181,9 @@ enum Direction_Enum
 
 //namespace ServerOrientation
 //{
-enum ServerOrientation_Enum
+  enum ServerOrientation_Enum
   {
-    Unknown,
+      ServerOrientation_Unknown,
     YUp,
     ZUp,
   };
@@ -242,7 +191,7 @@ enum ServerOrientation_Enum
 
 //namespace StreamMode
 //{
-enum StreamMode_Enum
+  enum StreamMode_Enum
   {
     ClientPull,
     ClientPullPreFetch,
@@ -252,7 +201,7 @@ enum StreamMode_Enum
 
 //namespace TimecodeStandard
 //{
-enum TimecodeStandard_Enum
+  enum TimecodeStandard_Enum
   {
     None,
     PAL,
@@ -266,9 +215,9 @@ enum TimecodeStandard_Enum
 
 //namespace DeviceType
 //{
-	enum DeviceType_Enum
+  enum DeviceType_Enum
   {
-		DeviceType_Unknown,
+      DeviceType_Unknown,
     ForcePlate,
     EyeTracker
   };
@@ -276,9 +225,9 @@ enum TimecodeStandard_Enum
 
 //namespace Unit
 //{
-enum Unit_Enum
+  enum Unit_Enum
   {
-	Unit_Unknown,
+    Unknown,
     Volt,
     Newton,
     NewtonMeter,
@@ -321,9 +270,9 @@ enum Unit_Enum
 //namespace Result
 //{
   /// The Result code indicates the success or failure of a function.
-enum	Result_Enum
+  enum Result_Enum
   {
-	Result_Unknown, ///< The result is unknown. Treat it as a failure.
+      Result_Unknown, ///< The result is unknown. Treat it as a failure.
     NotImplemented, ///< The function called has not been implemented in this version of the SDK.
     Success, ///< The function call succeeded.
     InvalidHostName, ///< The "HostName" parameter passed to Connect() is invalid.
@@ -400,9 +349,7 @@ enum	Result_Enum
   class Output_DisableDebugData           : public Output_SimpleResult {};
   class Output_SetStreamMode              : public Output_SimpleResult {};
   class Output_SetApexDeviceFeedback      : public Output_SimpleResult {};
-
-  // es hat nicht funktioniert . es liegt wahrscheinliech an dll Datai
- //class Output_SetAxisMapping             : public Output_SimpleResult {};
+  class Output_SetAxisMapping             : public Output_SimpleResult {};
   class Output_GetFrame                   : public Output_SimpleResult {};
   class Output_UpdateFrame                : public Output_SimpleResult {};
   class Output_WaitForFrame               : public Output_SimpleResult {};
@@ -466,7 +413,7 @@ enum	Result_Enum
     unsigned int           Frames;
     unsigned int           SubFrame;
     bool                   FieldFlag;
-    TimecodeStandard_Enum Standard;
+    TimecodeStandard::Enum Standard;
     unsigned int           SubFramesPerFrame;
     unsigned int           UserBits;
   };
@@ -806,7 +753,7 @@ enum	Result_Enum
   public:
     Result_Enum     Result;
     String           DeviceName;
-    DeviceType_Enum DeviceType;
+    DeviceType::Enum DeviceType;
   };
 
   class Output_GetDeviceOutputCount
@@ -821,7 +768,7 @@ enum	Result_Enum
   public:
     Result_Enum Result;
     String       DeviceOutputName;
-    Unit_Enum   DeviceOutputUnit;
+    Unit::Enum   DeviceOutputUnit;
   };
 
   class Output_GetDeviceOutputComponentName
@@ -830,7 +777,7 @@ enum	Result_Enum
     Result_Enum Result;
     String       DeviceOutputName;
     String       DeviceOutputComponentName;
-    Unit_Enum   DeviceOutputUnit;
+    Unit::Enum   DeviceOutputUnit;
   };
   
   class Output_GetDeviceOutputValue
@@ -1226,10 +1173,7 @@ enum	Result_Enum
     ///           + Success
     ///           + CoLinearAxes
     ///           + LeftHandedAxes
-
-	// es hat nicht funktioniert . es liegt wahrscheinliech an dll Datai
-
-   //virtual Output_SetAxisMapping SetAxisMapping( const Direction_Enum XAxis, const Direction_Enum YAxis, const Direction_Enum ZAxis ) = 0;
+    virtual Output_SetAxisMapping SetAxisMapping( const Direction::Enum XAxis, const Direction::Enum YAxis, const Direction::Enum ZAxis ) = 0;
 
     /// Get the current Axis mapping.
     ///
