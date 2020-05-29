@@ -17,7 +17,7 @@ Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API.
 Projekt in git pullen.\
 Mit Klick auf die `[...].sln` Datei im Projektverzeichnis Visual Studio öffnen.
 
-In der Menüleitste: `Build` > `Build Solution` erzeugt alle benötigten Dateien.\
+In der Menüleiste: `Build` > `Build Solution` erzeugt alle benötigten Dateien.\
 Ein sauberer Rebuild ist möglich mit `Rebuild Solution`.
 
 > Anmerkung: Dafür müssen in den `Properties` der `[...].i` Datei in `Outputs` dieselben Pfade wie in `Command Line` übergeben, angeben sein.
