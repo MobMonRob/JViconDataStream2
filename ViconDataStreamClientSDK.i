@@ -3,7 +3,7 @@
 %module ViconDataStreamClientSDK
 %begin 
 %{
-#include "stdafx.h"
+#include "../stdafx.h"
 %}
 
 %rename (CString) String;
@@ -12,16 +12,17 @@
 %include "std_string.i"
 %include "arrays_java.i";
 %include "typemaps.i"
-%include <windows.i>
+%include <windows.i> //Has no effect in Linux
 %include "enumtypesafe.swg"
 %javaconst(1);
 
 
-%include "Vicon_DataStream SDK_Win64_CPP_1.10\IDataStreamClientBase.h"
-%include "Vicon_DataStream SDK_Win64_CPP_1.10\DataStreamClient.h"
-%include "Vicon_DataStream SDK_Win64_CPP_1.10\DataStreamRetimingClient.h"
-
 %{
+//#include "TestSwig.h"
+//#include "../Vicon_DataStream SDK_Win64_CPP_1.10/IDataStreamClientBase.h"
+//#include "../Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamClient.h"
+//#include "../Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamRetimingClient.h"
+
 #include <new>
 using namespace std;
 #include <stdexcept>
@@ -94,4 +95,9 @@ void operator delete(void *v) {
   }
 }
 %}
+
+//%include "TestSwig.h"
+//%include "Vicon_DataStream SDK_Win64_CPP_1.10/IDataStreamClientBase.h"
+//%include "Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamClient.h"
+//%include "Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamRetimingClient.h"
 

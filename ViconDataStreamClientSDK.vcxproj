@@ -158,7 +158,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;VICONDATASTREAMCLIENTSDK_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\Java\*\include;C:\Program Files\Java\*\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Java\jdk-14.0.1\include;C:\Program Files\Java\jdk-14.0.1\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -238,9 +239,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TestSwig.cpp" />
     <ClCompile Include="ViconDataStreamClientSDK.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Wrapcode\ViconDataStreamClientSDK_wrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ViconDataStreamClientSDK.i">
@@ -256,12 +259,8 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.10\DataStreamClient.h" />
-    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.10\DataStreamRetimingClient.h" />
+    <ClInclude Include="TestSwig.h" />
     <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.10\IDataStreamClientBase.h" />
-    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamClient.h" />
-    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\DataStreamRetimingClient.h" />
-    <ClInclude Include="Vicon_DataStream SDK_Win64_CPP_1.8\IDataStreamClientBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
