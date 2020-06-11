@@ -1,12 +1,6 @@
-%module ViconDataStreamClientSDK
-%begin 
-
-%{
-#include "stdafx.h"
-%}
+﻿%module ViconDataStreamClientSDK
 
 %rename (CString) String;
-
 
 %include "std_string.i"
 %include "arrays_java.i";
@@ -15,12 +9,17 @@
 %include "enumtypesafe.swg"
 %javaconst(1);
 
-
+//Parse the header files to generate wrappers
 %include "ViconDataStreamSDK_1.10.0.123216h/IDataStreamClientBase.h"
 %include "ViconDataStreamSDK_1.10.0.123216h/DataStreamClient.h"
 %include "ViconDataStreamSDK_1.10.0.123216h/DataStreamRetimingClient.h"
 
 %{
+//Includes the header files in the wrapper code
+#include "IDataStreamClientBase.h"
+#include "DataStreamClient.h"
+#include "DataStreamRetimingClient.h"
+
 #include <new>
 using namespace std;
 #include <stdexcept>
