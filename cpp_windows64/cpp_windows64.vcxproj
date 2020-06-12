@@ -134,6 +134,14 @@
       <AdditionalLibraryDirectories>../Vicon_DataStream_SDK_Win64_CPP_1.9;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ViconDataStreamSDK_CPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>
+      </Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -170,7 +178,9 @@
     <CustomBuild Include="..\swig\ViconDataStreamSDK.i">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd ..\swig\&amp;.\invoke.bat</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\swig\ViconDataStreamSDK_wrap.cpp;..\JViconDataStreamTest\src\main\java\de\dhbw\mobmonrob\vicon\datastreamapi\impl\*.java</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\swig\ViconDataStreamSDK_wrap.cpp;..\JViconDataStreamTest\src\main\java\de\dhbw\mobmonrob\vicon\datastreamapi\impl\**</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

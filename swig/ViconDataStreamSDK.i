@@ -1,6 +1,7 @@
 /* File : ViconDataStreamSDK.i */
 
 %module ViconDataStreamSDK
+%feature("nspace");
 
 %rename (CString) String;
 
@@ -14,10 +15,12 @@
 
 
 %{
-//#include "TestSwig.h"
-//#include "../Vicon_DataStream SDK_Win64_CPP_1.10/IDataStreamClientBase.h"
-//#include "../Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamClient.h"
-//#include "../Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamRetimingClient.h"
+////////////////////////////////////////////////////////
+//Includes the header files in the wrapper code
+//#include "../cpp_windows64/SwigTest.h"
+#include "../Vicon_DataStream_SDK_Win64_CPP_1.9/IDataStreamClientBase.h"
+#include "../Vicon_DataStream_SDK_Win64_CPP_1.9/DataStreamClient.h"
+#include "../Vicon_DataStream_SDK_Win64_CPP_1.9/DataStreamRetimingClient.h"
 
 #include <new>
 using namespace std;
@@ -92,8 +95,10 @@ void operator delete(void *v) {
 }
 %}
 
-//%include "TestSwig.h"
-//%include "Vicon_DataStream SDK_Win64_CPP_1.10/IDataStreamClientBase.h"
-//%include "Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamClient.h"
-//%include "Vicon_DataStream SDK_Win64_CPP_1.10/DataStreamRetimingClient.h"
+////////////////////////////////////////////////////////
+//Parse the header files to generate wrappers
+//%include "../cpp_windows64/SwigTest.h"
+%include "../Vicon_DataStream_SDK_Win64_CPP_1.9/IDataStreamClientBase.h"
+%include "../Vicon_DataStream_SDK_Win64_CPP_1.9/DataStreamClient.h"
+%include "../Vicon_DataStream_SDK_Win64_CPP_1.9/DataStreamRetimingClient.h"
 
