@@ -1,6 +1,6 @@
 /* File : ViconDataStreamSDK.i */
 
-%module ViconDataStreamClientSDK
+%module ViconDataStreamSDK
 
 %rename (CString) String;
 

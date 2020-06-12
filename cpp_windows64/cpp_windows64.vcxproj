@@ -131,7 +131,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>../Vicon_DataStream SDK_Win64_CPP_1.9;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../Vicon_DataStream_SDK_Win64_CPP_1.9;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ViconDataStreamSDK_CPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -155,9 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Vicon_DataStream SDK_Win64_CPP_1.9\DataStreamClient.h" />
-    <ClInclude Include="..\Vicon_DataStream SDK_Win64_CPP_1.9\DataStreamRetimingClient.h" />
-    <ClInclude Include="..\Vicon_DataStream SDK_Win64_CPP_1.9\IDataStreamClientBase.h" />
+    <ClInclude Include="..\Vicon_DataStream_SDK_Win64_CPP_1.9\DataStreamClient.h" />
+    <ClInclude Include="..\Vicon_DataStream_SDK_Win64_CPP_1.9\DataStreamRetimingClient.h" />
+    <ClInclude Include="..\Vicon_DataStream_SDK_Win64_CPP_1.9\IDataStreamClientBase.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="SwigTest.h" />
   </ItemGroup>
