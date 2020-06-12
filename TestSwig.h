@@ -1,18 +1,13 @@
 #pragma once
 
-#include "./Vicon_DataStream SDK_Win64_CPP_1.10/IDataStreamClientBase.h"
+#include "./Vicon_DataStream SDK_Win64_CPP_1.9/DataStreamClient.h";
 
-//namespace ViconDataStreamSDK
-//{
-	//namespace CPP
-	//{
-		class TestSwig
-		{
-		public:
-			int getI() { return i; }
-		private:
-			int i;
-		};
+class TestSwig
+{
+public:
+	int getI() { return i; };
+	int gI();
+private:
+	int i;
+};
 
-//	}
-//}

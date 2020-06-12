@@ -157,7 +157,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -213,7 +213,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -246,7 +246,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -293,7 +293,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -336,7 +336,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -361,7 +361,7 @@ namespace ViconDataStreamSDK
       ///
       /// Call this function on startup, after connecting to the server, and before trying to read local or global segment data.
       ///
-      /// See Also: DisableLightweightSegmentData(), IsLightWeightSegmentDataEnabled()
+      /// See Also: IsSegmentDataEnabled(), DisableSegmentData(), EnableMarkerData(), EnableUnlabeledMarkerData(), EnableDeviceData(), GetSegmentCount(), GetSegmentName(), GetSegmentGlobalTranslation(), GetSegmentGlobalRotationEulerXYZ(), GetSegmentLocalTranslation(), GetSegmentLocalRotationEulerXYZ()
       ///
       ///
       /// C example
@@ -396,10 +396,9 @@ namespace ViconDataStreamSDK
       Output_EnableLightweightSegmentData         EnableLightweightSegmentData();
 
       /// Disable the lightweight output mode for kinematic segment data in the Vicon DataStream.
-      /// The implementation in this retiming client automatically enables normal segment data; this is distinct
-      /// to the non retiming client where the user must do this themselves.
+      /// Calling this mode does not automatically enable any other data types
       ///
-      /// See Also: EnableLightweightSegmentData(), IsLightWeightSegmentDataEnabled()
+      /// See Also: IsSegmentDataEnabled(), EnableSegmentData(), EnableMarkerData(), EnableUnlabeledMarkerData(), EnableDeviceData(), GetSegmentCount(), GetSegmentName(), GetSegmentGlobalTranslation(), GetSegmentGlobalRotationEulerXYZ(), GetSegmentLocalTranslation(), GetSegmentLocalRotationEulerXYZ()
       ///
       ///
       ///
@@ -436,7 +435,7 @@ namespace ViconDataStreamSDK
       
       /// Return whether the lightweight transport mode for kinematic segment data is enabled in the Vicon DataStream.
       ///
-      /// See Also: EnableLightweightSegmentData(), DisableLightWeightSegmentDataEnabled()
+      /// See Also: EnableSegmentData(), DisableSegmentData(), IsMarkerDataEnabled(), IsUnlabeledMarkerDataEnabled(), IsDeviceDataEnabled()
       ///
       ///
       /// C example
@@ -510,7 +509,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -552,7 +551,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -599,7 +598,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -644,7 +643,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -689,7 +688,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -752,7 +751,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -812,7 +811,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -874,7 +873,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -935,7 +934,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1011,7 +1010,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1079,7 +1078,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1145,7 +1144,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1200,7 +1199,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1247,7 +1246,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1298,7 +1297,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1349,7 +1348,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1401,7 +1400,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1455,7 +1454,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1504,7 +1503,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1554,7 +1553,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1605,7 +1604,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1654,7 +1653,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1704,7 +1703,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1754,7 +1753,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1803,7 +1802,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1853,7 +1852,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1903,7 +1902,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1949,7 +1948,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      
@@ -1979,7 +1978,7 @@ namespace ViconDataStreamSDK
       ///      
       /// MATLAB example
       ///      
-      ///     See .NET example
+      /// Not implemented
       ///      
       /// .NET example
       ///      

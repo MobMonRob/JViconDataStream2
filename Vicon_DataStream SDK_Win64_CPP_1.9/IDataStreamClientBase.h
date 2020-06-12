@@ -92,7 +92,7 @@ public:
   }
 
   inline
-  String & assign=( const String & i_rString )
+  String & operator=( const String & i_rString )
   {
     m_pConstString = i_rString.m_pConstString;
     m_pStringFactory = i_rString.m_pStringFactory;
@@ -124,7 +124,7 @@ public:
     m_pStringFactory = &i_rStringFactory;
     m_pConstString = 0;
   }
-  /*
+
   inline
   operator std::string() const
   {
@@ -137,21 +137,6 @@ public:
       return std::string( m_pConstString );
     }
   }
-  
-  
-  
-  */
-  const char* toString() const
-  {
-      if (m_pStringFactory)
-      {
-          return m_pString;
-      }
-      else
-      {
-          return m_pConstString;
-      }
-  }
 
 private:
         char     * m_pString;
@@ -159,16 +144,18 @@ private:
   IStringFactory * m_pStringFactory;
 };
 
+/*
 // Streaming operator for String
-inline std::ostream & stream( std::ostream & io_rStream, const String & i_rString )
+inline std::ostream & operator<<( std::ostream & io_rStream, const String & i_rString )
 {
   io_rStream << std::string( i_rString );
   return io_rStream;
 }
+*/
 
-//namespace Direction
-//{
-  enum Direction_Enum
+namespace Direction
+{
+  enum Enum
   {
     Up,
     Down,
@@ -177,31 +164,31 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
     Forward,
     Backward
   };
-//}
+}
 
-//namespace ServerOrientation
-//{
-  enum ServerOrientation_Enum
+namespace ServerOrientation
+{
+  enum Enum
   {
-      ServerOrientation_Unknown,
+    Unknown,
     YUp,
     ZUp,
   };
-//}
+}
 
-//namespace StreamMode
-//{
-  enum StreamMode_Enum
+namespace StreamMode
+{
+  enum Enum
   {
     ClientPull,
     ClientPullPreFetch,
     ServerPush
   };
-//}
+}
 
-//namespace TimecodeStandard
-//{
-  enum TimecodeStandard_Enum
+namespace TimecodeStandard
+{
+  enum Enum
   {
     None,
     PAL,
@@ -211,21 +198,21 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
     NTSCFilm,
     ATSC
   };
-//}
+}
 
-//namespace DeviceType
-//{
-  enum DeviceType_Enum
+namespace DeviceType
+{
+  enum Enum
   {
-      DeviceType_Unknown,
+    Unknown,
     ForcePlate,
     EyeTracker
   };
-//}
+}
 
-//namespace Unit
-//{
-  enum Unit_Enum
+namespace Unit
+{
+  enum Enum
   {
     Unknown,
     Volt,
@@ -265,14 +252,14 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
     Katal
   };
 
-//}
+}
 
-//namespace Result
-//{
+namespace Result
+{
   /// The Result code indicates the success or failure of a function.
-  enum Result_Enum
+  enum Enum
   {
-      Result_Unknown, ///< The result is unknown. Treat it as a failure.
+    Unknown, ///< The result is unknown. Treat it as a failure.
     NotImplemented, ///< The function called has not been implemented in this version of the SDK.
     Success, ///< The function call succeeded.
     InvalidHostName, ///< The "HostName" parameter passed to Connect() is invalid.
@@ -301,7 +288,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
     ConfigurationFailed, ///< The operating system configuration changed failed.
     NotPresent ///< The requested data type is not present in the stream.
   };
-//}
+}
 
   /// The version information returned by Client::GetVersion.
   class Output_GetVersion
@@ -320,7 +307,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_SimpleResult
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
   };
 
   // Output objects that only return a result enum
@@ -384,29 +371,29 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetAxisMapping
   {
   public:
-    Direction_Enum XAxis;
-    Direction_Enum YAxis;
-    Direction_Enum ZAxis;
+    Direction::Enum XAxis;
+    Direction::Enum YAxis;
+    Direction::Enum ZAxis;
   };
 
   class Output_GetServerOrientation
   {
   public:
-    Result_Enum Result;
-    ServerOrientation_Enum Orientation;
+    Result::Enum Result;
+    ServerOrientation::Enum Orientation;
   };
 
   class Output_GetFrameNumber
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int FrameNumber;
   };
 
   class Output_GetTimecode
   {
   public:
-    Result_Enum           Result;
+    Result::Enum           Result;
     unsigned int           Hours;
     unsigned int           Minutes;
     unsigned int           Seconds;
@@ -421,63 +408,63 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetFrameRate
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double FrameRateHz;
   };
 
   class Output_GetLatencySampleCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int Count;
   };
 
   class Output_GetLatencySampleName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       Name;
   };
 
   class Output_GetLatencySampleValue
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Value;
   };
 
   class Output_GetLatencyTotal
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Total;
   };
 
   class Output_GetFrameRateCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int Count;
   };
 
   class Output_GetFrameRateName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       Name;
   };
 
   class Output_GetFrameRateValue
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Value;
   };
 
   class Output_GetHardwareFrameNumber
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int HardwareFrameNumber;
   };
 
@@ -485,105 +472,105 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSubjectCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int SubjectCount;
   };
 
   class Output_GetSubjectName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       SubjectName;
   };
 
   class Output_GetSubjectRootSegmentName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       SegmentName;
   };
 
   class Output_GetSegmentChildCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int SegmentCount;
   };
 
   class Output_GetSegmentChildName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       SegmentName;
   };
 
   class Output_GetSegmentParentName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       SegmentName;
   };
 
   class Output_GetSegmentCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int SegmentCount;
   };
 
   class Output_GetSegmentName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       SegmentName;
   };
 
   class Output_GetSegmentStaticTranslation
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Translation[ 3 ];
   };
 
   class Output_GetSegmentStaticRotationHelical
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 3 ];
   };
 
   class Output_GetSegmentStaticRotationMatrix
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 9 ];
   };
 
   class Output_GetSegmentStaticRotationQuaternion
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 4 ];
   };
 
   class Output_GetSegmentStaticRotationEulerXYZ
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 3 ];
   };
 
   class Output_GetSegmentStaticScale
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Scale[3];
   };
 
   class Output_GetSegmentGlobalTranslation
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Translation[ 3 ];
     bool         Occluded;
   };
@@ -591,7 +578,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentGlobalRotationHelical
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 3 ];
     bool         Occluded;
   };
@@ -599,7 +586,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentGlobalRotationMatrix
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 9 ];
     bool         Occluded;
   };
@@ -607,7 +594,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentGlobalRotationQuaternion
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 4 ];
     bool         Occluded;
   };
@@ -615,7 +602,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentGlobalRotationEulerXYZ
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 3 ];
     bool         Occluded;
   };
@@ -623,7 +610,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentLocalTranslation
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Translation[ 3 ];
     bool         Occluded;
   };
@@ -631,7 +618,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentLocalRotationHelical
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 3 ];
     bool         Occluded;
   };
@@ -639,7 +626,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentLocalRotationMatrix
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 9 ];
     bool         Occluded;
   };
@@ -647,7 +634,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentLocalRotationQuaternion
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 4 ];
     bool         Occluded;
   };
@@ -655,7 +642,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetSegmentLocalRotationEulerXYZ
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Rotation[ 3 ];
     bool         Occluded;
   };
@@ -663,35 +650,35 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetObjectQuality
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double Quality;
   };
 
   class Output_GetMarkerCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int MarkerCount;
   };
 
   class Output_GetMarkerName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       MarkerName;
   };
 
   class Output_GetMarkerParentName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       SegmentName;
   };
 
   class Output_GetMarkerGlobalTranslation
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Translation[ 3 ];
     bool         Occluded;
   };
@@ -699,14 +686,14 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetMarkerRayContributionCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int RayContributionsCount;
   };
 
   class Output_GetMarkerRayContribution
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int CameraID;
     unsigned int CentroidIndex;
   };
@@ -714,14 +701,14 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetUnlabeledMarkerCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int MarkerCount;
   };
 
   class Output_GetUnlabeledMarkerGlobalTranslation
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Translation[ 3 ];
     unsigned int MarkerID;
   };
@@ -729,14 +716,14 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetLabeledMarkerCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int MarkerCount;
   };
 
   class Output_GetLabeledMarkerGlobalTranslation
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Translation[ 3 ];
     unsigned int MarkerID;
   };
@@ -744,14 +731,14 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetDeviceCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int DeviceCount;
   };
 
   class Output_GetDeviceName
   {
   public:
-    Result_Enum     Result;
+    Result::Enum     Result;
     String           DeviceName;
     DeviceType::Enum DeviceType;
   };
@@ -759,14 +746,14 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetDeviceOutputCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int DeviceOutputCount;
   };
 
   class Output_GetDeviceOutputName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       DeviceOutputName;
     Unit::Enum   DeviceOutputUnit;
   };
@@ -774,7 +761,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetDeviceOutputComponentName
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String       DeviceOutputName;
     String       DeviceOutputComponentName;
     Unit::Enum   DeviceOutputUnit;
@@ -783,7 +770,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetDeviceOutputValue
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Value;
     bool         Occluded;
   };
@@ -791,7 +778,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetDeviceOutputSubsamples
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int DeviceOutputSubsamples;
     bool         Occluded;
   };
@@ -799,49 +786,49 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetForcePlateCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int ForcePlateCount;
   };
 
   class Output_GetGlobalForceVector
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       ForceVector[ 3 ];
   };
 
   class Output_GetGlobalMomentVector
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       MomentVector[ 3 ];
   };
 
   class Output_GetGlobalCentreOfPressure
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       CentreOfPressure[ 3 ];
   };
 
   class Output_GetForcePlateSubsamples
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int ForcePlateSubsamples;
   };
 
   class Output_GetEyeTrackerCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int EyeTrackerCount;
   };
 
   class Output_GetEyeTrackerGlobalPosition
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       Position[ 3 ];
     bool         Occluded;
   };
@@ -849,7 +836,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetEyeTrackerGlobalGazeVector
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double       GazeVector[ 3 ];
     bool         Occluded;
   };
@@ -857,49 +844,49 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetCameraCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int CameraCount;
   };
 
   class Output_GetCameraName
   {
   public:
-    Result_Enum     Result;
+    Result::Enum     Result;
     String           CameraName;
   };
 
   class Output_GetCameraId
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int CameraId;
   };
 
   class Output_GetCameraUserId
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int CameraUserId;
   };
 
   class Output_GetCameraType
   {
   public:
-    Result_Enum     Result;
+    Result::Enum     Result;
     String           CameraType;
   };
 
   class Output_GetCameraDisplayName
   {
   public:
-    Result_Enum     Result;
+    Result::Enum     Result;
     String           CameraDisplayName;
   };
 
   class Output_GetCameraResolution
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int ResolutionX;
     unsigned int ResolutionY;
   };
@@ -907,21 +894,21 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetIsVideoCamera
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     bool IsVideoCamera;
   };
 
   class Output_GetCentroidCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int CentroidCount;
   };
 
   class Output_GetCentroidPosition
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double CentroidPosition[ 2 ];
     double Radius;
 //    double Accuracy;
@@ -930,21 +917,21 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_GetCentroidWeight
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     double Weight;
   };
 
   class Output_GetGreyscaleBlobCount
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     unsigned int BlobCount;
   };
 
   class Output_GetGreyscaleBlob
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     std::vector< unsigned int > BlobLinePositionsX;
     std::vector< unsigned int > BlobLinePositionsY;
     std::vector< std::vector< unsigned char > > BlobLinePixelValues;
@@ -953,7 +940,7 @@ inline std::ostream & stream( std::ostream & io_rStream, const String & i_rStrin
   class Output_ConfigureWireless
   {
   public:
-    Result_Enum Result;
+    Result::Enum Result;
     String Error;
   };
 
