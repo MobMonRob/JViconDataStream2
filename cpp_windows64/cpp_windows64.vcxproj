@@ -125,7 +125,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp14</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Program Files\Java\jdk-14.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(JAVA_HOME)\include;$(JAVA_HOME)\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -162,6 +162,7 @@
     <ClInclude Include="SwigTest.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\swig\ViconDataStreamSDK_wrap.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="SwigTest.cpp" />
   </ItemGroup>
