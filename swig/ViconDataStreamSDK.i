@@ -3,7 +3,8 @@
 %module ViconDataStreamSDK
 %feature("nspace");
 
-%rename (CString) String;
+%rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
+%rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
 
 
 %include "std_string.i"
