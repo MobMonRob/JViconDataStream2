@@ -1,7 +1,7 @@
 **/.vs
 **/x64
 **/Debug
-/Wrapcode/*.cpp
+/swig/*.cpp
 /JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/*.java
 /JViconDataStreamTest/target
 

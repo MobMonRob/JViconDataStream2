@@ -43,4 +43,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\swig\ViconDataStreamSDK.i" />
+  </ItemGroup>
 </Project>

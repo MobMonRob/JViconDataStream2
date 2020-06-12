@@ -165,6 +165,13 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="SwigTest.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\swig\ViconDataStreamSDK.i">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd ..\swig\&amp;.\invoke.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\swig\ViconDataStreamSDK_wrap.cpp;..\JViconDataStreamTest\src\main\java\de\dhbw\mobmonrob\vicon\datastreamapi\impl\*.java</Outputs>
+    </CustomBuild>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
