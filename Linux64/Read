@@ -18,18 +18,6 @@ $ ./configure
 $ make
 $ make install
 
-swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl  -outdir JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl -o Wrapcode/ViconDataStreamClientSDK_wrap.cpp ViconDataStreamClientSDK.i
+1- swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl  -outdir JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl -o Wrapcode/ViconDataStreamClientSDK_wrap.cpp ViconDataStreamClientSDK.i
 
-2- $ gcc  -fPIC -cpp Wrapcode/ViconDataStreamClientSDK_wrap.cpp  -I/usr/lib/jvm/java-11-openjdk-amd64/include/linux -I/usr/lib/jvm/java-11-openjdk-amd64/include 
-$ gcc -Wall -fPIC -cpp ViconDataStreamClientSDK.cpp
- 3- gcc -lViconDataStreamSDK_CPP
- 
-4- $ ld -G ViconDataStreamClientSDK.o -o libViconDataStreamSDK_CPP.so
-
-• #include "DataStreamClient.h"
-• Link against libViconDataStreamSDK_CPP.so
-• Redistribute libViconDataStreamSDK_CPP.so
-
-swig -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl  -outdir "$(ProjectDir)JViconDataStreamTest\src\main\java\de\dhbw\mobmonrob\vicon\datastreamapi\impl" -o "$(ProjectDir)Wrapcode\$(ProjectName)_wrap.cpp" %(Identity) 
-g++ -g -c -Wall -fPIC beat11.cpp -o beat11.o
-g++ -g -c -Wall -fPIC Wrapcode/ViconDataStreamClientSDK_wrap.cpp -o libViconDataStreamSDK_CPP.so
+2- gcc -shared -fPIC -cpp Wrapcode/ViconDataStreamClientSDK_wrap.cpp -LViconDataStreamSDK_1.10.0.123216h -lViconDataStreamSDK_CPP -o viconWrapper.so -I/usr/lib/jvm/java-11-openjdk-amd64/include/linux -I/usr/lib/jvm/java-11-openjdk-amd64/include 

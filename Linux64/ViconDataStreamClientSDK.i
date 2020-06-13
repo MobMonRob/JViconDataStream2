@@ -1,24 +1,27 @@
-﻿%module ViconDataStreamClientSDK
+/* File : ViconDataStreamSDK.i */
 
-%rename (CString) String;
+%module ViconDataStreamSDK
+%feature("nspace");
+
+%rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
+%rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
+
 
 %include "std_string.i"
 %include "arrays_java.i";
 %include "typemaps.i"
-// %include <windows.i>
+%include <windows.i> //Has no effect in Linux
 %include "enumtypesafe.swg"
 %javaconst(1);
 
-//Parse the header files to generate wrappers
-%include "ViconDataStreamSDK_1.10.0.123216h/IDataStreamClientBase.h"
-%include "ViconDataStreamSDK_1.10.0.123216h/DataStreamClient.h"
-%include "ViconDataStreamSDK_1.10.0.123216h/DataStreamRetimingClient.h"
 
 %{
+////////////////////////////////////////////////////////
 //Includes the header files in the wrapper code
-#include "IDataStreamClientBase.h"
-#include "DataStreamClient.h"
-#include "DataStreamRetimingClient.h"
+//#include "../cpp_windows64/SwigTest.h"
+#include "../ViconDataStreamSDK_1.10.0.123216h/IDataStreamClientBase.h"
+#include "../ViconDataStreamSDK_1.10.0.123216h/DataStreamClient.h"
+#include "../ViconDataStreamSDK_1.10.0.123216h/DataStreamRetimingClient.h"
 
 #include <new>
 using namespace std;
@@ -92,3 +95,11 @@ void operator delete(void *v) {
   }
 }
 %}
+
+////////////////////////////////////////////////////////
+//Parse the header files to generate wrappers
+//%include "../cpp_windows64/SwigTest.h"
+%include "./ViconDataStreamSDK_1.10.0.123216h/IDataStreamClientBase.h"
+%include "./ViconDataStreamSDK_1.10.0.123216h/DataStreamClient.h"
+%include "./ViconDataStreamSDK_1.10.0.123216h/DataStreamRetimingClient.h"
+
