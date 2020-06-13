@@ -5,6 +5,7 @@
 
 %rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
 %rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
+%rename (streamingOperator) ViconDataStreamSDK::CPP::operator<<;
 
 
 %include "std_string.i"
@@ -18,10 +19,12 @@
 %{
 ////////////////////////////////////////////////////////
 //Includes the header files in the wrapper code
-//#include "../cpp_windows64/SwigTest.h"
+#include <iostream> //Wichtig: Vor Vicon Headern!
+//#include "../Windows64/wrapper_dll_generator/SwigTest.h"
 #include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
 #include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
 #include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
+
 
 #include <new>
 using namespace std;
@@ -98,7 +101,7 @@ void operator delete(void *v) {
 
 ////////////////////////////////////////////////////////
 //Parse the header files to generate wrappers
-//%include "../cpp_windows64/SwigTest.h"
+//%include "../Windows64/wrapper_dll_generator/SwigTest.h"
 %include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
 %include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
 %include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
