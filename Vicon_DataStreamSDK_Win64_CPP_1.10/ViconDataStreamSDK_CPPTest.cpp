@@ -21,8 +21,6 @@
 #include <string>
 #include <vector>
 
-#define WIN32
-
 #ifdef WIN32
   #include <conio.h>   // For _kbhit()
   #include <cstdio>   // For getchar()
