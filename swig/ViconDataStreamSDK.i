@@ -19,9 +19,9 @@
 ////////////////////////////////////////////////////////
 //Includes the header files in the wrapper code
 //#include "../cpp_windows64/SwigTest.h"
-#include "../Vicon_DataStreamSDK_Win64_CPP_1.10/IDataStreamClientBase.h"
-#include "../Vicon_DataStreamSDK_Win64_CPP_1.10/DataStreamClient.h"
-#include "../Vicon_DataStreamSDK_Win64_CPP_1.10/DataStreamRetimingClient.h"
+#include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
+#include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
+#include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
 
 #include <new>
 using namespace std;
@@ -99,7 +99,7 @@ void operator delete(void *v) {
 ////////////////////////////////////////////////////////
 //Parse the header files to generate wrappers
 //%include "../cpp_windows64/SwigTest.h"
-%include "../Vicon_DataStreamSDK_Win64_CPP_1.10/IDataStreamClientBase.h"
-%include "../Vicon_DataStreamSDK_Win64_CPP_1.10/DataStreamClient.h"
-%include "../Vicon_DataStreamSDK_Win64_CPP_1.10/DataStreamRetimingClient.h"
+%include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
+%include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
+%include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
 

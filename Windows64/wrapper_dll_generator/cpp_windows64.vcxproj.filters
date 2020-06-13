@@ -42,11 +42,11 @@
     <ClCompile Include="SwigTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\swig\ViconDataStreamSDK_wrap.cpp">
+    <ClCompile Include="..\..\swig\ViconDataStreamSDK_wrap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\swig\ViconDataStreamSDK.i" />
+    <CustomBuild Include="..\..\swig\ViconDataStreamSDK.i" />
   </ItemGroup>
 </Project>

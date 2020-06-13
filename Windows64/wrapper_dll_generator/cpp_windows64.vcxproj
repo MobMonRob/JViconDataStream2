@@ -124,14 +124,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(JAVA_HOME)\include;$(JAVA_HOME)\include\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalLibraryDirectories>../Vicon_DataStreamSDK_Win64_CPP_1.10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../DataStreamSDK_1.10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ViconDataStreamSDK_CPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
@@ -170,15 +170,15 @@
     <ClInclude Include="SwigTest.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\swig\ViconDataStreamSDK_wrap.cpp" />
+    <ClCompile Include="..\..\swig\ViconDataStreamSDK_wrap.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="SwigTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\swig\ViconDataStreamSDK.i">
+    <CustomBuild Include="..\..\swig\ViconDataStreamSDK.i">
       <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd ..\swig\&amp;.\invoke.bat</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\swig\ViconDataStreamSDK_wrap.cpp;..\JViconDataStreamTest\src\main\java\de\dhbw\mobmonrob\vicon\datastreamapi\impl\**</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">cd ..\..\swig\&amp;.\invoke.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\swig\ViconDataStreamSDK_wrap.cpp;..\..\JViconDataStreamTest\src\main\java\de\dhbw\mobmonrob\vicon\datastreamapi\impl\**</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </CustomBuild>
