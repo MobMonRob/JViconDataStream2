@@ -22,9 +22,6 @@
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SwigTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\DataStreamSDK_1.10\DataStreamClient.h">
       <Filter>vicon</Filter>
     </ClInclude>
@@ -37,9 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SwigTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\swig\ViconDataStreamSDK_wrap.cpp">
