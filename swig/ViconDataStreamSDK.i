@@ -1,20 +1,43 @@
 /* File : ViconDataStreamSDK.i */
+%module ViconDataStreamSDKSwig; //Wichtig: Modul muss anders heißen, als die Namespaces! Sonst gibt es den Namen als Klasse (wegen dem Modul) und als Namespace. Das ist doof.
 
-%module ViconDataStreamSDK
-%feature("nspace");
+//%feature("nspace"); //Wäre so schön. Aber ich finde keine Möglichkeit, die Pakete der Template Instantzierungen zu ändern.
 
-%rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
-%rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
-%rename (streamingOperator) ViconDataStreamSDK::CPP::operator<<;
-
-
-%include "std_string.i"
+%include <std_shared_ptr.i>
+%include "std_string.i";
 %include "arrays_java.i";
-%include "typemaps.i"
-%include <windows.i> //Has no effect in Linux
-%include "enumtypesafe.swg"
+%include "std_vector.i"
+%include "typemaps.i";
+%include <windows.i>; //Has no effect in Linux
+%include "enumtypesafe.swg";
 %javaconst(1);
 
+%rename (ViconString) ViconDataStreamSDK::CPP::String; //Wichtig! Swig benennt den Java String nicht mit vollständigem Pfad. Innerhalb des Namespaces gibt es sonst Mehrdeutigkeit.
+%rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
+%rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
+%ignore ViconDataStreamSDK::CPP::String::String(char const *);
+%ignore ViconDataStreamSDK::CPP::operator<<;
+
+%rename (Direction_Enum) ViconDataStreamSDK::CPP::Direction::Enum;
+%rename (ServerOrientation_Enum) ViconDataStreamSDK::CPP::ServerOrientation::Enum;
+%rename (StreamMode_Enum) ViconDataStreamSDK::CPP::StreamMode::Enum;
+%rename (TimecodeStandard_Enum) ViconDataStreamSDK::CPP::TimecodeStandard::Enum;
+%rename (DeviceType_Enum) ViconDataStreamSDK::CPP::DeviceType::Enum;
+%rename (Unit_Enum) ViconDataStreamSDK::CPP::Unit::Enum;
+%rename (Result_Enum) ViconDataStreamSDK::CPP::Result::Enum;
+
+
+%template(VectorUint) std::vector<unsigned int>; //Gebraucht von DataStreamClient
+%template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
+%template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
+%template(SharedPtrVectorUchar) std::shared_ptr<std::vector<unsigned char>>; //Gebraucht von Output_GetVideoFrame
+
+
+//Parse the header files to generate wrappers
+//%include "../Windows64/wrapper_dll_generator/SwigTest.h"
+%include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
+%include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
+%include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
 
 %{
 ////////////////////////////////////////////////////////
@@ -27,7 +50,7 @@
 
 
 #include <new>
-using namespace std;
+//using namespace std; //Vermeiden
 #include <stdexcept>
 #include "jni.h"
 
@@ -61,22 +84,22 @@ void * operator new(size_t t) {
     JNIEnv *env = JNU_GetEnv();
     jbyteArray jba = env->NewByteArray((int) t + sizeof(Jalloc));
     if (env->ExceptionOccurred())
-      throw bad_alloc();
+      throw std::bad_alloc();
     void *jbuffer = static_cast<void *>(env->GetByteArrayElements(jba, 0));
     if (env->ExceptionOccurred())
-      throw bad_alloc();
+      throw std::bad_alloc();
     Jalloc *pJalloc = static_cast<Jalloc *>(jbuffer);
     pJalloc->jba = jba;
     /* Assign a global reference so byte array will persist until delete'ed */
     pJalloc->ref = env->NewGlobalRef(jba);
     if (env->ExceptionOccurred())
-      throw bad_alloc();
+      throw std::bad_alloc();
     return static_cast<void *>(static_cast<char *>(jbuffer) + sizeof(Jalloc));
   }
   else { /* JNI_OnLoad not called, use malloc and mark as special */
     Jalloc *pJalloc = static_cast<Jalloc *>(malloc((int) t + sizeof(Jalloc)));
     if (!pJalloc)
-      throw bad_alloc();
+      throw std::bad_alloc();
     pJalloc->ref = 0;
     return static_cast<void *>(
         static_cast<char *>(static_cast<void *>(pJalloc)) + sizeof(Jalloc));
@@ -98,11 +121,4 @@ void operator delete(void *v) {
   }
 }
 %}
-
-////////////////////////////////////////////////////////
-//Parse the header files to generate wrappers
-//%include "../Windows64/wrapper_dll_generator/SwigTest.h"
-%include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
-%include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
-%include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
 
