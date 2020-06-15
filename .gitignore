@@ -4,4 +4,5 @@
 /swig/*.cpp
 /JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/**
 /JViconDataStreamTest/target
+/Linux64/*.so
 
