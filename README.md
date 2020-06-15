@@ -1,4 +1,4 @@
-# Wrapper Generator Projekt
+# Java-Wrapper für ViconDataStream
 
 ## Beschreibung
 Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API.
@@ -29,7 +29,7 @@ Ein sauberer Rebuild ist möglich mit `Rebuild Solution`.
 Die gewünschten Dateien befinden sich jetzt in den Verzeichnissen {`java_class_generated`, `x64/Debug`}.
 
 
-# Java schöner Wrapper-Wrapper Projekt
+# Java API für ViconDataStream (aufbauend auf dem JAVA-Wrapper)
 
 ## Beschreibung
 Dieses Projekt liefert eine "schöne" Java API um den generierten Vicon DataStream API Wrapper. Außerdem gibt es Tests.
