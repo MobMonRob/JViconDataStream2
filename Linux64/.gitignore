@@ -1,6 +1,0 @@
-/.vs
-/x64
-/Wrapcode/*.cpp
-/JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/*.java
-/JViconDataStreamTest/target
-

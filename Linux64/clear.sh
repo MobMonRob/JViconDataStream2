@@ -1,6 +1,8 @@
-﻿#!/bin/bash
+#!/bin/bash
 
-rm ./Wrapcode/*.cpp
+cd "$(dirname "$BASH_SOURCE")"
 
-rm ./JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/*.java
+rm -f *.so
+
+../swig/clear.sh
 
