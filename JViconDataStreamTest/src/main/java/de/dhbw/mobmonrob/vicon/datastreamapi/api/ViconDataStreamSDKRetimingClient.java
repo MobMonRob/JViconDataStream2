@@ -5,7 +5,7 @@
  */
 package de.dhbw.mobmonrob.vicon.datastreamapi.api;
 
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.CString;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.ViconString;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_Connect;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_Disconnect;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableLightweightSegmentData;
@@ -57,9 +57,9 @@ public class ViconDataStreamSDKRetimingClient {
      public void connect(String hostname){
          while (!isConnected()){
             
-            Output_Connect result = retimingClient.Connect(new CString(hostname));
+            Output_Connect result = retimingClient.Connect(new ViconString(hostname));
          
-            //Output_ConnectToMulticast result = client.ConnectToMulticast(new CString(hostname), new CString(hostname));
+            //Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
             
             // tritt seltsamerweise auch für localhost ab und zu auf
             //if (result.getResult() == Result_Enum.InvalidHostName) 
@@ -176,7 +176,7 @@ public class ViconDataStreamSDKRetimingClient {
     The root segment is the ancestor of all other segments in the subject.
     */
     public String getSubjectRootSegmentName(String subjectName){    
-        Output_GetSubjectRootSegmentName result = retimingClient.GetSubjectRootSegmentName(new CString(subjectName));
+        Output_GetSubjectRootSegmentName result = retimingClient.GetSubjectRootSegmentName(new ViconString(subjectName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("GetSubjectRootSegmentName() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 

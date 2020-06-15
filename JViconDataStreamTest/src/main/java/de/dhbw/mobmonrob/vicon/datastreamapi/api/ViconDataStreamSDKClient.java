@@ -1,6 +1,6 @@
 package de.dhbw.mobmonrob.vicon.datastreamapi.api;
 
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.CString;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.ViconString;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Client;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_Connect;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_Disconnect;
@@ -118,9 +118,9 @@ public class ViconDataStreamSDKClient{
     public void connect(String hostname){
          while (!isConnected()){
             
-            Output_Connect result = client.Connect(new CString(hostname));
+            Output_Connect result = client.Connect(new ViconString(hostname));
          
-            //Output_ConnectToMulticast result = client.ConnectToMulticast(new CString(hostname), new CString(hostname));
+            //Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
             
             // tritt seltsamerweise auch für localhost ab und zu auf
             //if (result.getResult() == Result_Enum.InvalidHostName) 
@@ -309,7 +309,7 @@ public class ViconDataStreamSDKClient{
       
   public double getFrameRateValue(String FrameRateName)
 {         
-                   Output_GetFrameRateValue result = client.GetFrameRateValue(new CString(FrameRateName)); 
+                   Output_GetFrameRateValue result = client.GetFrameRateValue(new ViconString(FrameRateName)); 
               //  if (result.getResult() == Result_Enum.InvalidFrameRateName) 
                   //  throw new RuntimeException("getFrameRateName() but FrameRateName \""+FrameRateName+"\" is invalid!");
                 if (result.getResult() == Result_Enum.NotConnected) 
@@ -406,7 +406,7 @@ return result.getValue();
     The root segment is the ancestor of all other segments in the subject.
     */
     public String getSubjectRootSegmentName(String subjectName){    
-        Output_GetSubjectRootSegmentName result = client.GetSubjectRootSegmentName(new CString(subjectName));
+        Output_GetSubjectRootSegmentName result = client.GetSubjectRootSegmentName(new ViconString(subjectName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("GetSubjectRootSegmentName() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -432,7 +432,7 @@ return result.getValue();
      * @throws RuntimeException if subjectName is invalid, client is not connected or no frame available.
      */
     public long getSegmentCount(String subjectName){
-        Output_GetSegmentCount result = client.GetSegmentCount(new CString(subjectName));
+        Output_GetSegmentCount result = client.GetSegmentCount(new ViconString(subjectName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentCount() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NoFrame) 
@@ -456,7 +456,7 @@ return result.getValue();
      * the segment index is invalid or if no frame available
      */
     public String getSegmentName(String subjectName, long segmentIndex){    
-        Output_GetSegmentName result = client.GetSegmentName(new CString(subjectName), segmentIndex);
+        Output_GetSegmentName result = client.GetSegmentName(new ViconString(subjectName), segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentName() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -471,7 +471,7 @@ return result.getValue();
     }
     
      public long getSegmentChildCount(String subjectName, String segmentName){
-        Output_GetSegmentChildCount result = client.GetSegmentChildCount(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentChildCount result = client.GetSegmentChildCount(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentChildCount() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NoFrame) 
@@ -487,7 +487,7 @@ return result.getValue();
     }
      
      public String getSegmentChildName(String subjectName,String segmentName, long segmentIndex){    
-        Output_GetSegmentChildName result = client.GetSegmentChildName(new CString(subjectName),new CString(segmentName), segmentIndex);
+        Output_GetSegmentChildName result = client.GetSegmentChildName(new ViconString(subjectName),new ViconString(segmentName), segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentChildName() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -505,7 +505,7 @@ return result.getValue();
      
     }
         public String getSegmentParentName(String subjectName,String segmentName){    
-        Output_GetSegmentParentName result = client.GetSegmentParentName(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentParentName result = client.GetSegmentParentName(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentParentName() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -521,7 +521,7 @@ return result.getValue();
      
     }
          public double [] getSegmentStaticTranslation(String subjectName,String segmentName){    
-        Output_GetSegmentStaticTranslation result = client.GetSegmentStaticTranslation(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentStaticTranslation result = client.GetSegmentStaticTranslation(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentStaticTranslation() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -537,7 +537,7 @@ return result.getValue();
      
     }
           public double [] getSegmentStaticRotationHelical(String subjectName,String segmentName){    
-        Output_GetSegmentStaticRotationHelical result = client.GetSegmentStaticRotationHelical(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentStaticRotationHelical result = client.GetSegmentStaticRotationHelical(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentStaticRotationHelical() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -553,7 +553,7 @@ return result.getValue();
      
     }
           public double [] getSegmentStaticRotationMatrix(String subjectName,String segmentName){    
-       Output_GetSegmentStaticRotationMatrix result = client.GetSegmentStaticRotationMatrix(new CString(subjectName),new CString(segmentName));
+       Output_GetSegmentStaticRotationMatrix result = client.GetSegmentStaticRotationMatrix(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentStaticRotationMatrix() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -569,7 +569,7 @@ return result.getValue();
      
     }
        public double [] getSegmentStaticRotationQuaternion(String subjectName,String segmentName){    
-        Output_GetSegmentStaticRotationQuaternion result = client.GetSegmentStaticRotationQuaternion(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentStaticRotationQuaternion result = client.GetSegmentStaticRotationQuaternion(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentStaticRotationQuaternion() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -585,7 +585,7 @@ return result.getValue();
      
     }   
           public double [] getSegmentStaticRotationEulerXYZ(String subjectName,String segmentName){    
-       Output_GetSegmentStaticRotationEulerXYZ result = client.GetSegmentStaticRotationEulerXYZ(new CString(subjectName),new CString(segmentName));
+       Output_GetSegmentStaticRotationEulerXYZ result = client.GetSegmentStaticRotationEulerXYZ(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentStaticRotationEulerXYZ() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -601,7 +601,7 @@ return result.getValue();
      
     }   
           public double [] getSegmentGlobalTranslation(String subjectName,String segmentName){    
-        Output_GetSegmentGlobalTranslation result = client.GetSegmentGlobalTranslation(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentGlobalTranslation result = client.GetSegmentGlobalTranslation(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentGlobalTranslation() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -617,7 +617,7 @@ return result.getValue();
      
     }
            public double [] getSegmentLocalRotationHelical(String subjectName,String segmentName){    
-        Output_GetSegmentLocalRotationHelical result = client.GetSegmentLocalRotationHelical(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentLocalRotationHelical result = client.GetSegmentLocalRotationHelical(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentLocalRotationHelical() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -633,7 +633,7 @@ return result.getValue();
      
     }
             public double [] getSegmentGlobalRotationHelical(String subjectName,String segmentName){    
-        Output_GetSegmentGlobalRotationHelical result = client.GetSegmentGlobalRotationHelical(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentGlobalRotationHelical result = client.GetSegmentGlobalRotationHelical(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentGlobalRotationHelical() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -649,7 +649,7 @@ return result.getValue();
      
     }
           public double [] getSegmentGlobalRotationMatrix(String subjectName,String segmentName){    
-       Output_GetSegmentGlobalRotationMatrix result = client.GetSegmentGlobalRotationMatrix(new CString(subjectName),new CString(segmentName));
+       Output_GetSegmentGlobalRotationMatrix result = client.GetSegmentGlobalRotationMatrix(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentGlobalRotationMatrix() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -665,7 +665,7 @@ return result.getValue();
      
     }
        public double [] getSegmentGlobalRotationQuaternion(String subjectName,String segmentName){    
-        Output_GetSegmentGlobalRotationQuaternion result = client.GetSegmentGlobalRotationQuaternion(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentGlobalRotationQuaternion result = client.GetSegmentGlobalRotationQuaternion(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentGlobalRotationQuaternion() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -681,7 +681,7 @@ return result.getValue();
      
     }   
           public double [] getSegmentGlobalRotationEulerXYZ(String subjectName,String segmentName){    
-       Output_GetSegmentGlobalRotationEulerXYZ result = client.GetSegmentGlobalRotationEulerXYZ(new CString(subjectName),new CString(segmentName));
+       Output_GetSegmentGlobalRotationEulerXYZ result = client.GetSegmentGlobalRotationEulerXYZ(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentGlobalRotationEulerXYZ() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -697,7 +697,7 @@ return result.getValue();
      
     }   
            public double [] getSegmentLocalTranslation (String subjectName,String segmentName){    
-       Output_GetSegmentLocalTranslation result = client.GetSegmentLocalTranslation(new CString(subjectName),new CString(segmentName));
+       Output_GetSegmentLocalTranslation result = client.GetSegmentLocalTranslation(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentLocalTranslation () but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -714,7 +714,7 @@ return result.getValue();
     }
 
           public double [] getSegmentLocalRotationMatrix(String subjectName,String segmentName){    
-          Output_GetSegmentLocalRotationMatrix result = client.GetSegmentLocalRotationMatrix(new CString(subjectName),new CString(segmentName));
+          Output_GetSegmentLocalRotationMatrix result = client.GetSegmentLocalRotationMatrix(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentLocalRotationMatrix() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -730,7 +730,7 @@ return result.getValue();
      
     }
        public double [] getSegmentLocalRotationQuaternion(String subjectName,String segmentName){    
-        Output_GetSegmentLocalRotationQuaternion result = client.GetSegmentLocalRotationQuaternion(new CString(subjectName),new CString(segmentName));
+        Output_GetSegmentLocalRotationQuaternion result = client.GetSegmentLocalRotationQuaternion(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentLocalRotationQuaternion() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -746,7 +746,7 @@ return result.getValue();
      
     }   
           public double [] getSegmentLocalRotationEulerXYZ(String subjectName,String segmentName){    
-       Output_GetSegmentLocalRotationEulerXYZ result = client.GetSegmentLocalRotationEulerXYZ(new CString(subjectName),new CString(segmentName));
+       Output_GetSegmentLocalRotationEulerXYZ result = client.GetSegmentLocalRotationEulerXYZ(new ViconString(subjectName),new ViconString(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getSegmentLocalRotationEulerXYZ() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -762,7 +762,7 @@ return result.getValue();
      
     }   
            public double getObjectQuality(String subjectName){    
-       Output_GetObjectQuality result = client.GetObjectQuality(new CString(subjectName));
+       Output_GetObjectQuality result = client.GetObjectQuality(new ViconString(subjectName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getObjectQuality() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -776,7 +776,7 @@ return result.getValue();
      
     }   
             public double [] getMarkerGlobalTranslation (String subjectName,String markerName){    
-       Output_GetMarkerGlobalTranslation result = client.GetMarkerGlobalTranslation(new CString(subjectName),new CString(markerName));
+       Output_GetMarkerGlobalTranslation result = client.GetMarkerGlobalTranslation(new ViconString(subjectName),new ViconString(markerName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getMarkerGlobalTranslation () but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -793,7 +793,7 @@ return result.getValue();
     }
             
              public long getMarkerRayContributionCount(String subjectName,String markerName){    
-       Output_GetMarkerRayContributionCount result = client.GetMarkerRayContributionCount(new CString(subjectName),new CString(markerName));
+       Output_GetMarkerRayContributionCount result = client.GetMarkerRayContributionCount(new ViconString(subjectName),new ViconString(markerName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getMarkerRayContributionCount () but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -810,7 +810,7 @@ return result.getValue();
              }
              
              public long getMarkerRayContribution(String subjectName,String markerName, int MarkerRayContributionIndex){    
-       Output_GetMarkerRayContribution result = client.GetMarkerRayContribution(new CString(subjectName),new CString(markerName),MarkerRayContributionIndex );
+       Output_GetMarkerRayContribution result = client.GetMarkerRayContribution(new ViconString(subjectName),new ViconString(markerName),MarkerRayContributionIndex );
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getMarkerRayContribution() but subjectName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -851,7 +851,7 @@ return result.getValue();
      * @return The number of markers
      */
     public long getMarkerCount(String subjectName){
-        Output_GetMarkerCount result = client.GetMarkerCount(new CString(subjectName));
+        Output_GetMarkerCount result = client.GetMarkerCount(new ViconString(subjectName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) 
              throw new RuntimeException("getMarkerCount() but segmentName \""+subjectName+"\" is invalid!");
         if (result.getResult() == Result_Enum.NotConnected) 
@@ -905,7 +905,7 @@ return result.getValue();
      public String getDeviceOutputName(String deviceName,int deviceIndex){
         if (deviceIndex <0) throw new IllegalArgumentException("getSubjectName() deviceIndex >=0 is needed!");
         System.out.println("test1");
-        Output_GetDeviceOutputName result = client.GetDeviceOutputName(new CString(deviceName),deviceIndex);
+        Output_GetDeviceOutputName result = client.GetDeviceOutputName(new ViconString(deviceName),deviceIndex);
         System.out.println("test2");
         if (result.getResult() == Result_Enum.InvalidIndex) 
             throw new RuntimeException("getDeviceOutputName() but deviceIndex is invalid!");
@@ -919,7 +919,7 @@ return result.getValue();
     }
      public double getDeviceOutputValue(String deviceName,String deviceOutputName){
        
-        Output_GetDeviceOutputValue result = client.GetDeviceOutputValue(new CString(deviceName),new CString(deviceOutputName));
+        Output_GetDeviceOutputValue result = client.GetDeviceOutputValue(new ViconString(deviceName),new ViconString(deviceOutputName));
         
         if (result.getResult() == Result_Enum.InvalidIndex) 
             throw new RuntimeException("getDeviceOutputName() but deviceIndex is invalid!");
@@ -933,7 +933,7 @@ return result.getValue();
     }
       public long getDeviceOutputSubsamples(String deviceName,String deviceOutputName){
        
-        Output_GetDeviceOutputSubsamples result = client.GetDeviceOutputSubsamples(new CString(deviceName),new CString(deviceOutputName));
+        Output_GetDeviceOutputSubsamples result = client.GetDeviceOutputSubsamples(new ViconString(deviceName),new ViconString(deviceOutputName));
         
          if (result.getResult() == Result_Enum.NoFrame) 
              throw new RuntimeException("getDeviceOutputSubsamples() but no frame available!");
@@ -1121,9 +1121,9 @@ return result.getValue();
         /**
          * TODO
          * unklar, wie man ein Objekt vom Typ SWIGTYPE_p_std__string erzeugen kann.
-         * Möglicherweise zeigt der Pointer von CString auf so ein Objekt ...
+         * Möglicherweise zeigt der Pointer von ViconString auf so ein Objekt ...
          * 
-         * Unterschied zu CString ist const std::string
+         * Unterschied zu ViconString ist const std::string
          * 
          * @param cameraName
          * @return 
@@ -1156,7 +1156,7 @@ return result.getValue();
      */
            
     public String getMarkerName(String subjectName, long markerIndex){
-        Output_GetMarkerName result = client.GetMarkerName(new CString(subjectName), markerIndex);
+        Output_GetMarkerName result = client.GetMarkerName(new ViconString(subjectName), markerIndex);
         //System.out.println("Get marker name: "+result.getResult().toString());
         if (result.getResult() == Result_Enum.NotConnected) 
             throw new RuntimeException("getMarkerName() but client not connected!");
@@ -1238,7 +1238,7 @@ return result.getValue();
   
     //public double[] getSegmentLocalRotationMatrix(String subjectName, String segmentName){
         Output_GetSegmentLocalRotationMatrix result = 
-            client.GetSegmentLocalRotationMatrix(new CString(subjectName), new CString(segmentName));
+            client.GetSegmentLocalRotationMatrix(new ViconString(subjectName), new ViconString(segmentName));
         System.out.println("Get segment local rotation matrix: "+result.getResult().toString());
         if (result.getResult() == Result_Enum.NotConnected) throw new RuntimeException("getSegmentLocalRotationMatrix() but client not connected!");
         if (result.getResult() == Result_Enum.NoFrame) throw new RuntimeException("getSegmentLocalRotationMatrix() but no frame available!");
@@ -1266,7 +1266,7 @@ return result.getValue();
      * or invalid marker name.
      */
     /* public double[] getMarkerGlobalTranslation(String subjectName, String markerName){
-        Output_GetMarkerGlobalTranslation result = client.GetMarkerGlobalTranslation(new CString(subjectName), new CString(markerName));
+        Output_GetMarkerGlobalTranslation result = client.GetMarkerGlobalTranslation(new ViconString(subjectName), new ViconString(markerName));
         if (result.getResult() == Result_Enum.NotConnected) throw new RuntimeException("getMarkerGlobalTranslation() but client not connected!");
         if (result.getResult() == Result_Enum.NoFrame) throw new RuntimeException("getMarkerGlobalTranslation() but no frame available!");
         if (result.getResult() == Result_Enum.InvalidSubjectName) throw new RuntimeException("getMarkerGlobalTranslation() but invalid subject name \""+subjectName+"\"!");
