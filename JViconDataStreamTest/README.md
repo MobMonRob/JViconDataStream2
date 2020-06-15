@@ -1,0 +1,30 @@
+# Java API für ViconDataStream (aufbauend auf dem JAVA-Wrapper)
+
+## Beschreibung
+Dieses Projekt liefert eine "schöne" Java API um den generierten ViconDataStream API Wrapper.\
+Außerdem gibt es Tests.
+
+## Benötigte Software
+#### Für Windows
+* `Windows 10 x64`
+* [Java JDK ab 11 LTS](https://www.oracle.com/java/technologies/javase-downloads.html)
+* [Apache NetBeans 12.0 LTS](https://netbeans.apache.org/download/nb120/nb120.html)
+#### Für Linux
+* `Ubuntu 18.04 x64`
+* [Java JDK ab 11 LTS](https://www.oracle.com/java/technologies/javase-downloads.html)
+* [Apache NetBeans 12.0 LTS](https://netbeans.apache.org/download/nb120/nb120.html)
+
+## Notwendige lokale Anpassungen
+#### Für Windows
+In die Systemvariable `PATH` den Pfad der generierten Wrapper `.dll` hinzufügen.\
+Diese befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `\Windows64\wrapper_dll_generator\x64\Debug`.\
+Dadurch wird der Pfad, in der die `.dll` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
+Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
+
+#### Für Linux
+In die Systemvariable `PATH` den Pfad der generierten Wrapper `.so` hinzufügen.\
+Dies geschieht indem man der `~/.bashrc` die Zeile `export PATH=$PATH:<Pfad zur .so>` hinzufügt.
+Die `.so` Datei befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `/Linux64/`.\
+Dadurch wird der Pfad, in der die `.so` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
+Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
+
