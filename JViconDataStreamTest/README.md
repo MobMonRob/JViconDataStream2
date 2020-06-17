@@ -16,19 +16,24 @@ Außerdem gibt es Tests.
 
 ## Notwendige lokale Anpassungen
 #### Für Windows
-In die Systemvariable `PATH` jeweils den Pfad der generierten Wrapper `.dll` und des Vicon DataStreamSDKs hinzufügen.\
+In die Systemvariable `PATH` jeweils den vollständigen(!) Pfad der generierten Wrapper `.dll` und des Vicon DataStreamSDKs hinzufügen.\
 Erstere befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `\Windows64\wrapper_dll_generator\x64\Debug`.\
 Zweiteres befindet sich in Projektverzeichnis unter `\Windows64\DataStreamSDK_1.10`.\
 Dadurch werden diese Pfade zu den `.dll`s Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
 Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
 
 #### Für Linux
-In die Systemvariable `PATH` jeweils den Pfad der generierten Wrapper `.so` und des Vicon DataStreamSDKs hinzufügen.\
+In die Systemvariable `LD_LIBRARY_PATH` für Anwendungen(!) jeweils den Pfad der generierten Wrapper `.so` und des Vicon DataStreamSDKs hinzufügen.\
 Erstere befindet befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `/Linux64/`.\
-Zweiteres befindet sich in Projektverzeichnis unter `\Linux64\DataStreamSDK_1.10`.\
-Der Systemvariable `PATH` einen Pfad hinzufügen geschieht indem man der `~/.bashrc` die Zeile `export PATH=$PATH:<Pfad zur .so>` hinzufügt.
+Zweiteres befindet sich in Projektverzeichnis unter `/Linux64/DataStreamSDK_1.10`.\
 Dadurch wird der Pfad, in der die `.so` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht. \
-Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
+Das Setzen der Systemvariable `LD_LIBRARY_PATH` für Anwendungen(!) ist abhängig von der verwendeten Desktop Umgebung.
+###### KDE Plasma 5
+Notwendige Datei erstellen:
+`echo '#!/bin/bash' | tee -a ~/.config/plasma-workspace/env/ld_library_path.sh`
+Für jeden hinzuzufügenden Pfad:
+`echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:<Vollständiger Pfad zur .so>" | tee -a ~/.config/plasma-workspace/env/ld_library_path.sh`
+Um die Änderungen zu übernehmen, muss Ubuntu neu gestartet werden.
 
 ## Anmerkungen
 * Java Dateien mit der Bezeichnung `SWIGTYPE[...].java` sind Fehler, da nur leere Klassenstummel!
