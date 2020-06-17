@@ -1,0 +1,15 @@
+%{
+//Includes the header files in the wrapper code
+#include <iostream> //Wichtig: Vor Vicon Headern!
+//#include "../Windows64/wrapper_dll_generator/SwigTest.h"
+#include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
+#include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
+#include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
+%}
+
+//Parse the header files to generate wrappers
+//%include "../Windows64/wrapper_dll_generator/SwigTest.h"
+%include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
+%include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
+%include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
+

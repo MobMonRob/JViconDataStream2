@@ -1,9 +1,8 @@
-/* File : ViconDataStreamSDK.i */
 %module ViconDataStreamSDKSwig; //Wichtig: Modul muss anders heißen, als die Namespaces! Sonst gibt es den Namen als Klasse (wegen dem Modul) und als Namespace. Das ist doof.
 
 //%feature("nspace"); //Wäre so schön. Aber ich finde keine Möglichkeit, die Pakete der Template Instantzierungen zu ändern.
 
-%include <std_shared_ptr.i>
+%include "std_shared_ptr.i";
 %include "std_string.i";
 %include "arrays_java.i";
 %include "std_vector.i"
@@ -26,37 +25,19 @@
 %rename (Unit_Enum) ViconDataStreamSDK::CPP::Unit::Enum;
 %rename (Result_Enum) ViconDataStreamSDK::CPP::Result::Enum;
 
-
 %template(VectorUint) std::vector<unsigned int>; //Gebraucht von DataStreamClient
 %template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
 %template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
 %template(SharedPtrVectorUchar) std::shared_ptr<std::vector<unsigned char>>; //Gebraucht von Output_GetVideoFrame
 
 
-//Parse the header files to generate wrappers
-//%include "../Windows64/wrapper_dll_generator/SwigTest.h"
-%include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
-%include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
-%include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
-
 %{
-////////////////////////////////////////////////////////
-//Includes the header files in the wrapper code
-#include <iostream> //Wichtig: Vor Vicon Headern!
-//#include "../Windows64/wrapper_dll_generator/SwigTest.h"
-#include "../Windows64/DataStreamSDK_1.10/IDataStreamClientBase.h"
-#include "../Windows64/DataStreamSDK_1.10/DataStreamClient.h"
-#include "../Windows64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
-
-
 #include <new>
 //using namespace std; //Vermeiden
 #include <stdexcept>
 #include "jni.h"
 
-/**
- *  A stash area embedded in each allocation to hold java handles
- */
+//A stash area embedded in each allocation to hold java handles
 struct Jalloc {
   jbyteArray jba;
   jobject ref;
@@ -90,13 +71,13 @@ void * operator new(size_t t) {
       throw std::bad_alloc();
     Jalloc *pJalloc = static_cast<Jalloc *>(jbuffer);
     pJalloc->jba = jba;
-    /* Assign a global reference so byte array will persist until delete'ed */
+    //Assign a global reference so byte array will persist until deleted
     pJalloc->ref = env->NewGlobalRef(jba);
     if (env->ExceptionOccurred())
       throw std::bad_alloc();
     return static_cast<void *>(static_cast<char *>(jbuffer) + sizeof(Jalloc));
   }
-  else { /* JNI_OnLoad not called, use malloc and mark as special */
+  else { //JNI_OnLoad not called, use malloc and mark as special
     Jalloc *pJalloc = static_cast<Jalloc *>(malloc((int) t + sizeof(Jalloc)));
     if (!pJalloc)
       throw std::bad_alloc();
