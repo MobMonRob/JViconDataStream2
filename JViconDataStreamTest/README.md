@@ -16,16 +16,18 @@ Außerdem gibt es Tests.
 
 ## Notwendige lokale Anpassungen
 #### Für Windows
-In die Systemvariable `PATH` den Pfad der generierten Wrapper `.dll` hinzufügen.\
-Diese befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `\Windows64\wrapper_dll_generator\x64\Debug`.\
-Dadurch wird der Pfad, in der die `.dll` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
+In die Systemvariable `PATH` jeweils den Pfad der generierten Wrapper `.dll` und des Vicon DataStreamSDKs hinzufügen.\
+Erstere befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `\Windows64\wrapper_dll_generator\x64\Debug`.\
+Zweiteres befindet sich in Projektverzeichnis unter `\Windows64\DataStreamSDK_1.10`.\
+Dadurch werden diese Pfade zu den `.dll`s Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
 Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
 
 #### Für Linux
-In die Systemvariable `PATH` den Pfad der generierten Wrapper `.so` hinzufügen.\
-Dies geschieht indem man der `~/.bashrc` die Zeile `export PATH=$PATH:<Pfad zur .so>` hinzufügt.
-Die `.so` Datei befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `/Linux64/`.\
-Dadurch wird der Pfad, in der die `.so` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
+In die Systemvariable `PATH` jeweils den Pfad der generierten Wrapper `.so` und des Vicon DataStreamSDKs hinzufügen.\
+Erstere befindet befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `/Linux64/`.\
+Zweiteres befindet sich in Projektverzeichnis unter `\Linux64\DataStreamSDK_1.10`.\
+Der Systemvariable `PATH` einen Pfad hinzufügen geschieht indem man der `~/.bashrc` die Zeile `export PATH=$PATH:<Pfad zur .so>` hinzufügt.
+Dadurch wird der Pfad, in der die `.so` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht. \
 Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
 
 ## Anmerkungen

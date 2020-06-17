@@ -20,7 +20,11 @@ public class Test2 {
 		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
 
 		Version version = client.getVersion();
-		System.out.println(version.toString());
+		String stringMajor = String.valueOf(version.getMajor());
+		String stringMinor = String.valueOf(version.getMinor());
+		String stringPoint = String.valueOf(version.getPoint());
+		String completeVersion = stringMajor + "." + stringMinor + "." + stringPoint;
+		System.out.println(completeVersion);
 
 		/*
 		String hostname = "localhost";
