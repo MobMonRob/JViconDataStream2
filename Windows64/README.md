@@ -22,5 +22,5 @@ Mit Klick auf die `.sln` Datei im Projektverzeichnis unter `\Windows64\wrapper_d
 
 In der Menüleiste: `Build` > `Build Solution` erzeugt alle benötigten Dateien.\
 Ein sauberer Rebuild ist möglich mit `Rebuild Solution`.\
-Die Java Dateien befinden sich jetzt in `JViconDataStreamTest` und die `.dll` Datei in `\Windows64\wrapper_dll_generator\x64\Debug`.
+Die Java Dateien befinden sich jetzt in `JViconDataStreamTest` und die `.dll` Datei in `\Windows64\wrapper_dll_generator\x64\Release`.
 
