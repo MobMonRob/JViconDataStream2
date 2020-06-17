@@ -29,10 +29,10 @@ Zweiteres befindet sich in Projektverzeichnis unter `/Linux64/DataStreamSDK_1.10
 Dadurch wird der Pfad, in der die `.so` liegt Apache NetBeans über die Variable `java.library.path` bekannt gemacht. \
 Das Setzen der Systemvariable `LD_LIBRARY_PATH` für Anwendungen(!) ist abhängig von der verwendeten Desktop Umgebung.
 ###### KDE Plasma 5
-Notwendige Datei erstellen:
-`echo '#!/bin/bash' | tee -a ~/.config/plasma-workspace/env/ld_library_path.sh`
-Für jeden hinzuzufügenden Pfad:
-`echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:<Vollständiger Pfad zur .so>" | tee -a ~/.config/plasma-workspace/env/ld_library_path.sh`
+Notwendige Datei erstellen:\
+`echo '#!/bin/bash' | tee -a ~/.config/plasma-workspace/env/ld_library_path.sh`\
+Für jeden hinzuzufügenden Pfad:\
+`echo -e "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:<Vollständiger Pfad zur .so>" | tee -a ~/.config/plasma-workspace/env/ld_library_path.sh`\
 Um die Änderungen zu übernehmen, muss Ubuntu neu gestartet werden.
 
 ## Anmerkungen
