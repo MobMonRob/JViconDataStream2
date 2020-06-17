@@ -5,6 +5,7 @@
  */
 package de.dhbw.mobmonrob.vicon.datastreamapi.test;
 
+import de.dhbw.mobmonrob.vicon.datastreamapi.api.Version;
 import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKClient;
 import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKRetimingClient;
 
@@ -13,27 +14,30 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKRetimingClien
  * @author mobmonrob
  */
 public class Test2 {
-    
-      public static void main(String argv[]) throws InterruptedException {
-            ViconDataStreamSDKClient client = new ViconDataStreamSDKClient();
-           ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
-           
-              String hostname = "localhost";
-              client.connect(hostname);
-              client.getFrame(true);
-             System.out.println("Subject Count = "+ client.getSubjectCount());
-         
-          int SubjectIndex=1;
-        String SubjectName=client.getSubjectName(SubjectIndex);
-         //System.out.println("subject name= "+SubjectName);
-              //retimingClient.connect(hostname);
-            //  retimingClient.updateFrame();
-             // System.out.println("Subject Count = "+ retimingClient.getSubjectCount());
-         
-          //retimingClient.waitForFrame();
+
+	public static void main(String argv[]) throws InterruptedException {
+		ViconDataStreamSDKClient client = new ViconDataStreamSDKClient();
+		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
+
+		Version version = client.getVersion();
+		System.out.println(version.toString());
+
+		/*
+		String hostname = "localhost";
+        client.connect(hostname);
+        client.getFrame(true);
+        System.out.println("Subject Count = " + client.getSubjectCount());
+
+        int SubjectIndex = 1;
+        String SubjectName = client.getSubjectName(SubjectIndex);
+        //System.out.println("subject name= "+SubjectName);
+        //retimingClient.connect(hostname);
+        //  retimingClient.updateFrame();
+        // System.out.println("Subject Count = "+ retimingClient.getSubjectCount());
+
+        //retimingClient.waitForFrame();
         //  SubjectName=retimingClient.getSubjectName(SubjectIndex);
-         //System.out.println("subject name= "+SubjectName);
-              
-      }
-    
+        //System.out.println("subject name= "+SubjectName);
+		 */
+	}
 }
