@@ -17,7 +17,7 @@ Außerdem gibt es Tests.
 ## Notwendige lokale Anpassungen
 #### Für Windows
 In die Systemvariable `PATH` jeweils den vollständigen(!) Pfad der generierten Wrapper `.dll` und des Vicon DataStreamSDKs hinzufügen.\
-Erstere befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `\Windows64\wrapper_dll_generator\x64\Debug`.\
+Erstere befindet sich nach einem Generierungsvorgang im Projektverzeichnis unter `\Windows64\wrapper_dll_generator\x64\Release`.\
 Zweiteres befindet sich in Projektverzeichnis unter `\Windows64\DataStreamSDK_1.10`.\
 Dadurch werden diese Pfade zu den `.dll`s Apache NetBeans über die Variable `java.library.path` bekannt gemacht.\
 Um die Änderungen zu übernehmen, muss Apache NetBeans neu gestartet werden.
