@@ -6,7 +6,9 @@ cd "$(dirname "$BASH_SOURCE")"
 
 mkdir "../JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/"
 
-swig -Wall -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl -outdir "../JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl" -o "../swig/ViconDataStreamSDK_wrap.cpp" ViconDataStreamSDK.i
+cat PlatformIndependent.i >> genLinux.i
+cat Windows.patch >> genLinux.i
 
+swig -Wall -c++ -java -package de.dhbw.mobmonrob.vicon.datastreamapi.impl -outdir "../JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl" -o ViconDataStreamSDK_wrap.cpp genLinux.i
 echo "SWIG finished"
 
