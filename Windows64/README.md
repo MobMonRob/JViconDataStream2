@@ -16,7 +16,7 @@ Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API unter `Win
 * Die Systemvariable `JAVA_HOME` so einrichten, damit diese auf die aktuelle Java Installation zeigt. (z.B. `C:\Program Files\Java\jdk-14.0.1`)
 
 ## Dateien generieren
-Projekt in `git pull`en.\
+Projekt in `git pull`en. Mit Apache Netbeans: Team-->Remote-->Pull\
 Mit Klick auf die `.sln` Datei im Projektverzeichnis unter `\Windows64\wrapper_dll_generator` in Visual Studio öffnen.
 
 In der Menüleiste: `Build` > `Build Solution` erzeugt alle benötigten Dateien.\
