@@ -6,8 +6,7 @@ Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API unter `Win
 ## Benötigte Software
 * `Windows 10 x64`
 * `Visual Studio Community 2019 x64` (Version 2017 funktioniert nicht!)
-* [(empfohlen) Git für Windows x64](https://git-scm.com/download/win)
-* [(empfohlen) TortoiseGit x64](https://tortoisegit.org/download/)
+* [(empfohlen) Git für Windows x64](https://git-scm.com/download/win) oder [(empfohlen) TortoiseGit x64](https://tortoisegit.org/download/) oder [Apache Netbeans IDE](https://netbeans.apache.org/)
 * [Java JDK ab 11 LTS](https://www.oracle.com/java/technologies/javase-downloads.html)
 * [SWIG für Windows (swigwin) 4.0.1](http://www.swig.org/download.html)
 	* Entpacken an einen beliebigen Ort
