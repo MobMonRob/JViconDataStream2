@@ -5,12 +5,10 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetTimecode;
 /**
  * Return the timecode information for the last frame retrieved from the DataStream. 
  * 
- * If the stream is valid but timecode is not available the Output will be 
- * Result.Success and the Standard will be None.<p>
- * 
- * See Also : GetFrame, GetFrameNumber<p>
- * 
- * @author Oliver Rettig
+ * <p>If the stream is valid but timecode is not available the Output will be 
+ * Result.Success and the Standard will be None.</p>
+ * @see getFrame
+ * @see getFrameNumber
  */
 public class TimeCode {
     private final Output_GetTimecode timeCode;
@@ -24,20 +22,19 @@ public class TimeCode {
     public long getFrames(){
         return timeCode.getFrames();
     }
-    
     public long getHours(){
         return timeCode.getHours();
     }
     public long getMinutes(){
         return timeCode.getMinutes();
     }
-     public long getSeconds(){
+    public long getSeconds(){
         return timeCode.getSeconds();
     }
-      public boolean getFieldFlag(){
+    public boolean getFieldFlag(){
         return timeCode.getFieldFlag();
     }
-     public long getSubFramesPerFrame(){
+    public long getSubFramesPerFrame(){
         return timeCode.getSubFramesPerFrame();
     }
     public long getUserBits(){

@@ -26,9 +26,8 @@ public class Version {
     /**
      * The minor version number.
      * 
-     * When this number increases we have probably added new functionality to 
+     * <p>When this number increases we have probably added new functionality to 
      * the SDK without breaking backwards compatibility with previous versions.<p>
-     * 
      * @return The minor version number.
      */
     public long getMinor(){
@@ -37,9 +36,8 @@ public class Version {
     /**
      * The point version number.
      * 
-     * When this number increases, we have introduced a bug fix or performance 
-     * enhancement without breaking backwards compatibility.<p>
-     * 
+     * <p>When this number increases, we have introduced a bug fix or performance 
+     * enhancement without breaking backwards compatibility.</p>
      * @return The point version number
      */
     public long getPoint(){

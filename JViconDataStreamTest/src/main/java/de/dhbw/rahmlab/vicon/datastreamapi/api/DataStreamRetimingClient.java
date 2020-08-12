@@ -137,7 +137,7 @@ public class DataStreamRetimingClient {
      * 
      * @param subjectIndex between 0 and getSubjectCount()-1
      * @return The name of the subject.
-     * @throws new RuntimeException if subject index is invalid.
+     * @throws RuntimeException if subject index is invalid.
      * @throws IllegalArgumentException, if subjectIndex <0
      */
     public String getSubjectName(long subjectIndex){
