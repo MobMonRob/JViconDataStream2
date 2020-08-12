@@ -3,6 +3,7 @@ package de.dhbw.rahmlab.vicon.datastreamapi.api;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.ViconString;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Client;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.DeviceType_Enum;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Direction_Enum;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_Connect;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_ConnectToMulticast;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableCentroidData;
@@ -25,6 +26,7 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableMarkerData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableMarkerRayData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableUnlabeledMarkerData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableVideoData;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetAxisMapping;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraId;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraName;
@@ -88,6 +90,7 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsDeviceDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsGreyscaleDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsMarkerRayDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsVideoDataEnabled;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_SetAxisMapping;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_SetStreamMode;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_StartTransmittingMulticast;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_StopTransmittingMulticast;
@@ -1055,9 +1058,52 @@ public class DataStreamClient {
      * <p>Apex device names may be obtained using GetDeviceCount, GetDeviceName.</p>
      * @param deviceName device name
      * @param on on
+     * @throws RuntimeException not yet implemented
      */
     public void setApexDeviceFeedback(String deviceName, boolean on){
        // TODO
+       throw new RuntimeException("not yet implemented!");
+    }
+    
+    /**
+     * Remaps the 3D axis.
+     * 
+     * <p>Vicon Data uses a right-handed coordinate system, with +X forward, +Y left, 
+     * and +Z up. Other systems use different coordinate systems. The SDK can
+     * transform its data into any valid right-handed coordinate system by 
+     * re-mapping each axis. Valid directions are "Up", "Down", "Left", "Right", 
+     * "Forward", and "-Backward".</p>
+     * 
+     * <p>Note that "Forward" means moving away from you, and "Backward" is 
+     * moving towards you. Common usages are Z-up: SetAxisMapping(Forward, Left, Up) 
+     * Y-up: SetAxisMapping(Forward, Up, Right)</p>
+     * 
+     * @param x x direction
+     * @param y y direction
+     * @param z z direction
+     * @see getAxisMapping
+     * 
+     * TODO
+     * vielleicht ein besseres Argument einführen, also z.B. xyz, yxz, ... so wie
+     * in CalcML
+     */
+    public void setAxisMapping(Direction x, Direction y, Direction z){
+        Direction_Enum x_enum = Direction_Enum.swigToEnum(x.swigValue());
+        Direction_Enum y_enum = Direction_Enum.swigToEnum(y.swigValue());
+        Direction_Enum z_enum = Direction_Enum.swigToEnum(z.swigValue());
+        Output_SetAxisMapping result = client.SetAxisMapping(x_enum, y_enum, z_enum);
+    }
+    /**
+     * Get the current Axis mapping.
+     * 
+     * @see setAxisMapping
+     * @return the current Axis mapping.
+     */
+    public Direction[] getAxisMapping(){
+        Output_GetAxisMapping result = client.GetAxisMapping();
+        return new Direction[]{Direction.swigToEnum(result.getXAxis().swigValue()),
+                               Direction.swigToEnum(result.getYAxis().swigValue()),
+                               Direction.swigToEnum(result.getZAxis().swigValue())};
     }
     
     /**
@@ -3115,9 +3161,6 @@ public class DataStreamClient {
         if (frameNumber.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("get frame number but client not connected!");
         }
-        if (frameNumber.getResult() == Result_Enum.NoFrame) {
-            throw new RuntimeException("get frame number but no frame available!");
-        }
         return frameNumber.getFrameNumber();
     }
 
@@ -3125,12 +3168,11 @@ public class DataStreamClient {
      * Return the timecode information for the last frame retrieved from the 
      * DataStream. 
      * 
-     * If the stream is valid but timecode is not available, the Output will 
-     * be Result.Success and the Standard will be None. 
-     * 
+     * <p>If the stream is valid but timecode is not available, the Output will 
+     * be Result.Success and the Standard will be None.</p>
      * @see getFrame
      * @see getFrameNumber
-     * @return timecode
+     * @return timecode time code
      * @throws RuntimeException if no frame is avaialble or the client is not connected.
      */
     public TimeCode getTimeCode() {
@@ -3148,11 +3190,9 @@ public class DataStreamClient {
      * Request a new frame to be fetched from the Vicon DataStream Server.
      *
      * TODO eventuell timeout als argument mitübergeben?
-     * <p>
      *
      * @param waiting true, than waiting till connected
      * @return false if client is not connected.
-     *
      * @see setStreamMode
      */
     public boolean getFrame(boolean waiting) {
