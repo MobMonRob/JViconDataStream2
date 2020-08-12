@@ -1,7 +1,7 @@
 package de.dhbw.mobmonrob.vicon.datastreamapi.test;
 
-import de.dhbw.mobmonrob.vicon.datastreamapi.api.Version;
-import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKClient;
+import de.dhbw.rahmlab.vicon.datastreamapi.api.Version;
+import de.dhbw.rahmlab.vicon.datastreamapi.api.DataStreamClient;
 
 /**
  *
@@ -12,7 +12,7 @@ public class Test {
 	//-Djava.library.path="C:\Users\mobmonrob\Documents\jdk-12\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Python27\;C:\Program Files\OpenNI\Bin64;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\swigwin-3.0.12\swigwin-3.0.12;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\jdk-12\bin;C:\Users\mobmonrob\AppData\Local\Microsoft\WindowsApps;C:\Users\mobmonrob\AppData\Local\GitHubDesktop\bin;C:\Users\mobmonrob\Documents\NetBeansProjects\JViconDataStream2\lib;."
 	public static void main(String argv[]) throws InterruptedException {
 
-		ViconDataStreamSDKClient client = new ViconDataStreamSDKClient();
+		DataStreamClient client = new DataStreamClient();
 		// ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
 
 		//String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
@@ -133,7 +133,7 @@ public class Test {
 		//System.out.println( "Goodbye" );
 	}
 
-	private static void printSubjectHierarchie(ViconDataStreamSDKClient client) {
+	private static void printSubjectHierarchie(DataStreamClient client) {
 		long subjects = client.getSubjectCount();
 		System.out.println("subjects " + subjects);
 		for (long subjectIndex = 0; subjectIndex < subjects; subjectIndex++) {

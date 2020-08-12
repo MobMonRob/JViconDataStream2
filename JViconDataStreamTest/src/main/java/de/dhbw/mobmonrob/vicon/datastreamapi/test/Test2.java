@@ -5,9 +5,9 @@
  */
 package de.dhbw.mobmonrob.vicon.datastreamapi.test;
 
-import de.dhbw.mobmonrob.vicon.datastreamapi.api.Version;
-import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKClient;
-import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKRetimingClient;
+import de.dhbw.rahmlab.vicon.datastreamapi.api.Version;
+import de.dhbw.rahmlab.vicon.datastreamapi.api.DataStreamClient;
+import de.dhbw.rahmlab.vicon.datastreamapi.api.DataStreamRetimingClient;
 
 /**
  *
@@ -16,7 +16,7 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.api.ViconDataStreamSDKRetimingClien
 public class Test2 {
 
 	public static void main(String argv[]) throws InterruptedException {
-		ViconDataStreamSDKClient client = new ViconDataStreamSDKClient();
+		DataStreamClient client = new DataStreamClient();
 		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
 
 		Version version = client.getVersion();
