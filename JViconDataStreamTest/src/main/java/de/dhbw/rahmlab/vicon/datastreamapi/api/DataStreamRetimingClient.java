@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.dhbw.rahmlab.vicon.datastreamapi.api;
 
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.ViconString;
@@ -142,8 +137,8 @@ public class DataStreamRetimingClient {
      * 
      * @param subjectIndex between 0 and getSubjectCount()-1
      * @return The name of the subject.
-     * @throw new RuntimeException if subject index is invalid.
-     * @throw IllegalArgumentException, if subjectIndex <0
+     * @throws new RuntimeException if subject index is invalid.
+     * @throws IllegalArgumentException, if subjectIndex <0
      */
     public String getSubjectName(long subjectIndex){
         if (subjectIndex <0) throw new IllegalArgumentException("getSubjectName() subjectIndex >=0 is needed!");

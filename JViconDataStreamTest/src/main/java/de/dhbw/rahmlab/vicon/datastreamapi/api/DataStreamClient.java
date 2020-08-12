@@ -283,9 +283,9 @@ public class DataStreamClient {
     /**
      * Establish a dedicated connection to a Vicon DataStream Server.
      *
-     * @see ConnectToMulticast
-     * @see Disconnect
-     * @see IsConnected
+     * @see connectToMulticast
+     * @see disconnect
+     * @see isConnected
      * @param hostname The DNS identifiable name, or IP address of the PC
      * hosting the DataStream server. The function defaults to connecting on
      * port 801. You can specify an alternate port number after a colon. E.g.:
@@ -330,8 +330,8 @@ public class DataStreamClient {
     /**
      * Connect to a Vicon DataStream Server’s Multicast stream.
      *
-     * @see Connect
-     * @see Disconnect
+     * @see connect
+     * @see disconnect
      * @see isConnected
      * @see startTransmittingMulticast
      * @see stopTransmittingMulticast
@@ -389,8 +389,8 @@ public class DataStreamClient {
      * 
      * @see connect
      * @see connectToMulticast 
-     * @see cisconnect
-     * @see ctopTransmittingMulticast
+     * @see disconnect
+     * @see stopTransmittingMulticast
      * @param serverIP The IP Address of the server Ethernet interface from which 
      * the Multicast data will be sent. Do not specify a port number 
      * (any port number speciﬁed will be ignored). 
@@ -457,8 +457,7 @@ public class DataStreamClient {
      * Disconnect from the Vicon DataStream Server.
      *
      * @see connect
-     * @see isConnected<p>
-     *
+     * @see isConnected
      * @return success status
      */
     public boolean disconnect() {
@@ -540,7 +539,7 @@ public class DataStreamClient {
      * @see isMarkerDataEnabled
      * @see disableMarkerData
      * @see enableSegmentData
-     * @see enableUnlabelledMarkerData
+     * @see enableUnlabeledMarkerData
      * @see enableDeviceData
      * @see getMarkerCount
      * @see getMarkerName
@@ -610,10 +609,10 @@ public class DataStreamClient {
      * You should call this function on startup, after connecting to the server,
      * and before trying to read local or global segment data.<p>
      *
-     * @see isSegmetnDataEnabled 
+     * @see isSegmentDataEnabled 
      * @see disableSegmentData 
      * @see enableMarkerData
-     * @see enableUnlabelledMarkerData
+     * @see enableUnlabeledMarkerData
      * @see enableDeviceData 
      * @see getSegmentCount
      * @see getSegmentName
@@ -678,7 +677,7 @@ public class DataStreamClient {
     /**
      * Disable labeled reconstructed marker data in the Vicon DataStream.
      * 
-     * @see IsMarkerDataEnabled
+     * @see isMarkerDataEnabled
      * @see enableMarkerData
      * @see enableSegmentData
      * @see enableUnlabeledMarkerData
@@ -994,11 +993,10 @@ public class DataStreamClient {
     /**
      * Set the number of frames that the client should buffer.
      * 
-     * The default value is 1, which always supplies the latest frame.
-     * Choose higher values to reduce the risk of missing frames between calls.<p>
-     * 
+     * <p>The default value is 1, which always supplies the latest frame.
+     * Choose higher values to reduce the risk of missing frames between calls.</p>
      * @see getFrame
-     * @param bufferSize
+     * @param bufferSize buffer size
      */
     public void setBufferSize(long bufferSize){
         client.SetBufferSize(bufferSize);
@@ -1054,10 +1052,9 @@ public class DataStreamClient {
     /**
      * Enable haptic feedback for the selected Apex device.
      * 
-     * Apex device names may be obtained using GetDeviceCount, GetDeviceName.<p>
-     * 
-     * @param deviceName
-     * @param on 
+     * <p>Apex device names may be obtained using GetDeviceCount, GetDeviceName.</p>
+     * @param deviceName device name
+     * @param on on
      */
     public void setApexDeviceFeedback(String deviceName, boolean on){
        // TODO
@@ -1112,7 +1109,7 @@ public class DataStreamClient {
     /**
      * Get the current value of the specified frame rate type.
      * 
-     * @See getFrameRateCount
+     * @see getFrameRateCount
      * @see getFrameRateName
      * @param frameRateName name of the frame rate
      * @return frame rate value
@@ -1135,7 +1132,7 @@ public class DataStreamClient {
      * 
      * This information can be used in conjunction with GetGlobalUnlabeledMarkerTranslation.<p>
      * 
-     * @see GetGlobalUnlabeledMarkerTranslation
+     * @see getGlobalUnlabeledMarkerTranslation
      * @return the number of unlabeled markers in the DataStream.
      * @throws RuntimeException if no frame is available or the client is not connected
      */
@@ -1158,7 +1155,6 @@ public class DataStreamClient {
      * @see getFrame
      * @see getFrameNumber
      * @see getTimecode
-     * 
      * @return the Vicon camera system frame rate (in Hz) at the time of the last 
      * frame retrieved from the DataStream.
      * @throws RuntimeException if no frame is available or client is not connected.
@@ -1182,7 +1178,7 @@ public class DataStreamClient {
      * millimeters with respect to the global origin.<p>
      * 
      * @see getUnlabeledMarkerCount
-     * @param markerIndex
+     * @param markerIndex marker index
      * @return the translation of an unlabeled marker in global coordinates.
      * @throws RuntimeException if no frame is available or client is not connected.
      */
@@ -1201,14 +1197,11 @@ public class DataStreamClient {
     /**
      * Return the number of subjects in the DataStream.
      *
-     * This information can be used in conjunction with GetSubjectName.<p>
-     * 
-     * precondition: invoke GetFrame(); if this is not invoked before you can get the
-     * error "NO FRAME AVAILABLE".
-     *
+     * <p>This information can be used in conjunction with GetSubjectName.</p>
+     * <p>precondition: invoke GetFrame(); if this is not invoked before you can get the
+     * error "NO FRAME AVAILABLE".</p>
      * @see getSubjectName
-     *
-     * @return subject count >=0
+     * @return subject count bigger or equal 0
      * @throws RuntimeException if no frame available or not connected.
      *
      */
@@ -1233,14 +1226,12 @@ public class DataStreamClient {
     /**
      * Return the name of a subject.
      *
-     * This can be passed into segment and marker functions.<p>
-     *
-     * @see getSubjectCount<p>
-     *
+     * <p>This can be passed into segment and marker functions.</p>
+     * @see getSubjectCount
      * @param subjectIndex between 0 and getSubjectCount()-1
      * @return The name of the subject.
      * @throws RuntimeException if subject index is invalid, no frame available or not connected.
-     * @throws IllegalArgumentException, if subjectIndex <0
+     * @throws IllegalArgumentException if subjectIndex less than 0
      */
     public String getSubjectName(long subjectIndex) {
         if (subjectIndex < 0) {
@@ -1283,7 +1274,7 @@ public class DataStreamClient {
       * @see getSegmentParentName
       * @see getSegmentChildCount
       * @see getSegmentChildName
-      * @param subjectName
+      * @param subjectName subject name
       * @return the name of the root segment for a specified subject.
       * @throws RuntimeException if no frame is available, client is not connected
       * @throws IllegalArgumentException subject name is invalid.
@@ -1504,10 +1495,9 @@ public class DataStreamClient {
      * @see getSegmentChildCount
      * @see getSegmentChildName
      * @see getSubjectRootSegmentName
-     *
-     * @param subjectName 
-     * @param segmentName 
-     * @param segmentIndex 
+     * @param subjectName subject name
+     * @param segmentName segment name
+     * @param segmentIndex segment index
      * @return segment child name
      * @throws RuntimeException if the subject or segment name is invalid, the client is 
      * not connected, the segment index is invalid or no frame is available.
@@ -1542,8 +1532,8 @@ public class DataStreamClient {
      * @see getSegmentChildCount
      * @see getSegmentChildName
      * @see getSubjectRootSegmentName
-     * @param subjectName
-     * @param segmentName
+     * @param subjectName subject name
+     * @param segmentName segment name
      * @return null, if the given segment is the root segment of the subject
      * @throws RuntimeException if the subject name is invalid, the client is not
      * connected, no frame is available or the segment name is invalid.
@@ -1588,8 +1578,8 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationMatrix
      * @see getSegmentLocalRotationQuaternion 
      * @see getSegmentLocalRotationEulerXYZ
-     * @param subjectName
-     * @param segmentName
+     * @param subjectName subject name
+     * @param segmentName segment name
      * @return the static pose translation of a subject segment.
      * @throws RuntimeException if subject- or segment name is invalid, client is not connected
      * or no frame is available.
@@ -2288,10 +2278,10 @@ public class DataStreamClient {
      * @see getMarkerRayContributionCount
      * @see enableMarkerRayData
      * @see disableMarkerRayData
-     * @see sMarkerRayDataEnabled
+     * @see isMarkerRayDataEnabled
      * @param subjectName subject name
      * @param markerName marker name
-     * @param markerRayContributionIndex
+     * @param markerRayContributionIndex marker ray contribution index
      * @return the camera ID for an indexed ray that is contributing to a labeled marker in the DataStream.
      * @throws IllegalArgumentException if subject name or marker name is invalid.
      * @throws RuntimeException if no frame is available or the client is not connected.
@@ -2398,7 +2388,7 @@ public class DataStreamClient {
      * This information can be used in conjunction with GetDeviceOutputName.
      * @see getDeviceName
      * @see getDeviceOutputName
-     * @param deviceName
+     * @param deviceName device name
      * @return the number of outputs for a device in the DataStream.
      * @throws RuntimeException if client is not connected or no frame is available
      * @throws IllegalArgumentException if the device name is not available
@@ -2431,7 +2421,7 @@ public class DataStreamClient {
      * @see getDeviceCount
      * @see getDeviceOutputCount
      * @see getDeviceOutputValue
-     * @param deviceIndex
+     * @param deviceIndex device index
      * @return device name and type
      * @throws IllegalArgumentException if device index is invalid, no frame is available 
      * or client is not connected.
@@ -2654,7 +2644,7 @@ public class DataStreamClient {
      * 
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
-     * @param forceplateIndex
+     * @param forceplateIndex force plate index
      * @return the force vector for the force plate in global coordinates.
      * @throws RuntimeException if the client is not connected or no frame available
      * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2685,9 +2675,9 @@ public class DataStreamClient {
     * Any force plate origin offset is accounted for in the moments so they are 
     * acting about the exact center of the top surface of the force plate.<p>
     * 
-    * @see getGlobalForceVector,
+    * @see getGlobalForceVector
     * @see getGlobalCentreOfPressure
-    * @param forceplateIndex
+    * @param forceplateIndex force plate index
     * @return the moment vector for the force plate in global coordinates.
     * @throws RuntimeException if the client is not connected or no frame available
     * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2717,7 +2707,7 @@ public class DataStreamClient {
      * 
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
-     * @param forceplateIndex
+     * @param forceplateIndex force plate index
      * @return the center of pressure for the force plate in global coordinates.
      * @throws RuntimeException if the client is not connected or no frame available
      * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2749,7 +2739,7 @@ public class DataStreamClient {
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
-     * @param forceplateIndex
+     * @param forceplateIndex force plate index
      * @return the number of subsamples available for a specified force plate in the current frame.
      * @throws RuntimeException if the client is not connected or no frame available
      * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2782,8 +2772,8 @@ public class DataStreamClient {
      * 
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
-     * @param forceplateIndex
-     * @param subsample
+     * @param forceplateIndex force plate index
+     * @param subsample sub sample
      * @return the force vector for the force plate in global coordinates.
      * @throws RuntimeException if the client is not connected or no frame available
      * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2818,8 +2808,8 @@ public class DataStreamClient {
      * 
      * @see getGlobalForceVector
      * @see getGlobalCentreOfPressure
-     * @param forceplateIndex
-     * @param subsample
+     * @param forceplateIndex force plate index
+     * @param subsample sub sample
      * @return the moment vector for the force plate in global coordinates.
      * @throws RuntimeException if the client is not connected or no frame available
      * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2850,8 +2840,8 @@ public class DataStreamClient {
      * 
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
-     * @param forceplateIndex
-     * @param subsample
+     * @param forceplateIndex force plate index
+     * @param subsample sub sample
      * @return the center of pressure for the force plate in global coordinates.
      * @throws RuntimeException if the client is not connected or no frame available
      * @throws IllegalArgumentException if the forceplate index does not exist
@@ -2902,7 +2892,7 @@ public class DataStreamClient {
      * 
      * @see getEyeTrackerCount
      * @see getEyeTrackerGlobalGazeVector
-     * @param eyeTrackerIndex
+     * @param eyeTrackerIndex eye tracker index
      * @return the location of the eye.
      */
     public double[] getEyeTrackerGlobalPosition(int eyeTrackerIndex) {
@@ -2931,7 +2921,7 @@ public class DataStreamClient {
      * 
      * @see getEyeTrackerCount
      * @see getEyeTrackerGlobalPosition
-     * @param eyeTrackerIndex
+     * @param eyeTrackerIndex eye tracker index
      * @return the gaze direction as a unit vector in global coordinates.
      * @throws IllegalArgumentException if the eyeTrackerIndex does not exist
      * @throws RuntimeException if no frame is available or the client is not connected
@@ -2955,9 +2945,8 @@ public class DataStreamClient {
     /**
      * Enable centroid data in the Vicon DataStream. 
      * 
-     * Call this function on startup, after connecting to the server, and before
-     * trying to read centroid information.<p>
-     * 
+     * <p>Call this function on startup, after connecting to the server, and before
+     * trying to read centroid information.</p>
      * @see isCentroidDataEnabled
      * @see disableCentroidData
      * @throws RuntimeException if the client is not connected.
@@ -2975,9 +2964,9 @@ public class DataStreamClient {
      * Call this function on startup, after connecting to the server, and before 
      * trying to read greyscale information.<p>
      * 
-     * @see IsGreyscaleDataEnabled
-     * @see DisableGreyscaleData
-     * @throw RuntimeException if the client is not connected.
+     * @see isGreyscaleDataEnabled
+     * @see disableGreyscaleData
+     * @throws RuntimeException if the client is not connected.
      */
     public void enableGreyscaleData() {
         Output_EnableGreyscaleData result = client.EnableGreyscaleData();
@@ -3006,8 +2995,9 @@ public class DataStreamClient {
     /**
      * Return the number of cameras available in the DataStream. 
      * 
-     * See Also: GetCameraName(), GetCentroidCount(), GetCentroidPosition()
-     * 
+     * @see getCameraName
+     * @see getCentroidCount
+     * @see getCentroidPosition
      * @return number of cameras
      * @throws RuntimeException if client is not connected or no frame is available
      */
@@ -3027,20 +3017,21 @@ public class DataStreamClient {
     /**
      * Return the name of a camera. 
      * 
-     * This name can be passed into centroid functions.<p>
+     * <p>This name can be passed into centroid functions.</p>
      * 
-     * See Also: GetCameraCount(), GetCentroidCount(), GetCentroidPosition() 
-     * 
-     * @param CameraIndex
+     * @see getCameraCount
+     * @see getCentroidCount
+     * @see getCentroidPosition
+     * @param cameraIndex camera index
      * @return camera name
      * @throws RuntimeException for wrong camera index, if the client is not connected
      * or no frame is avaiable
      */
-    public String getCameraName(int CameraIndex) {
-        if (CameraIndex < 0) {
+    public String getCameraName(int cameraIndex) {
+        if (cameraIndex < 0) {
             throw new IllegalArgumentException("getCameraName() CameraIndex >=0 is needed!");
         }
-        Output_GetCameraName result = client.GetCameraName(CameraIndex);
+        Output_GetCameraName result = client.GetCameraName(cameraIndex);
         if (result.getResult() == Result_Enum.InvalidIndex) {
             throw new RuntimeException("getCameraName() but CameraIndex is invalid!");
         }
@@ -3056,29 +3047,27 @@ public class DataStreamClient {
     }
 
     /**
-     * TODO unklar, wie man ein Objekt vom Typ SWIGTYPE_p_std__string erzeugen
-     * kann. Möglicherweise zeigt der Pointer von ViconString auf so ein Objekt
-     * ...
-     *
-     * Unterschied zu ViconString ist const std::string
-     *
-     * @param cameraName
-     * @return
+     * Return the name of a camera.
+     * 
+     * <p>This name can be passed into centroid functions.</p>
+     * @see getCameraCount
+     * @see getCentroidCount
+     * @see getCentroidPosition
+     * @param cameraIndex camera index
+     * @return the name of a camera.
      */
-    public long getCameraId(String cameraName) {
-        Output_GetCameraName Result = client.GetCameraName(0);
+    public String getCameraName(long cameraIndex) {
+        Output_GetCameraName Result = client.GetCameraName(cameraIndex);
         if (Result.getResult() == Result_Enum.NotConnected) {
-            throw new RuntimeException("getCameraId() but client is not connected!!");
+            throw new RuntimeException("getCameraName() but client is not connected!!");
         }
         if (Result.getResult() == Result_Enum.NoFrame) {
-            throw new RuntimeException("getCameraId () but no frame available!");
+            throw new RuntimeException("getCameraName() but no frame available!");
         }
-        cameraName = Result.getCameraName().toString();
-
-        Output_GetCameraId Id = client.GetCameraId(cameraName);
-        return Id.getCameraId();
-        //System.out.println("Get segment name: "+SegmentName);
-        //return Id;  
+        if (Result.getResult() == Result_Enum.InvalidIndex) {
+            throw new IllegalArgumentException("getCameraName() but camera index \""+String.valueOf(cameraIndex)+"\" is invalid!");
+        }
+        return Result.getCameraName().toStdString();
     }
 
     /* 
