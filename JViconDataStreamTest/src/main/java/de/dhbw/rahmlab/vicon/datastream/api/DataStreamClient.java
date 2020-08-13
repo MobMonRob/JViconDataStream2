@@ -79,11 +79,13 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencySampleCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencySampleName;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencySampleValue;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencyTotal;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetMarkerParentName;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetObjectQuality;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentGlobalRotationEulerXYZ;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentGlobalRotationHelical;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentGlobalRotationMatrix;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentGlobalRotationQuaternion;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentStaticScale;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetTimecode;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetUnlabeledMarkerCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetUnlabeledMarkerGlobalTranslation;
@@ -1172,7 +1174,6 @@ public class DataStreamClient {
      * 
      * @see getFrameRateCount
      * @see getFrameRateValue
-     * 
      * @param frameRateIndex index of a frame rate type
      * @return name of the frame rate type with the given index
      * @throws RuntimeException if the index is invalid or the client is not connected
@@ -1212,8 +1213,7 @@ public class DataStreamClient {
     /**
      * Return the number of unlabeled markers in the DataStream
      * 
-     * This information can be used in conjunction with GetGlobalUnlabeledMarkerTranslation.<p>
-     * 
+     * <p>This information can be used in conjunction with GetGlobalUnlabeledMarkerTranslation</p>
      * @see getUnlabeledMarkerGlobalTranslation
      * @return the number of unlabeled markers in the DataStream.
      * @throws RuntimeException if no frame is available or the client is not connected
@@ -1411,6 +1411,8 @@ public class DataStreamClient {
      * @return The name of the subject.
      * @throws RuntimeException if subject index is invalid, no frame available or not connected.
      * @throws IllegalArgumentException if subjectIndex less than 0
+     * 
+     * TODO code aufräumen, System.out entfernen
      */
     public String getSubjectName(long subjectIndex) {
         if (subjectIndex < 0) {
@@ -1446,9 +1448,8 @@ public class DataStreamClient {
     /**
       * Return the name of the root segment for a specified subject.
       * 
-      * This can be passed into segment functions. The root segment is the 
-      * ancestor of all other segments in the subject. 
-      * 
+      * <p>This can be passed into segment functions. The root segment is the 
+      * ancestor of all other segments in the subject.</p>
       * @see getSegmentCount
       * @see getSegmentParentName
       * @see getSegmentChildCount
@@ -1591,8 +1592,7 @@ public class DataStreamClient {
     /**
      * Return the number of segments for a specified subject in the DataStream.
      *
-     * This information can be used in conjunction with GetSegmentName<p>
-     *
+     * <p>This information can be used in conjunction with GetSegmentName</p>
      * @see getSubjectName
      * @see getSegmentName
      * @param subjectName name of the subject
@@ -1603,8 +1603,6 @@ public class DataStreamClient {
     public long getSegmentCount(String subjectName) {
         Output_GetSegmentCount result = client.GetSegmentCount(convertSubjectName(subjectName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            //Exception in thread "main" java.lang.RuntimeException: getSegmentCount() 
-            // but subjectName "de.dhbw.mobmonrob.vicon.datastreamapi.impl.ViconString@404b9385" is invalid!
             throw new RuntimeException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NoFrame) {
@@ -1627,13 +1625,13 @@ public class DataStreamClient {
      * @param subjectName The name of the subject.
      * @param segmentIndex The index of the segment.
      * @return The name of the segment 
-     * @throws RuntimeException if the client is not connected, the subjectName
-     * is not valid, the segment index is invalid or if no frame is available
+     * @throws RuntimeException if the client is not connected or if no frame is available
+     * @throws IllegalArgumentException if is not valid or the segment index is invalid 
      */
     public String getSegmentName(String subjectName, long segmentIndex) {
         Output_GetSegmentName result = client.GetSegmentName(convertSubjectName(subjectName), segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            throw new RuntimeException("getSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSegmentName() but client is not connected!!");
@@ -1642,7 +1640,7 @@ public class DataStreamClient {
             throw new RuntimeException("getSegmentName() but no frame available!");
         }
         if (result.getResult() == Result_Enum.InvalidIndex) {
-            throw new RuntimeException("getSegmentName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
         }
         return result.getSegmentName().toStdString();
     }
@@ -1692,14 +1690,15 @@ public class DataStreamClient {
      * @param segmentName segment name
      * @param segmentIndex segment index
      * @return segment child name
-     * @throws RuntimeException if the subject or segment name is invalid, the client is 
-     * not connected, the segment index is invalid or no frame is available.
+     * @throws IllegalArgumentException if the subject, segment name is invalid 
+     * or the segment index is invalid
+     * @throws RuntimeException if the client is not connected or no frame is available.
      */
     public String getSegmentChildName(String subjectName, String segmentName, long segmentIndex) {
         Output_GetSegmentChildName result = client.GetSegmentChildName(
                 convertSubjectName(subjectName), convertSegmentName(segmentName), segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            throw new RuntimeException("getSegmentChildName() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentChildName() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSegmentChildName() but client is not connected!!");
@@ -1708,14 +1707,12 @@ public class DataStreamClient {
             throw new RuntimeException("getSegmentChildName() but no frame available!");
         }
         if (result.getResult() == Result_Enum.InvalidIndex) {
-            throw new RuntimeException("getSegmentChildName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentChildName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
-            throw new RuntimeException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        String SegmentName = result.getSegmentName().toStdString();
-        //System.out.println("Get segment name: "+SegmentName);
-        return SegmentName;
+        return result.getSegmentName().toStdString();
     }
 
     /**
@@ -1728,13 +1725,13 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return null, if the given segment is the root segment of the subject
-     * @throws RuntimeException if the subject name is invalid, the client is not
-     * connected, no frame is available or the segment name is invalid.
+     * @throws IllegalArgumentException if the subject name is invalid or the segment name is invalid.
+     * @throws RuntimeException if the client is not connected or no frame is available 
      */
     public String getSegmentParentName(String subjectName, String segmentName) {
         Output_GetSegmentParentName result = client.GetSegmentParentName(convertSubjectName(subjectName), convertSegmentName(segmentName));
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            throw new RuntimeException("getSegmentParentName() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentParentName() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSegmentParentName() but client is not connected!!");
@@ -1743,9 +1740,9 @@ public class DataStreamClient {
             throw new RuntimeException("getSegmentParentName() but no frame available!");
         }
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
-            throw new RuntimeException("getSegmentParentName() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentParentName() but segmentName \"" + segmentName + "\" is invalid!");
         }
-
+        //TODO aufärumen
         String resultString = result.getSegmentName().toStdString();
         if (resultString.isEmpty()) resultString = null;
         return resultString;
@@ -1774,15 +1771,15 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the static pose translation of a subject segment.
-     * @throws RuntimeException if subject- or segment name is invalid, client is not connected
-     * or no frame is available.
+     * @throws IllegalArgumentException if subject- or segment name is invalid
+     * @throws RuntimeException if client is not connected or no frame is available.
      */
     public double[] getSegmentStaticTranslation(String subjectName, String segmentName) {
         ViconString subjectNameAsViconString = convertSubjectName(subjectName);
         ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentStaticTranslation result = client.GetSegmentStaticTranslation(subjectNameAsViconString, segmentNameAsViconString);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            throw new RuntimeException("getSegmentStaticTranslation() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticTranslation() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSegmentStaticTranslation() but client is not connected!!");
@@ -1791,7 +1788,7 @@ public class DataStreamClient {
             throw new RuntimeException("getSegmentStaticTranslation() but no frame available!");
         }
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
-            throw new RuntimeException("getSegmentStaticTranslation() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticTranslation() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getTranslation();
     }
@@ -1884,9 +1881,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentStaticRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -1935,6 +1930,41 @@ public class DataStreamClient {
         double[] Rotation = result.getRotation();
         //System.out.println("Get segment name: "+SegmentName);
         return Rotation;
+    }
+    
+    /**
+     * Return a 3D Scale of a subject segment if present.
+     * 
+     * @param subjectName subject name
+     * @param segmentName segment name
+     * @return a 3D Scale of a subject segment if present.
+     * @throws IllegalArgumentException for invalid subject- or segment name
+     * @throws RuntimeException if client is not connected or no frame is available
+     * @throws UnsupportedOperationException if segment static scale is not supported or not present
+     */
+    public double[] getSegmentStaticScale(String subjectName, String segmentName){
+        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
+        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
+        Output_GetSegmentStaticScale result = client.GetSegmentStaticScale(subjectNameAsViconString, segmentNameAsViconString);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentStaticScale() but client is not connected!!");
+        }
+        if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticScale() but no frame available!");
+        }
+        if (result.getResult() == Result_Enum.InvalidSubjectName) {
+            throw new IllegalArgumentException("getSegmentStaticScale() but subjectName \"" + subjectName + "\" is invalid!");
+        }
+        if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticScale() but segmentName \"" + segmentName + "\" is invalid!");
+        }
+        if (result.getResult() == Result_Enum.NotSupported){
+            throw new UnsupportedOperationException("getSegmentStaticScale() not supported!");
+        }
+        if (result.getResult() == Result_Enum.NotPresent){
+            throw new UnsupportedOperationException("getSegmentStaticScale() not present!");
+        }
+        return result.getScale();
     }
 
     /**
@@ -2018,9 +2048,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalTranslation() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Translation = result.getTranslation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Translation;
+        return result.getTranslation();
     }
 
     /**
@@ -2065,9 +2093,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -2145,9 +2171,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -2188,9 +2212,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but segmentName\"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -2270,9 +2292,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalTranslation () but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Translation = result.getTranslation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Translation;
+        return result.getTranslation();
     }
 
     /**
@@ -2316,9 +2336,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -2358,17 +2376,14 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
      * Return the quality score for a speciﬁed Object (Subject). 
      * 
-     * This is only implemented by applications that use an object tracking graph 
-     * such as Evoke and Tracker.<p>
-     * 
+     * <p>This is only implemented by applications that use an object tracking graph 
+     * such as Evoke and Tracker.</p>
      * @see getSubjectCount
      * @see getSubjectName
      * @param subjectName subject name
@@ -2387,10 +2402,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getObjectQuality() but no frame available!");
         }
-        double Quality = result.getQuality();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Quality;
-
+        return result.getQuality();
     }
 
     /**
@@ -2502,8 +2514,7 @@ public class DataStreamClient {
     /**
      * Return the number of markers for a specified subject in the DataStream.
      *
-     * This information can be used in conjunction with GetMarkerName<p>
-     *
+     * <p>This information can be used in conjunction with GetMarkerName</p>
      * @see getSubjectName
      * @see getMarkerName
      * @param subjectName The name of the subject
@@ -3235,6 +3246,36 @@ public class DataStreamClient {
     }
 
     /**
+     * Return the name of the segment that is the parent of this marker.
+     * 
+     * @see getMarkerCount
+     * @see getMarkerName
+     * @see getMarkerGlobalTranslation
+     * @param subjectName subject name
+     * @param markerName marker name
+     * @return the name of the segment that is the parent of this marker.
+     */
+    public String getMarkerParentName(String subjectName, String markerName){
+        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
+        ViconString markerNameAsViconString = convertMarkerName(markerName);
+        Output_GetMarkerParentName result = client.GetMarkerParentName(
+                subjectNameAsViconString, markerNameAsViconString);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getMarkerParentName() but client not connected!");
+        }
+        if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getMarkerParentName() but no frame available!");
+        }
+        if (result.getResult() == Result_Enum.InvalidSubjectName) {
+            throw new IllegalArgumentException("getMarkerParentName() but invalid subject name \""+subjectName+"!");
+        }
+        if (result.getResult() == Result_Enum.InvalidMarkerName) {
+            throw new IllegalArgumentException("getMarkerParentName() but invalid marker name \""+markerName+"!");
+        }
+        return result.getSegmentName().toStdString();
+    }
+    
+    /**
      * Return the number of the last frame retrieved from the DataStream.
      *
      * @see getFrame
@@ -3317,7 +3358,6 @@ public class DataStreamClient {
     * relative to its parent segment.
     * @throws RuntimeException if the client is not connected, no frame is available,
     * @throws IllegalArgumentException for invalid subject or invalid segment name
-    *
     * @see getSegmentLocalRotationHelical
     * @see getSegmentLocalRotationMatrix
     * @see getSegmentLocalRotationQuaternion 
@@ -3327,7 +3367,6 @@ public class DataStreamClient {
     * @see getSegmentGlobalRotationMatrix
     * @see getSegmentGlobalRotationQuaternion
     * @see getSegmentGlobalRotationEulerXYZ
-    *
     */
     public double[] getSegmentLocalRotationMatrix(String subjectName, String segmentName){ 
         Output_GetSegmentLocalRotationMatrix result =
