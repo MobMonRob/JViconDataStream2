@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
@@ -14,47 +15,49 @@ public class ViconDataStreamSDKClientTest {
     
     public DataStreamClient client;
     
+    //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
+    String hostname = "localhost";
+       
     public ViconDataStreamSDKClientTest() {}
     
     // Achtung: Das wir vor dem Aufruf jeder Testmethode aufgerufen.
     // Ich will aber eigentlich das nur einmal aufgerufen haben!
-    //@Before
+    @BeforeEach
     public void setUp() {
         client = new DataStreamClient();
-        client.connect("localhost");
-        //System.out.println("connect");
-        //assertTrue(client.isConnected());
+        Version version = client.getVersion();
+        System.out.println("Version: " + version.getMajor() + "." + 
+                version.getMinor() + "." + version.getPoint());
     }
 
     /**
-     * Test of connect method, of class ViconDataStreamSDKClient.
+     * Test of connect method, of class DataStreamClient.
      */
     @Test
     public void testConnect() {
         System.out.println("connect");
-        String hostname = "";
-        DataStreamClient instance = new DataStreamClient();
-        instance.connect(hostname);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        client.connect(hostname);
+        if (client.isConnected()) {
+            System.out.println("is conected");
+        } else {
+            fail("The test case is a prototype.");
+        }
     }
 
     /**
-     * Test of connectToMulticast method, of class ViconDataStreamSDKClient.
+     * Test of connectToMulticast method, of class DataStreamClient.
      */
     @Test
     public void testConnectToMulticast() {
         System.out.println("connectToMulticast");
-        String hostname = "";
         String multicastHostname = "";
-        DataStreamClient instance = new DataStreamClient();
-        instance.connectToMulticast(hostname, multicastHostname);
+        client.connectToMulticast(hostname, multicastHostname);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of startTransmittingMulticast method, of class ViconDataStreamSDKClient.
+     * Test of startTransmittingMulticast method, of class DataStreamClient.
      */
     @Test
     public void testStartTransmittingMulticast() {
