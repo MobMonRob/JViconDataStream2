@@ -118,7 +118,7 @@ public class DataStreamRetimingClient {
             throw new RuntimeException("WaitForFrame() but client was not connected!");
         }
     }
- public long getSubjectCount(){
+    public long getSubjectCount(){
         Output_GetSubjectCount result = retimingClient.GetSubjectCount();
         //System.out.println("Get subject count: "+result.getResult().toString());
         if (result.getResult() == Result_Enum.NoFrame)
@@ -138,7 +138,7 @@ public class DataStreamRetimingClient {
      * @param subjectIndex between 0 and getSubjectCount()-1
      * @return The name of the subject.
      * @throws RuntimeException if subject index is invalid.
-     * @throws IllegalArgumentException, if subjectIndex <0
+     * @throws IllegalArgumentException if subjectIndex less than zero
      */
     public String getSubjectName(long subjectIndex){
         if (subjectIndex <0) throw new IllegalArgumentException("getSubjectName() subjectIndex >=0 is needed!");
@@ -180,10 +180,11 @@ public class DataStreamRetimingClient {
              throw new RuntimeException("GetSubjectRootSegmentName() but no frame available!");
         if (result.getResult() == Result_Enum.InvalidIndex) 
              throw new RuntimeException("GetSubjectRootSegmentName() but segmentIndex \"\" is invalid!");
-        String SegmentName = result.getSegmentName().toString();
+        String SegmentName = result.getSegmentName().toStdString();
         //System.out.println("Get segment name: "+SegmentName);
         return SegmentName;
     }
+    
     
 
 }

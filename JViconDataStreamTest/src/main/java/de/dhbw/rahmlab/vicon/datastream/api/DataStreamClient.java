@@ -28,6 +28,7 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableVideoData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetAxisMapping;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraName;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCentroidCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsSegmentDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsUnlabeledMarkerDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetFrameRateCount;
@@ -74,6 +75,10 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetForcePlateSubsamples
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetGlobalCentreOfPressure;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetGlobalForceVector;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetGlobalMomentVector;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencySampleCount;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencySampleName;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencySampleValue;
+import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetLatencyTotal;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetObjectQuality;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentGlobalRotationEulerXYZ;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentGlobalRotationHelical;
@@ -118,6 +123,7 @@ public class DataStreamClient {
     private final Map<String, ViconString> frameRateNames = new HashMap<>();
     private final Map<String, ViconString> deviceNames = new HashMap<>();
     private final Map<String, Map<String, ViconString>> deviceOutputNames = new HashMap<>();
+    private final Map<String, ViconString> latencySampleNames = new HashMap<>();
     
     static {
         try {
@@ -204,6 +210,23 @@ public class DataStreamClient {
             String frameRateName = frameRateNameAsViconString.toStdString();
             frameRateNames.put(frameRateName, frameRateNameAsViconString);
             System.out.println("added frameRateName \""+frameRateName+"\"");
+        }
+    }
+    private void scanLatencySampleNames(){
+        latencySampleNames.clear();
+        long latencySampleNamesCount = getLatencySampleCount();
+        for (int i=0;i<latencySampleNamesCount;i++){
+            Output_GetLatencySampleName result = client.GetLatencySampleName(i);
+            if (result.getResult() == Result_Enum.NotConnected) {
+                throw new RuntimeException("getLatencySampleName() but client is not connected!!");
+            }
+            if (result.getResult() == Result_Enum.InvalidIndex) {
+                throw new RuntimeException("getLatencySampleName() but index is invalid!");
+            }
+            ViconString latencySampleNameAsViconString = result.getName();
+            String latencySampleName = latencySampleNameAsViconString.toStdString();
+            latencySampleNames.put(latencySampleName, latencySampleNameAsViconString);
+            System.out.println("added latencySampleName \""+latencySampleName+"\"");
         }
     }
     /**
@@ -333,6 +356,7 @@ public class DataStreamClient {
         scanFrameRateNames();
         scanDeviceNames();
         scanDeviceOutputNames();
+        scanLatencySampleNames();
     }
     
     /**
@@ -385,6 +409,7 @@ public class DataStreamClient {
         scanFrameRateNames();
         scanDeviceNames();
         scanDeviceOutputNames();
+        scanLatencySampleNames();
     }
     
     /**
@@ -625,9 +650,15 @@ public class DataStreamClient {
      * @see getSegmentCount
      * @see getSegmentName
      * @see getSegmentGlobalTranslation
-     * @see getSegmentGlobalRotationXXX
+     * @see getSegmentGlobalRotationHelical
+     * @see getSegmentGlobalRotationMatrix
+     * @see getSegmentGlobalRotationQuaternion
+     * @see getSegmentGlobalRotationEulerXYZ
      * @see getSegmentLocalTranslation 
-     * @see getSegmentLocalRotationXXX
+     * @see getSegmentLocalRotationHelical
+     * @see getSegmentLocalRotationMatrix
+     * @see getSegmentLocalRotationQuaternion
+     * @see getSegmentLocalRotationEulerXYZ
      * @throws RuntimeException if the client is not connected.
      */
     public void enableSegmentData() {
@@ -1183,7 +1214,7 @@ public class DataStreamClient {
      * 
      * This information can be used in conjunction with GetGlobalUnlabeledMarkerTranslation.<p>
      * 
-     * @see getGlobalUnlabeledMarkerTranslation
+     * @see getUnlabeledMarkerGlobalTranslation
      * @return the number of unlabeled markers in the DataStream.
      * @throws RuntimeException if no frame is available or the client is not connected
      */
@@ -1205,7 +1236,7 @@ public class DataStreamClient {
      * 
      * @see getFrame
      * @see getFrameNumber
-     * @see getTimecode
+     * @see getTimeCode
      * @return the Vicon camera system frame rate (in Hz) at the time of the last 
      * frame retrieved from the DataStream.
      * @throws RuntimeException if no frame is available or client is not connected.
@@ -1222,6 +1253,103 @@ public class DataStreamClient {
         return result.getFrameRateHz();
     }
 
+    /**
+     * Return the number of latency measurements that were taken at various 
+     * stages of the real-time pipeline.
+     * 
+     * <p>This value can be passed into GetLatencySampleName().</p>
+     * 
+     * @see getFrame
+     * @see getTimeCode
+     * @see getLatencyTotal 
+     * @see getLatencySampleName
+     * @see getLatencySampleValue
+     * @return the number of latency measurements that were taken at various.
+     */
+    public long getLatencySampleCount(){
+        Output_GetLatencySampleCount result = client.GetLatencySampleCount();
+        if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getFrameRate() invoked but no frame available!");
+        }
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getFrameRate() but client is not connected!!");
+        }
+        return result.getCount();
+    }
+    /**
+     * Return the name of a latency sample.
+     * 
+     * This value can be passed into GetLatencySampleValue().
+     * 
+     * @see getFrame
+     * @see getTimeCode 
+     * @see getLatencyTotal
+     * @see getLatencySampleCount
+     * @see getLatencySampleValue
+     * @param index latency name index
+     * @return the name of a latency sample.
+     */
+    public String getLatencySampleName(long index){
+        Output_GetLatencySampleName result = client.GetLatencySampleName(index);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getFrameRate() but client is not connected!!");
+        }
+        return result.getName().toStdString();
+    }
+    /**
+     * Return the duration of a named latency sample in seconds.
+     * 
+     * This value can be passed into GetLatencySampleValue().
+     * 
+     * @see getFrame
+     * @see getTimeCode
+     * @see getLatencyTotal
+     * @see getLatencySampleCount
+     * @see getLatencySampleValue
+     * @param latencySampleName latency sample name
+     * @return the duration of a named latency sample in seconds.
+     */
+    public double getLatencySampleValue(String latencySampleName){
+        ViconString latencySampleNameAsViconString = convertLatencySampleName(latencySampleName);
+        if (latencySampleNameAsViconString == null){
+            throw new IllegalArgumentException("getLatencySampleValue(): Unknown latency sample name \""+latencySampleName+"\"!");
+        }
+        Output_GetLatencySampleValue result = client.GetLatencySampleValue(latencySampleNameAsViconString);
+        if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getLatencySampleValue() invoked but no frame available!");
+        }
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getLatencySampleValue() but client is not connected!!");
+        }
+        if (result.getResult() == Result_Enum.InvalidIndex) {
+            throw new RuntimeException("getLatencySampleValue() but index is invalid!");
+        }
+        return result.getValue();
+    }
+    /**
+     * Return the total latency in seconds introduced at various stages of the 
+     * real-time pipeline.
+     * 
+     * <p>If no latency information is available then all latencies will be 
+     * reported as 0.0.</p>
+     * @see getFrame
+     * @see getTimeCode
+     * @see getLatencySampleCount 
+     * @see getLatencySampleName
+     * @see getLatencySampleValue
+     * @return the total latency in seconds introduced at various stages of the 
+     * real-time pipeline.
+     */
+    public double getLatencyTotal(){
+        Output_GetLatencyTotal result = client.GetLatencyTotal();
+        if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getLatencyTotal() invoked but no frame available!");
+        }
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getLatencyTotal() but client is not connected!!");
+        }
+        return result.getTotal();
+    }
     /**
      * Return the translation of an unlabeled marker in global coordinates.
      * 
@@ -1411,7 +1539,6 @@ public class DataStreamClient {
             throw new IllegalArgumentException("FrameRate with name \""+frameRateName+"\" does not exist");
         }
     }
-    
     /**
      * Convert frame rate name in a native lib usable object.
      * 
@@ -1445,6 +1572,21 @@ public class DataStreamClient {
             throw new IllegalArgumentException("convertDeviceOutputName(): The device output name \""+deviceOutputName+"\" does not exist!");
         }
         return result;
+    }
+    /**
+     * Get latency sample name as an native lib object.
+     * 
+     * @param latencySampleName
+     * @return latency sample name as an native lib object.
+     * @throws IllegalArgumentException if the given latency sample name does not exist
+     */
+    private ViconString convertLatencySampleName(String latencySampleName){
+        ViconString latencySampleNameAsViconString = latencySampleNames.get(latencySampleName);
+        if (latencySampleNameAsViconString != null){
+            return latencySampleNameAsViconString;
+        } else {
+            throw new IllegalArgumentException("Latency sample name \""+latencySampleName+"\" does not exist");
+        }
     }
     /**
      * Return the number of segments for a specified subject in the DataStream.
@@ -1853,7 +1995,7 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationHelical
      * @see getSegmentLocalRotationMatrix
      * @see getSegmentLocalRotationQuaternion
-     * @see getSegmentLocalRotationEulerXYZ() 
+     * @see getSegmentLocalRotationEulerXYZ
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the translation of a subject segment in global coordinates.
@@ -2382,33 +2524,6 @@ public class DataStreamClient {
         }
         //System.out.println("Get marker count: "+result.getResult().toString());
         return result.getMarkerCount();
-    }
-
-    /**
-     * Return the translation of an unlabeled marker in global coordinates. 
-     * 
-     * The Translation is of the form (x, y, z) where x, y and z are in millimeters 
-     * with respect to the global origin.<p>
-     * 
-     * @see getUnlabeledMarkerCount()
-     * @param markerIndex marker index
-     * @return the translation of an unlabeled marker in global coordinates.
-     * @throws IllegalArgumentException if the marker index does not exist
-     */
-    public double[] getUnlabeledMarkerGlobalTranslation(int markerIndex) {
-        Output_GetUnlabeledMarkerGlobalTranslation result = client.GetUnlabeledMarkerGlobalTranslation(markerIndex);
-        if (result.getResult() == Result_Enum.NotConnected) {
-            throw new RuntimeException("getUnlabeledMarkerGlobalTranslation() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-            throw new RuntimeException("getUnlabeledMarkerGlobalTranslation() but no frame available!");
-        }
-        //System.out.println("Get marker count: "+result.getResult().toString());
-        if (result.getResult() == Result_Enum.InvalidIndex) {
-            throw new IllegalArgumentException("getUnlabeledMarkerGlobalTranslation() but markerIndex \"" + markerIndex + "\" is invalid!");
-        }
-        double[] Translation = result.getTranslation();
-        return Translation;
     }
 
     /**
@@ -3029,9 +3144,8 @@ public class DataStreamClient {
     /**
      * Enable video data in the Vicon DataStream. 
      * 
-     * Call this function on startup, after connecting to the server, and before 
-     * trying to read video information.<p>
-     * 
+     * <p>Call this function on startup, after connecting to the server, and before 
+     * trying to read video information.</p>
      * @see isVideoDataEnabled
      * @see disableVideoData
      * @throws RuntimeException if the client is not connected.
@@ -3063,38 +3177,6 @@ public class DataStreamClient {
         long Count = result.getCameraCount();
         //System.out.println("Get segment name: "+SegmentName);
         return Count;
-    }
-
-    /**
-     * Return the name of a camera. 
-     * 
-     * <p>This name can be passed into centroid functions.</p>
-     * 
-     * @see getCameraCount
-     * @see getCentroidCount
-     * @see getCentroidPosition
-     * @param cameraIndex camera index
-     * @return camera name
-     * @throws RuntimeException for wrong camera index, if the client is not connected
-     * or no frame is avaiable
-     */
-    public String getCameraName(int cameraIndex) {
-        if (cameraIndex < 0) {
-            throw new IllegalArgumentException("getCameraName() CameraIndex >=0 is needed!");
-        }
-        Output_GetCameraName result = client.GetCameraName(cameraIndex);
-        if (result.getResult() == Result_Enum.InvalidIndex) {
-            throw new RuntimeException("getCameraName() but CameraIndex is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-            throw new RuntimeException("getCameraName() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-            throw new RuntimeException("getCameraName() but client is not connected!!");
-        }
-        String CameraName = result.getCameraName().toStdString();
-        //System.out.println("Get subject name: "+result.getResult().toString());
-        return CameraName;
     }
 
     /**
@@ -3156,7 +3238,7 @@ public class DataStreamClient {
      * Return the number of the last frame retrieved from the DataStream.
      *
      * @see getFrame
-     * @see getTimecode
+     * @see getTimeCode
      * @return number of the last frame.
      * @throws RuntimeException if client not connected or no frame available.
      */
@@ -3225,29 +3307,29 @@ public class DataStreamClient {
         client.delete();
     }
     
-    /**
-     * Return the rotation row-major matrix of a subject segment in local 
-     * coordinates relative to its parent segment.
-     *
-     * @param subjectName The name of the subject
-     * @param segmentName The name of the segment.
-     * @return The translation of a subject segment in local co-ordinates
-     * relative to its parent segment.
-     * @throws RuntimeException if the client is not connected, no frame is available,
-     * @throws IllegalArgumentException for invalid subject or invalid segment name
-     *
-     * @see getSegmentLocalRotationHelical
-     * @see getSegmentLocalRotationMatrix
-     * @see getSegmentLocalRotationQuaternion 
-     * @see getSegmentLocalRotationEulerXYZ
-     * @see getSegmentGlobalTranslation
-     * @see getSegmentGlobalRotationHelical
-     * @see getSegmentGlobalRotationMatrix
-     * @see getSegmentGlobalRotationQuaternion
-     * @see getSegmentGlobalRotationEulerXYZ
-     *
-     */
-     public double[] getSegmentLocalRotationMatrix(String subjectName, String segmentName){ 
+   /**
+    * Return the rotation row-major matrix of a subject segment in local 
+    * coordinates relative to its parent segment.
+    *
+    * @param subjectName The name of the subject
+    * @param segmentName The name of the segment.
+    * @return The translation of a subject segment in local co-ordinates
+    * relative to its parent segment.
+    * @throws RuntimeException if the client is not connected, no frame is available,
+    * @throws IllegalArgumentException for invalid subject or invalid segment name
+    *
+    * @see getSegmentLocalRotationHelical
+    * @see getSegmentLocalRotationMatrix
+    * @see getSegmentLocalRotationQuaternion 
+    * @see getSegmentLocalRotationEulerXYZ
+    * @see getSegmentGlobalTranslation
+    * @see getSegmentGlobalRotationHelical
+    * @see getSegmentGlobalRotationMatrix
+    * @see getSegmentGlobalRotationQuaternion
+    * @see getSegmentGlobalRotationEulerXYZ
+    *
+    */
+    public double[] getSegmentLocalRotationMatrix(String subjectName, String segmentName){ 
         Output_GetSegmentLocalRotationMatrix result =
                client.GetSegmentLocalRotationMatrix(convertSubjectName(subjectName), convertSegmentName(segmentName)); 
         System.out.println("Get segment local rotation matrix: "+result.getResult().toString()); 
@@ -3264,9 +3346,31 @@ public class DataStreamClient {
             return new double[]{Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN}; 
         } 
         return result.getRotation(); 
-     }
+    }
 
     double[] getForceVector(int ForceplateIndex) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Return the number of centroids reported by a named camera.
+     * 
+     * The centroid data needs to be enabled to get the number of centroids.
+     * 
+     * @see getCameraCount
+     * @see getCameraName
+     * @see getCentroidPosition
+     * @param cameraName camera name
+     * @return the number of centroids reported by a named camera.
+     */
+    public long getCentroidCount(String cameraName){
+        Output_GetCentroidCount result = client.GetCentroidCount(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getCentroidCount() but client is not connected!!");
+        }
+        if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getCentroidCount () but no frame available!");
+        }
+        return result.getCentroidCount();
     }
 }
