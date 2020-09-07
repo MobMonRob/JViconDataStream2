@@ -2,8 +2,7 @@
 
 cd "$(dirname "$BASH_SOURCE")"
 
-rm -f *.cpp
-rm -f gen*.i
+git clean -d -f -X &> /dev/null
 
-rm -rdf "../JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/"
+../JViconDataStreamTest/clear.sh
 
