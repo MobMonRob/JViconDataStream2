@@ -2,7 +2,8 @@
 
 cd "$(dirname "$BASH_SOURCE")"
 
-rm -f *.so
+git clean -d -f -X &> /dev/null
 
 ../swig/clear.sh
+../JViconDataStreamTest/clear.sh
 
