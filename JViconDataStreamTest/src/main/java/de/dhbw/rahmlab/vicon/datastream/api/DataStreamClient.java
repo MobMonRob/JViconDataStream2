@@ -28,7 +28,6 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableVideoData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetAxisMapping;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraName;
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCentroidCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsSegmentDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsUnlabeledMarkerDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetFrameRateCount;
@@ -58,7 +57,6 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentLocalRotation
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentLocalRotationHelical;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentLocalRotationQuaternion;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentLocalTranslation;
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetSegmentLocalRotationMatrix;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetMarkerRayContribution;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetMarkerRayContributionCount;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetDeviceName;
@@ -335,7 +333,6 @@ public class DataStreamClient {
 			Output_Connect result = client.Connect(new ViconString(hostname));
 
 			//Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
-            
 			// tritt seltsamerweise auch für localhost ab und zu auf
 			if (result.getResult() == Result_Enum.InvalidHostName) {
 				throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
@@ -691,6 +688,7 @@ public class DataStreamClient {
 			throw new RuntimeException("Client is not connected!");
 		}
 	}
+
 	/**
 	 * Disable kinematic segment data in the Vicon DataStream.
 	 *
@@ -738,6 +736,7 @@ public class DataStreamClient {
 			throw new RuntimeException("Client is not connected!");
 		}
 	}
+
 	/**
 	 * Disable labeled reconstructed marker data in the Vicon DataStream.
 	 *
@@ -757,6 +756,7 @@ public class DataStreamClient {
 			throw new RuntimeException("Client is not connected!");
 		}
 	}
+
 	/**
 	 * Disable unlabeled reconstructed marker data in the Vicon DataStream.
 	 *
@@ -3490,77 +3490,5 @@ public class DataStreamClient {
 
 	public void delete(){
 		client.delete();
-	}
-
-	/**
-	 * Return the rotation row-major matrix of a subject segment in local
-	 * coordinates relative to its parent segment.
-	 *
-	 * @param subjectName The name of the subject
-	 * @param segmentName The name of the segment.
-	 * @return The translation of a subject segment in local co-ordinates
-	 * relative to its parent segment.
-	 * @throws RuntimeException if the client is not connected, no frame is
-	 * available,
-	 * @throws IllegalArgumentException for invalid subject or invalid segment
-	 * name
-	 * @see getSegmentLocalRotationHelical
-	 * @see getSegmentLocalRotationMatrix
-	 * @see getSegmentLocalRotationQuaternion
-	 * @see getSegmentLocalRotationEulerXYZ
-	 * @see getSegmentGlobalTranslation
-	 * @see getSegmentGlobalRotationHelical
-	 * @see getSegmentGlobalRotationMatrix
-	 * @see getSegmentGlobalRotationQuaternion
-	 * @see getSegmentGlobalRotationEulerXYZ
-         *
-	 */
-	public double[] getSegmentLocalRotationMatrix(String subjectName, String segmentName) {
-		Output_GetSegmentLocalRotationMatrix result
-			= client.GetSegmentLocalRotationMatrix(convertSubjectName(subjectName), convertSegmentName(segmentName));
-		System.out.println("Get segment local rotation matrix: " + result.getResult().toString());
-		if (result.getResult() == Result_Enum.NotConnected) {
-			throw new RuntimeException("getSegmentLocalRotationMatrix() but client not connected!");
-		}
-		if (result.getResult() == Result_Enum.NoFrame) {
-			throw new RuntimeException("getSegmentLocalRotationMatrix() but no frame available!");
-		}
-		if (result.getResult() == Result_Enum.InvalidSubjectName) {
-			throw new IllegalArgumentException("getSegmentLocalRotationMatrix() but invalid subject name \"" + subjectName + "\"!");
-		}
-		if (result.getResult() == Result_Enum.InvalidSegmentName) {
-			throw new IllegalArgumentException("getSegmentLocalRotationMatrix() but invalid segment name \"" + segmentName + "\"!");
-		}
-
-		if (result.getOccluded()) {
-			return new double[]{Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN};
-		}
-		return result.getRotation();
-	}
-
-	double[] getForceVector(int ForceplateIndex) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
-
-	/**
-	 * Return the number of centroids reported by a named camera.
-	 *
-	 * The centroid data needs to be enabled to get the number of centroids.
-	 *
-	 * @see getCameraCount
-	 * @see getCameraName
-	 * @see getCentroidPosition
-	 * @param cameraName camera name
-	 * @return the number of centroids reported by a named camera.
-	 */
-	public long getCentroidCount(String cameraName) {
-		Output_GetCentroidCount result = client.GetCentroidCount(cameraName);
-		if (result.getResult() == Result_Enum.NotConnected) {
-			throw new RuntimeException("getCentroidCount() but client is not connected!!");
-		}
-		if (result.getResult() == Result_Enum.NoFrame) {
-			throw new RuntimeException("getCentroidCount () but no frame available!");
-		}
-		return result.getCentroidCount();
 	}
 }

@@ -6,6 +6,7 @@
 /swig/*.cpp
 /swig/gen*.i
 /JViconDataStreamTest/src/main/java/de/dhbw/mobmonrob/vicon/datastreamapi/impl/**
-/JViconDataStreamTest/target
+/JViconDataStreamTest/src/main/resources/lib/linux-x86_64/**
+**/target
 /Linux64/*.so
 
