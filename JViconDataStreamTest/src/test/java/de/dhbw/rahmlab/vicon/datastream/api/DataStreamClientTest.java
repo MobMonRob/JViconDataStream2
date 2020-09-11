@@ -1,6 +1,6 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.StreamMode_Enum;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.StreamMode_Enum;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;

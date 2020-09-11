@@ -1,6 +1,6 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetTimecode;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetTimecode;
 
 /**
  * Return the timecode information for the last frame retrieved from the DataStream. 
