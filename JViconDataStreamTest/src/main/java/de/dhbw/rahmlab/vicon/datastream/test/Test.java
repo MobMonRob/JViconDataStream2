@@ -1,7 +1,7 @@
-package de.dhbw.mobmonrob.vicon.datastreamapi.test;
+package de.dhbw.rahmlab.vicon.datastream.test;
 
-import de.dhbw.rahmlab.vicon.datastreamapi.api.Version;
-import de.dhbw.rahmlab.vicon.datastreamapi.api.DataStreamClient;
+import de.dhbw.rahmlab.vicon.datastream.api.Version;
+import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
 
 /**
  *

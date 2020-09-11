@@ -1,5 +1,9 @@
-package de.dhbw.rahmlab.vicon.datastreamapi.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
+/**
+ * 
+ * @author Oliver Rettig
+ */
 public final class Direction {
     
   public final static Direction Up = new Direction("Up");

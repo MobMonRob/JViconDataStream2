@@ -1,4 +1,4 @@
-package de.dhbw.rahmlab.vicon.datastreamapi.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetVersion;
 

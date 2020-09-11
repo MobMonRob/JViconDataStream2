@@ -1,4 +1,4 @@
-package de.dhbw.rahmlab.vicon.datastreamapi.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetTimecode;
 
@@ -9,6 +9,7 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetTimecode;
  * Result.Success and the Standard will be None.</p>
  * @see getFrame
  * @see getFrameNumber
+ * @author Oliver Rettig
  */
 public class TimeCode {
     private final Output_GetTimecode timeCode;
