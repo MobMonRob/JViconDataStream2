@@ -4,7 +4,8 @@ package de.dhbw.rahmlab.vicon.datastream.api;
 //import java.io.IOException;
 
 /**
- *
+ * Testweise wieder auskommentiert.
+ * 
  * @author fabian
  */
 public class NativeLibLoader {
@@ -19,12 +20,14 @@ public class NativeLibLoader {
 	}
 
 	private static void loadActually() {
-		/*try {
-			NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libjViconDataStreamSDK.so");
-		} catch (IOException e) {
-			System.err.println("Native code library failed to load. \n" + e);
-			System.exit(1);
-		}*/
+            System.loadLibrary("jViconDataStreamSDK");
+        
+            /*try {
+                    NativeUtils.loadLibraryFromJar("/lib/linux-x86_64/libjViconDataStreamSDK.so");
+            } catch (IOException e) {
+                    System.err.println("Native code library failed to load. \n" + e);
+                    System.exit(1);
+            }*/
 	}
 
 	/*
