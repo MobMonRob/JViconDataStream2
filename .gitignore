@@ -9,4 +9,5 @@
 /JViconDataStreamTest/src/main/resources/lib/linux-x86_64/**
 **/target
 /Linux64/*.so
+**/.directory
 
