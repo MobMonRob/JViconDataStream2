@@ -10,14 +10,18 @@
 //SWIG_JAVABODY_METHODS(public, public, SWIGTYPE)
 
 %include "std_shared_ptr.i";
-%include "std_string.i";
+//%include "std_string.i"; //Um leichter zu unterscheiden zwischen std::string und ViconString
 %include "arrays_java.i";
 %include "std_vector.i"
 
-%rename (ViconString) ViconDataStreamSDK::CPP::String; //Wichtig! Swig benennt den Java String nicht mit vollständigem Pfad. Innerhalb des Namespaces gibt es sonst Mehrdeutigkeit.
-%rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
-%rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
-%ignore ViconDataStreamSDK::CPP::String::String(char const *);
+%include "./ViconString.i"
+%ignore ViconDataStreamSDK::CPP::String; //Notwendig?
+
+//%rename (ViconString) ViconDataStreamSDK::CPP::String; //Wichtig! Swig benennt den Java String nicht mit vollständigem Pfad. Innerhalb des Namespaces gibt es sonst Mehrdeutigkeit.
+//%rename (assignmentOperator) ViconDataStreamSDK::CPP::String::operator=;
+//%rename (toStdString) ViconDataStreamSDK::CPP::String::operator std::string;
+//%ignore ViconDataStreamSDK::CPP::String::String(char const *);
+
 %ignore ViconDataStreamSDK::CPP::operator<<;
 
 %rename (Direction_Enum) ViconDataStreamSDK::CPP::Direction::Enum;

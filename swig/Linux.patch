@@ -4,10 +4,14 @@
 #include "../Linux64/DataStreamSDK_1.10/IDataStreamClientBase.h"
 #include "../Linux64/DataStreamSDK_1.10/DataStreamClient.h"
 #include "../Linux64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
+
+#include "../Linux64/DataStreamSDK_1.10/ViconStringTest.h"
 %}
 
 //Parse the header files to generate wrappers
 %include "../Linux64/DataStreamSDK_1.10/IDataStreamClientBase.h"
 %include "../Linux64/DataStreamSDK_1.10/DataStreamClient.h"
 %include "../Linux64/DataStreamSDK_1.10/DataStreamRetimingClient.h"
+
+%include "../Linux64/DataStreamSDK_1.10/ViconStringTest.h"
 
