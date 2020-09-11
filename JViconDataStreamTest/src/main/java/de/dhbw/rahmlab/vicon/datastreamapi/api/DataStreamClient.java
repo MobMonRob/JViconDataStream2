@@ -12,7 +12,6 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableDeviceData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableGreyscaleData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableLightweightSegmentData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableMarkerRayData;
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableSegmentData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableUnlabeledMarkerData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_DisableVideoData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_Disconnect;
@@ -28,7 +27,6 @@ import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableUnlabeledMarkerDa
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_EnableVideoData;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetAxisMapping;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraCount;
-import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraId;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_GetCameraName;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsSegmentDataEnabled;
 import de.dhbw.mobmonrob.vicon.datastreamapi.impl.Output_IsUnlabeledMarkerDataEnabled;
@@ -105,8 +103,17 @@ import java.util.logging.Logger;
 /**
  * @author Oliver Rettig
  * 
+ * When a function has returned false, the output arguments are set to an appropriate default value:
+ * • Booleans will be set to false.
+ * • Integers will be set to zero.
+ * • Doubles will be set to zero.
+ * • Strings will be set to zero length.
+ * • When the output argument is an array, all elements are set in this manner.
+ *
+ * By default the global coordinate system matches the server application; Z-Up, 
+ * Y-Left. This can be changed by using Client::SetAxisMapping.
+ *
  * TODO
- * - mobmonrob durch rahmlab ersetzen
  * - Kommentare vervollständigen, Ex überprüfen
  * - throw messages in String const auslagern
  */
