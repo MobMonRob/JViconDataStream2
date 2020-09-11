@@ -2,5 +2,6 @@
 
 cd "$(dirname "$BASH_SOURCE")"
 
-git ls-files -ci --exclude-standard -z | xargs -0 git rm &> /dev/null
+#git clean -d -f -X
+git ls-files -c -o -i --exclude-standard -z| xargs -0 rm -r &> /dev/null
 
