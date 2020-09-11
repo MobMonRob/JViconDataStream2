@@ -137,9 +137,9 @@ public class DataStreamClient {
 	private final Map<String, ViconString> latencySampleNames = new HashMap<>();
 
 	static {
-            //NativeLibLoader.load();
-            System.loadLibrary("jViconDataStreamSDK");
-	}
+            //System.loadLibrary("jViconDataStreamSDK");
+            NativeLibLoader.load();	
+        }
 
 	/**
 	 * Scan subject names.
@@ -147,9 +147,9 @@ public class DataStreamClient {
 	 * @throws RuntimeException if no frame is available or the client is not
 	 * connected
 	 */
-        private void scanSubjectNames(){
-		subjectNames.clear();
-		long subjects = getSubjectCount();
+	private void scanSubjectNames(){
+            subjectNames.clear();
+            long subjects = getSubjectCount();
             for (int i=0;i<subjects;i++){
 			Output_GetSubjectName result = client.GetSubjectName(i);
 			if (result.getResult() == Result_Enum.NoFrame) {
@@ -263,7 +263,7 @@ public class DataStreamClient {
 	 */
 	private void scanDeviceOutputNames() {
 		deviceOutputNames.clear();
-		for (String deviceName : deviceNames.keySet()) {
+		for (String deviceName: deviceNames.keySet()) {
 			long deviceOutputCount = getDeviceOutputCount(deviceName);
 			Map<String, ViconString> outputNamesMap = deviceOutputNames.get(deviceName);
 			if (outputNamesMap == null) {
@@ -1520,7 +1520,7 @@ public class DataStreamClient {
 	 * Return the name of the root segment for a specified subject.
 	 *
 	 * This can be passed into segment functions. The root segment is the
-	 * ancestor of all other segments in the subject.</p>
+	 * ancestor of all other segments in the subject.
 	 *
 	 * @see getSegmentCount
 	 * @see getSegmentParentName
@@ -3290,7 +3290,7 @@ public class DataStreamClient {
 	 * Enable video data in the Vicon DataStream.
 	 *
 	 * Call this function on startup, after connecting to the server, and before
-	 * trying to read video information.</p>
+	 * trying to read video information.
 	 *
 	 * @see isVideoDataEnabled
 	 * @see disableVideoData
@@ -3355,7 +3355,7 @@ public class DataStreamClient {
 		return Result.getCameraName().toStdString();
 	}
 
-	/* 
+    /* 
      * Return the name of a marker for a specified subject. 
      * 
      * This can be passed into GetMarkerGlobalTranslation.<p>
@@ -3473,7 +3473,7 @@ public class DataStreamClient {
 			// while not connected
 			while (result != Result_Enum.Success) {
 				try {
-					Thread.sleep(10);
+                                    Thread.sleep(10);
 				} catch (InterruptedException ex) {
 					Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
 				}
