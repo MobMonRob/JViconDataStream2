@@ -135,7 +135,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
-      <Command>..\..\swig\invoke.bat</Command>
+      <Command>..\..\swig\generate.bat</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>SWIG</Message>
@@ -190,7 +190,7 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PreBuildEvent>
-      <Command>..\..\swig\invoke.bat</Command>
+      <Command>..\..\swig\generate.bat</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>SWIG</Message>
