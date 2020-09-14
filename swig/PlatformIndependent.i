@@ -10,7 +10,7 @@
 //SWIG_JAVABODY_METHODS(public, public, SWIGTYPE)
 
 %include "std_shared_ptr.i";
-%include "std_string.i"; //Auskommentieren, um leichter zu unterscheiden zwischen Verwendung std::string und ViconString
+%include "std_string.i";
 %include "arrays_java.i";
 %include "std_vector.i"
 
