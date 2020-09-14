@@ -2,7 +2,12 @@
 
 cd "$(dirname "$BASH_SOURCE")"
 
-git clean -d -f -X &> /dev/null
+#remove ignored files and folders
+git ls-files -c -o -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 
-../JViconDataStream/clear.sh
+echo "swig cleared"
+
+../JViconDataStream/clear.sh &> /dev/null
+
+echo "swig touched folders cleared"
 
