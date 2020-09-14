@@ -4,6 +4,9 @@ import de.dhbw.rahmlab.vicon.datastream.api.impl.ViconString;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Client;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.DeviceType_Enum;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Direction_Enum;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_AddToSubjectFilter;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_ClearSubjectFilter;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_ConfigureWireless;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_Connect;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_ConnectToMulticast;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_DisableCentroidData;
@@ -28,6 +31,7 @@ import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_EnableVideoData;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetAxisMapping;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCameraCount;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCameraName;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCameraResolution;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_IsSegmentDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_IsUnlabeledMarkerDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetFrameRateCount;
@@ -3261,6 +3265,8 @@ public class DataStreamClient {
     
     // TODO
     // Objektstruktur, Methoden müssen noch überlegt werden
+    // bessere Benennung
+    // unklar ob für Tracker und/oder Nexus verfügbar ist
     public class ViconBlob{
         private ViconBlob(Output_GetGreyscaleBlob blob){
             VectorUint posx = blob.getBlobLinePositionsX();
@@ -3453,6 +3459,24 @@ public class DataStreamClient {
         return Result.getCameraName().toStdString();
     }
 
+    /**
+     * Returns the sensor resolution of the camera with the specified name.
+     * 
+     * @see getCameraName
+     * 
+     * @param cameraName the name of the camera
+     * @return camera resultion x,y
+     */
+    public long[] getCameraResolution(String cameraName){
+        Output_GetCameraResolution result = client.GetCameraResolution(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException ("getCameraResolution(): Camera \""+cameraName+"\" not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new RuntimeException("getCameraResolution(): Invalid camera name \""+cameraName+"\"!");
+        }
+        return new long[]{result.getResolutionX(), result.getResolutionY()};
+    }
+    
     /* 
      * Return the name of a marker for a specified subject. 
      * 
@@ -3584,6 +3608,49 @@ public class DataStreamClient {
                 }
         }
         return false;
+    }
+    
+    /**
+     * Add a subject name to the subject filter.
+     * 
+     * Only subjects present in the subject filter will be sent and subjects not
+     * in the filter will be presented as absent/occluded. If no filtered subjects 
+     * are present, all subjects will be sent.
+     * 
+     * @see clearSubjectFilter
+     * @param subjectName the name of the subject
+     */
+    public void addToSubjectFilter(String subjectName){
+        Output_AddToSubjectFilter result = client.AddToSubjectFilter(new ViconString(subjectName));
+        if (result.getResult() == Result_Enum.InvalidSubjectName){
+            throw new RuntimeException("addToSubjectFilter() failed due to wrong subject name \""+subjectName+"\"!");
+        }
+    }
+    /**
+     * Clear the subject filter.
+     * 
+     * This will result in all subjects beeing sent.
+     * 
+     * @see addToSubjectFilter
+     */
+    public void clearSubjectFilter(){
+        Output_ClearSubjectFilter result = client.ClearSubjectFilter();
+    }
+    
+    /**
+     * Request that the wireless adapters will be optionally configured for streaming data.
+     * 
+     * On windows this will disable background scan and enable streaming. The call 
+     * does not need the client to be connected.
+     * 
+     */
+    public void configureWireless(){
+        Output_ConfigureWireless result = client.ConfigureWireless();
+        if (result.getResult() == Result_Enum.NotSupported){
+            throw new RuntimeException("configureWireless() invoked but the OS does not support this function1");
+        } else if (result.getResult() == Result_Enum.ConfigurationFailed){
+            throw new RuntimeException("configurateWireless failed: \""+result.getError().toString()+"\"!");
+        }
     }
 
     public void delete(){
