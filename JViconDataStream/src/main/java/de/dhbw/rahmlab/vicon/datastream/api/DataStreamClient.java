@@ -73,6 +73,8 @@ import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetForcePlateSubsamples;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetGlobalCentreOfPressure;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetGlobalForceVector;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetGlobalMomentVector;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetGreyscaleBlob;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetGreyscaleBlobCount;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetLatencySampleCount;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetLatencySampleName;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetLatencySampleValue;
@@ -100,6 +102,8 @@ import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_StartTransmittingMultica
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_StopTransmittingMulticast;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Result_Enum;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.StreamMode_Enum;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.VectorUint;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.VectorVectorUchar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -3215,6 +3219,56 @@ public class DataStreamClient {
     }
 
     /**
+     * Obtain the number of greyscale blobs that are available for the specified camera.
+     * 
+     * @see GetGrescaleBlob
+     * @see EnableGreyscaleData
+     */
+    public long getGreyscaleBlobCount(String cameraName){
+        Output_GetGreyscaleBlobCount result = client.GetGreyscaleBlobCount(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException("getGreyscaleCount() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new RuntimeException("getGreyscaleCount() with invalid camera name \""+cameraName+"\"!");
+        }
+        return result.getBlobCount();
+    }
+    /**
+     * Obtains greyscale blob data for the specified camera and blob index.
+     * 
+     * @see GetGreyscaleBlobCount
+     * @see EnableGreyscaleData
+     * 
+     * A valid camera name may be obtained from GetCameraName(long cameraIndex).<p>
+     * 
+     * A valid blob index is between 0 and GetGreyscaleBlobCount() -1.
+     * 
+     * @param cameraName
+     * @param blobIndex
+     * @return blob
+     */
+    public ViconBlob getGreyscaleBlob(String cameraName, long blobIndex){
+        Output_GetGreyscaleBlob result = client.GetGreyscaleBlob(cameraName, blobIndex);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException("getGreyscaleBlob() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new RuntimeException("getGreyscaleBlob() with invalid camera name \""+cameraName+"\"!");
+        } else if (result.getResult() == Result_Enum.InvalidIndex){
+            throw new RuntimeException("getGreyscaleBlob() with invalid blobindex \""+String.valueOf(blobIndex)+"\"!");
+        }
+        return new ViconBlob(result);
+    }
+    
+    // TODO
+    // Objektstruktur, Methoden müssen noch überlegt werden
+    public class ViconBlob{
+        private ViconBlob(Output_GetGreyscaleBlob blob){
+            VectorUint posx = blob.getBlobLinePositionsX();
+            VectorUint posy = blob.getBlobLinePositionsY();
+            VectorVectorUchar  values = blob.getBlobLinePixelValues();
+        }
+    }
+    /**
      * Return the number of eye trackers available in the DataStream.
      *
      * @see getEyeTrackerGlobalGazeVector
@@ -3227,8 +3281,7 @@ public class DataStreamClient {
         Output_GetEyeTrackerCount result = client.GetEyeTrackerCount();
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getEyeTrackerCount() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
+        } else if (result.getResult() == Result_Enum.NoFrame) {
                 throw new RuntimeException("getEyeTrackerCount () but no frame available!");
         }
         long Count = result.getEyeTrackerCount();
