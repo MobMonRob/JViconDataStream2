@@ -32,6 +32,9 @@ import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetAxisMapping;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCameraCount;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCameraName;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCameraResolution;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCentroidCount;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCentroidPosition;
+import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetCentroidWeight;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_IsSegmentDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_IsUnlabeledMarkerDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetFrameRateCount;
@@ -849,7 +852,7 @@ public class DataStreamClient {
     public void disableGreyscaleData() {
         Output_DisableGreyscaleData result = client.DisableGreyscaleData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -3430,6 +3433,86 @@ public class DataStreamClient {
         return Count;
     }
 
+    /**
+     * Return the number of centroids reported by a named camera.
+     * 
+     * The centroid data needs to be enabled to get the number of centroids.
+     * 
+     * @see getCameraCount
+     * @see getCameraName
+     * @see getCentroidPosition
+     * 
+     * @param cameraName the name of the camera
+     * @return numer of centroids
+     */
+    public long getCentroidCount(String cameraName){
+        Output_GetCentroidCount result = client.GetCentroidCount(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getCentroidCount() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getCentroidCount () but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new RuntimeException("getCentroidCount() but camera name \""+cameraName+" is invalid!");
+        }
+        return result.getCentroidCount();
+    }
+    /**
+     * Return the position and radius of the centroid in camera coordinates.
+     * 
+     * The centroid data needs to be enabled to get the centroid position and radius.
+     * 
+     * @see getCameraCount
+     * @see getCameraName
+     * @see getCentroidCount
+     * 
+     * @param cameraName
+     * @param centroidIndex
+     * @return 
+     */
+    public Centroid getCentroidPosition(String cameraName, long centroidIndex){
+        Output_GetCentroidPosition result = client.GetCentroidPosition(cameraName, centroidIndex);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getCentroidPosition() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getCentroidPosition () but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new RuntimeException("getCentroidPosition() but camera name \""+cameraName+" is invalid!");
+        } else if (result.getResult() == Result_Enum.InvalidIndex){
+            throw new RuntimeException("getCentroidPosition() but centroid index \""+
+                String.valueOf(centroidIndex)+" is invalid!");
+        }
+        return new Centroid(result.getCentroidPosition(), result.getRadius());
+    }
+    
+    /**
+     * Return the weight of the centroid.
+     * 
+     * The centroid data needs to be enabled to get the centroid weight. Only 
+     * supported by Tracker - weights will be 1.0 for all centroids, if low jitter
+     * mode is not enabled.
+     * 
+     * @see getCameraCount
+     * @see getCamerName
+     * @see getCentroidCount
+     * 
+     * @param cameraName the name of the camera
+     * @param centroidIndex the index of the centroid
+     * @return  the weight of the centroid
+     */
+    public double getCentroidWeight(String cameraName, long centroidIndex){
+        Output_GetCentroidWeight result = client.GetCentroidWeight(cameraName, centroidIndex);
+        if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getCentroidWeight() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getCentroidWeight () but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new RuntimeException("getCentroidWeight() but camera name \""+cameraName+" is invalid!");
+        } else if (result.getResult() == Result_Enum.InvalidIndex){
+            throw new RuntimeException("getCentroidWeight() but centroid index \""+
+                String.valueOf(centroidIndex)+" is invalid!");
+        }
+        return result.getWeight();
+    }
     /**
      * Return the name of a camera.
      *
