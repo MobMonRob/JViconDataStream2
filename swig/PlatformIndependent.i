@@ -15,9 +15,6 @@
 %include "std_vector.i"
 
 %include "./ViconString.i"
-%ignore ViconDataStreamSDK::CPP::String;
-%ignore ViconDataStreamSDK::CPP::IStringFactory;
-%ignore ViconDataStreamSDK::CPP::operator<<;
 
 %rename (Direction_Enum) ViconDataStreamSDK::CPP::Direction::Enum;
 %rename (ServerOrientation_Enum) ViconDataStreamSDK::CPP::ServerOrientation::Enum;
