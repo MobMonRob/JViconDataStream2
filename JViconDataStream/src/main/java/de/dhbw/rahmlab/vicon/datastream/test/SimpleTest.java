@@ -21,7 +21,7 @@ public class SimpleTest {
 	}
 
 	public static void viconStringTest() {
-		de.dhbw.rahmlab.vicon.datastream.api.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.api.impl.ViconStringTest();
+		de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest();
 		String viconString = viconStringTest.getViconStringHallo();
 		String charString = viconStringTest.getCharStringHallo();
 		String stdString = viconStringTest.getStdStringHallo();
