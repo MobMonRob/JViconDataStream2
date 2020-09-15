@@ -20,11 +20,11 @@ import java.util.Set;
 
 /**
  * Der Sinn dieser Klasse ist es, automatisiert herauszufinden, welche Klassen
- * tatsächlich verwendet werden.
+ * von jogamp gluegen nicht notwendig sind.
  *
  * @author fabian
  */
-public class UnusedImports {
+public class UnusedClasses {
 
 	public static void start() {
 		List<JavaClass> allClasses = get_AllClasses("/home/fabian/Schreibtisch/JViconDataStream2/JViconDataStream/src/main/java/");
@@ -37,11 +37,11 @@ public class UnusedImports {
 		Map<String, JavaClass> allNamesAndClasses = get_nameToClass(allClasses);
 
 		Set<String> usedImports = get_usedImports(allNamesAndClasses, firstImports);
-		List<String> unusedImports = get_unusedImports(allClasses, usedImports);
+		List<String> unusedClasses = get_unusedClasses(allClasses, usedImports);
 
 		System.out.println("-------------");
-		System.out.println("---UnusedImprts:");
-		unusedImports.forEach(s -> System.out.println(s));
+		System.out.println("---UnusedImports:");
+		unusedClasses.forEach(s -> System.out.println(s));
 	}
 
 	private static List<String> get_firstImports(List<JavaClass> allClasses, String startClass) {
@@ -64,25 +64,20 @@ public class UnusedImports {
 		return firstImports;
 	}
 
-	private static List<String> get_unusedImports(List<JavaClass> allClasses, Set<String> usedImports) {
-		List<String> allNames = allClasses
+	private static List<String> get_unusedClasses(List<JavaClass> allClasses, Set<String> usedImports) {
+		Set<String> allClassesNames = allClasses
 			.stream() //List<JavaClass>
-			.map(cl -> cl.getSource().getImports()) //List<List<String>>
-			.reduce(new ArrayList(), (sumList, importsList) -> listConcat(sumList, importsList)); //List<String>
+			.map(cl -> cl.getCanonicalName()) //List<String>
+			.collect(Collectors.toCollection(HashSet::new)); //List<String>
 
-		Set<String> filteredNormedNames = allNames
-			.stream()
-			.map(s -> normImport(s)) //List<String>
-			.filter(s -> !s.startsWith("java")) //List<String>
-			.collect(Collectors.toCollection(HashSet::new));
-		filteredNormedNames.removeAll(usedImports);
+		allClassesNames.removeAll(usedImports);
 
-		List<String> sortedNormedFilteredNames = filteredNormedNames
+		List<String> sortedNames = allClassesNames
 			.stream()
 			.sorted()
 			.collect(Collectors.toCollection(ArrayList::new));
 
-		return sortedNormedFilteredNames;
+		return sortedNames;
 	}
 
 	private static String normImport(String importString) {
