@@ -4,7 +4,7 @@ package de.dhbw.rahmlab.vicon.datastream.test;
 import de.dhbw.rahmlab.vicon.datastream.api.Version;
 import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
  */
-import de.dhbw.rahmlab.vicon.datastream.maintenance.DeleteUnusedGluegenClassFiles;
+import de.dhbw.rahmlab.vicon.datastream.maintenance.DeleteUnusedGluegenJavaFiles;
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 
 /**
@@ -19,7 +19,7 @@ public class SimpleTest {
 
 	public static void main(String argv[]) throws InterruptedException {
 		viconStringTest();
-		DeleteUnusedGluegenClassFiles.start();
+		DeleteUnusedGluegenJavaFiles.start();
 	}
 
 	public static void viconStringTest() {
