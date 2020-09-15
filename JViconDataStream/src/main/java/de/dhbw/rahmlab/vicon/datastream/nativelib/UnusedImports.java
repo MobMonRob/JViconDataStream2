@@ -39,6 +39,8 @@ public class UnusedImports {
 		Set<String> usedImports = get_usedImports(allNamesAndClasses, firstImports);
 		List<String> unusedImports = get_unusedImports(allClasses, usedImports);
 
+		System.out.println("-------------");
+		System.out.println("---UnusedImprts:");
 		unusedImports.forEach(s -> System.out.println(s));
 	}
 
@@ -68,15 +70,15 @@ public class UnusedImports {
 			.map(cl -> cl.getSource().getImports()) //List<List<String>>
 			.reduce(new ArrayList(), (sumList, importsList) -> listConcat(sumList, importsList)); //List<String>
 
-		Set<String> filteredNames = allNames
-			.stream()
-			.filter(s -> !s.startsWith("java")) //List<String>
-			.collect(Collectors.toCollection(HashSet::new));
-		filteredNames.removeAll(usedImports);
-
-		List<String> sortedNormedFilteredNames = filteredNames
+		Set<String> filteredNormedNames = allNames
 			.stream()
 			.map(s -> normImport(s)) //List<String>
+			.filter(s -> !s.startsWith("java")) //List<String>
+			.collect(Collectors.toCollection(HashSet::new));
+		filteredNormedNames.removeAll(usedImports);
+
+		List<String> sortedNormedFilteredNames = filteredNormedNames
+			.stream()
 			.sorted()
 			.collect(Collectors.toCollection(ArrayList::new));
 
