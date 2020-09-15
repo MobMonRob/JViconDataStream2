@@ -5,11 +5,11 @@
  */
 package de.dhbw.rahmlab.vicon.datastream.maintenance;
 
-import de.dhbw.rahmlab.vicon.datastream.maintenance.UnusedGluegenClasses;
+import com.thoughtworks.qdox.model.JavaClass;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -18,13 +18,20 @@ import java.util.logging.Logger;
 public class DeleteUnusedGluegenClassFiles {
 
 	public static void start() {
-		List<String> unusedClassesNames = UnusedGluegenClasses.get_unusedGluegenClassesNames();
+		List<JavaClass> unusedClasses = UnusedGluegenClasses.get_unusedGluegenClasses();
 
 		System.out.println("-------------");
 		System.out.println("---UnusedClasses:");
-		//unusedClassesNames.forEach(s -> System.out.println(s));
+		unusedClasses.forEach(cl -> System.out.println(cl.getCanonicalName()));
 
-		//System.out.println(bundleInfo.getSource().getURL());
+		List<String> unusedPath = unusedClasses
+			.stream()
+			.map(cl -> cl.getSource().getURL().getPath())
+			.collect(Collectors.toCollection(ArrayList::new));
 
+		for (String path : unusedPath) {
+			File file = new File(path);
+			//file.delete();
+		}
 	}
 }
