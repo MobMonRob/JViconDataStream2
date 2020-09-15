@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.rahmlab.vicon.datastream.nativelib;
+package de.dhbw.rahmlab.vicon.datastream.maintenance;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.impl.DefaultJavaClass;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import java.util.Set;
  */
 public class UnusedGluegenClasses {
 
-	public static void start() {
+	public static List<JavaClass> get_unusedGluegenClasses() {
 		List<JavaClass> allClasses = get_AllClasses("/home/fabian/Schreibtisch/JViconDataStream2/JViconDataStream/src/main/java/");
 		List<String> firstImports = get_firstImports(allClasses, "JViconDataStreamBundleInfo");
 		allClasses = allClasses
@@ -34,19 +33,18 @@ public class UnusedGluegenClasses {
 			.filter(cl -> !cl.getCanonicalName().startsWith("de.dhbw."))
 			.collect(Collectors.toCollection(ArrayList::new));
 
-		Set<String> usedImports = get_usedImports(allClasses, firstImports);
-		List<String> unusedClasses = get_unusedClasses(allClasses, usedImports);
+		Map<String, JavaClass> namesOfClasses = get_namesOfClasses(allClasses);
 
-		System.out.println("-------------");
-		System.out.println("---UnusedClasses:");
-		unusedClasses.forEach(s -> System.out.println(s));
+		Set<String> usedImports = get_usedImports(namesOfClasses, firstImports);
+		List<JavaClass> unusedClasses = get_unusedClasses(namesOfClasses, usedImports);
+
+		return unusedClasses;
 	}
 
 	private static List<String> get_firstImports(List<JavaClass> allClasses, String startClass) {
 		List<JavaClass> bundleInfos = allClasses
 			.stream()
-			.filter(cl -> cl.getCanonicalName()
-			.contains(startClass))
+			.filter(cl -> cl.getCanonicalName().contains(startClass))
 			.collect(Collectors.toCollection(ArrayList::new));
 
 		assert bundleInfos.size() == 1;
@@ -56,29 +54,31 @@ public class UnusedGluegenClasses {
 			.getSource()
 			.getImports()
 			.stream()
+			.map(s -> normalizeImport(s))
 			.filter(s -> !s.startsWith("java"))
 			.collect(Collectors.toCollection(ArrayList::new));
 
 		return firstImports;
 	}
 
-	private static List<String> get_unusedClasses(List<JavaClass> allClasses, Set<String> usedImports) {
-		Set<String> allClassesNames = allClasses
-			.stream() //List<JavaClass>
-			.map(cl -> cl.getCanonicalName()) //List<String>
-			.collect(Collectors.toCollection(HashSet::new)); //List<String>
+	private static List<JavaClass> get_unusedClasses(Map<String, JavaClass> namesOfClasses, Set<String> usedImports) {
+		Set<String> unusedClassesNames = new HashSet();
+		unusedClassesNames.addAll(namesOfClasses.keySet());
+		unusedClassesNames.removeAll(usedImports);
 
-		allClassesNames.removeAll(usedImports);
-
-		List<String> sortedNames = allClassesNames
+		List<JavaClass> unusedClasses = unusedClassesNames
 			.stream()
 			.sorted()
+			.map(s -> namesOfClasses.get(s))
+			.filter(Objects::nonNull)
 			.collect(Collectors.toCollection(ArrayList::new));
 
-		return sortedNames;
+		assert unusedClassesNames.size() == unusedClasses.size();
+
+		return unusedClasses;
 	}
 
-	private static String normImport(String importString) {
+	private static String normalizeImport(String importString) {
 		if (importString.startsWith("static ")) {
 			return importString.substring(7);
 		}
@@ -86,9 +86,7 @@ public class UnusedGluegenClasses {
 		return importString;
 	}
 
-	private static Set<String> get_usedImports(List<JavaClass> allClasses, List<String> firstImports) {
-		Map<String, JavaClass> nameOfClass = get_nameOfClass(allClasses);
-
+	private static Set<String> get_usedImports(Map<String, JavaClass> namesOfClasses, List<String> firstImports) {
 		Set<String> newImports = new HashSet();
 		Set<String> processedImports = new HashSet();
 
@@ -99,15 +97,14 @@ public class UnusedGluegenClasses {
 
 			List<String> currentImports = newImports
 				.stream() //List<String>
-				.map(importString -> nameOfClass.getOrDefault(importString, new DefaultJavaClass("empty"))) //List<JavaClass>
-				.map(cl -> cl.getSource()) //List<List<JavaSource>>
+				.map(importString -> namesOfClasses.get(importString)) //List<JavaClass>
 				.filter(Objects::nonNull)
-				.map(src -> src.getImports()) //List<List<String>>
+				.map(cl -> cl.getSource().getImports()) //List<List<String>>
 				.reduce(new ArrayList(), (sumList, importsList) -> listConcat(sumList, importsList)); //List<String>
 
 			newImports = currentImports //filtered
 				.stream() //List<String>
-				.map(s -> normImport(s)) //List<String>
+				.map(s -> normalizeImport(s)) //List<String>
 				.filter(s -> !s.startsWith("java")) //List<String>
 				.collect(Collectors.toCollection(HashSet::new));
 		}
@@ -138,20 +135,20 @@ public class UnusedGluegenClasses {
 		return classesList;
 	}
 
-	private static Map<String, JavaClass> get_nameOfClass(List<JavaClass> allClasses) {
-		HashMap<String, JavaClass> nameOfClass = new HashMap();
+	private static Map<String, JavaClass> get_namesOfClasses(List<JavaClass> allClasses) {
+		HashMap<String, JavaClass> namesOfClasses = new HashMap();
 
 		List<String> allClassesNames = allClasses
-			.stream()
-			.map(cl -> cl.getCanonicalName())
+			.stream() //List<JavaClass>
+			.map(cl -> cl.getCanonicalName()) //List<String>
 			.collect(Collectors.toCollection(ArrayList::new));
 
 		assert allClasses.size() == allClassesNames.size();
 
 		for (int i = 0; i < allClasses.size(); ++i) {
-			nameOfClass.put(allClassesNames.get(i), allClasses.get(i));
+			namesOfClasses.put(allClassesNames.get(i), allClasses.get(i));
 		}
 
-		return nameOfClass;
+		return namesOfClasses;
 	}
 }
