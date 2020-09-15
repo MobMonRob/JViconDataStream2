@@ -44,7 +44,7 @@
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
-							<skip>false</skip> <!-- false, um Tests wieder anzuschalten -->
+							<skip>true</skip> <!-- false, um Tests wieder anzuschalten -->
 						</configuration>
 					</execution>
 				</executions>
