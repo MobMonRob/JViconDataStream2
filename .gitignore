@@ -1,13 +1,17 @@
+#Automatisch generierte Verzeichnisse entfernen
 **/.vs
 **/x64
 **/x32
 **/Debug
 **/Release
+**/target
+
+#Inhalte von Verzeichnissen entfernen
+/JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/impl/**
+/JViconDataStream/src/main/natives/linux-amd64/**
+
+#Dateien entfernen
 /swig/*.cpp
 /swig/gen*.i
-/JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/api/impl/**
-/JViconDataStream/src/main/resources/lib/linux-x86_64/**
-**/target
-/Linux64/*.so
+/Linux64/libjViconDataStreamSDK.so
 **/.directory
-
