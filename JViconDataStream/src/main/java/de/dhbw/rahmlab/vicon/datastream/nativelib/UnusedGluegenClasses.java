@@ -24,7 +24,7 @@ import java.util.Set;
  *
  * @author fabian
  */
-public class UnusedClasses {
+public class UnusedGluegenClasses {
 
 	public static void start() {
 		List<JavaClass> allClasses = get_AllClasses("/home/fabian/Schreibtisch/JViconDataStream2/JViconDataStream/src/main/java/");
@@ -34,9 +34,7 @@ public class UnusedClasses {
 			.filter(cl -> !cl.getCanonicalName().startsWith("de.dhbw."))
 			.collect(Collectors.toCollection(ArrayList::new));
 
-		Map<String, JavaClass> allNamesAndClasses = get_nameToClass(allClasses);
-
-		Set<String> usedImports = get_usedImports(allNamesAndClasses, firstImports);
+		Set<String> usedImports = get_usedImports(allClasses, firstImports);
 		List<String> unusedClasses = get_unusedClasses(allClasses, usedImports);
 
 		System.out.println("-------------");
@@ -88,7 +86,9 @@ public class UnusedClasses {
 		return importString;
 	}
 
-	private static Set<String> get_usedImports(Map<String, JavaClass> allNamesAndClasses, List<String> firstImports) {
+	private static Set<String> get_usedImports(List<JavaClass> allClasses, List<String> firstImports) {
+		Map<String, JavaClass> nameOfClass = get_nameOfClass(allClasses);
+
 		Set<String> newImports = new HashSet();
 		Set<String> processedImports = new HashSet();
 
@@ -99,7 +99,7 @@ public class UnusedClasses {
 
 			List<String> currentImports = newImports
 				.stream() //List<String>
-				.map(importString -> allNamesAndClasses.getOrDefault(importString, new DefaultJavaClass("empty"))) //List<JavaClass>
+				.map(importString -> nameOfClass.getOrDefault(importString, new DefaultJavaClass("empty"))) //List<JavaClass>
 				.map(cl -> cl.getSource()) //List<List<JavaSource>>
 				.filter(Objects::nonNull)
 				.map(src -> src.getImports()) //List<List<String>>
@@ -138,8 +138,8 @@ public class UnusedClasses {
 		return classesList;
 	}
 
-	private static Map<String, JavaClass> get_nameToClass(List<JavaClass> allClasses) {
-		HashMap<String, JavaClass> nameToClass = new HashMap();
+	private static Map<String, JavaClass> get_nameOfClass(List<JavaClass> allClasses) {
+		HashMap<String, JavaClass> nameOfClass = new HashMap();
 
 		List<String> allClassesNames = allClasses
 			.stream()
@@ -149,9 +149,9 @@ public class UnusedClasses {
 		assert allClasses.size() == allClassesNames.size();
 
 		for (int i = 0; i < allClasses.size(); ++i) {
-			nameToClass.put(allClassesNames.get(i), allClasses.get(i));
+			nameOfClass.put(allClassesNames.get(i), allClasses.get(i));
 		}
 
-		return nameToClass;
+		return nameOfClass;
 	}
 }
