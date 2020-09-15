@@ -11,7 +11,7 @@ import com.jogamp.common.util.RunnableExecutor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Test1DynLibBundleInfo implements DynamicLibraryBundleInfo {
+public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
 
 	private static final List<String> glueLibNames;
 
@@ -20,7 +20,7 @@ public class Test1DynLibBundleInfo implements DynamicLibraryBundleInfo {
 		glueLibNames.add("jViconDataStreamSDK");
 	}
 
-	protected Test1DynLibBundleInfo() {
+	protected JViconDataStreamBundleInfo() {
 	}
 
 	/**
@@ -64,6 +64,7 @@ public class Test1DynLibBundleInfo implements DynamicLibraryBundleInfo {
 	public final List<List<String>> getToolLibNames() {
 		final List<List<String>> libNamesList = new ArrayList<List<String>>();
 
+		/*
 		final List<String> libNames = new ArrayList<String>();
 		{
 			// this is the default AL lib name, according to the spec
@@ -71,6 +72,8 @@ public class Test1DynLibBundleInfo implements DynamicLibraryBundleInfo {
 			libNames.add("jViconDataStreamSDK"); // windows, OSX
 		}
 		libNamesList.add(libNames);
+		 */
+		libNamesList.add(glueLibNames);
 
 		return libNamesList;
 	}

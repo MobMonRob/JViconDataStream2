@@ -22,7 +22,7 @@ public class NativeLibLoader {
 	private static void loadActually() {
 		//System.loadLibrary("jViconDataStreamSDK");
 
-		dlb = new DynamicLibraryBundle(new Test1DynLibBundleInfo());
+		dlb = new DynamicLibraryBundle(new JViconDataStreamBundleInfo());
 		if (!dlb.isLibComplete()) {
 			System.out.println("Native lib loading failed");
 		} else {
