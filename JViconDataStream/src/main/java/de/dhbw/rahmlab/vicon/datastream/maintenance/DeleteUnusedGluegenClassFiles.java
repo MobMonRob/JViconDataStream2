@@ -6,7 +6,10 @@
 package de.dhbw.rahmlab.vicon.datastream.maintenance;
 
 import de.dhbw.rahmlab.vicon.datastream.maintenance.UnusedGluegenClasses;
+import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,8 +22,9 @@ public class DeleteUnusedGluegenClassFiles {
 
 		System.out.println("-------------");
 		System.out.println("---UnusedClasses:");
-		unusedClassesNames.forEach(s -> System.out.println(s));
+		//unusedClassesNames.forEach(s -> System.out.println(s));
 
-		//Class.forName("com.jogamp.common.net.UriQueryProps").getProtectionDomain().getCodeSource().getLocation().getPath();
+		//System.out.println(bundleInfo.getSource().getURL());
+
 	}
 }

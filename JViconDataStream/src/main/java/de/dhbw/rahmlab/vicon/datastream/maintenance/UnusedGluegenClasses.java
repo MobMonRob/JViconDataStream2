@@ -41,6 +41,10 @@ public class UnusedGluegenClasses {
 	}
 
 	private static List<String> get_firstImports(List<JavaClass> allClasses, String startClass) {
+		
+		//Hier die Klassen unbedingt behalten!!
+		
+		
 		List<JavaClass> bundleInfos = allClasses
 			.stream()
 			.filter(cl -> cl.getCanonicalName()
