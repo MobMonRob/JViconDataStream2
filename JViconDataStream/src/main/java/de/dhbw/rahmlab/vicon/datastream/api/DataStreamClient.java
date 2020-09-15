@@ -1,5 +1,6 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
+import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconString;
 import de.dhbw.rahmlab.vicon.datastream.impl.Client;
 import de.dhbw.rahmlab.vicon.datastream.impl.DeviceType_Enum;

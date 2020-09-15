@@ -4,7 +4,7 @@ package de.dhbw.rahmlab.vicon.datastream.test;
 import de.dhbw.rahmlab.vicon.datastream.api.Version;
 import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
  */
-import de.dhbw.rahmlab.vicon.datastream.api.NativeLibLoader;
+import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 
 /**
  *

@@ -13,6 +13,6 @@
 #Dateien entfernen
 /swig/*.cpp
 /swig/gen*.i
-/Linux64/*.so
+/Linux64/libjViconDataStreamSDK.so
 **/.directory
 
