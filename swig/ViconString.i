@@ -1,3 +1,7 @@
+%ignore ViconDataStreamSDK::CPP::String;
+%ignore ViconDataStreamSDK::CPP::IStringFactory;
+%ignore ViconDataStreamSDK::CPP::operator<<;
+
 namespace ViconDataStreamSDK
 {
 namespace CPP
@@ -136,4 +140,3 @@ class String;
 
 }
 }
-

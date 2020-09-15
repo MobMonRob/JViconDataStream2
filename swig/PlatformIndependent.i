@@ -1,5 +1,5 @@
 %module ViconDataStreamSDKSwig;
-//Wichtig: Modul muss anders heiﬂen, als die Namespaces! Sonst gibt es den Namen als Klasse (wegen dem Modul) und als Namespace. Das gibt Probleme.
+//Wichtig: Modul muss anders heissen, als die Namespaces! Sonst gibt es den Namen als Klasse (wegen dem Modul) und als Namespace. Das gibt Probleme.
 
 //%feature("nspace");
 //Muss unbedingt vor den Template Instanzierungen stehen, damit die zugreifbar bleiben.
@@ -10,14 +10,11 @@
 //SWIG_JAVABODY_METHODS(public, public, SWIGTYPE)
 
 %include "std_shared_ptr.i";
-%include "std_string.i"; //Auskommentieren, um leichter zu unterscheiden zwischen Verwendung std::string und ViconString
+%include "std_string.i";
 %include "arrays_java.i";
 %include "std_vector.i"
 
 %include "./ViconString.i"
-%ignore ViconDataStreamSDK::CPP::String;
-%ignore ViconDataStreamSDK::CPP::IStringFactory;
-%ignore ViconDataStreamSDK::CPP::operator<<;
 
 %rename (Direction_Enum) ViconDataStreamSDK::CPP::Direction::Enum;
 %rename (ServerOrientation_Enum) ViconDataStreamSDK::CPP::ServerOrientation::Enum;
@@ -31,4 +28,3 @@
 %template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
 %template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
 %template(SharedPtrVectorUchar) std::shared_ptr<std::vector<unsigned char>>; //Gebraucht von Output_GetVideoFrame
-
