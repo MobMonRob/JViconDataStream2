@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.dhbw.rahmlab.vicon.datastream.nativelib;
+package de.dhbw.rahmlab.vicon.datastream.maintenance;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class UnusedGluegenClasses {
 
-	public static void start() {
+	public static List<String> get_unusedGluegenClassesNames() {
 		List<JavaClass> allClasses = get_AllClasses("/home/fabian/Schreibtisch/JViconDataStream2/JViconDataStream/src/main/java/");
 		List<String> firstImports = get_firstImports(allClasses, "JViconDataStreamBundleInfo");
 		allClasses = allClasses
@@ -35,11 +35,9 @@ public class UnusedGluegenClasses {
 			.collect(Collectors.toCollection(ArrayList::new));
 
 		Set<String> usedImports = get_usedImports(allClasses, firstImports);
-		List<String> unusedClasses = get_unusedClasses(allClasses, usedImports);
+		List<String> unusedClassesNames = get_unusedClassesNames(allClasses, usedImports);
 
-		System.out.println("-------------");
-		System.out.println("---UnusedClasses:");
-		unusedClasses.forEach(s -> System.out.println(s));
+		return unusedClassesNames;
 	}
 
 	private static List<String> get_firstImports(List<JavaClass> allClasses, String startClass) {
@@ -62,7 +60,7 @@ public class UnusedGluegenClasses {
 		return firstImports;
 	}
 
-	private static List<String> get_unusedClasses(List<JavaClass> allClasses, Set<String> usedImports) {
+	private static List<String> get_unusedClassesNames(List<JavaClass> allClasses, Set<String> usedImports) {
 		Set<String> allClassesNames = allClasses
 			.stream() //List<JavaClass>
 			.map(cl -> cl.getCanonicalName()) //List<String>
