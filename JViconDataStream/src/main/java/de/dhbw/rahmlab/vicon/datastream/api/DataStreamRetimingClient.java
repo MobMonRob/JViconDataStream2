@@ -1,16 +1,17 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
-import de.dhbw.rahmlab.vicon.datastream.api.impl.ViconString;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_Connect;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_Disconnect;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_EnableLightweightSegmentData;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetSubjectCount;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetSubjectName;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetSubjectRootSegmentName;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_UpdateFrame;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_WaitForFrame;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Result_Enum;
-import de.dhbw.rahmlab.vicon.datastream.api.impl.RetimingClient;
+import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
+import de.dhbw.rahmlab.vicon.datastream.impl.ViconString;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_Connect;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_Disconnect;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableLightweightSegmentData;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSubjectCount;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSubjectName;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSubjectRootSegmentName;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_UpdateFrame;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_WaitForFrame;
+import de.dhbw.rahmlab.vicon.datastream.impl.Result_Enum;
+import de.dhbw.rahmlab.vicon.datastream.impl.RetimingClient;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
