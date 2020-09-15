@@ -4,7 +4,7 @@ package de.dhbw.rahmlab.vicon.datastream.test;
 import de.dhbw.rahmlab.vicon.datastream.api.Version;
 import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
  */
-import de.dhbw.rahmlab.vicon.datastream.api.NativeLibLoader;
+import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 
 /**
  *
@@ -21,7 +21,7 @@ public class SimpleTest {
 	}
 
 	public static void viconStringTest() {
-		de.dhbw.rahmlab.vicon.datastream.api.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.api.impl.ViconStringTest();
+		de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest();
 		String viconString = viconStringTest.getViconStringHallo();
 		String charString = viconStringTest.getCharStringHallo();
 		String stdString = viconStringTest.getStdStringHallo();
@@ -34,7 +34,6 @@ public class SimpleTest {
 	public static void versionTest() {
 		DataStreamClient client = new DataStreamClient();
 		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
-
 		Version version = client.getVersion();
 		String stringMajor = String.valueOf(version.getMajor());
 		String stringMinor = String.valueOf(version.getMinor());
