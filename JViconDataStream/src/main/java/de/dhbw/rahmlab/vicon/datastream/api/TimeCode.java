@@ -7,12 +7,15 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetTimecode;
  * 
  * <p>If the stream is valid but timecode is not available the Output will be 
  * Result.Success and the Standard will be None.</p>
+ * 
  * @see getFrame
  * @see getFrameNumber
  * @author Oliver Rettig
  */
 public class TimeCode {
+    
     private final Output_GetTimecode timeCode;
+    
     public TimeCode(Output_GetTimecode timeCode){
         this.timeCode = timeCode;
     }
