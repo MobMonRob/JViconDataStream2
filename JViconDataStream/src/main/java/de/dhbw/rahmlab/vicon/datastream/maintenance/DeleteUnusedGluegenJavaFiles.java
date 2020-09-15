@@ -22,7 +22,7 @@ public class DeleteUnusedGluegenJavaFiles {
 
 		System.out.println("-------------");
 		System.out.println("---UnusedClasses:");
-		unusedClasses.forEach(cl -> System.out.println(cl.getCanonicalName()));
+		//unusedClasses.forEach(cl -> System.out.println(cl.getCanonicalName()));
 
 		List<String> unusedPath = unusedClasses
 			.stream()
