@@ -40,7 +40,7 @@ public class UnusedClasses {
 		List<String> unusedClasses = get_unusedClasses(allClasses, usedImports);
 
 		System.out.println("-------------");
-		System.out.println("---UnusedImports:");
+		System.out.println("---UnusedClasses:");
 		unusedClasses.forEach(s -> System.out.println(s));
 	}
 
