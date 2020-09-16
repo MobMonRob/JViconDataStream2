@@ -8,7 +8,6 @@ package de.dhbw.rahmlab.vicon.datastream.maintenance;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +47,15 @@ public class UnusedGluegenClasses {
             "com.jogamp.common.os.DynamicLibraryBundle",
             "com.jogamp.common.util.cache.TempFileCache",
             "com.jogamp.common.util.CustomCompress",
-            "com.jogamp.common.util.InterruptSource"
+            "com.jogamp.common.util.InterruptSource",
+            "com.jogamp.common.net.AssetURLStreamHandler",
+            "com.jogamp.common.net.GenericURLStreamHandlerFactory",
+            "com.jogamp.common.nio.PointerBuffer",
+            "com.jogamp.common.os.DynamicLinkerImpl",
+            "jogamp.common.os.elf.Ehdr_p1",
+            "jogamp.common.os.elf.SectionHeader",
+            "jogamp.common.os.elf.Section",
+            "jogamp.common.os.com.jogamp.common.os.DynamicLinkerImpl"
         };
 
         firstImports.addAll(Arrays.asList(definitelyNeededClassesHint));
