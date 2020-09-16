@@ -36,7 +36,6 @@ public class SimpleTest {
 	public static void versionTest() {
 		DataStreamClient client = new DataStreamClient();
 		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
-
 		Version version = client.getVersion();
 		String stringMajor = String.valueOf(version.getMajor());
 		String stringMinor = String.valueOf(version.getMinor());

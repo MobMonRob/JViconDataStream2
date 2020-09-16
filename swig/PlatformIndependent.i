@@ -1,5 +1,5 @@
 %module ViconDataStreamSDKSwig;
-//Wichtig: Modul muss anders heiﬂen, als die Namespaces! Sonst gibt es den Namen als Klasse (wegen dem Modul) und als Namespace. Das gibt Probleme.
+//Wichtig: Modul muss anders heissen, als die Namespaces! Sonst gibt es den Namen als Klasse (wegen dem Modul) und als Namespace. Das gibt Probleme.
 
 //%feature("nspace");
 //Muss unbedingt vor den Template Instanzierungen stehen, damit die zugreifbar bleiben.
@@ -28,4 +28,3 @@
 %template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
 %template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
 %template(SharedPtrVectorUchar) std::shared_ptr<std::vector<unsigned char>>; //Gebraucht von Output_GetVideoFrame
-

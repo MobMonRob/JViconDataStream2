@@ -870,6 +870,22 @@ public class DataStreamClient {
                 throw new RuntimeException("Client is not connected!");
         }
     }
+    
+    /**
+     * Obtains video data for the specified camera.
+     * 
+     * @param cameraName the name of the camera
+     * @return 
+     */
+    public Frame getVideoFrame(String cameraName){
+        Output_GetVideoFrame result = client.GetVideoFrame(cameraName);
+        if (result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("getVideoFrame(): Client is not connected!");
+        } else if (result.getResult().equals(Result_Enum.InvalidCameraName)){
+            throw new RuntimeException("getVideoFrame() with invalid camera name \""+cameraName+"\"!");
+        }
+        return new Frame(result);
+    }
 
     /**
      * Disable debug data in the Vicon DataStream.
