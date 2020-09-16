@@ -19,7 +19,7 @@ public class SimpleTest {
 
     public static void main(String argv[]) throws InterruptedException {
         viconStringTest();
-        DeleteUnusedGluegenJavaFiles.start();
+        //DeleteUnusedGluegenJavaFiles.delete();
     }
 
     public static void viconStringTest() {

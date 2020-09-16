@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  */
 public class DeleteUnusedGluegenJavaFiles {
 
-    public static void start() {
+    public static void delete() {
         List<JavaClass> unusedClasses = UnusedGluegenClasses.get_unusedGluegenClasses();
 
         System.out.println("-------------");
