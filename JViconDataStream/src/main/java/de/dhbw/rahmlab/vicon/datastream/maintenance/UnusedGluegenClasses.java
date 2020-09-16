@@ -8,7 +8,9 @@ package de.dhbw.rahmlab.vicon.datastream.maintenance;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+//qdox JavaDoc: https://javadoc.io/doc/com.thoughtworks.qdox/qdox/latest/index.html
 /**
  * Der Sinn dieser Klasse ist es, automatisiert herauszufinden, welche Klassen
  * von jogamp gluegen nicht notwendig sind.
@@ -27,7 +30,7 @@ public class UnusedGluegenClasses {
 
     public static List<JavaClass> get_unusedGluegenClasses() {
         List<JavaClass> allClasses = get_AllClasses("/home/fabian/Schreibtisch/JViconDataStream2/JViconDataStream/src/main/java/");
-        List<String> firstImports = get_firstImports(allClasses, "JViconDataStreamBundleInfo");
+        List<String> firstImports = get_firstClassImports(allClasses, "JViconDataStreamBundleInfo");
         allClasses = allClasses
             .stream()
             .filter(cl -> !cl.getCanonicalName().startsWith("de.dhbw."))
@@ -35,22 +38,37 @@ public class UnusedGluegenClasses {
 
         Map<String, JavaClass> namesOfClasses = get_namesOfClasses(allClasses);
 
+        String[] definitelyNeededClassesHint = new String[]{
+            "jogamp.common.os.elf.IOUtils",
+            "jogamp.common.os.UnixDynamicLinkerImpl",
+            "com.jogamp.common.net.PiggybackURLContext",
+            "com.jogamp.common.nio.NativeBuffer",
+            "com.jogamp.common.os.DynamicLookupHelper",
+            "com.jogamp.common.os.DynamicLinker",
+            "com.jogamp.common.os.DynamicLibraryBundle",
+            "com.jogamp.common.util.cache.TempFileCache",
+            "com.jogamp.common.util.CustomCompress",
+            "com.jogamp.common.util.InterruptSource"
+        };
+
+        firstImports.addAll(Arrays.asList(definitelyNeededClassesHint));
+
         Set<String> usedImports = get_usedImports(namesOfClasses, firstImports);
         List<JavaClass> unusedClasses = get_unusedClasses(namesOfClasses, usedImports);
 
         return unusedClasses;
     }
 
-    private static List<String> get_firstImports(List<JavaClass> allClasses, String startClass) {
+    private static List<String> get_firstClassImports(List<JavaClass> allClasses, String firstClassName) {
         List<JavaClass> bundleInfos = allClasses
             .stream()
-            .filter(cl -> cl.getCanonicalName().contains(startClass))
+            .filter(cl -> cl.getCanonicalName().contains(firstClassName))
             .collect(Collectors.toCollection(ArrayList::new));
 
         assert bundleInfos.size() == 1;
         JavaClass bundleInfo = bundleInfos.get(0);
 
-        List<String> firstImports = bundleInfo
+        List<String> rootClassImports = bundleInfo
             .getSource()
             .getImports()
             .stream()
@@ -58,7 +76,7 @@ public class UnusedGluegenClasses {
             .filter(s -> !s.startsWith("java"))
             .collect(Collectors.toCollection(ArrayList::new));
 
-        return firstImports;
+        return rootClassImports;
     }
 
     private static List<JavaClass> get_unusedClasses(Map<String, JavaClass> namesOfClasses, Set<String> usedImports) {
@@ -118,9 +136,9 @@ public class UnusedGluegenClasses {
         return sumList;
     }
 
-    private static List<JavaClass> get_AllClasses(String fileFullPath) {
+    private static List<JavaClass> get_AllClasses(String javaFolderPath) {
         JavaProjectBuilder builder = new JavaProjectBuilder();
-        builder.addSourceTree(new File(fileFullPath));
+        builder.addSourceTree(new File(javaFolderPath));
 
         List<List<JavaClass>> classesListSquared = builder
             .getSources() //<List<JavaSource>>
