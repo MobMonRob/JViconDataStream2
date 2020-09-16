@@ -13,26 +13,26 @@ import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
  */
 public class SimpleTest {
 
-	static {
-		NativeLibLoader.load();
-	}
+    static {
+        NativeLibLoader.load();
+    }
 
-	public static void main(String argv[]) throws InterruptedException {
-		viconStringTest();
-		DeleteUnusedGluegenJavaFiles.start();
-	}
+    public static void main(String argv[]) throws InterruptedException {
+        viconStringTest();
+        DeleteUnusedGluegenJavaFiles.start();
+    }
 
-	public static void viconStringTest() {
-		de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest();
-		String viconString = viconStringTest.getViconStringHallo();
-		String charString = viconStringTest.getCharStringHallo();
-		String stdString = viconStringTest.getStdStringHallo();
-		System.out.println("viconString: " + viconString);
-		System.out.println("charString: " + charString);
-		System.out.println("stdString: " + stdString);
-	}
+    public static void viconStringTest() {
+        de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest();
+        String viconString = viconStringTest.getViconStringHallo();
+        String charString = viconStringTest.getCharStringHallo();
+        String stdString = viconStringTest.getStdStringHallo();
+        System.out.println("viconString: " + viconString);
+        System.out.println("charString: " + charString);
+        System.out.println("stdString: " + stdString);
+    }
 
-	/*
+    /*
 	public static void versionTest() {
 		DataStreamClient client = new DataStreamClient();
 		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
@@ -43,5 +43,5 @@ public class SimpleTest {
 		String completeVersion = stringMajor + "." + stringMinor + "." + stringPoint;
 		System.out.println("Vicon SDK Version: " + completeVersion);
 	}
-	 */
+     */
 }

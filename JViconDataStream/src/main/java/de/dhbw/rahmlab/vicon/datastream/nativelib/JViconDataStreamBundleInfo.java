@@ -75,12 +75,12 @@ public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
 
     @Override
     public final List<String> getToolGetProcAddressFuncNameList() {
-            return null;
+        return null;
     }
 
     @Override
     public final long toolGetProcAddress(final long toolGetProcAddressHandle, final String funcName) {
-       return 0;
+        return 0;
     }
 
     @Override

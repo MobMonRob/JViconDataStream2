@@ -12,8 +12,8 @@ public class NativeLibLoader {
 
     public static void load() {
         if (!isLoaded) {
-                loadActually();
-                isLoaded = true;
+            loadActually();
+            isLoaded = true;
         }
     }
 
@@ -22,9 +22,9 @@ public class NativeLibLoader {
 
         dlb = new DynamicLibraryBundle(new JViconDataStreamBundleInfo());
         if (!dlb.isLibComplete()) {
-                System.out.println("Native lib loading failed");
+            System.out.println("Native lib loading failed");
         } else {
-                System.out.println("Native lib loading succeeded");
+            System.out.println("Native lib loading succeeded");
         }
     }
 

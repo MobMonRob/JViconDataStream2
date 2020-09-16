@@ -17,21 +17,21 @@ import java.util.stream.Collectors;
  */
 public class DeleteUnusedGluegenJavaFiles {
 
-	public static void start() {
-		List<JavaClass> unusedClasses = UnusedGluegenClasses.get_unusedGluegenClasses();
+    public static void start() {
+        List<JavaClass> unusedClasses = UnusedGluegenClasses.get_unusedGluegenClasses();
 
-		System.out.println("-------------");
-		System.out.println("---UnusedClasses:");
-		//unusedClasses.forEach(cl -> System.out.println(cl.getCanonicalName()));
+        System.out.println("-------------");
+        System.out.println("---UnusedClasses:");
+        //unusedClasses.forEach(cl -> System.out.println(cl.getCanonicalName()));
 
-		List<String> unusedPath = unusedClasses
-			.stream()
-			.map(cl -> cl.getSource().getURL().getPath())
-			.collect(Collectors.toCollection(ArrayList::new));
+        List<String> unusedPath = unusedClasses
+            .stream()
+            .map(cl -> cl.getSource().getURL().getPath())
+            .collect(Collectors.toCollection(ArrayList::new));
 
-		for (String path : unusedPath) {
-			File file = new File(path);
-			//file.delete();
-		}
-	}
+        for (String path : unusedPath) {
+            File file = new File(path);
+            //file.delete();
+        }
+    }
 }
