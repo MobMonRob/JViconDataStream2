@@ -33,5 +33,7 @@ public class DeleteUnusedGluegenJavaFiles {
             File file = new File(path);
             //file.delete();
         }
+
+        PatchGluegenClasses.patch();
     }
 }
