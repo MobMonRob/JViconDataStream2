@@ -126,14 +126,15 @@ import java.util.logging.Logger;
  * • Integers will be set to zero.
  * • Doubles will be set to zero.
  * • Strings will be set to zero length.
- * • When the output argument is an array, all elements are set in this manner.
+ * • When the output argument is an array, all elements are set in this manner.<p>
  *
  * By default the global coordinate system matches the server application; Z-Up, 
- * Y-Left. This can be changed by using Client::SetAxisMapping.
+ * Y-Left. This can be changed by using setAxisMapping.<p>
  *
- * TODO
+ * TODO<p>
  * - Kommentare vervollständigen, Ex überprüfen
  * - throw messages in String const auslagern
+ * - bis getCameraCount sind ist die Existenz der Methoden überprüft
  */
 public class DataStreamClient {
 
@@ -392,7 +393,7 @@ public class DataStreamClient {
     /**
      * Enable debug data in the Vicon DataStream.
      *
-     * In order to receive debug data, call this function on startup, after
+     * <p>In order to receive debug data, call this function on startup, after
      * connecting to the server.<p>
      *
      * @see isDebugDataEnabled
@@ -402,7 +403,7 @@ public class DataStreamClient {
     public void enableDebugData(){
         Output_EnableDebugData result = client.EnableDebugData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -426,7 +427,7 @@ public class DataStreamClient {
         Output_EnableMarkerData result = client.EnableMarkerData();
         //System.out.println("Enable marker data: "+result.getResult().toString());
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -453,7 +454,7 @@ public class DataStreamClient {
         Output_EnableDeviceData result = client.EnableDeviceData();
         //System.out.println("Enable marker data: "+result.getResult().toString());
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -476,7 +477,7 @@ public class DataStreamClient {
     public void enableMarkerRayData() {
         Output_EnableMarkerRayData result = client.EnableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -508,10 +509,11 @@ public class DataStreamClient {
     public void enableSegmentData() {
         Output_EnableSegmentData result = client.EnableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
+    
     /**
      * Disable kinematic segment data in the Vicon DataStream.
      *
@@ -556,7 +558,7 @@ public class DataStreamClient {
     public void disableSegmentData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -595,7 +597,7 @@ public class DataStreamClient {
     public void disableUnlabeledMarkerData() {
         Output_DisableUnlabeledMarkerData result = client.DisableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -614,7 +616,7 @@ public class DataStreamClient {
     public void disableMarkerRayData() {
         Output_DisableMarkerRayData result = client.DisableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -636,7 +638,7 @@ public class DataStreamClient {
     public void disableDeviceData() {
         Output_DisableDeviceData result = client.DisableDeviceData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+           throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -678,7 +680,7 @@ public class DataStreamClient {
     public void disableVideoData() {
         Output_DisableVideoData result = client.DisableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
     
@@ -744,7 +746,7 @@ public class DataStreamClient {
     public void enableLightweightSegmentData() {
         Output_EnableLightweightSegmentData result = client.EnableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -782,7 +784,7 @@ public class DataStreamClient {
     public void enableUnlabeledMarkerData() {
         Output_EnableUnlabeledMarkerData result = client.EnableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -3040,7 +3042,7 @@ public class DataStreamClient {
     public void enableCentroidData() {
         Output_EnableCentroidData result = client.EnableCentroidData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("enableCentroidData but client is not connected!");
+            throw new RuntimeException("enableCentroidData but client is not connected!");
         }
     }
 
@@ -3057,7 +3059,7 @@ public class DataStreamClient {
     public void enableGreyscaleData() {
         Output_EnableGreyscaleData result = client.EnableGreyscaleData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+           throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -3074,7 +3076,7 @@ public class DataStreamClient {
     public void enableVideoData() {
         Output_EnableVideoData result = client.EnableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -3399,7 +3401,7 @@ public class DataStreamClient {
             throw new RuntimeException("configureWireless() invoked but the OS does not support this function1");
         } else if (result.getResult() == Result_Enum.ConfigurationFailed){
             throw new RuntimeException("configurateWireless failed: \""+result.getError().toString()+"\"!");
-        }
+        } 
     }
 
     public void delete(){
