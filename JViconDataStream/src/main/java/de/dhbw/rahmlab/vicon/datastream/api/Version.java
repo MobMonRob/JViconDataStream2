@@ -5,7 +5,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVersion;
 /**
  * @author Oliver Rettig
  */
-public class Version {
+public class Version{
     
     private final Output_GetVersion version;
     
@@ -23,6 +23,7 @@ public class Version {
     public long getMajor(){
         return version.getMajor();
     }
+    
     /**
      * The minor version number.
      * 

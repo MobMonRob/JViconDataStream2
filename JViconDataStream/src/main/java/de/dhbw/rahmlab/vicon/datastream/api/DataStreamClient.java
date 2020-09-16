@@ -1,7 +1,7 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
-import de.dhbw.rahmlab.vicon.datastream.impl.ViconString;
 import de.dhbw.rahmlab.vicon.datastream.impl.Client;
 import de.dhbw.rahmlab.vicon.datastream.impl.DeviceType_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.Direction_Enum;
@@ -126,196 +126,22 @@ import java.util.logging.Logger;
  * • Integers will be set to zero.
  * • Doubles will be set to zero.
  * • Strings will be set to zero length.
- * • When the output argument is an array, all elements are set in this manner.
+ * • When the output argument is an array, all elements are set in this manner.<p>
  *
  * By default the global coordinate system matches the server application; Z-Up, 
- * Y-Left. This can be changed by using Client::SetAxisMapping.
+ * Y-Left. This can be changed by using setAxisMapping.<p>
  *
- * TODO
+ * TODO<p>
  * - Kommentare vervollständigen, Ex überprüfen
  * - throw messages in String const auslagern
+ * - bis getCameraCount sind ist die Existenz der Methoden überprüft
  */
 public class DataStreamClient {
 
     private final Client client;
 
-    private final Map<String, ViconString> subjectNames = new HashMap<>();
-    private final Map<String, ViconString> segmentNames = new HashMap<>();
-    private final Map<String, ViconString> markerNames = new HashMap<>();
-    private final Map<String, ViconString> frameRateNames = new HashMap<>();
-    private final Map<String, ViconString> deviceNames = new HashMap<>();
-    private final Map<String, Map<String, ViconString>> deviceOutputNames = new HashMap<>();
-    private final Map<String, ViconString> latencySampleNames = new HashMap<>();
-
     static {
         NativeLibLoader.load();	
-    }
-
-    /**
-     * Scan subject names.
-     *
-     * @throws RuntimeException if no frame is available or the client is not
-     * connected
-     */
-    private void scanSubjectNames(){
-        subjectNames.clear();
-        long subjects = getSubjectCount();
-        for (int i=0;i<subjects;i++){
-            Output_GetSubjectName result = client.GetSubjectName(i);
-            if (result.getResult() == Result_Enum.NoFrame) {
-                    throw new RuntimeException("getSubjectName() but no frame available!");
-            }
-            if (result.getResult() == Result_Enum.NotConnected) {
-                    throw new RuntimeException("getSubjectName() but client is not connected!!");
-            }
-            ViconString subjectNameViconString = result.getSubjectName();
-            String SubjectName = subjectNameViconString.toStdString(); //toString();
-            subjectNames.put(SubjectName, subjectNameViconString);
-        }
-    }
-
-    /**
-     * Scan segment names.
-     */
-    private void scanSegmentNames() {
-        segmentNames.clear();
-        long subjects = getSubjectCount();
-        for (int j=0;j<subjects;j++){
-            String subjectName = getSubjectName(j);
-            ViconString subjecNameAsViconString = convertSubjectName(subjectName);
-            long segments = getSegmentCount(subjectName);
-            for (int i = 0; i < segments; i++) {
-                Output_GetSegmentName result = client.GetSegmentName(subjecNameAsViconString, i);
-                if (result.getResult() == Result_Enum.NotConnected) {
-                        throw new RuntimeException("getSegmentName() but client is not connected!!");
-                }
-                if (result.getResult() == Result_Enum.InvalidIndex) {
-                        throw new RuntimeException("getSegmentName() but index is invalid!");
-                }
-                ViconString segmentNameViconString = result.getSegmentName();
-                String segmentName = segmentNameViconString.toStdString(); //toString();
-                segmentNames.put(segmentName, segmentNameViconString);
-                System.out.println("added segment \"" + segmentName + "\"");
-            }
-        }
-    }
-
-    /**
-     * Scan frameRate names.
-     *
-     */
-    private void scanFrameRateNames() {
-        frameRateNames.clear();
-        long frameRateCount = this.getFrameRateCount();
-        for (int j = 0; j < frameRateCount; j++) {
-                Output_GetFrameRateName result = client.GetFrameRateName(j);
-                if (result.getResult() == Result_Enum.NotConnected) {
-                        throw new RuntimeException("getFrameRateName() but client is not connected!!");
-                }
-                if (result.getResult() == Result_Enum.InvalidIndex) {
-                        throw new RuntimeException("getFrameRateName() but index is invalid!");
-                }
-                ViconString frameRateNameAsViconString = result.getName();
-                String frameRateName = frameRateNameAsViconString.toStdString();
-                frameRateNames.put(frameRateName, frameRateNameAsViconString);
-                System.out.println("added frameRateName \"" + frameRateName + "\"");
-        }
-    }
-
-    private void scanLatencySampleNames() {
-        latencySampleNames.clear();
-        long latencySampleNamesCount = getLatencySampleCount();
-        for (int i = 0; i < latencySampleNamesCount; i++) {
-            Output_GetLatencySampleName result = client.GetLatencySampleName(i);
-            if (result.getResult() == Result_Enum.NotConnected) {
-                    throw new RuntimeException("getLatencySampleName() but client is not connected!!");
-            }
-            if (result.getResult() == Result_Enum.InvalidIndex) {
-                    throw new RuntimeException("getLatencySampleName() but index is invalid!");
-            }
-            ViconString latencySampleNameAsViconString = result.getName();
-            String latencySampleName = latencySampleNameAsViconString.toStdString();
-            latencySampleNames.put(latencySampleName, latencySampleNameAsViconString);
-            System.out.println("added latencySampleName \"" + latencySampleName + "\"");
-        }
-    }
-
-    /**
-     * Scan device names.
-     *
-     * @throws RuntimeException if the client is not connected
-     * @throws IllegalArgumentException if the an invalid device index is
-     * selected.
-     */
-    private void scanDeviceNames() {
-        deviceNames.clear();
-        long deviceCount = getDeviceCount();
-        for (int j = 0; j < deviceCount; j++) {
-            Output_GetDeviceName result = client.GetDeviceName(j);
-            if (result.getResult() == Result_Enum.NotConnected) {
-                    throw new RuntimeException("getDeviceName() but client is not connected!!");
-            }
-            if (result.getResult() == Result_Enum.InvalidIndex) {
-                    throw new IllegalArgumentException("getDeviceName() but index is invalid!");
-            }
-            ViconString deviceNameAsViconString = result.getDeviceName();
-            String deviceName = deviceNameAsViconString.toStdString();
-            deviceNames.put(deviceName, deviceNameAsViconString);
-            System.out.println("added deviceName \"" + deviceName + "\"");
-        }
-    }
-
-    /**
-     * Scan device output names for all devices.
-     *
-     * @throws RuntimeException if the client is not connected or no frame is
-     * available
-     */
-    private void scanDeviceOutputNames() {
-        deviceOutputNames.clear();
-        for (String deviceName: deviceNames.keySet()) {
-            long deviceOutputCount = getDeviceOutputCount(deviceName);
-            Map<String, ViconString> outputNamesMap = deviceOutputNames.get(deviceName);
-            if (outputNamesMap == null) {
-                    outputNamesMap = new HashMap<>();
-                    deviceOutputNames.put(deviceName, outputNamesMap);
-            }
-            ViconString deviceNameAsViconString = convertDeviceName(deviceName);
-            for (int j = 0; j < deviceOutputCount; j++) {
-                Output_GetDeviceOutputName result = client.GetDeviceOutputName(deviceNameAsViconString, j);
-                if (result.getResult() == Result_Enum.NotConnected) {
-                        throw new RuntimeException("getDeviceOutputName() but client is not connected!!");
-                }
-                if (result.getResult() == Result_Enum.InvalidIndex) {
-                        throw new RuntimeException("getDeviceOutputName() but index is invalid!");
-                }
-                ViconString deviceOutputNameAsViconString = result.getDeviceOutputName();
-                String deviceOutputName = deviceOutputNameAsViconString.toStdString();
-                outputNamesMap.put(deviceOutputName, deviceOutputNameAsViconString);
-                System.out.println("added deviceOutputName \"" + deviceOutputName + "\" for device \"" + deviceName + "\"!");
-            }
-        }
-    }
-
-    /**
-     * Scan marker names.
-     *
-     */
-    private void scanMarkerNames() {
-        markerNames.clear();
-        long subjects = getSubjectCount();
-        for (int j = 0; j < subjects; j++) {
-            String subjectName = getSubjectName(j);
-            ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-            long markers = getMarkerCount(subjectName);
-            for (int i = 0; i < markers; i++) {
-                Output_GetMarkerName result = client.GetMarkerName(subjectNameAsViconString, i);
-                ViconString markerNameViconString = result.getMarkerName();
-                String markerName = markerNameViconString.toStdString(); //toString();
-                markerNames.put(markerName, markerNameViconString);
-                System.out.println("added marker \"" + markerName + "\"");
-            }
-        }
     }
 
     /**
@@ -342,7 +168,7 @@ public class DataStreamClient {
         int i = 0;
         while (!isConnected()) {
 
-            Output_Connect result = client.Connect(new ViconString(hostname));
+            Output_Connect result = client.Connect(hostname);
 
             //Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
             // tritt seltsamerweise auch für localhost ab und zu auf
@@ -372,13 +198,6 @@ public class DataStreamClient {
             }
         }
         getFrame(true);
-        scanSubjectNames();
-        scanSegmentNames();
-        scanMarkerNames();
-        scanFrameRateNames();
-        scanDeviceNames();
-        scanDeviceOutputNames();
-        scanLatencySampleNames();
     }
 
     /**
@@ -406,7 +225,7 @@ public class DataStreamClient {
         int i = 0;
         while (!isConnected()) {
 
-            Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(multicastHostname));
+            Output_ConnectToMulticast result = client.ConnectToMulticast(hostname, multicastHostname);
 
             // tritt seltsamerweise auch für localhost ab und zu auf
             if (result.getResult() == Result_Enum.InvalidHostName) {
@@ -433,13 +252,6 @@ public class DataStreamClient {
             }
         }
         getFrame(true);
-        scanSubjectNames();
-        scanSegmentNames();
-        scanMarkerNames();
-        scanFrameRateNames();
-        scanDeviceNames();
-        scanDeviceOutputNames();
-        scanLatencySampleNames();
     }
 
     /**
@@ -469,7 +281,7 @@ public class DataStreamClient {
     public boolean startTransmittingMulticast(String serverIP, String multicastIP) {
         boolean resultValue = true;
         Output_StartTransmittingMulticast result = client.StartTransmittingMulticast(
-                new ViconString(serverIP), new ViconString(multicastIP));
+                serverIP, multicastIP);
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("Client is not connected!");
         } else if (result.getResult() == Result_Enum.InvalidMulticastIP) {
@@ -573,15 +385,15 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new IllegalArgumentException("getDeviceOutputName() but deviceName is invalid!");
         }
-        ViconString deviceName = result.getDeviceName();
+        String deviceName = result.getDeviceName();
         DeviceType_Enum deviceType = result.getDeviceType();
-        return new String[]{deviceName.toStdString(), deviceType.toString()};
+        return new String[]{deviceName, deviceType.toString()};
     }
 
     /**
      * Enable debug data in the Vicon DataStream.
      *
-     * In order to receive debug data, call this function on startup, after
+     * <p>In order to receive debug data, call this function on startup, after
      * connecting to the server.<p>
      *
      * @see isDebugDataEnabled
@@ -591,7 +403,7 @@ public class DataStreamClient {
     public void enableDebugData(){
         Output_EnableDebugData result = client.EnableDebugData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -615,7 +427,7 @@ public class DataStreamClient {
         Output_EnableMarkerData result = client.EnableMarkerData();
         //System.out.println("Enable marker data: "+result.getResult().toString());
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -642,7 +454,7 @@ public class DataStreamClient {
         Output_EnableDeviceData result = client.EnableDeviceData();
         //System.out.println("Enable marker data: "+result.getResult().toString());
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -665,7 +477,7 @@ public class DataStreamClient {
     public void enableMarkerRayData() {
         Output_EnableMarkerRayData result = client.EnableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -697,10 +509,11 @@ public class DataStreamClient {
     public void enableSegmentData() {
         Output_EnableSegmentData result = client.EnableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
+    
     /**
      * Disable kinematic segment data in the Vicon DataStream.
      *
@@ -745,7 +558,7 @@ public class DataStreamClient {
     public void disableSegmentData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -784,7 +597,7 @@ public class DataStreamClient {
     public void disableUnlabeledMarkerData() {
         Output_DisableUnlabeledMarkerData result = client.DisableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -803,7 +616,7 @@ public class DataStreamClient {
     public void disableMarkerRayData() {
         Output_DisableMarkerRayData result = client.DisableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -825,7 +638,7 @@ public class DataStreamClient {
     public void disableDeviceData() {
         Output_DisableDeviceData result = client.DisableDeviceData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+           throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -867,7 +680,7 @@ public class DataStreamClient {
     public void disableVideoData() {
         Output_DisableVideoData result = client.DisableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
     
@@ -933,7 +746,7 @@ public class DataStreamClient {
     public void enableLightweightSegmentData() {
         Output_EnableLightweightSegmentData result = client.EnableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -971,7 +784,7 @@ public class DataStreamClient {
     public void enableUnlabeledMarkerData() {
         Output_EnableUnlabeledMarkerData result = client.EnableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -1266,7 +1079,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new RuntimeException("getFrameRateName() but index is invalid!");
         }
-        return result.getName().toStdString();
+        return result.getName();
     }
 
     /**
@@ -1280,7 +1093,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException if frameRateName does not exist
      */
     public double getFrameRateValue(String frameRateName) {
-        Output_GetFrameRateValue result = client.GetFrameRateValue(convertFrameRateName(frameRateName));
+        Output_GetFrameRateValue result = client.GetFrameRateValue(frameRateName);
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getFrameRateName() but client is not connected!!");
         }
@@ -1381,7 +1194,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getFrameRate() but client is not connected!!");
         }
-        return result.getName().toStdString();
+        return result.getName();
     }
 
     /**
@@ -1398,11 +1211,10 @@ public class DataStreamClient {
      * @return the duration of a named latency sample in seconds.
      */
     public double getLatencySampleValue(String latencySampleName) {
-        ViconString latencySampleNameAsViconString = convertLatencySampleName(latencySampleName);
-        if (latencySampleNameAsViconString == null) {
+        if (latencySampleName == null) {
                 throw new IllegalArgumentException("getLatencySampleValue(): Unknown latency sample name \"" + latencySampleName + "\"!");
         }
-        Output_GetLatencySampleValue result = client.GetLatencySampleValue(latencySampleNameAsViconString);
+        Output_GetLatencySampleValue result = client.GetLatencySampleValue(latencySampleName);
         if (result.getResult() == Result_Enum.NoFrame) {
                 throw new RuntimeException("getLatencySampleValue() invoked but no frame available!");
         }
@@ -1539,7 +1351,7 @@ public class DataStreamClient {
         }
         //String SubjectName = null;
         //if (result.getResult()==Result_Enum.Success){
-        String SubjectName = result.getSubjectName().toStdString(); //toString();
+        String SubjectName = result.getSubjectName(); //toString();
         //System.out.println("Get subject name: "+result.getResult().toString());
         return SubjectName;
     }
@@ -1562,7 +1374,7 @@ public class DataStreamClient {
      *
      */
     public String getSubjectRootSegmentName(String subjectName) {
-        Output_GetSubjectRootSegmentName result = client.GetSubjectRootSegmentName(convertSubjectName(subjectName));
+        Output_GetSubjectRootSegmentName result = client.GetSubjectRootSegmentName(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("GetSubjectRootSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1578,130 +1390,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new RuntimeException("GetSubjectRootSegmentName() but segmentIndex \"\" is invalid!");
         }
-        return result.getSegmentName().toStdString();
-    }
-
-    /**
-     * Convert subject name in a native lib usable object.
-     *
-     * @param subjectName name of the subject to convert into the corresponding
-     * Vicon String type.
-     * @return native lib representation of the given String.
-     * @throws IllegalArgumentException if the subject name is not known.
-     */
-    private ViconString convertSubjectName(String subjectName) {
-        ViconString subjectNameAsViconString = subjectNames.get(subjectName);
-        if (subjectNameAsViconString != null) {
-                return subjectNameAsViconString;
-        } else {
-                throw new IllegalArgumentException("Subject with name \"" + subjectName + "\" does not exist");
-        }
-    }
-
-    /**
-     * Convert segment name in a native lib usable object.
-     *
-     * @param segmentName name of the segment to convert into the corresponding
-     * Vicon String type.
-     * @return native lib object representation of the given segment name.
-     * @throws IllegalArgumentException if the segment is not known.
-     */
-    private ViconString convertSegmentName(String segmentName) {
-        ViconString segmentNameAsViconString = segmentNames.get(segmentName);
-        if (segmentNameAsViconString != null) {
-                return segmentNameAsViconString;
-        } else {
-                throw new IllegalArgumentException("Segment with name \"" + segmentName + "\" does not exist");
-        }
-    }
-
-    /**
-     * Convert marker name in a native lib usable object.
-     *
-     * @param markerName name of the marker to convert into the corresponding
-     * Vicon String type.
-     * @return native lib object representation of the given marker name.
-     * @throws IllegalArgumentException if the marker is not known.
-     */
-    private ViconString convertMarkerName(String markerName) {
-        ViconString markerNameAsViconString = markerNames.get(markerName);
-        if (markerNameAsViconString != null) {
-                return markerNameAsViconString;
-        } else {
-                throw new IllegalArgumentException("Marker with name \"" + markerName + "\" does not exist");
-        }
-    }
-
-    /**
-     * Convert frame rate name in a native lib usable object.
-     *
-     * @param frameRateName name of the segment to convert into the
-     * corresponding Vicon String type.
-     * @return native lib object representation of the given segment name.
-     * @throws IllegalArgumentException if the segment is not known.
-     */
-    private ViconString convertFrameRateName(String frameRateName) {
-        ViconString frameRateNameAsViconString = frameRateNames.get(frameRateName);
-        if (frameRateNameAsViconString != null) {
-                return frameRateNameAsViconString;
-        } else {
-                throw new IllegalArgumentException("FrameRate with name \"" + frameRateName + "\" does not exist");
-        }
-    }
-
-    /**
-     * Convert frame rate name in a native lib usable object.
-     *
-     * @param frameRateName name of the segment to convert into the
-     * corresponding Vicon String type.
-     * @return native lib object representation of the given segment name.
-     * @throws IllegalArgumentException if the device is not known.
-     */
-    private ViconString convertDeviceName(String deviceName) {
-        ViconString deviceNameAsViconString = deviceNames.get(deviceName);
-        if (deviceNameAsViconString != null) {
-                return deviceNameAsViconString;
-        } else {
-                throw new IllegalArgumentException("Device with name \"" + deviceName + "\" does not exist");
-        }
-    }
-
-    /**
-     * Get device output name for a given device as an native lib object.
-     *
-     * @param deviceName
-     * @param deviceOutputName
-     * @return device output name
-     * @throws IllegalArgumentException if the given divice or the given
-     * deviceOutputName does not exist
-     */
-    private ViconString convertDeviceOutputName(String deviceName, String deviceOutputName) {
-        Map<String, ViconString> deviceOutputNamesMap = deviceOutputNames.get(deviceName);
-        if (deviceOutputNamesMap == null) {
-                throw new IllegalArgumentException("convertDeviceOutputName(): The device \"" + deviceName + "\" does not exist!");
-        }
-        ViconString result = deviceOutputNamesMap.get(deviceOutputName);
-        if (result == null) {
-                throw new IllegalArgumentException("convertDeviceOutputName(): The device output name \"" + deviceOutputName + "\" does not exist!");
-        }
-        return result;
-    }
-
-    /**
-     * Get latency sample name as an native lib object.
-     *
-     * @param latencySampleName
-     * @return latency sample name as an native lib object.
-     * @throws IllegalArgumentException if the given latency sample name does
-     * not exist
-     */
-    private ViconString convertLatencySampleName(String latencySampleName) {
-        ViconString latencySampleNameAsViconString = latencySampleNames.get(latencySampleName);
-        if (latencySampleNameAsViconString != null) {
-                return latencySampleNameAsViconString;
-        } else {
-                throw new IllegalArgumentException("Latency sample name \"" + latencySampleName + "\" does not exist");
-        }
+        return result.getSegmentName();
     }
 
     /**
@@ -1718,7 +1407,7 @@ public class DataStreamClient {
      * connected or no frame available.
      */
     public long getSegmentCount(String subjectName) {
-        Output_GetSegmentCount result = client.GetSegmentCount(convertSubjectName(subjectName));
+        Output_GetSegmentCount result = client.GetSegmentCount(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new RuntimeException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1748,7 +1437,7 @@ public class DataStreamClient {
      * invalid
      */
     public String getSegmentName(String subjectName, long segmentIndex) {
-        Output_GetSegmentName result = client.GetSegmentName(convertSubjectName(subjectName), segmentIndex);
+        Output_GetSegmentName result = client.GetSegmentName(subjectName, segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1761,7 +1450,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new IllegalArgumentException("getSegmentName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
         }
-        return result.getSegmentName().toStdString();
+        return result.getSegmentName();
     }
 
     /**
@@ -1777,7 +1466,7 @@ public class DataStreamClient {
      * is not valid, the segment index is invalid or if no frame is available
      */
     public long getSegmentChildCount(String subjectName, String segmentName) {
-        Output_GetSegmentChildCount result = client.GetSegmentChildCount(convertSubjectName(subjectName), convertSegmentName(segmentName));
+        Output_GetSegmentChildCount result = client.GetSegmentChildCount(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new RuntimeException("getSegmentChildCount() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1816,7 +1505,7 @@ public class DataStreamClient {
      */
     public String getSegmentChildName(String subjectName, String segmentName, long segmentIndex) {
         Output_GetSegmentChildName result = client.GetSegmentChildName(
-                convertSubjectName(subjectName), convertSegmentName(segmentName), segmentIndex);
+                subjectName, segmentName, segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentChildName() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1832,7 +1521,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
                 throw new IllegalArgumentException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        return result.getSegmentName().toStdString();
+        return result.getSegmentName();
     }
 
     /**
@@ -1851,7 +1540,7 @@ public class DataStreamClient {
      * available
      */
     public String getSegmentParentName(String subjectName, String segmentName) {
-        Output_GetSegmentParentName result = client.GetSegmentParentName(convertSubjectName(subjectName), convertSegmentName(segmentName));
+        Output_GetSegmentParentName result = client.GetSegmentParentName(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentParentName() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1865,7 +1554,7 @@ public class DataStreamClient {
                 throw new IllegalArgumentException("getSegmentParentName() but segmentName \"" + segmentName + "\" is invalid!");
         }
         //TODO aufärumen
-        String resultString = result.getSegmentName().toStdString();
+        String resultString = result.getSegmentName();
         if (resultString.isEmpty()) {
                 resultString = null;
         }
@@ -1899,9 +1588,7 @@ public class DataStreamClient {
      * available.
      */
     public double[] getSegmentStaticTranslation(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentStaticTranslation result = client.GetSegmentStaticTranslation(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentStaticTranslation result = client.GetSegmentStaticTranslation(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentStaticTranslation() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1951,10 +1638,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentStaticRotationHelical(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentStaticRotationHelical result = client.GetSegmentStaticRotationHelical(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentStaticRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -1998,9 +1683,7 @@ public class DataStreamClient {
      * available
      */
     public double[] getSegmentStaticRotationMatrix(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentStaticRotationMatrix result = client.GetSegmentStaticRotationMatrix(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentStaticRotationMatrix result = client.GetSegmentStaticRotationMatrix(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentStaticRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2047,9 +1730,7 @@ public class DataStreamClient {
      * available
      */
     public double[] getSegmentStaticRotationQuaternion(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentStaticRotationQuaternion result = client.GetSegmentStaticRotationQuaternion(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentStaticRotationQuaternion result = client.GetSegmentStaticRotationQuaternion(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentStaticRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2080,9 +1761,7 @@ public class DataStreamClient {
      * supported or not present
      */
     public double[] getSegmentStaticScale(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentStaticScale result = client.GetSegmentStaticScale(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentStaticScale result = client.GetSegmentStaticScale(subjectName, segmentName);
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getSegmentStaticScale() but client is not connected!!");
         }
@@ -2126,10 +1805,8 @@ public class DataStreamClient {
      * available
      */
     public double[] getSegmentStaticRotationEulerXYZ(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentStaticRotationEulerXYZ result = client.GetSegmentStaticRotationEulerXYZ(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentStaticRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2175,9 +1852,7 @@ public class DataStreamClient {
      * available
      */
     public double[] getSegmentGlobalTranslation(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentGlobalTranslation result = client.GetSegmentGlobalTranslation(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentGlobalTranslation result = client.GetSegmentGlobalTranslation(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentGlobalTranslation() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2220,10 +1895,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentLocalRotationHelical(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentLocalRotationHelical result = client.GetSegmentLocalRotationHelical(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentLocalRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2259,10 +1932,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentGlobalRotationHelical(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentGlobalRotationHelical result = client.GetSegmentGlobalRotationHelical(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentGlobalRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2301,9 +1972,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentGlobalRotationMatrix(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentGlobalRotationMatrix result = client.GetSegmentGlobalRotationMatrix(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentGlobalRotationMatrix result = client.GetSegmentGlobalRotationMatrix(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2346,9 +2015,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentGlobalRotationQuaternion(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
-        Output_GetSegmentGlobalRotationQuaternion result = client.GetSegmentGlobalRotationQuaternion(subjectNameAsViconString, segmentNameAsViconString);
+        Output_GetSegmentGlobalRotationQuaternion result = client.GetSegmentGlobalRotationQuaternion(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2385,10 +2052,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentGlobalRotationEulerXYZ(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentGlobalRotationEulerXYZ result = client.GetSegmentGlobalRotationEulerXYZ(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentGlobalRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2428,10 +2093,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentLocalTranslation(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentLocalTranslation result = client.GetSegmentLocalTranslation(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentLocalTranslation () but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2474,10 +2137,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentLocalRotationQuaternion(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentLocalRotationQuaternion result = client.GetSegmentLocalRotationQuaternion(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2522,10 +2183,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentLocalRotationMatrix(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentLocalRotationMatrix result = client.GetSegmentLocalRotationMatrix(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2563,10 +2222,8 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject- or segment name
      */
     public double[] getSegmentLocalRotationEulerXYZ(String subjectName, String segmentName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString segmentNameAsViconString = convertSegmentName(segmentName);
         Output_GetSegmentLocalRotationEulerXYZ result = client.GetSegmentLocalRotationEulerXYZ(
-                subjectNameAsViconString, segmentNameAsViconString);
+                subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2598,7 +2255,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException if subject name in invalid
      */
     public double getObjectQuality(String subjectName) {
-        Output_GetObjectQuality result = client.GetObjectQuality(convertSubjectName(subjectName));
+        Output_GetObjectQuality result = client.GetObjectQuality(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getObjectQuality() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2627,10 +2284,8 @@ public class DataStreamClient {
      * connected.
      */
     public double[] getMarkerGlobalTranslation(String subjectName, String markerName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString markerNameAsViconString = convertMarkerName(markerName);
         Output_GetMarkerGlobalTranslation result = client.GetMarkerGlobalTranslation(
-                subjectNameAsViconString, markerNameAsViconString);
+                subjectName, markerName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getMarkerGlobalTranslation () but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2670,7 +2325,7 @@ public class DataStreamClient {
      */
     public long getMarkerRayContributionCount(String subjectName, String markerName) {
         Output_GetMarkerRayContributionCount result = client.GetMarkerRayContributionCount(
-                convertSubjectName(subjectName), convertMarkerName(markerName));
+                subjectName, markerName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getMarkerRayContributionCount () but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2711,7 +2366,7 @@ public class DataStreamClient {
      */
     public long getMarkerRayContribution(String subjectName, String markerName, int markerRayContributionIndex) {
         Output_GetMarkerRayContribution result = client.GetMarkerRayContribution(
-                convertSubjectName(subjectName), convertMarkerName(markerName), markerRayContributionIndex);
+                subjectName, markerName, markerRayContributionIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getMarkerRayContribution() but subjectName \"" + subjectName + "\" is invalid!");
         }
@@ -2744,7 +2399,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException if segment name is invalid,
      */
     public long getMarkerCount(String subjectName) {
-        Output_GetMarkerCount result = client.GetMarkerCount(convertSubjectName(subjectName));
+        Output_GetMarkerCount result = client.GetMarkerCount(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getMarkerCount() but segmentName \"" + subjectName + "\" is invalid!");
         }
@@ -2796,11 +2451,10 @@ public class DataStreamClient {
      * @throws IllegalArgumentException if the device name is not available
      */
     public long getDeviceOutputCount(String deviceName) {
-        ViconString deviceNameAsViconString = convertDeviceName(deviceName);
-        if (deviceNameAsViconString == null) {
+        if (deviceName == null) {
                 throw new IllegalArgumentException("getDeviceOutputCount() device name \"" + deviceName + "\" not found!");
         }
-        Output_GetDeviceOutputCount result = client.GetDeviceOutputCount(deviceNameAsViconString);
+        Output_GetDeviceOutputCount result = client.GetDeviceOutputCount(deviceName);
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getDeviceOutputCount() but client is not connected!!");
         }
@@ -2841,7 +2495,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getDeviceName() but client is not connected!!");
         }
-        return new String[]{result.getDeviceName().toStdString(),
+        return new String[]{result.getDeviceName(),
                 result.getDeviceType().toString()};
     }
 
@@ -2883,7 +2537,7 @@ public class DataStreamClient {
                 throw new IllegalArgumentException("getSubjectName() deviceIndex >=0 is needed!");
         }
         System.out.println("test1");
-        Output_GetDeviceOutputName result = client.GetDeviceOutputName(convertDeviceName(deviceName), deviceIndex);
+        Output_GetDeviceOutputName result = client.GetDeviceOutputName(deviceName, deviceIndex);
         System.out.println("test2");
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new IllegalArgumentException("getDeviceOutputName() but deviceIndex is invalid!");
@@ -2922,8 +2576,8 @@ public class DataStreamClient {
      * available
      */
     public double getDeviceOutputValue(String deviceName, String deviceOutputName){
-        Output_GetDeviceOutputValue result = client.GetDeviceOutputValue(convertDeviceName(deviceName),
-                convertDeviceOutputName(deviceName, deviceOutputName));
+        Output_GetDeviceOutputValue result = client.GetDeviceOutputValue(deviceName,
+                deviceOutputName);
 
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new RuntimeException("getDeviceOutputName() but deviceName is invalid!");
@@ -2962,9 +2616,8 @@ public class DataStreamClient {
      * available
      */
     public long getDeviceOutputSubsamples(String deviceName, String deviceOutputName) {
-        ViconString deviceNameAsViconString = convertDeviceName(deviceName);
-        Output_GetDeviceOutputSubsamples result = client.GetDeviceOutputSubsamples(deviceNameAsViconString,
-                convertDeviceOutputName(deviceName, deviceOutputName));
+        Output_GetDeviceOutputSubsamples result = client.GetDeviceOutputSubsamples(deviceName,
+                deviceOutputName);
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new IllegalArgumentException("getDeviceOutputName() but deviceName is invalid!");
         }
@@ -3389,7 +3042,7 @@ public class DataStreamClient {
     public void enableCentroidData() {
         Output_EnableCentroidData result = client.EnableCentroidData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("enableCentroidData but client is not connected!");
+            throw new RuntimeException("enableCentroidData but client is not connected!");
         }
     }
 
@@ -3406,7 +3059,7 @@ public class DataStreamClient {
     public void enableGreyscaleData() {
         Output_EnableGreyscaleData result = client.EnableGreyscaleData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+           throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -3423,7 +3076,7 @@ public class DataStreamClient {
     public void enableVideoData() {
         Output_EnableVideoData result = client.EnableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
         }
     }
 
@@ -3556,7 +3209,7 @@ public class DataStreamClient {
         if (Result.getResult() == Result_Enum.InvalidIndex) {
                 throw new IllegalArgumentException("getCameraName() but camera index \"" + String.valueOf(cameraIndex) + "\" is invalid!");
         }
-        return Result.getCameraName().toStdString();
+        return Result.getCameraName();
     }
 
     /**
@@ -3591,7 +3244,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for invalid subject name or invalid marker index
      */
     public String getMarkerName(String subjectName, long markerIndex) {
-        Output_GetMarkerName result = client.GetMarkerName(this.convertSubjectName(subjectName), markerIndex);
+        Output_GetMarkerName result = client.GetMarkerName(subjectName, markerIndex);
         //System.out.println("Get marker name: "+result.getResult().toString());
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getMarkerName() but client not connected!");
@@ -3605,7 +3258,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidIndex) {
                 throw new IllegalArgumentException("getMarkerName() but invalid marker index \"" + markerIndex + "\"!");
         }
-        return result.getMarkerName().toStdString();
+        return result.getMarkerName();
     }
 
     /**
@@ -3619,10 +3272,8 @@ public class DataStreamClient {
      * @return the name of the segment that is the parent of this marker.
      */
     public String getMarkerParentName(String subjectName, String markerName) {
-        ViconString subjectNameAsViconString = convertSubjectName(subjectName);
-        ViconString markerNameAsViconString = convertMarkerName(markerName);
         Output_GetMarkerParentName result = client.GetMarkerParentName(
-                subjectNameAsViconString, markerNameAsViconString);
+                subjectName, markerName);
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getMarkerParentName() but client not connected!");
         }
@@ -3635,7 +3286,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidMarkerName) {
                 throw new IllegalArgumentException("getMarkerParentName() but invalid marker name \"" + markerName + "!");
         }
-        return result.getSegmentName().toStdString();
+        return result.getSegmentName();
     }
 
     /**
@@ -3721,7 +3372,7 @@ public class DataStreamClient {
      * @param subjectName the name of the subject
      */
     public void addToSubjectFilter(String subjectName){
-        Output_AddToSubjectFilter result = client.AddToSubjectFilter(new ViconString(subjectName));
+        Output_AddToSubjectFilter result = client.AddToSubjectFilter(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName){
             throw new RuntimeException("addToSubjectFilter() failed due to wrong subject name \""+subjectName+"\"!");
         }
@@ -3750,7 +3401,7 @@ public class DataStreamClient {
             throw new RuntimeException("configureWireless() invoked but the OS does not support this function1");
         } else if (result.getResult() == Result_Enum.ConfigurationFailed){
             throw new RuntimeException("configurateWireless failed: \""+result.getError().toString()+"\"!");
-        }
+        } 
     }
 
     public void delete(){

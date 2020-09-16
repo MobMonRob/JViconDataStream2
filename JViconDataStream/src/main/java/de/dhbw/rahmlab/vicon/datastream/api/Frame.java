@@ -1,6 +1,6 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
-import de.dhbw.rahmlab.vicon.datastream.api.impl.Output_GetVideoFrame;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
 
 /**
  *

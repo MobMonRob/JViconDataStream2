@@ -1,7 +1,6 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
-import de.dhbw.rahmlab.vicon.datastream.impl.ViconString;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Connect;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Disconnect;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableLightweightSegmentData;
@@ -38,7 +37,7 @@ public class DataStreamRetimingClient {
 	public void connect(String hostname) {
 		while (!isConnected()) {
 
-			Output_Connect result = retimingClient.Connect(new ViconString(hostname));
+			Output_Connect result = retimingClient.Connect(hostname);
 
 			//Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
 			// tritt seltsamerweise auch für localhost ab und zu auf
@@ -167,7 +166,7 @@ public class DataStreamRetimingClient {
     The root segment is the ancestor of all other segments in the subject.
 	 */
 	public String getSubjectRootSegmentName(String subjectName) {
-		Output_GetSubjectRootSegmentName result = retimingClient.GetSubjectRootSegmentName(new ViconString(subjectName));
+		Output_GetSubjectRootSegmentName result = retimingClient.GetSubjectRootSegmentName(subjectName);
 		if (result.getResult() == Result_Enum.InvalidSubjectName) {
 			throw new RuntimeException("GetSubjectRootSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
 		}
@@ -180,7 +179,7 @@ public class DataStreamRetimingClient {
 		if (result.getResult() == Result_Enum.InvalidIndex) {
 			throw new RuntimeException("GetSubjectRootSegmentName() but segmentIndex \"\" is invalid!");
 		}
-		String SegmentName = result.getSegmentName().toStdString();
+		String SegmentName = result.getSegmentName();
 		//System.out.println("Get segment name: "+SegmentName);
 		return SegmentName;
 	}
