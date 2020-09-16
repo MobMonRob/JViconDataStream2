@@ -37,6 +37,7 @@ public class UnusedGluegenClasses {
 
         Map<String, JavaClass> namesOfClasses = get_namesOfClasses(allClasses);
 
+        //Not found via import
         String[] definitelyNeededClassesHint = new String[]{
             "jogamp.common.os.elf.IOUtils",
             "jogamp.common.os.UnixDynamicLinkerImpl",
@@ -55,7 +56,13 @@ public class UnusedGluegenClasses {
             "jogamp.common.os.elf.Ehdr_p1",
             "jogamp.common.os.elf.SectionHeader",
             "jogamp.common.os.elf.Section",
-            "jogamp.common.os.com.jogamp.common.os.DynamicLinkerImpl"
+            "jogamp.common.os.DynamicLinkerImpl",
+            "com.jogamp.common.net.PiggybackURLConnection",
+            "com.jogamp.common.nio.AbstractBuffer",
+            "com.jogamp.common.util.HashUtil",
+            "jogamp.common.os.elf.Ehdr_p2",
+            "jogamp.common.os.elf.Shdr",
+            "com.jogamp.common.nio.StructAccessor"
         };
 
         firstImports.addAll(Arrays.asList(definitelyNeededClassesHint));
