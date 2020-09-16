@@ -8,8 +8,6 @@ package de.dhbw.rahmlab.vicon.datastream.maintenance;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -40,7 +38,7 @@ public class PatchGluegenClasses {
         String fullFileName = javaFilePath + fileName + ".java";
         String fullPatchName = patchPath + fileName + ".patch";
 
-        ProcessBuilder builder = new ProcessBuilder("patch", "-u", fullFileName, fullPatchName);
+        ProcessBuilder builder = new ProcessBuilder("patch", "-u", "-N",fullFileName, fullPatchName);
         Process process = builder.start();
 
         StringBuilder out = new StringBuilder();
