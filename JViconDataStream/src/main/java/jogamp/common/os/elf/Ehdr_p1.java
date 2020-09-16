@@ -3,12 +3,10 @@
 
 package jogamp.common.os.elf;
 
-import java.nio.*;
-
-import com.jogamp.gluegen.runtime.*;
-import com.jogamp.common.os.*;
-import com.jogamp.common.nio.*;
-import jogamp.common.os.MachineDataInfoRuntime;
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.common.nio.StructAccessor;
+import com.jogamp.common.os.MachineDataInfo;
+import java.nio.ByteBuffer;
 
 
 public class Ehdr_p1 {
