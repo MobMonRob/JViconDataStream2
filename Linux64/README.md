@@ -16,6 +16,7 @@ Dieses Projekt erzeugt einen Java Wrapper um die Vicon DataStream API unter `Ubu
     * `make`
     * `sudo make install`
     * SWIG 3.x does not work
+    * siehe: https://github.com/swig/swig/wiki/Getting-Started
 * [Netbeans 12 LTS](https://netbeans.apache.org/download/nb120/nb120.html)
 
 ## Dateien generieren
