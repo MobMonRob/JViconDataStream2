@@ -2,12 +2,12 @@
 
 #include <string>
 
-namespace ViconDataStreamSDK::CPP
+namespace ViconDataStreamSDK
 {
-	class ViconStringTest;
-}
+namespace CPP
+{
 
-class ViconDataStreamSDK::CPP::ViconStringTest
+class ViconStringTest
 {
 public:
 	ViconDataStreamSDK::CPP::String getViconStringHallo() {
@@ -22,4 +22,7 @@ public:
 		return std::string("StdStringHallo");
 	}
 };
+
+}
+}
 
