@@ -12,6 +12,9 @@ echo "gcc finished"
 
 mkdir -p ../JViconDataStream/src/main/natives/linux-amd64/
 cp ./*.so ../JViconDataStream/src/main/natives/linux-amd64/
+cp DataStreamSDK_1.10/*.so ../JViconDataStream/src/main/natives/linux-amd64/
+# workaround
+cp DataStreamSDK_1.10/*.so.1.58.0 ../JViconDataStream/src/main/natives/linux-amd64/
 
 echo "Linux64 finished"
 
