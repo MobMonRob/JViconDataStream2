@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
  */
 public class DataStreamClientTest {
     
-    public DataStreamClient client;
+    public DataStreamClient client = new DataStreamClient();;
     
     //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
     String hostname = "localhost";
@@ -24,7 +24,7 @@ public class DataStreamClientTest {
     // Ich will aber eigentlich das nur einmal aufgerufen haben!
     @BeforeEach
     public void setUp() {
-        client = new DataStreamClient();
+        //client = new DataStreamClient();
         Version version = client.getVersion();
         System.out.println("Version: " + version.getMajor() + "." + 
                 version.getMinor() + "." + version.getPoint());
