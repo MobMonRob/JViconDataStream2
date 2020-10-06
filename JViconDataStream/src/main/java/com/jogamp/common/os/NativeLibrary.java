@@ -505,7 +505,7 @@ public final class NativeLibrary implements DynamicLookupHelper {
 
     // Add current working directory + natives/os-arch/ + library names
     // to handle Bug 1145 cc1 using an unpacked fat-jar
-    addPaths(userDir+File.separator+"natives"+File.separator+PlatformPropsImpl.os_and_arch+File.separator, baseNames, paths);
+    addPaths(userDir+File.separator+"natives"+File.separator+PlatformPropsImpl.os_and_arch, baseNames, paths);
 
     if( searchSystemPath && !searchSystemPathFirst ) {
         // Add just the library names to use the OS's search algorithm

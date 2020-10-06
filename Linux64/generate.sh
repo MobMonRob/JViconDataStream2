@@ -10,8 +10,9 @@ gcc -shared -fPIC -cpp -std=c++17 -O3 -flto ../swig/ViconDataStreamSDK_wrap.cpp 
 
 echo "gcc finished"
 
-mkdir -p ../JViconDataStream/src/main/natives/linux-amd64/
-cp ./*.so ../JViconDataStream/src/main/natives/linux-amd64/
+#Has to be: <Project Folder>/natives/<os-arch> !!
+mkdir -p ../JViconDataStream/natives/linux-amd64/
+cp ./*.so ../JViconDataStream/natives/linux-amd64/
 
 echo "Linux64 finished"
 
