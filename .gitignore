@@ -8,7 +8,7 @@
 
 #Inhalte von Verzeichnissen entfernen
 /JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/impl/
-/JViconDataStream/natives/linux-amd64/
+/JViconDataStream/natives/
 
 #Dateien entfernen
 /swig/*.cpp
