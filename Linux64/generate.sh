@@ -12,7 +12,8 @@ echo "gcc finished"
 
 #Has to be: <Project Folder>/natives/<os-arch> !!
 mkdir -p ../JViconDataStream/natives/linux-amd64/
-cp ./*.so ../JViconDataStream/natives/linux-amd64/
+cp ./*.so* ../JViconDataStream/natives/linux-amd64/
+cp ./DataStreamSDK_1.10/*.so* ../JViconDataStream/natives/linux-amd64/
 
 echo "Linux64 finished"
 
