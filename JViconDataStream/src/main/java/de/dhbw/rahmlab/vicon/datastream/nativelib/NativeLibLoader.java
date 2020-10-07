@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 public class NativeLibLoader {
 
     private static boolean isLoaded = false;
-    //private static List<DynamicLibraryBundle> dynamicLibraryBundles;
-    private static DynamicLibraryBundle dynamicLibraryBundle;
+    private static List<DynamicLibraryBundle> dynamicLibraryBundles;
+    //private static DynamicLibraryBundle dynamicLibraryBundle;
 
     public static void load() {
+        //Die Funktionalität gibt es für einzelne Libs schon im gluegen code.
+        //Hier nochmal für alle zusammen.
         if (!isLoaded) {
             loadActually();
             isLoaded = true;
@@ -26,23 +28,19 @@ public class NativeLibLoader {
     private static void loadActually() {
         //System.loadLibrary("jViconDataStreamSDK");
 
-        dynamicLibraryBundle = new DynamicLibraryBundle(new JViconDataStreamBundleInfo());
-        if (!dynamicLibraryBundle.isLibComplete()) {
-            System.out.println("Native lib loading failed: " + dynamicLibraryBundle.getBundleInfo().getClass().getCanonicalName());
-        } else {
-            System.out.println("Native lib loading succeeded: " + dynamicLibraryBundle.getBundleInfo().getClass().getCanonicalName());
-        }
-        
-        
+        System.setProperty("jogamp.debug.JNILibLoader", "true");
 
-        /*
+        //dynamicLibraryBundle = new DynamicLibraryBundle(new JViconDataStreamBundleInfo());
         List<DynamicLibraryBundleInfo> dynamicLibraryBundleInfos = new ArrayList<DynamicLibraryBundleInfo>();
-        dynamicLibraryBundleInfos.add(new JViconDataStreamBundleInfo());
-        dynamicLibraryBundleInfos.add(new ViconDataStreamSDKBundleInfo());
+        dynamicLibraryBundleInfos.add(new ViconDataStreamSDKBundleInfo()); //Als erstes
+        dynamicLibraryBundleInfos.add(new JViconDataStreamBundleInfo()); //Als zweites
 
         dynamicLibraryBundles = dynamicLibraryBundleInfos
             .stream()
-            .map(bi -> new DynamicLibraryBundle(bi))
+            .map(bi -> {
+                System.out.println("-----------------------------");
+                return new DynamicLibraryBundle(bi);
+            })
             .collect(Collectors.toCollection(ArrayList::new));
 
         dynamicLibraryBundles.forEach(b -> {
@@ -52,7 +50,6 @@ public class NativeLibLoader {
                 System.out.println("Native lib loading succeeded: " + b.getBundleInfo().getClass().getCanonicalName());
             }
         });
-         */
     }
 
     /*
