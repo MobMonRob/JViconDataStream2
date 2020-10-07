@@ -6,7 +6,8 @@ cd "$(dirname "$BASH_SOURCE")"
 
 ../swig/generate.sh
 
-gcc -shared -fPIC -cpp -std=c++17 -O3 -flto ../swig/ViconDataStreamSDK_wrap.cpp -LDataStreamSDK_1.10 -lViconDataStreamSDK_CPP -o libjViconDataStreamSDK.so -I/usr/lib/jvm/default-java/include/linux -I/usr/lib/jvm/default-java/include
+#https://stackoverflow.com/questions/54373254/load-dependent-so-from-other-shared-library-via-jni/58842312#58842312
+gcc -shared -fPIC -cpp -std=c++17 -O3 -flto ../swig/ViconDataStreamSDK_wrap.cpp -LDataStreamSDK_1.10 -lViconDataStreamSDK_CPP -o libjViconDataStreamSDK.so -I/usr/lib/jvm/default-java/include/linux -I/usr/lib/jvm/default-java/include -Wl,-rpath,'$ORIGIN/.'
 
 echo "gcc finished"
 

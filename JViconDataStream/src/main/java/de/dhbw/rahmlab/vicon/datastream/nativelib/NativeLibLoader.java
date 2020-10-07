@@ -14,7 +14,6 @@ public class NativeLibLoader {
 
     private static boolean isLoaded = false;
     private static List<DynamicLibraryBundle> dynamicLibraryBundles;
-    //private static DynamicLibraryBundle dynamicLibraryBundle;
 
     public static void load() {
         //Die Funktionalität gibt es für einzelne Libs schon im gluegen code.
@@ -26,19 +25,14 @@ public class NativeLibLoader {
     }
 
     private static void loadActually() {
-        //System.loadLibrary("jViconDataStreamSDK");
+        //System.setProperty("jogamp.debug.JNILibLoader", "true");
 
-        System.setProperty("jogamp.debug.JNILibLoader", "true");
-
-        //dynamicLibraryBundle = new DynamicLibraryBundle(new JViconDataStreamBundleInfo());
         List<DynamicLibraryBundleInfo> dynamicLibraryBundleInfos = new ArrayList<DynamicLibraryBundleInfo>();
-        dynamicLibraryBundleInfos.add(new ViconDataStreamSDKBundleInfo()); //Als erstes
-        dynamicLibraryBundleInfos.add(new JViconDataStreamBundleInfo()); //Als zweites
+        dynamicLibraryBundleInfos.add(new JViconDataStreamBundleInfo());
 
         dynamicLibraryBundles = dynamicLibraryBundleInfos
             .stream()
             .map(bi -> {
-                System.out.println("-----------------------------");
                 return new DynamicLibraryBundle(bi);
             })
             .collect(Collectors.toCollection(ArrayList::new));

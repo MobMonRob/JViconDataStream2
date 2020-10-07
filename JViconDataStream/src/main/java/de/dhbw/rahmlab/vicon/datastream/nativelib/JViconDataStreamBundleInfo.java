@@ -18,6 +18,7 @@ public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
     protected JViconDataStreamBundleInfo() {
     }
 
+    //Die Funktionalität gibt es nur für ToolLibraries
     /**
      * <p>
      * Returns <code>true</code>, since we might load the library and allow
