@@ -16,7 +16,7 @@ public class DataStreamClientTest {
     public DataStreamClient client = new DataStreamClient();;
     
     //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
-    String hostname = "localhost";
+    String hostname = "192.168.10.1:51001";
        
     public DataStreamClientTest() {}
     
@@ -38,7 +38,7 @@ public class DataStreamClientTest {
         System.out.println("connect");
         client.connect(hostname);
         if (client.isConnected()) {
-            System.out.println("is conected");
+            System.out.println("is connected");
         } else {
             fail("The test case is a prototype.");
         }
