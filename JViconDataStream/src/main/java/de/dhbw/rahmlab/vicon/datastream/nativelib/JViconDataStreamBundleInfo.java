@@ -18,6 +18,7 @@ public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
     protected JViconDataStreamBundleInfo() {
     }
 
+    //Die Funktionalität gibt es nur für ToolLibraries
     /**
      * <p>
      * Returns <code>true</code>, since we might load the library and allow
@@ -40,6 +41,8 @@ public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
         return false;
     }
 
+    //Only the last entry is crucial, ie all other are optional preload dependencies and may generate errors, which are ignored.
+    //GlueLibs sind die .so Dateien, die gesucht werden sollen.
     @Override
     public final List<String> getGlueLibNames() {
         return glueLibNames;
@@ -47,28 +50,18 @@ public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
 
     @Override
     public final boolean searchToolLibInSystemPath() {
-        return true;
+        return false;
     }
 
     @Override
     public final boolean searchToolLibSystemPathFirst() {
-        return true;
+        return false;
     }
 
+    //ToolLibs sind Bibliotheken auf dem System, die für die zu ladenden Bibliotheken gebraucht werden.
     @Override
     public final List<List<String>> getToolLibNames() {
         final List<List<String>> libNamesList = new ArrayList<>();
-
-        /*
-        final List<String> libNames = new ArrayList<String>();
-        {
-                // this is the default AL lib name, according to the spec
-                // libNames.add("libtest1.so"); // unix
-                libNames.add("jViconDataStreamSDK"); // windows, OSX
-        }
-        libNamesList.add(libNames);
-         */
-        libNamesList.add(glueLibNames);
 
         return libNamesList;
     }
