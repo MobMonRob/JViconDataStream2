@@ -8,7 +8,7 @@ namespace ViconDataStreamSDK
 namespace CPP
 {
 
-class ViconStringTest
+class ViconStringToJavaStringTest
 {
 public:
 	ViconDataStreamSDK::CPP::String getViconStringHallo() {
@@ -21,6 +21,16 @@ public:
 
 	std::string getStdStringHallo() {
 		return std::string("StdStringHallo");
+	}
+};
+
+class JavaStringToViconStringTest
+{
+public:
+	std::string testJavaStringInput(ViconDataStreamSDK::CPP::String javaString)
+	{
+		std::string stdString = javaString;
+		return stdString;
 	}
 };
 

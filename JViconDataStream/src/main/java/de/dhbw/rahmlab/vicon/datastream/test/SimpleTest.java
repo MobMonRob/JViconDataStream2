@@ -1,9 +1,10 @@
 package de.dhbw.rahmlab.vicon.datastream.test;
 
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
-import de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest;
+import de.dhbw.rahmlab.vicon.datastream.impl.ViconStringToJavaStringTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconConnectTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Connect;
+import de.dhbw.rahmlab.vicon.datastream.impl.JavaStringToViconStringTest;
 
 /**
  *
@@ -16,9 +17,19 @@ public class SimpleTest {
     }
 
     public static void main(String argv[]) throws InterruptedException {
-        //viconStringTest();
-        viconConnectTest();
+        //viconStringToJavaStringTest();
+        javaStringToViconStringTest();
+        //viconConnectTest();
         //DeleteUnusedGluegenJavaFiles.delete();
+    }
+
+    public static void javaStringToViconStringTest() {
+        JavaStringToViconStringTest test = new JavaStringToViconStringTest();
+
+        String javaInputString = "asdf";
+
+        String output = test.testJavaStringInput(javaInputString);
+        System.out.println("javaStringToViconStringTest Output: " + output);
     }
 
     public static void viconConnectTest() {
@@ -27,8 +38,8 @@ public class SimpleTest {
         System.out.println("Result: " + output.getResult().toString());
     }
 
-    public static void viconStringTest() {
-        ViconStringTest viconStringTest = new ViconStringTest();
+    public static void viconStringToJavaStringTest() {
+        ViconStringToJavaStringTest viconStringTest = new ViconStringToJavaStringTest();
         String viconString = viconStringTest.getViconStringHallo();
         String charString = viconStringTest.getCharStringHallo();
         String stdString = viconStringTest.getStdStringHallo();
