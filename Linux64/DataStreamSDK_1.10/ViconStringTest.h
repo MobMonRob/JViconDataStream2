@@ -3,6 +3,12 @@
 #include <string>
 #include "DataStreamClient.h"
 
+#include <iostream>
+#include <exception>
+#include <typeinfo>
+#include <stdexcept>
+#include <sstream>
+
 namespace ViconDataStreamSDK
 {
 namespace CPP
@@ -52,12 +58,36 @@ public:
 		return result;
 	}
 
-	Output_Connect testConnectGiven(const ViconDataStreamSDK::CPP::String& javaString)
+	std::string testConnectGiven(const ViconDataStreamSDK::CPP::String& javaString)
 	{
 		Client client;
-		Output_Connect result = client.Connect(javaString);
+		Output_Connect result;
+		std::string output;
+
+		try {
+			result = client.Connect(javaString);
+			if (result.Result == Result::Success)
+			{
+				output = "success";
+			}
+			else
+			{
+				output = "failure";
+			}
+			//exception schmeißen testen
+		}
+		catch(...)
+		{
+			std::ostringstream os;
+
+			std::exception_ptr p = std::current_exception();
+			os <<(p ? p.__cxa_exception_type()->name() : "null") << std::endl;
+
+			return os.str();
+		}
+
 		client.Disconnect();
-		return result;
+		return output;
 	}
 };
 

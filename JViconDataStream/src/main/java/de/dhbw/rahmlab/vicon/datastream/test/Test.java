@@ -16,7 +16,7 @@ public class Test {
         // ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
 
         //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
-        String hostname = "192.168.10.1:51001";
+        String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
 
         Version version = client.getVersion();
 
