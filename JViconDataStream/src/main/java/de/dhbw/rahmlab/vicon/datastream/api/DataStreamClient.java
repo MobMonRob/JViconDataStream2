@@ -173,7 +173,8 @@ public class DataStreamClient {
             //Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
             // tritt seltsamerweise auch für localhost ab und zu auf
             if (result.getResult() == Result_Enum.InvalidHostName) {
-                    throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
+                    //throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
+                    System.out.println("connect() but invalid hostname \"" + hostname + "\"!");
             }
             if (result.getResult() == Result_Enum.ClientAlreadyConnected) {
                     System.out.println("Client is Already Connected! ");

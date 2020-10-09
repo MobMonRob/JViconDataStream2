@@ -32,6 +32,12 @@ public:
 		std::string stdString = javaString;
 		return stdString;
 	}
+
+	std::string testJavaStringReferenceInput(const ViconDataStreamSDK::CPP::String& javaString)
+	{
+		std::string stdString = javaString;
+		return stdString;
+	}
 };
 
 
@@ -41,7 +47,16 @@ public:
 	Output_Connect testConnect()
 	{
 		Client client;
-		Output_Connect result = client.Connect("192.168.10.1");
+		Output_Connect result = client.Connect("192.168.10.1:51001");
+		client.Disconnect();
+		return result;
+	}
+
+	Output_Connect testConnectGiven(const ViconDataStreamSDK::CPP::String& javaString)
+	{
+		Client client;
+		Output_Connect result = client.Connect(javaString);
+		client.Disconnect();
 		return result;
 	}
 };

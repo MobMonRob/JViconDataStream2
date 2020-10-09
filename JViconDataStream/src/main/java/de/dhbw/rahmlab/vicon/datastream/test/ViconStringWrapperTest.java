@@ -5,6 +5,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.ViconStringToJavaStringTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconConnectTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Connect;
 import de.dhbw.rahmlab.vicon.datastream.impl.JavaStringToViconStringTest;
+import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
 
 /**
  *
@@ -20,22 +21,36 @@ public class ViconStringWrapperTest {
         //viconStringToJavaStringTest();
         javaStringToViconStringTest();
         //viconConnectTest();
-     
+        //testtest();
+
         //DeleteUnusedGluegenJavaFiles.delete();
+    }
+
+    public static void testtest() {
+        DataStreamClient client = new DataStreamClient();
+        client.connect("192.168.10.1");
+        System.out.println(client.getCameraName(0));
     }
 
     public static void javaStringToViconStringTest() {
         JavaStringToViconStringTest test = new JavaStringToViconStringTest();
 
-        String javaInputString = "asdf";
+        String javaInputString = "Input";
 
         String output = test.testJavaStringInput(javaInputString);
-        System.out.println("javaStringToViconStringTest Output: " + output);
+        System.out.println("testJavaStringInput Output: " + output);
+
+        String referenceOutput = test.testJavaStringReferenceInput(javaInputString);
+        System.out.println("testJavaStringReferenceInput Output: " + referenceOutput);
     }
 
     public static void viconConnectTest() {
         ViconConnectTest connectTest = new ViconConnectTest();
-        Output_Connect output = connectTest.testConnect();
+        //Output_Connect output = connectTest.testConnect();
+
+        //Nur falscher Port gibt clientConnectionFailed
+        Output_Connect output = connectTest.testConnectGiven("192.168.10.1");
+        //51001
         System.out.println("Result: " + output.getResult().toString());
     }
 

@@ -86,7 +86,7 @@ class String;
 %typemap(javadirectorin) const ViconDataStreamSDK::CPP::String & "$jniinput"
 %typemap(javadirectorout) const ViconDataStreamSDK::CPP::String & "$javacall"
 
-
+//Java -> C++
 %typemap(in) const ViconDataStreamSDK::CPP::String &
 %{ if(!$input) {
      SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
@@ -94,11 +94,16 @@ class String;
    }
    const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
    if (!$1_pstr) return $null;
-   $*1_ltype $1_str($1_pstr);
+
+   std::string $1_stdString = std::string($1_pstr);
+
+   $*1_ltype $1_str($1_stdString);
+   //$*1_ltype $1_str(std::string($1_pstr)); //does not work?
+
    $1 = &$1_str;
    jenv->ReleaseStringUTFChars($input, $1_pstr); %}
 
-
+//Java -> C++
 %typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const ViconDataStreamSDK::CPP::String &
 %{ if(!$input) {
      SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
@@ -106,9 +111,14 @@ class String;
    }
    const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
    if (!$1_pstr) return $null;
+
+   std::string $1_stdString = std::string($1_pstr);
+
    //possible thread/reentrant code problem
    static $*1_ltype $1_str;
-   $1_str = $1_pstr;
+
+   $1_str = $*1_ltype($1_stdString);
+
    $result = &$1_str;
    jenv->ReleaseStringUTFChars($input, $1_pstr); %}
 

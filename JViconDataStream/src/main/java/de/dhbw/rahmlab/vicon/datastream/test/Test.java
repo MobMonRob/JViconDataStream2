@@ -16,10 +16,10 @@ public class Test {
         // ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
 
         //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
-        String hostname = "192.168.10.1";
+        String hostname = "192.168.10.1:51001";
 
         Version version = client.getVersion();
-        
+
         System.out.println("Version: " + version.getMajor() + "." + version.getMinor() + "." + version.getPoint());
 
         System.out.println("Try to connect to: " + hostname);
