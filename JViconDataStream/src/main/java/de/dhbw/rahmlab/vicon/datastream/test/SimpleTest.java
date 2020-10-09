@@ -1,11 +1,9 @@
 package de.dhbw.rahmlab.vicon.datastream.test;
 
-/*
-import de.dhbw.rahmlab.vicon.datastream.api.Version;
-import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
- */
-//import de.dhbw.rahmlab.vicon.datastream.maintenance.DeleteUnusedGluegenJavaFiles;
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
+import de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest;
+import de.dhbw.rahmlab.vicon.datastream.impl.ViconConnectTest;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_Connect;
 
 /**
  *
@@ -18,12 +16,19 @@ public class SimpleTest {
     }
 
     public static void main(String argv[]) throws InterruptedException {
-        viconStringTest();
+        //viconStringTest();
+        viconConnectTest();
         //DeleteUnusedGluegenJavaFiles.delete();
     }
 
+    public static void viconConnectTest() {
+        ViconConnectTest connectTest = new ViconConnectTest();
+        Output_Connect output = connectTest.testConnect();
+        System.out.println("Result: " + output.getResult().toString());
+    }
+
     public static void viconStringTest() {
-        de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest viconStringTest = new de.dhbw.rahmlab.vicon.datastream.impl.ViconStringTest();
+        ViconStringTest viconStringTest = new ViconStringTest();
         String viconString = viconStringTest.getViconStringHallo();
         String charString = viconStringTest.getCharStringHallo();
         String stdString = viconStringTest.getStdStringHallo();
@@ -31,17 +36,4 @@ public class SimpleTest {
         System.out.println("charString: " + charString);
         System.out.println("stdString: " + stdString);
     }
-
-    /*
-	public static void versionTest() {
-		DataStreamClient client = new DataStreamClient();
-		//ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
-		Version version = client.getVersion();
-		String stringMajor = String.valueOf(version.getMajor());
-		String stringMinor = String.valueOf(version.getMinor());
-		String stringPoint = String.valueOf(version.getPoint());
-		String completeVersion = stringMajor + "." + stringMinor + "." + stringPoint;
-		System.out.println("Vicon SDK Version: " + completeVersion);
-	}
-     */
 }

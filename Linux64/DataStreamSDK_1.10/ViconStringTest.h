@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "DataStreamClient.h"
 
 namespace ViconDataStreamSDK
 {
@@ -20,6 +21,18 @@ public:
 
 	std::string getStdStringHallo() {
 		return std::string("StdStringHallo");
+	}
+};
+
+
+class ViconConnectTest
+{
+public:
+	Output_Connect testConnect()
+	{
+		Client client;
+		Output_Connect result = client.Connect("192.168.10.1");
+		return result;
 	}
 };
 
