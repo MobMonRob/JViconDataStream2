@@ -11,7 +11,7 @@ namespace CPP
 
 class String;
 
-//Typemap ViconDataStreamSDK::CPP::String -> java.lang.String
+//Typemap ViconDataStreamSDK::CPP::String <-> java.lang.String
 //Angelehnt an https://github.com/swig/swig/blob/master/Lib/java/std_string.i
 
 // String
@@ -33,9 +33,9 @@ class String;
     const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
     if (!$1_pstr) return $null;
 
-    $1 = ViconDataStreamSDK::CPP::String($1_pstr);
+    $1 = ViconDataStreamSDK::CPP::String(std::string($1_pstr));
     jenv->ReleaseStringUTFChars($input, $1_pstr); %}
-
+//std::string copies, ViconString does not!
 
 //Java -> C++
 //$result: return ViconDataStreamSDK::CPP::String
@@ -48,7 +48,7 @@ class String;
    }
    const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
    if (!$1_pstr) return $null;
-   $result = ViconDataStreamSDK::CPP::String($1_pstr);
+   $result = ViconDataStreamSDK::CPP::String(std::string($1_pstr));
    jenv->ReleaseStringUTFChars($input, $1_pstr); %}
 
 

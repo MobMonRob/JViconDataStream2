@@ -10,7 +10,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.JavaStringToViconStringTest;
  *
  * @author Oliver Rettig
  */
-public class SimpleTest {
+public class ViconStringWrapperTest {
 
     static {
         NativeLibLoader.load();
@@ -20,6 +20,7 @@ public class SimpleTest {
         //viconStringToJavaStringTest();
         javaStringToViconStringTest();
         //viconConnectTest();
+     
         //DeleteUnusedGluegenJavaFiles.delete();
     }
 
