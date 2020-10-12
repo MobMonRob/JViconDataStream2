@@ -155,6 +155,13 @@ public class DataStreamClient {
     /**
      * Establish a dedicated connection to a Vicon DataStream Server.
      *
+     * The function defaults to connecting on port 801. You can specify an 
+     * alternate port number after a colon.<p>
+     *
+     * This is for future compatibility: current products serve data on port 801 
+     * only. Additional clients can be added separated with a semicolon ’;’. 
+     * These are used in combination to reduce temporal jitter.<p>
+     *
      * @see connectToMulticast
      * @see disconnect
      * @see isConnected
@@ -162,7 +169,7 @@ public class DataStreamClient {
      * hosting the DataStream server. The function defaults to connecting on
      * port 801. You can specify an alternate port number after a colon. E.g.:
      * "localhost" "MyViconPC:804", "10.0.0.2"
-     * @throws IllegalArgumentException if given hostname is invalid
+     * @throws IllegalArgumentException, if given hostname is invalid
      */
     public void connect(String hostname) {
         int i = 0;
@@ -170,31 +177,25 @@ public class DataStreamClient {
 
             Output_Connect result = client.Connect(hostname);
 
-            //Output_ConnectToMulticast result = client.ConnectToMulticast(new ViconString(hostname), new ViconString(hostname));
             // tritt seltsamerweise auch für localhost ab und zu auf
             if (result.getResult() == Result_Enum.InvalidHostName) {
-                    throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
-            }
-            if (result.getResult() == Result_Enum.ClientAlreadyConnected) {
-                    System.out.println("Client is Already Connected! ");
-            }
-            if (result.getResult() == Result_Enum.Success) // ende der while schleife
-            {
-                    System.out.println("Client Connection sucess!");
-            }
-            if (result.getResult() == Result_Enum.ClientAlreadyConnected) // --> kann innerhalb der while schleife nicht auftreten
-            {
-                    System.out.println("Client already connected!");
-            }
-            if (result.getResult() == Result_Enum.ClientConnectionFailed) // --> dafür ist die while schleife da
-            {
-                    System.out.println("Client Connection failed!");
+                //throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
+                System.out.println("connect() but invalid hostname \"" + hostname + "\"!");
+            } else if (result.getResult() == Result_Enum.ClientAlreadyConnected) {
+                System.out.println("Client is Already Connected! ");
+            } else if (result.getResult() == Result_Enum.Success) { // -->ende der while schleife
+                System.out.println("Client Connection sucess!");
+            } else if (result.getResult() == Result_Enum.ClientAlreadyConnected) { // --> kann innerhalb der while schleife nicht auftreten
+                System.out.println("Client already connected!");
+            } else if (result.getResult() == Result_Enum.ClientConnectionFailed) { // --> dafür ist die while schleife da
+                System.out.println("Client Connection failed!");
             }
             try {
-                    Thread.sleep(1000);
-                    System.out.println("...try to connect " + String.valueOf(i++));
+                Thread.sleep(1000);
+                System.out.println("...try to connect " + String.valueOf(i++));
             } catch (InterruptedException ex) {
-                    Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
+                //TODO
+                Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         getFrame(true);
