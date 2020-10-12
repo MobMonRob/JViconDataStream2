@@ -87,6 +87,8 @@ public class Test {
         long frameNumber = client.getFrameNumber();
         System.out.println("frame " + frameNumber);
 
+        printSubjectHierarchie(client);
+        
         //printSubjectHierarchie(client);
         /*for (int markerIndex = 0; markerIndex < client.getUnlabeledMarkerCount(); markerIndex++){
             double[] translation = client.getUnlabeledMarkerGlobalTranslation(markerIndex);
