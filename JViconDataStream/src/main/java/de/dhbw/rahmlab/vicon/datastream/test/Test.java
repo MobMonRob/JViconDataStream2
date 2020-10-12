@@ -27,7 +27,7 @@ public class Test {
         if (client.isConnected()) {
             System.out.println("is conected");
         }
-        if (client.isMarkerDataEnabled() == true) {
+        if (client.isMarkerDataEnabled()) {
             System.out.println("IsMarkerDataEnabled is enabeled");
         } else {
             System.out.println("IsMarkerDataEnabled is not enabeled");
@@ -36,61 +36,51 @@ public class Test {
         System.out.println("Subject Count = " + client.getSubjectCount());
 
         int SubjectIndex = 1;
-        // retimingClient.connect(hostname);
-        // retimingClient.updateFrame();
-        //String SubjectName=retimingClient.getSubjectName(SubjectIndex);
-        //String SubjectName = "LeftElbow";
-        // System.out.println("subject name= "+SubjectName);
         String SubjectName = client.getSubjectName(SubjectIndex);
-        //String SubjectName = "LeftElbow";
         System.out.println("subject name= " + SubjectName);
-        // System.out.println(client.IsSegmentDataEnabled());
-
+        
         client.enableMarkerData();
         client.enableSegmentData();
-        if (client.isMarkerDataEnabled() == true) {
+        if (client.isMarkerDataEnabled()) {
             System.out.println("IsMarkerDataEnabled is enabeled");
         } else {
             System.out.println("IsMarkerDataEnabled is not enabeled");
         }
         client.enableUnlabeledMarkerData();
-        if (client.isUnlabeledMarkerDataEnabled() == true) {
+        if (client.isUnlabeledMarkerDataEnabled()) {
             System.out.println("UnlabeledMarkerData is enabeled");
         }
-        //client.enableUnlabeledMarkerData();
-        // System.out.println(client.IsSegmentDataEnabled());
         client.getFrame(true);
         long FrameRateCount = client.getFrameRateCount();
         System.out.println("Frame rate Count is " + FrameRateCount);
-        long FrameRateIndex = 1;
-        // String FrameRateName =client.getFrameRateName(FrameRateIndex);
-        //System.out.println( "Frame rate Name is "+FrameRateName );
         System.out.println("Unlabeled Marker Count is " + client.getUnlabeledMarkerCount());
-        // System.out.println( "Frame rate Value is "+client.getFrameRateValue(FrameRateName));
         long MarkerIndex = 0;
         double[] Translation = client.getUnlabeledMarkerGlobalTranslation(MarkerIndex);
         System.out.println("Unlabeled Marker Global Translation x= " + Translation[0] + "Y= " + Translation[1] + "Z= " + Translation[2]);
         System.out.println("Subject Count = " + client.getSubjectCount());
 
-        //System.out.println("Subject Name is "+ SubjectName);
-        //System.out.println("Subject Root Segment Name is "+ client.getSubjectRootSegmentName(SubjectName));
-        // System.out.println("Segment Count is  "+client.getSegmentCount( SubjectName));
         long segmentCount = client.getSegmentCount(SubjectName);
         for (long i = 0; i < segmentCount; i++) {
             String SegmentName = client.getSegmentName(SubjectName, i);
             System.out.println("Segment Name Is´" + SegmentName);
-            System.out.println("Segment Child Count is " + client.getSegmentChildCount(SubjectName, SegmentName));
-            System.out.println("Segment Child Name is " + client.getSegmentChildName(SubjectName, SegmentName, i));
+            
+            long segmentChildCount = client.getSegmentChildCount(SubjectName, SegmentName);
+            System.out.println("Segment Child Count is " + segmentChildCount);
+            
             System.out.println("Segment Parent Name is " + client.getSegmentParentName(SubjectName, SegmentName));
 
-            double[] SST = client.getSegmentStaticTranslation(SubjectName, SegmentName);
+            for (long j = 0; j < segmentChildCount; j++){
+                System.out.println("Segment Child Name is " + client.getSegmentChildName(SubjectName, SegmentName, j));
+            }
+            
+            /*double[] SST = client.getSegmentStaticTranslation(SubjectName, SegmentName);
             System.out.println("Segment Static Translation is X= " + SST[0] + "Y= " + SST[1] + "Z= " + SST[2]);
             double[] SSRH = client.getSegmentStaticRotationHelical(SubjectName, SegmentName);
             System.out.println("Segment Static Rotation Helicalis X= " + SSRH[0] + "Y= " + SSRH[1] + "Z= " + SSRH[2]);
             double[] SSRM = client.getSegmentStaticRotationMatrix(SubjectName, SegmentName);
             System.out.println("Segment Static Rotation Matrix X= " + SSRM[0] + "Y= " + SSRM[1] + "Z= " + SSRM[2]);
             double[] SSRQ = client.getSegmentStaticRotationQuaternion(SubjectName, SegmentName);
-            System.out.println("Segment Static Rotation Quaternion X= " + SSRQ[0] + "Y= " + SSRQ[1] + "Z= " + SSRQ[2]);
+            System.out.println("Segment Static Rotation Quaternion X= " + SSRQ[0] + "Y= " + SSRQ[1] + "Z= " + SSRQ[2]);*/
         }
 
         System.out.println("Frame rate is " + client.getFrameRate());
