@@ -1,53 +1,15 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
-import de.dhbw.rahmlab.vicon.datastream.impl.Client;
-import de.dhbw.rahmlab.vicon.datastream.impl.DeviceType_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.Direction_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_AddToSubjectFilter;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_ClearSubjectFilter;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_ConfigureWireless;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Connect;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_ConnectToMulticast;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableCentroidData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableDebugData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableDeviceData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableGreyscaleData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableLightweightSegmentData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableMarkerRayData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableUnlabeledMarkerData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableVideoData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Disconnect;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableCentroidData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableDebugData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableDeviceData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableGreyscaleData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableLightweightSegmentData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableSegmentData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableMarkerData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableMarkerRayData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableUnlabeledMarkerData;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableVideoData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetAxisMapping;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraName;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraResolution;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidPosition;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidWeight;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsSegmentDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsUnlabeledMarkerDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetFrameRateCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetFrameNumber;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetFrameRate;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetMarkerCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetFrameRateName;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetFrameRateValue;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetMarkerGlobalTranslation;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetMarkerName;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsMarkerDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentName;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSubjectCount;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSubjectName;
@@ -65,56 +27,20 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentLocalRotationEuler
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentLocalRotationHelical;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentLocalRotationQuaternion;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentLocalTranslation;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetMarkerRayContribution;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetMarkerRayContributionCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetDeviceName;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetDeviceCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetDeviceOutputCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetDeviceOutputName;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetDeviceOutputSubsamples;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetDeviceOutputValue;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetEyeTrackerCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetEyeTrackerGlobalGazeVector;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetEyeTrackerGlobalPosition;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetForcePlateCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetForcePlateSubsamples;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGlobalCentreOfPressure;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGlobalForceVector;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGlobalMomentVector;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGreyscaleBlob;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGreyscaleBlobCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetLatencySampleCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetLatencySampleName;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetLatencySampleValue;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetLatencyTotal;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetMarkerParentName;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetObjectQuality;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentGlobalRotationEulerXYZ;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentGlobalRotationHelical;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentGlobalRotationMatrix;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentGlobalRotationQuaternion;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentLocalRotationMatrix;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetSegmentStaticScale;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetTimecode;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetUnlabeledMarkerCount;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetUnlabeledMarkerGlobalTranslation;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsCentroidDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsDebugDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsDeviceDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsGreyscaleDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsMarkerRayDataEnabled;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsVideoDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_SetAxisMapping;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_SetStreamMode;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_StartTransmittingMulticast;
-import de.dhbw.rahmlab.vicon.datastream.impl.Output_StopTransmittingMulticast;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_UpdateFrame;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_WaitForFrame;
 import de.dhbw.rahmlab.vicon.datastream.impl.Result_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.RetimingClient;
-import de.dhbw.rahmlab.vicon.datastream.impl.StreamMode_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.VectorUint;
 import de.dhbw.rahmlab.vicon.datastream.impl.VectorVectorUchar;
-import java.util.HashMap;
-import java.util.Map;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -122,7 +48,34 @@ import java.util.logging.Logger;
 /**
  * @author Oliver Rettig
  *
- * When a function has returned false, the output arguments are set to an appropriate default value:
+ * Intended uses<p>
+ * 
+ * The Vicon DataStream re-timing client provides calls to obtain subject data 
+ * from the DataStream with minimal latency and temporal jitter. When UpdateFrame() 
+ * is called, the client uses re-timed data that has been linearly interpolated 
+ * from an internal buffer to predict the position of each segment to the current
+ * time.
+ * 
+ * The system and network latencies are used when determining the amount of 
+ * prediction required. If additional prediction is required, for example, for 
+ * use in a VR system where an additional latency is present due to rendering 
+ * and display latency; this may be requested in the call to UpdateFrame().
+ * 
+ * The user will call UpdateFrame(), which will update the current frame state 
+ * to the time of calling and return immediately. This is intended for use in 
+ * systems where you require subject data positions at times driven by an external 
+ * clock.
+ * 
+ * If you do not have an external clock, and require behavior similar to that of 
+ * the standard DataStream client running in ServerPush streaming mode, then 
+ * the system may be configured to provide frame data at a consistent frame rate 
+ * by providing a frame rate to the Connect() call. The user will then call Wait-
+ * ForFrame(), which will block in a similar method to Client::GetFrame(), but 
+ * using retimed data in order to keep the frame period very consistent.
+ *
+ * When a function has returned false, the output arguments are set to an 
+ * appropriate default value:<p>
+ * 
  * • Booleans will be set to false.
  * • Integers will be set to zero.
  * • Doubles will be set to zero.
@@ -132,10 +85,6 @@ import java.util.logging.Logger;
  * By default the global coordinate system matches the server application; Z-Up, 
  * Y-Left. This can be changed by using setAxisMapping.<p>
  *
- * TODO<p>
- * - Kommentare vervollständigen, Ex überprüfen
- * - throw messages in String const auslagern
- * - bis getCameraCount sind ist die Existenz der Methoden überprüft
  */
 public class DataStreamRetimingClient {
 
@@ -146,6 +95,13 @@ public class DataStreamRetimingClient {
     }
 
     /**
+     * Instances of the Vicon Data Stream RetimingClient create a DataStreamClient 
+     * internally that manages the connection to the data stream.
+     * 
+     * The RetimingClient will set up the underlying client to receive the 
+     * required data from the stream and to set the correct data delivery mode, 
+     * so it is not necessary to set this up manually.
+     *
      * You can create many instances of the Vicon DataStream Client, which can
      * connect to multiple Vicon DataStream Servers.
      */
@@ -159,7 +115,7 @@ public class DataStreamRetimingClient {
      * The function defaults to connecting on port 801. You can specify an 
      * alternate port number after a colon.<p>
      *
-     * This is for future compatibility: current products serve data on port 801 
+     * This is for future compatibility: Current products serve data on port 801 
      * only. Additional clients can be added separated with a semicolon ’;’. 
      * These are used in combination to reduce temporal jitter.<p>
      *
@@ -203,16 +159,17 @@ public class DataStreamRetimingClient {
     }
 
     /**
-     * Establish a dedicated connection to a Vicon DataStream Server.The function defaults to connecting on port 801.
+     * Establish a dedicated connection to a Vicon DataStream Server. The function 
+     * defaults to connecting on port 801.
      *
-     * You can specify an 
- alternate port number after a colon.<p>
+     * You can specify an alternate port number after a colon.<p>
      *
      * This is for future compatibility: current products serve data on port 801 
      * only. Additional clients can be added separated with a semicolon ’;’. 
      * These are used in combination to reduce temporal jitter.<p>
      *
-     * @param frameRate
+     * @param frameRate The re-timing client’s internal frame output clock
+     * will be active.
      * @see connectToMulticast
      * @see disconnect
      * @see isConnected
@@ -273,15 +230,26 @@ public class DataStreamRetimingClient {
     public boolean disconnect() {
         Output_Disconnect result = client.Disconnect();
         if (result.getResult().equals(Result_Enum.Success)) {
-                return true;
+            return true;
         } else if (result.getResult().equals(Result_Enum.NotConnected)) {
-                System.out.println("disconnect: but client was not connected!");
+            System.out.println("disconnect: but client was not connected!");
         }
         return false;
     }
 
     /**
      * Get the version of the Vicon DataStream SDK.
+     * 
+     * • Major When this number increases, we break backward compatibility with 
+     *   previous major versions.
+     * • Minor When this number increases, we have probably added new 
+     *   functionality to the SDK without breaking backward compatibility with 
+     *   previous versions.
+     * • Point When this number increases, we have introduced a bug fix or 
+     *   performance enhancement without breaking backward compatibility with 
+     *   previous versions.
+     * 
+     * The function can be called without the client being connected.
      *
      * @return version
      */
@@ -292,23 +260,18 @@ public class DataStreamRetimingClient {
     /**
      * Disable kinematic segment data in the Vicon DataStream.
      *
-     * @see isSegmentDataEnabled
-     * @see enableSegmentData
-     * @see enableMarkerData
-     * @see enableUnlabeledMarkerData
-     * @see enableDeviceData
-     * @see getSegmentCount
-     * @see getSegmentName
-     * @see getSegmentGlobalTranslation
-     * @see getSegmentGlobalRotationEulerXYZ
-     * @see getSegmentLocalTranslation
-     * @see getSegmentLocalRotationEulerXYZ
+     * The implementation in this retiming client automatically enables normal 
+     * segment data; this is distinct to the non retiming client where the user 
+     * must do this themselves.<p>
+     *
+     * @see EnableLightweightSegmentData()
+     * @see IsLightWeightSegmentDataEnabled()
      * @throws RuntimeException if the client is not connected.
      */
-    public void disableLightwiechtSegmentData() {
+    public void disableLightweightSegmentData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
     /**
@@ -353,7 +316,7 @@ public class DataStreamRetimingClient {
     public void disableMarkerData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         }
     }
 
@@ -377,16 +340,7 @@ public class DataStreamRetimingClient {
      * trying to read local or global segment data.<p>
      *
      * @see isSegmentDataEnabled
-     * @see disableSegmentData
-     * @see enableMarkerData
-     * @see enableUnlabeledMarkerData
-     * @see enableDeviceData
-     * @see getSegmentCount
-     * @see getSegmentName
-     * @see getSegmentGlobalTranslation
-     * @see getSegmentGlobalRotationEulerXYZ
-     * @see getSegmentLocalTranslation
-     * @see getSegmentLocalRotationEulerXYZ
+     * @see disableLightweightSegmentData
      * @throws RuntimeException if the client is not connected.
      */
     public void enableLightweightSegmentData() {
@@ -394,17 +348,15 @@ public class DataStreamRetimingClient {
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
         }
+        // success
     }
 
     /**
      * Return whether the lightweight transport mode for kinematic segment data
      * is enabled in the Vicon DataStream.
      *
-     * @see enableSegmentData
-     * @see disableSegmentData
-     * @see isMarkerDataEnabled
-     * @see isUnlabeledMarkerDataEnabled
-     * @see isDeviceDataEnabled
+     * @see enableLightweightSegmentData
+     * @see disableLightweightSegmentData
      * @return whether the lightweight transport mode for kinematic segment data
      * is enabled in the Vicon DataStream.
      */
@@ -443,10 +395,10 @@ public class DataStreamRetimingClient {
      * towards you. Common usages are Z-up: SetAxisMapping(Forward, Left, Up)
      * Y-up: SetAxisMapping(Forward, Up, Right)</p>
      *
-     * @param x x direction
-     * @param y y direction
-     * @param z z direction
-     * @see getAxisMapping
+     * @param x x direction - Specify the direction of your X axis relative to yourself as the observer.
+     * @param y y direction - Specify the direction of your Y axis relative to yourself as the observer.
+     * @param z z direction - Specify the direction of your Z axis relative to yourself as the observer.
+     * @see getAxisMapping<p>
      *
      * TODO vielleicht ein besseres Argument einführen, also z.B. xyz, yxz, ...
      * so wie in CalcML
@@ -456,6 +408,35 @@ public class DataStreamRetimingClient {
         Direction_Enum y_enum = Direction_Enum.swigToEnum(y.swigValue());
         Direction_Enum z_enum = Direction_Enum.swigToEnum(z.swigValue());
         Output_SetAxisMapping result = client.SetAxisMapping(x_enum, y_enum, z_enum);
+        if (result.getResult().equals(Result_Enum.CoLinearAxes)) {
+            throw new IllegalArgumentException("Colinear axes are not allowed!");
+        } else if (result.getResult().equals(Result_Enum.LeftHandedAxes)){
+            throw new IllegalArgumentException("Lefthanded axes are not allowed!");
+        }
+    }
+    
+    /**
+     * Sets the maximum amount by which the interpolation engine will predict 
+     * later than the latest received frame.
+     * 
+     * If required to predict by more than this amount, the result 
+     * LateDataRequested will be returned.
+     *
+     * @param maxPrediction The maximum amount of prediction required in milliseconds
+     */
+    public void setMaximumPrediction(double maxPrediction){
+        client.SetMaximumPrediction(maxPrediction);
+    }
+    
+    /**
+     * Returns the maximum prediction value currently in use.
+     * 
+     * The default value is 100 ms.
+     *
+     * @return the maximum prediction value currently in use. The Default value is 100ms.
+     */
+    public double maximumPrediction(){
+        return client.MaximumPrediction();
     }
 
     /**
@@ -470,7 +451,74 @@ public class DataStreamRetimingClient {
                 Direction.swigToEnum(result.getYAxis().swigValue()),
                 Direction.swigToEnum(result.getZAxis().swigValue())};
     }
-
+    
+    /**
+     * Update the current frame state to represent the position of all active 
+     * subjects at the current time.
+     * 
+     * The position of each segment is estimated by predicting forwards from the 
+     * most recent frames received from the DataStream, taking into account the 
+     * latency reported by the system to determine the amount of prediction required.
+     * 
+     * The results of calls which return details about the current frame state 
+     * such as GetSubjectCount() and GetSegmentGlobalRotationQuaternion() will 
+     * all return the stream contents and position at the time that this call was 
+     * made.
+     * 
+     * If no call to UpdateFrame() is made, calls querying the stream state will 
+     * return NoFrame.
+     */
+    public void updateFrame(){
+        Output_UpdateFrame result = client.UpdateFrame();
+        if (result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("The client is not connected!");
+        }
+        // success
+    }
+    /**
+     * Update the current frame state to represent the position of all active 
+     * subjects at the current time.
+     * 
+     * The position of each segment is estimated by predicting forwards from the 
+     * most recent frames received from the DataStream, taking into account the 
+     * latency reported by the system to determine the amount of prediction required.
+     * 
+     * The results of calls which return details about the current frame state 
+     * such as GetSubjectCount() and GetSegmentGlobalRotationQuaternion() will 
+     * all return the stream contents and position at the time that this call was 
+     * made.
+     * 
+     * If no call to UpdateFrame() is made, calls querying the stream state will 
+     * return NoFrame.
+     * 
+     * @param offset An additional offset that will be applied to the time at 
+     *        which the predicted position is calculated. This may be used to 
+     *        compensate for additional delays that are in the user’s system, 
+     *        such as render delay. 
+     */
+    public void updateFrame(double offset){
+        Output_UpdateFrame result = client.UpdateFrame(offset);
+        if (result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("The client is not connected!");
+        }
+        // success
+    }
+    
+    /**
+     * Used when running the retiming client with a specified frame rate.
+     * 
+     * This call will block until the next frame is available, as driven by an 
+     * internal clock running at the frame rate specified by connect(Host, frameRate). 
+     * The frame data is re-timed to the correct time point.
+     */
+    public void waitForFrame(){
+        Output_WaitForFrame result = client.WaitForFrame();
+        if (result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("The client is not connected!");
+        }
+        // success
+    }
+    
     /**
      * Return the number of subjects in the DataStream.
      *
@@ -512,38 +560,25 @@ public class DataStreamRetimingClient {
      * @throws RuntimeException if subject index is invalid, no frame available
      * or not connected.
      * @throws IllegalArgumentException if subjectIndex less than 0
-     *
-     * TODO code aufräumen, System.out entfernen
      */
     public String getSubjectName(long subjectIndex) {
         if (subjectIndex < 0) {
-            throw new IllegalArgumentException("getSubjectName() subjectIndex >=0 is needed!");
+            throw new IllegalArgumentException("getSubjectName() subjectIndex >= 0 is needed!");
         }
-        //System.out.println("getSubjectName(): reached");
         long subjectCount = getSubjectCount();
-        //System.out.println("getSubjectCount(): Subject count = " + subjectCount);
         if (subjectIndex >= subjectCount) {
-                throw new IllegalArgumentException("getSubjectName() subjectIndex >=subject count is needed!");
+            throw new IllegalArgumentException("getSubjectName() subjectIndex >= subject count is needed!");
         }
-        //System.out.println("getSubjectName(): Index = " + subjectIndex);
         Output_GetSubjectName result = client.GetSubjectName(subjectIndex);
-
-        //System.out.println("getSubjectName() index = " + subjectIndex);//warum?
-
         if (result.getResult() == Result_Enum.InvalidIndex) {
+            // sollte gar nicht mehr auftreten, da bereits oben spezifischer abgefangen
             throw new RuntimeException("getSubjectName() but subjectIndex is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
+        } else if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getSubjectName() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
+        } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSubjectName() but client is not connected!!");
         }
-        //String SubjectName = null;
-        //if (result.getResult()==Result_Enum.Success){
-        String SubjectName = result.getSubjectName(); //toString();
-        //System.out.println("Get subject name: "+result.getResult().toString());
-        return SubjectName;
+        return result.getSubjectName(); 
     }
 
     /**
@@ -561,24 +596,23 @@ public class DataStreamRetimingClient {
      * @throws RuntimeException if no frame is available, client is not
      * connected
      * @throws IllegalArgumentException subject name is invalid.
-     *
      */
     public String getSubjectRootSegmentName(String subjectName) {
         Output_GetSubjectRootSegmentName result = client.GetSubjectRootSegmentName(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("GetSubjectRootSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("GetSubjectRootSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("GetSubjectRootSegmentName() but client is not connected!!");
+            throw new RuntimeException("GetSubjectRootSegmentName() but client is not connected!!");
         }
         if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("GetSubjectRootSegmentName() but no frame available!");
+            throw new RuntimeException("GetSubjectRootSegmentName() but no frame available!");
         }
         // vielleicht tritt das auf, wenn das angegebene subject gar kein root segment besitzt
         // ist das überhaupt möglich?
         //FIXME
         if (result.getResult() == Result_Enum.InvalidIndex) {
-                throw new RuntimeException("GetSubjectRootSegmentName() but segmentIndex \"\" is invalid!");
+            throw new RuntimeException("GetSubjectRootSegmentName() but segmentIndex \"\" is invalid!");
         }
         return result.getSegmentName();
     }
@@ -599,15 +633,12 @@ public class DataStreamRetimingClient {
     public long getSegmentCount(String subjectName) {
         Output_GetSegmentCount result = client.GetSegmentCount(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new RuntimeException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new RuntimeException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentCount() but no frame available!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentCount() but client is not connected!!");
         }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentCount() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentCount() but client is not connected!!");
-        }
-        //System.out.println("Get segment count: " + result.getResult().toString());
         return result.getSegmentCount();
     }
 
@@ -629,16 +660,13 @@ public class DataStreamRetimingClient {
     public String getSegmentName(String subjectName, long segmentIndex) {
         Output_GetSegmentName result = client.GetSegmentName(subjectName, segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentName() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentName() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidIndex) {
-                throw new IllegalArgumentException("getSegmentName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentName() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentName() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentName() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidIndex) {
+            throw new IllegalArgumentException("getSegmentName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
         }
         return result.getSegmentName();
     }
@@ -658,20 +686,15 @@ public class DataStreamRetimingClient {
     public long getSegmentChildCount(String subjectName, String segmentName) {
         Output_GetSegmentChildCount result = client.GetSegmentChildCount(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new RuntimeException("getSegmentChildCount() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentChildCount() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentChildCount() but client is not connected!!");
-        }
-        System.out.println("get Segment Child Count: " + result.getResult().toString());
-        if (result.getResult() == Result_Enum.InvalidIndex) {
-                throw new RuntimeException("getSegmentChildCount() but segmentIndex \"\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new RuntimeException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new RuntimeException("getSegmentChildCount() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentChildCount() but no frame available!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentChildCount() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.InvalidIndex) {
+            throw new RuntimeException("getSegmentChildCount() but segmentIndex \"\" is invalid!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new RuntimeException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getSegmentCount();
     }
@@ -697,19 +720,15 @@ public class DataStreamRetimingClient {
         Output_GetSegmentChildName result = client.GetSegmentChildName(
                 subjectName, segmentName, segmentIndex);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentChildName() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentChildName() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentChildName() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidIndex) {
-                throw new IllegalArgumentException("getSegmentChildName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentChildName() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentChildName() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentChildName() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidIndex) {
+            throw new IllegalArgumentException("getSegmentChildName() but segmentIndex \"" + segmentIndex + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentChildCount() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getSegmentName();
     }
@@ -732,21 +751,17 @@ public class DataStreamRetimingClient {
     public String getSegmentParentName(String subjectName, String segmentName) {
         Output_GetSegmentParentName result = client.GetSegmentParentName(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentParentName() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentParentName() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentParentName() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentParentName() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentParentName() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentParentName() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentParentName() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentParentName() but segmentName \"" + segmentName + "\" is invalid!");
-        }
-        //TODO aufärumen
         String resultString = result.getSegmentName();
         if (resultString.isEmpty()) {
-                resultString = null;
+            resultString = null;
         }
         return resultString;
     }
@@ -780,16 +795,13 @@ public class DataStreamRetimingClient {
     public double[] getSegmentStaticTranslation(String subjectName, String segmentName) {
         Output_GetSegmentStaticTranslation result = client.GetSegmentStaticTranslation(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticTranslation() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentStaticTranslation() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentStaticTranslation() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentStaticTranslation() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticTranslation() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentStaticTranslation() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticTranslation() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticTranslation() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getTranslation();
     }
@@ -831,16 +843,13 @@ public class DataStreamRetimingClient {
         Output_GetSegmentStaticRotationHelical result = client.GetSegmentStaticRotationHelical(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentStaticRotationHelical() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentStaticRotationHelical() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentStaticRotationHelical() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticRotationHelical() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
@@ -875,16 +884,13 @@ public class DataStreamRetimingClient {
     public double[] getSegmentStaticRotationMatrix(String subjectName, String segmentName) {
         Output_GetSegmentStaticRotationMatrix result = client.GetSegmentStaticRotationMatrix(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentStaticRotationMatrix() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentStaticRotationMatrix() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentStaticRotationMatrix() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticRotationMatrix() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
@@ -922,20 +928,15 @@ public class DataStreamRetimingClient {
     public double[] getSegmentStaticRotationQuaternion(String subjectName, String segmentName) {
         Output_GetSegmentStaticRotationQuaternion result = client.GetSegmentStaticRotationQuaternion(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentStaticRotationQuaternion() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticRotationQuaternion() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentStaticRotationQuaternion() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentStaticRotationQuaternion() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
-        }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -953,22 +954,17 @@ public class DataStreamRetimingClient {
     public double[] getSegmentStaticScale(String subjectName, String segmentName) {
         Output_GetSegmentStaticScale result = client.GetSegmentStaticScale(subjectName, segmentName);
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentStaticScale() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentStaticScale() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticScale() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentStaticScale() but segmentName \"" + segmentName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotSupported) {
-                throw new UnsupportedOperationException("getSegmentStaticScale() not supported!");
-        }
-        if (result.getResult() == Result_Enum.NotPresent) {
-                throw new UnsupportedOperationException("getSegmentStaticScale() not present!");
+            throw new RuntimeException("getSegmentStaticScale() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticScale() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSubjectName) {
+           throw new IllegalArgumentException("getSegmentStaticScale() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticScale() but segmentName \"" + segmentName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotSupported) {
+            throw new UnsupportedOperationException("getSegmentStaticScale() not supported!");
+        } else if (result.getResult() == Result_Enum.NotPresent) {
+            throw new UnsupportedOperationException("getSegmentStaticScale() not present!");
         }
         return result.getScale();
     }
@@ -998,21 +994,15 @@ public class DataStreamRetimingClient {
         Output_GetSegmentStaticRotationEulerXYZ result = client.GetSegmentStaticRotationEulerXYZ(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentStaticRotationEulerXYZ() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentStaticRotationEulerXYZ() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentStaticRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentStaticRotationEulerXYZ() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentStaticRotationEulerXYZ() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
-        }
-
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -1022,7 +1012,7 @@ public class DataStreamRetimingClient {
      * millimeters with respect to the global origin.<p>
      *
      * Occluded will be True if the segment was absent at this frame. In this
-     * case the translation will be [0,0,0]
+     * case the translation will be [0,0,0].
      * .<p>
      *
      * @see getSegmentGlobalRotationHelical
@@ -1044,16 +1034,13 @@ public class DataStreamRetimingClient {
     public double[] getSegmentGlobalTranslation(String subjectName, String segmentName) {
         Output_GetSegmentGlobalTranslation result = client.GetSegmentGlobalTranslation(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentGlobalTranslation() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentGlobalTranslation() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentGlobalTranslation() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentGlobalTranslation() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentGlobalTranslation() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentGlobalTranslation() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentGlobalTranslation() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentGlobalTranslation() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getTranslation();
     }
@@ -1067,7 +1054,10 @@ public class DataStreamRetimingClient {
      *
      * If you are required to calculate the amount a segment has moved from its
      * base position, subtract this value from the local translation.<p>
-     *
+     * 
+     * Occluded will be True if the segment was absent at this frame. In this 
+     * case the Rotation will be [0,0,0].
+     *  
      * @see getSegmentStaticRotationHelical
      * @see getSegmentStaticRotationMatrix
      * @see getSegmentStaticRotationQuaternion
@@ -1088,16 +1078,13 @@ public class DataStreamRetimingClient {
         Output_GetSegmentLocalRotationHelical result = client.GetSegmentLocalRotationHelical(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentLocalRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentLocalRotationHelical() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentLocalRotationHelical() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentLocalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentLocalRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentLocalRotationHelical() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentLocalRotationHelical() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentLocalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
@@ -1125,20 +1112,15 @@ public class DataStreamRetimingClient {
         Output_GetSegmentGlobalRotationHelical result = client.GetSegmentGlobalRotationHelical(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentGlobalRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentGlobalRotationHelical() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentGlobalRotationHelical() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentGlobalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentGlobalRotationHelical() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentGlobalRotationHelical() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
-        }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
@@ -1164,16 +1146,13 @@ public class DataStreamRetimingClient {
     public double[] getSegmentGlobalRotationMatrix(String subjectName, String segmentName) {
         Output_GetSegmentGlobalRotationMatrix result = client.GetSegmentGlobalRotationMatrix(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentGlobalRotationMatrix() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentGlobalRotationMatrix() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentGlobalRotationMatrix() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentGlobalRotationMatrix() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
@@ -1184,9 +1163,11 @@ public class DataStreamRetimingClient {
      *
      * The quaternion is of the form (x, y, z, w) where w is the real component
      * and x, y and z are the imaginary components. N.B. This is different from
-     * that used in many other applications, which use (w, x, y, z)
-     * .<p>
-     *
+     * that used in many other applications, which use (w, x, y, z).<p>
+     * 
+     * Occluded will be True if the segment was absent at this frame. In this 
+     * case the Rotation will be [1,0,0,0].
+     * 
      * @see getSegmentGlobalTranslation
      * @see getSegmentGlobalRotationHelical
      * @see getSegmentGlobalRotationMatrix
@@ -1207,22 +1188,22 @@ public class DataStreamRetimingClient {
     public double[] getSegmentGlobalRotationQuaternion(String subjectName, String segmentName) {
         Output_GetSegmentGlobalRotationQuaternion result = client.GetSegmentGlobalRotationQuaternion(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentGlobalRotationQuaternion() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentGlobalRotationQuaternion() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but segmentName\"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentGlobalRotationQuaternion() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentGlobalRotationQuaternion() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but segmentName\"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
 
     /**
      * Return the rotation of a subject segment in global Euler XYZ coordinates.
+     * 
+     *  Occluded will be True if the segment was absent at this frame. In this 
+     * case the rotation will be [0,0,0].<P>
      *
      * @see getSegmentGlobalTranslation
      * @see getSegmentGlobalRotationHelical
@@ -1245,25 +1226,23 @@ public class DataStreamRetimingClient {
         Output_GetSegmentGlobalRotationEulerXYZ result = client.GetSegmentGlobalRotationEulerXYZ(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentGlobalRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentGlobalRotationEulerXYZ() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentGlobalRotationEulerXYZ() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentGlobalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentGlobalRotationEulerXYZ() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentGlobalRotationEulerXYZ() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
-        }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        return result.getRotation();
     }
 
     /**
      * Return the translation of a subject segment in local coordinates relative
      * to its parent segment.
+     *
+     * Occluded will be True if the segment was absent at this frame. In this 
+     * case the translation will be [0,0,0].
      *
      * @see getSegmentLocalRotationHelical
      * @see getSegmentLocalRotationMatrix
@@ -1286,16 +1265,13 @@ public class DataStreamRetimingClient {
         Output_GetSegmentLocalTranslation result = client.GetSegmentLocalTranslation(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentLocalTranslation () but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentLocalTranslation () but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentLocalTranslation () but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentLocalTranslation () but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentLocalTranslation () but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentLocalTranslation () but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentLocalTranslation () but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentLocalTranslation () but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getTranslation();
     }
@@ -1306,9 +1282,11 @@ public class DataStreamRetimingClient {
      *
      * The quaternion is of the form (x, y, z, w) where w is the real component
      * and x, y and z are the imaginary components. N.B. This is different from
-     * that used in many other applications, which use (w, x, y, z)
-     * .<p>
-     *
+     * that used in many other applications, which use (w, x, y, z).<p>
+     * 
+     * Occluded will be True if the segment was absent at this frame. In this 
+     * case the rotation will be [1,0,0,0].
+
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationHelical
      * @see getSegmentLocalRotationMatrix
@@ -1331,14 +1309,11 @@ public class DataStreamRetimingClient {
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
+        } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSegmentLocalRotationQuaternion() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
+        } else if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getSegmentLocalRotationQuaternion() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
@@ -1347,12 +1322,12 @@ public class DataStreamRetimingClient {
     /**
      * Return the rotation row-major matrix of a subject segment in local 
      * coordinates relative to its parent segment.
-
      *
      * The quaternion is of the form (x, y, z, w) where w is the real component
      * and x, y and z are the imaginary components. N.B. This is different from
-     * that used in many other applications, which use (w, x, y, z)
-     * .<p>
+     * that used in many other applications, which use (w, x, y, z).<p>
+     *
+     * Occluded will be True if the segment was absent at this frame.<p>
      *
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationHelical
@@ -1377,14 +1352,11 @@ public class DataStreamRetimingClient {
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
+        } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getSegmentLocalRotationQuaternion() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
+        } else if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getSegmentLocalRotationQuaternion() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
@@ -1393,6 +1365,9 @@ public class DataStreamRetimingClient {
     /**
      * Return the rotation of a subject segment in local Euler XYZ coordinates
      * relative to its parent segment.
+     *
+     * Occluded will be True if the segment was absent at this frame. In this 
+     * case the rotation will be [0,0,0].
      *
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationHelical
@@ -1415,16 +1390,13 @@ public class DataStreamRetimingClient {
         Output_GetSegmentLocalRotationEulerXYZ result = client.GetSegmentLocalRotationEulerXYZ(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentLocalRotationEulerXYZ() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentLocalRotationEulerXYZ() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentLocalRotationEulerXYZ() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentLocalRotationEulerXYZ() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
@@ -1468,6 +1440,10 @@ public class DataStreamRetimingClient {
         Output_ClearSubjectFilter result = client.ClearSubjectFilter();
     }
 
+    /**
+     * Destruction will Disconnect if required.
+     *
+     */
     public void delete(){
         client.delete();
     }

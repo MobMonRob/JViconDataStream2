@@ -1,41 +1,55 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.StreamMode_Enum;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Timeout;
 
 /**
- *
+ * JUnit5 Test class.
+ * 
+ * TODO
+ * - Tags einführen, um die Tests zu gruppieren
  * @author Oliver Rettig
  */
-public class DataStreamClientTest {
+class DataStreamClientTest {
     
-    public DataStreamClient client = new DataStreamClient();;
+    DataStreamClient client;
     
     //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
-    String hostname = "192.168.10.1:51001";
+    String hostname = "192.168.10.1";
        
-    public DataStreamClientTest() {}
+    DataStreamClientTest() {}
     
-    // Achtung: Das wir vor dem Aufruf jeder Testmethode aufgerufen.
-    // Ich will aber eigentlich das nur einmal aufgerufen haben!
-    @BeforeEach
-    public void setUp() {
-        //client = new DataStreamClient();
+    @BeforeAll
+    void setUp() {
+        client = new DataStreamClient();
         Version version = client.getVersion();
         System.out.println("Version: " + version.getMajor() + "." + 
                 version.getMinor() + "." + version.getPoint());
     }
 
+    @AfterAll
+    void close(){
+        if (client.isConnected()){
+            client.disconnect();
+        }
+        client.delete();
+    }
+    
     /**
      * Test of connect method, of class DataStreamClient.
      */
     @Test
-    public void testConnect() {
-        System.out.println("connect");
+    @DisplayName("Connect to Vicon Data Stream")
+    @Timeout(60)
+    void testConnect() {
         client.connect(hostname);
         if (client.isConnected()) {
             System.out.println("is connected");
@@ -48,7 +62,7 @@ public class DataStreamClientTest {
      * Test of connectToMulticast method, of class DataStreamClient.
      */
     @Test
-    public void testConnectToMulticast() {
+    void testConnectToMulticast() {
         System.out.println("connectToMulticast");
         String multicastHostname = "";
         client.connectToMulticast(hostname, multicastHostname);
@@ -60,7 +74,7 @@ public class DataStreamClientTest {
      * Test of startTransmittingMulticast method, of class DataStreamClient.
      */
     @Test
-    public void testStartTransmittingMulticast() {
+    void testStartTransmittingMulticast() {
         System.out.println("startTransmittingMulticast");
         String serverIP = "";
         String multicastIP = "";
@@ -76,7 +90,7 @@ public class DataStreamClientTest {
      * Test of stopTransmittingMulticast method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testStopTransmittingMulticast() {
+    void testStopTransmittingMulticast() {
         System.out.println("stopTransmittingMulticast");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -90,7 +104,7 @@ public class DataStreamClientTest {
      * Test of isConnected method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testIsConnected() {
+    void testIsConnected() {
         System.out.println("isConnected");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -104,7 +118,7 @@ public class DataStreamClientTest {
      * Test of disconnect method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testDisconnect() {
+    void testDisconnect() {
         System.out.println("disconnect");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -118,7 +132,7 @@ public class DataStreamClientTest {
      * Test of getVersion method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetVersion() {
+    void testGetVersion() {
         System.out.println("getVersion");
         DataStreamClient instance = new DataStreamClient();
         Version expResult = null;
@@ -132,7 +146,7 @@ public class DataStreamClientTest {
      * Test of getDeviceName method, of class ViconDataStreamSDKClient.
      */
     /*@Test
-    public void testGetDeviceName_0args() {
+    void testGetDeviceName_0args() {
         System.out.println("getDeviceName");
         DataStreamClient instance = new DataStreamClient();
         String expResult = null;
@@ -146,7 +160,7 @@ public class DataStreamClientTest {
      * Test of enableDebugData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableDebugData() {
+    void testEnableDebugData() {
         System.out.println("enableDebugData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableDebugData();
@@ -158,7 +172,7 @@ public class DataStreamClientTest {
      * Test of enableMarkerData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableMarkerData() {
+    void testEnableMarkerData() {
         System.out.println("enableMarkerData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableMarkerData();
@@ -170,7 +184,7 @@ public class DataStreamClientTest {
      * Test of enableDeviceData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableDeviceData() {
+    void testEnableDeviceData() {
         System.out.println("enableDeviceData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableDeviceData();
@@ -182,7 +196,7 @@ public class DataStreamClientTest {
      * Test of enableMarkerRayData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableMarkerRayData() {
+    void testEnableMarkerRayData() {
         System.out.println("enableMarkerRayData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableMarkerRayData();
@@ -194,7 +208,7 @@ public class DataStreamClientTest {
      * Test of enableSegmentData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableSegmentData() {
+    void testEnableSegmentData() {
         System.out.println("enableSegmentData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableSegmentData();
@@ -206,7 +220,7 @@ public class DataStreamClientTest {
      * Test of disableSegmentData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testDisableSegmentData() {
+    void testDisableSegmentData() {
         System.out.println("disableSegmentData");
         DataStreamClient instance = new DataStreamClient();
         instance.disableSegmentData();
@@ -218,7 +232,7 @@ public class DataStreamClientTest {
      * Test of enableLightweightSegmentData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableLightweightSegmentData() {
+    void testEnableLightweightSegmentData() {
         System.out.println("enableLightweightSegmentData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableLightweightSegmentData();
@@ -230,7 +244,7 @@ public class DataStreamClientTest {
      * Test of isLightweightSegmentDataEnabled method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testIsLightweightSegmentDataEnabled() {
+    void testIsLightweightSegmentDataEnabled() {
         System.out.println("isLightweightSegmentDataEnabled");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -244,7 +258,7 @@ public class DataStreamClientTest {
      * Test of enableUnlabeledMarkerData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableUnlabeledMarkerData() {
+    void testEnableUnlabeledMarkerData() {
         System.out.println("enableUnlabeledMarkerData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableUnlabeledMarkerData();
@@ -256,7 +270,7 @@ public class DataStreamClientTest {
      * Test of isSegmentDataEnabled method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testIsSegmentDataEnabled() {
+    void testIsSegmentDataEnabled() {
         System.out.println("isSegmentDataEnabled");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -270,7 +284,7 @@ public class DataStreamClientTest {
      * Test of isDebugDataEnabled method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testIsDebugDataEnabled() {
+    void testIsDebugDataEnabled() {
         System.out.println("isDebugDataEnabled");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -284,7 +298,7 @@ public class DataStreamClientTest {
      * Test of isMarkerDataEnabled method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testIsMarkerDataEnabled() {
+    void testIsMarkerDataEnabled() {
         System.out.println("isMarkerDataEnabled");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -298,7 +312,7 @@ public class DataStreamClientTest {
      * Test of isUnlabeledMarkerDataEnabled method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testIsUnlabeledMarkerDataEnabled() {
+    void testIsUnlabeledMarkerDataEnabled() {
         System.out.println("isUnlabeledMarkerDataEnabled");
         DataStreamClient instance = new DataStreamClient();
         boolean expResult = false;
@@ -312,7 +326,7 @@ public class DataStreamClientTest {
      * Test of setStreamMode method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testSetStreamMode() {
+    void testSetStreamMode() {
         System.out.println("setStreamMode");
         StreamMode_Enum mode = null;
         DataStreamClient instance = new DataStreamClient();
@@ -325,7 +339,7 @@ public class DataStreamClientTest {
      * Test of getFrameRateCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetFrameRateCount() {
+    void testGetFrameRateCount() {
         System.out.println("getFrameRateCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -339,7 +353,7 @@ public class DataStreamClientTest {
      * Test of getFrameRateName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetFrameRateName() {
+    void testGetFrameRateName() {
         System.out.println("getFrameRateName");
         long FrameRateIndex = 0L;
         DataStreamClient instance = new DataStreamClient();
@@ -354,7 +368,7 @@ public class DataStreamClientTest {
      * Test of getFrameRateValue method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetFrameRateValue() {
+    void testGetFrameRateValue() {
         System.out.println("getFrameRateValue");
         String FrameRateName = "";
         DataStreamClient instance = new DataStreamClient();
@@ -369,7 +383,7 @@ public class DataStreamClientTest {
      * Test of getUnlabeledMarkerCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetUnlabeledMarkerCount() {
+    void testGetUnlabeledMarkerCount() {
         System.out.println("getUnlabeledMarkerCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -383,7 +397,7 @@ public class DataStreamClientTest {
      * Test of getFrameRate method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetFrameRate() {
+    void testGetFrameRate() {
         System.out.println("getFrameRate");
         DataStreamClient instance = new DataStreamClient();
         double expResult = 0.0;
@@ -397,7 +411,7 @@ public class DataStreamClientTest {
      * Test of getUnlabeledMarkerGlobalTranslation method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetUnlabeledMarkerGlobalTranslation_long() {
+    void testGetUnlabeledMarkerGlobalTranslation_long() {
         System.out.println("getUnlabeledMarkerGlobalTranslation");
         long markerIndex = 0L;
         DataStreamClient instance = new DataStreamClient();
@@ -412,7 +426,7 @@ public class DataStreamClientTest {
      * Test of getSubjectCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSubjectCount() {
+    void testGetSubjectCount() {
         System.out.println("getSubjectCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -426,7 +440,7 @@ public class DataStreamClientTest {
      * Test of getSubjectName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSubjectName() {
+    void testGetSubjectName() {
         System.out.println("getSubjectName");
         long subjectIndex = 0L;
         DataStreamClient instance = new DataStreamClient();
@@ -441,7 +455,7 @@ public class DataStreamClientTest {
      * Test of getSubjectRootSegmentName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSubjectRootSegmentName() {
+    void testGetSubjectRootSegmentName() {
         System.out.println("getSubjectRootSegmentName");
         String subjectName = "";
         DataStreamClient instance = new DataStreamClient();
@@ -456,7 +470,7 @@ public class DataStreamClientTest {
      * Test of getSegmentCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentCount() {
+    void testGetSegmentCount() {
         System.out.println("getSegmentCount");
         String subjectName = "";
         DataStreamClient instance = new DataStreamClient();
@@ -471,7 +485,7 @@ public class DataStreamClientTest {
      * Test of getSegmentName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentName() {
+    void testGetSegmentName() {
         System.out.println("getSegmentName");
         String subjectName = "";
         long segmentIndex = 0L;
@@ -487,7 +501,7 @@ public class DataStreamClientTest {
      * Test of getSegmentChildCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentChildCount() {
+    void testGetSegmentChildCount() {
         System.out.println("getSegmentChildCount");
         String subjectName = "";
         String segmentName = "";
@@ -503,7 +517,7 @@ public class DataStreamClientTest {
      * Test of getSegmentChildName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentChildName() {
+    void testGetSegmentChildName() {
         System.out.println("getSegmentChildName");
         String subjectName = "";
         String segmentName = "";
@@ -520,7 +534,7 @@ public class DataStreamClientTest {
      * Test of getSegmentParentName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentParentName() {
+    void testGetSegmentParentName() {
         System.out.println("getSegmentParentName");
         String subjectName = "";
         String segmentName = "";
@@ -536,7 +550,7 @@ public class DataStreamClientTest {
      * Test of getSegmentStaticTranslation method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentStaticTranslation() {
+    void testGetSegmentStaticTranslation() {
         System.out.println("getSegmentStaticTranslation");
         String subjectName = "";
         String segmentName = "";
@@ -552,7 +566,7 @@ public class DataStreamClientTest {
      * Test of getSegmentStaticRotationHelical method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentStaticRotationHelical() {
+    void testGetSegmentStaticRotationHelical() {
         System.out.println("getSegmentStaticRotationHelical");
         String subjectName = "";
         String segmentName = "";
@@ -568,7 +582,7 @@ public class DataStreamClientTest {
      * Test of getSegmentStaticRotationMatrix method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentStaticRotationMatrix() {
+    void testGetSegmentStaticRotationMatrix() {
         System.out.println("getSegmentStaticRotationMatrix");
         String subjectName = "";
         String segmentName = "";
@@ -584,7 +598,7 @@ public class DataStreamClientTest {
      * Test of getSegmentStaticRotationQuaternion method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentStaticRotationQuaternion() {
+    void testGetSegmentStaticRotationQuaternion() {
         System.out.println("getSegmentStaticRotationQuaternion");
         String subjectName = "";
         String segmentName = "";
@@ -600,7 +614,7 @@ public class DataStreamClientTest {
      * Test of getSegmentStaticRotationEulerXYZ method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentStaticRotationEulerXYZ() {
+    void testGetSegmentStaticRotationEulerXYZ() {
         System.out.println("getSegmentStaticRotationEulerXYZ");
         String subjectName = "";
         String segmentName = "";
@@ -616,7 +630,7 @@ public class DataStreamClientTest {
      * Test of getSegmentGlobalTranslation method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentGlobalTranslation() {
+    void testGetSegmentGlobalTranslation() {
         System.out.println("getSegmentGlobalTranslation");
         String subjectName = "";
         String segmentName = "";
@@ -632,7 +646,7 @@ public class DataStreamClientTest {
      * Test of getSegmentLocalRotationHelical method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentLocalRotationHelical() {
+    void testGetSegmentLocalRotationHelical() {
         System.out.println("getSegmentLocalRotationHelical");
         String subjectName = "";
         String segmentName = "";
@@ -648,7 +662,7 @@ public class DataStreamClientTest {
      * Test of getSegmentGlobalRotationHelical method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentGlobalRotationHelical() {
+    void testGetSegmentGlobalRotationHelical() {
         System.out.println("getSegmentGlobalRotationHelical");
         String subjectName = "";
         String segmentName = "";
@@ -664,7 +678,7 @@ public class DataStreamClientTest {
      * Test of getSegmentGlobalRotationMatrix method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentGlobalRotationMatrix() {
+    void testGetSegmentGlobalRotationMatrix() {
         System.out.println("getSegmentGlobalRotationMatrix");
         String subjectName = "";
         String segmentName = "";
@@ -680,7 +694,7 @@ public class DataStreamClientTest {
      * Test of getSegmentGlobalRotationQuaternion method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentGlobalRotationQuaternion() {
+    void testGetSegmentGlobalRotationQuaternion() {
         System.out.println("getSegmentGlobalRotationQuaternion");
         String subjectName = "";
         String segmentName = "";
@@ -696,7 +710,7 @@ public class DataStreamClientTest {
      * Test of getSegmentGlobalRotationEulerXYZ method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentGlobalRotationEulerXYZ() {
+    void testGetSegmentGlobalRotationEulerXYZ() {
         System.out.println("getSegmentGlobalRotationEulerXYZ");
         String subjectName = "";
         String segmentName = "";
@@ -712,7 +726,7 @@ public class DataStreamClientTest {
      * Test of getSegmentLocalTranslation method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentLocalTranslation() {
+    void testGetSegmentLocalTranslation() {
         System.out.println("getSegmentLocalTranslation");
         String subjectName = "";
         String segmentName = "";
@@ -728,7 +742,7 @@ public class DataStreamClientTest {
      * Test of getSegmentLocalRotationQuaternion method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentLocalRotationQuaternion() {
+    void testGetSegmentLocalRotationQuaternion() {
         System.out.println("getSegmentLocalRotationQuaternion");
         String subjectName = "";
         String segmentName = "";
@@ -744,7 +758,7 @@ public class DataStreamClientTest {
      * Test of getSegmentLocalRotationEulerXYZ method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentLocalRotationEulerXYZ() {
+    void testGetSegmentLocalRotationEulerXYZ() {
         System.out.println("getSegmentLocalRotationEulerXYZ");
         String subjectName = "";
         String segmentName = "";
@@ -760,7 +774,7 @@ public class DataStreamClientTest {
      * Test of getObjectQuality method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetObjectQuality() {
+    void testGetObjectQuality() {
         System.out.println("getObjectQuality");
         String subjectName = "";
         DataStreamClient instance = new DataStreamClient();
@@ -775,7 +789,7 @@ public class DataStreamClientTest {
      * Test of getMarkerGlobalTranslation method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetMarkerGlobalTranslation() {
+    void testGetMarkerGlobalTranslation() {
         System.out.println("getMarkerGlobalTranslation");
         String subjectName = "";
         String markerName = "";
@@ -791,7 +805,7 @@ public class DataStreamClientTest {
      * Test of getMarkerRayContributionCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetMarkerRayContributionCount() {
+    void testGetMarkerRayContributionCount() {
         System.out.println("getMarkerRayContributionCount");
         String subjectName = "";
         String markerName = "";
@@ -807,7 +821,7 @@ public class DataStreamClientTest {
      * Test of getMarkerRayContribution method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetMarkerRayContribution() {
+    void testGetMarkerRayContribution() {
         System.out.println("getMarkerRayContribution");
         String subjectName = "";
         String markerName = "";
@@ -824,7 +838,7 @@ public class DataStreamClientTest {
      * Test of getMarkerCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetMarkerCount() {
+    void testGetMarkerCount() {
         System.out.println("getMarkerCount");
         String subjectName = "";
         DataStreamClient instance = new DataStreamClient();
@@ -839,7 +853,7 @@ public class DataStreamClientTest {
      * Test of getUnlabeledMarkerGlobalTranslation method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetUnlabeledMarkerGlobalTranslation_int() {
+    void testGetUnlabeledMarkerGlobalTranslation_int() {
         System.out.println("getUnlabeledMarkerGlobalTranslation");
         int markerIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -854,7 +868,7 @@ public class DataStreamClientTest {
      * Test of getDeviceCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetDeviceCount() {
+    void testGetDeviceCount() {
         System.out.println("getDeviceCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -868,7 +882,7 @@ public class DataStreamClientTest {
      * Test of getDeviceName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetDeviceName_int() {
+    void testGetDeviceName_int() {
         System.out.println("getDeviceName");
         int deviceIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -883,7 +897,7 @@ public class DataStreamClientTest {
      * Test of getDeviceOutputName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetDeviceOutputName() {
+    void testGetDeviceOutputName() {
         System.out.println("getDeviceOutputName");
         String deviceName = "";
         int deviceIndex = 0;
@@ -899,7 +913,7 @@ public class DataStreamClientTest {
      * Test of getDeviceOutputValue method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetDeviceOutputValue() {
+    void testGetDeviceOutputValue() {
         System.out.println("getDeviceOutputValue");
         String deviceName = "";
         String deviceOutputName = "";
@@ -915,7 +929,7 @@ public class DataStreamClientTest {
      * Test of getDeviceOutputSubsamples method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetDeviceOutputSubsamples() {
+    void testGetDeviceOutputSubsamples() {
         System.out.println("getDeviceOutputSubsamples");
         String deviceName = "";
         String deviceOutputName = "";
@@ -931,7 +945,7 @@ public class DataStreamClientTest {
      * Test of getForcePlateCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetForcePlateCount() {
+    void testGetForcePlateCount() {
         System.out.println("getForcePlateCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -945,7 +959,7 @@ public class DataStreamClientTest {
      * Test of getForceVector method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetForceVector() {
+    void testGetForceVector() {
         System.out.println("getForceVector");
         int ForceplateIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -960,7 +974,7 @@ public class DataStreamClientTest {
      * Test of getGlobalMomentVector method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetGlobalMomentVector() {
+    void testGetGlobalMomentVector() {
         System.out.println("getGlobalMomentVector");
         int ForceplateIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -975,7 +989,7 @@ public class DataStreamClientTest {
      * Test of getGlobalCentreOfPressure method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetGlobalCentreOfPressure_int() {
+    void testGetGlobalCentreOfPressure_int() {
         System.out.println("getGlobalCentreOfPressure");
         int ForceplateIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -990,7 +1004,7 @@ public class DataStreamClientTest {
      * Test of getForcePlateSubsamples method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetForcePlateSubsamples() {
+    void testGetForcePlateSubsamples() {
         System.out.println("getForcePlateSubsamples");
         int ForceplateIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -1005,7 +1019,7 @@ public class DataStreamClientTest {
      * Test of getGlobalForceVector method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetGlobalForceVector() {
+    void testGetGlobalForceVector() {
         System.out.println("getGlobalForceVector");
         int ForceplateIndex = 0;
         int Subsample = 0;
@@ -1021,7 +1035,7 @@ public class DataStreamClientTest {
      * Test of getGlobalMomentVecto method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetGlobalMomentVecto() {
+    void testGetGlobalMomentVecto() {
         System.out.println("getGlobalMomentVecto");
         int ForceplateIndex = 0;
         int Subsample = 0;
@@ -1037,7 +1051,7 @@ public class DataStreamClientTest {
      * Test of getGlobalCentreOfPressure method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetGlobalCentreOfPressure_int_int() {
+    void testGetGlobalCentreOfPressure_int_int() {
         System.out.println("getGlobalCentreOfPressure");
         int ForceplateIndex = 0;
         int subsample = 0;
@@ -1053,7 +1067,7 @@ public class DataStreamClientTest {
      * Test of getEyeTrackerCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetEyeTrackerCount() {
+    void testGetEyeTrackerCount() {
         System.out.println("getEyeTrackerCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -1067,7 +1081,7 @@ public class DataStreamClientTest {
      * Test of getEyeTrackerGlobalPosition method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetEyeTrackerGlobalPosition() {
+    void testGetEyeTrackerGlobalPosition() {
         System.out.println("getEyeTrackerGlobalPosition");
         int EyeTrackerIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -1082,7 +1096,7 @@ public class DataStreamClientTest {
      * Test of getEyeTrackerGlobalGazeVector method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetEyeTrackerGlobalGazeVector() {
+    void testGetEyeTrackerGlobalGazeVector() {
         System.out.println("getEyeTrackerGlobalGazeVector");
         int EyeTrackerIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -1097,7 +1111,7 @@ public class DataStreamClientTest {
      * Test of enableCentroidData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableCentroidData() {
+    void testEnableCentroidData() {
         System.out.println("enableCentroidData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableCentroidData();
@@ -1109,7 +1123,7 @@ public class DataStreamClientTest {
      * Test of enableGreyscaleData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableGreyscaleData() {
+    void testEnableGreyscaleData() {
         System.out.println("enableGreyscaleData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableGreyscaleData();
@@ -1121,7 +1135,7 @@ public class DataStreamClientTest {
      * Test of enableVideoData method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testEnableVideoData() {
+    void testEnableVideoData() {
         System.out.println("enableVideoData");
         DataStreamClient instance = new DataStreamClient();
         instance.enableVideoData();
@@ -1133,7 +1147,7 @@ public class DataStreamClientTest {
      * Test of getCameraCount method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetCameraCount() {
+    void testGetCameraCount() {
         System.out.println("getCameraCount");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -1147,7 +1161,7 @@ public class DataStreamClientTest {
      * Test of getCameraName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetCameraName() {
+    void testGetCameraName() {
         System.out.println("getCameraName");
         int CameraIndex = 0;
         DataStreamClient instance = new DataStreamClient();
@@ -1162,7 +1176,7 @@ public class DataStreamClientTest {
      * Test of getMarkerName method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetMarkerName() {
+    void testGetMarkerName() {
         System.out.println("getMarkerName");
         String subjectName = "";
         long markerIndex = 0L;
@@ -1178,7 +1192,7 @@ public class DataStreamClientTest {
      * Test of getFrameNumber method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetFrameNumber() {
+    void testGetFrameNumber() {
         System.out.println("getFrameNumber");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
@@ -1192,7 +1206,7 @@ public class DataStreamClientTest {
      * Test of getTimeCode method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetTimeCode() {
+    void testGetTimeCode() {
         System.out.println("getTimeCode");
         DataStreamClient instance = new DataStreamClient();
         TimeCode expResult = null;
@@ -1206,7 +1220,7 @@ public class DataStreamClientTest {
      * Test of getFrame method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetFrame() {
+    void testGetFrame() {
         System.out.println("getFrame");
         boolean waiting = false;
         DataStreamClient instance = new DataStreamClient();
@@ -1221,7 +1235,7 @@ public class DataStreamClientTest {
      * Test of delete method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testDelete() {
+    void testDelete() {
         System.out.println("delete");
         DataStreamClient instance = new DataStreamClient();
         instance.delete();
@@ -1233,7 +1247,7 @@ public class DataStreamClientTest {
      * Test of getSegmentLocalRotationMatrix method, of class ViconDataStreamSDKClient.
      */
     @Test
-    public void testGetSegmentLocalRotationMatrix() {
+    void testGetSegmentLocalRotationMatrix() {
         System.out.println("getSegmentLocalRotationMatrix");
         String subjectName = "";
         String segmentName = "";

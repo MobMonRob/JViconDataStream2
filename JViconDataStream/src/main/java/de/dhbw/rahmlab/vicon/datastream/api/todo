@@ -4,9 +4,6 @@
   Tests vervollständigen
 - alle TODOs abarbeiten
 
-- Einlesen der subject/segment/marker Hierarchie funktioniert nicht richtig. Fehler treten
-  vermutlich bei Sonderzeichen in den Namen auf und zwar wenn diese in einen Java-string 
-  via toString() verwandelt werden
 - Es fehlen noch Methoden um die Buffer/Techniken zu parametrisieren, d.h. da klappen auch noch 
   noch nicht alle c++-Methoden sind daher im Interface auskommentiert
 

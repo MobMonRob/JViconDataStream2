@@ -974,7 +974,7 @@ public class DataStreamClient {
     public void setStreamMode(StreamMode_Enum mode) {
         Output_SetStreamMode result = client.SetStreamMode(mode);
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("GetFrameRateCount() but client was not connected!");
+            throw new RuntimeException("GetFrameRateCount() but client was not connected!");
         }
     }
 
@@ -1213,17 +1213,17 @@ public class DataStreamClient {
      */
     public double getLatencySampleValue(String latencySampleName) {
         if (latencySampleName == null) {
-                throw new IllegalArgumentException("getLatencySampleValue(): Unknown latency sample name \"" + latencySampleName + "\"!");
+            throw new IllegalArgumentException("getLatencySampleValue(): Unknown latency sample name \"" + latencySampleName + "\"!");
         }
         Output_GetLatencySampleValue result = client.GetLatencySampleValue(latencySampleName);
         if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getLatencySampleValue() invoked but no frame available!");
+            throw new RuntimeException("getLatencySampleValue() invoked but no frame available!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getLatencySampleValue() but client is not connected!!");
+            throw new RuntimeException("getLatencySampleValue() but client is not connected!!");
         }
         if (result.getResult() == Result_Enum.InvalidIndex) {
-                throw new RuntimeException("getLatencySampleValue() but index is invalid!");
+            throw new RuntimeException("getLatencySampleValue() but index is invalid!");
         }
         return result.getValue();
     }
@@ -1247,10 +1247,10 @@ public class DataStreamClient {
     public double getLatencyTotal() {
         Output_GetLatencyTotal result = client.GetLatencyTotal();
         if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getLatencyTotal() invoked but no frame available!");
+            throw new RuntimeException("getLatencyTotal() invoked but no frame available!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getLatencyTotal() but client is not connected!!");
+            throw new RuntimeException("getLatencyTotal() but client is not connected!!");
         }
         return result.getTotal();
     }
@@ -1291,7 +1291,6 @@ public class DataStreamClient {
      * @see getSubjectName
      * @return subject count bigger or equal 0
      * @throws RuntimeException if no frame available or not connected.
-     *
      */
     public long getSubjectCount() {
         Output_GetSubjectCount result = client.GetSubjectCount();
@@ -1305,9 +1304,9 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.Success) {
                 return result.getSubjectCount();
         } else {
-                //FIXME kann das überhaupt auftreten
-                System.out.println("getSubjectCount() failed: " + result.getResult().toString());
-                return -1;
+            //FIXME kann das überhaupt auftreten
+            System.out.println("getSubjectCount() failed: " + result.getResult().toString());
+            return -1;
         }
     }
 
@@ -1328,27 +1327,27 @@ public class DataStreamClient {
      */
     public String getSubjectName(long subjectIndex) {
         if (subjectIndex < 0) {
-                throw new IllegalArgumentException("getSubjectName() subjectIndex >=0 is needed!");
+            throw new IllegalArgumentException("getSubjectName() subjectIndex >=0 is needed!");
         }
-        System.out.println("getSubjectName(): reached");
+        //System.out.println("getSubjectName(): reached");
         long subjectCount = getSubjectCount();
-        System.out.println("getSubjectCount(): Subject count = " + subjectCount);
+        //System.out.println("getSubjectCount(): Subject count = " + subjectCount);
         if (subjectIndex >= subjectCount) {
                 throw new IllegalArgumentException("getSubjectName() subjectIndex >=subject count is needed!");
         }
-        System.out.println("getSubjectName(): Index = " + subjectIndex);
+        //System.out.println("getSubjectName(): Index = " + subjectIndex);
         Output_GetSubjectName result = client.GetSubjectName(subjectIndex);
 
-        System.out.println("getSubjectName() index = " + subjectIndex);//warum?
+        //System.out.println("getSubjectName() index = " + subjectIndex);//warum?
 
         if (result.getResult() == Result_Enum.InvalidIndex) {
-                throw new RuntimeException("getSubjectName() but subjectIndex is invalid!");
+            throw new RuntimeException("getSubjectName() but subjectIndex is invalid!");
         }
         if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSubjectName() but no frame available!");
+            throw new RuntimeException("getSubjectName() but no frame available!");
         }
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSubjectName() but client is not connected!!");
+            throw new RuntimeException("getSubjectName() but client is not connected!!");
         }
         //String SubjectName = null;
         //if (result.getResult()==Result_Enum.Success){
@@ -1418,7 +1417,7 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getSegmentCount() but client is not connected!!");
         }
-        System.out.println("Get segment count: " + result.getResult().toString());
+        //System.out.println("Get segment count: " + result.getResult().toString());
         return result.getSegmentCount();
     }
 
