@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Timeout;
 
@@ -15,12 +14,14 @@ import org.junit.jupiter.api.Timeout;
  * JUnit5 Test class.
  * 
  * TODO
+ * - Tests vervollständigen
  * - Tags einführen, um die Tests zu gruppieren
+ * 
  * @author Oliver Rettig
  */
 class DataStreamClientTest {
     
-    DataStreamClient client;
+    DataStreamClient client = new DataStreamClient();
     
     //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
     String hostname = "192.168.10.1";
@@ -29,10 +30,10 @@ class DataStreamClientTest {
     
     @BeforeAll
     void setUp() {
-        client = new DataStreamClient();
         Version version = client.getVersion();
         System.out.println("Version: " + version.getMajor() + "." + 
                 version.getMinor() + "." + version.getPoint());
+        client.connect(hostname);
     }
 
     @AfterAll
@@ -50,30 +51,32 @@ class DataStreamClientTest {
     @DisplayName("Connect to Vicon Data Stream")
     @Timeout(60)
     void testConnect() {
-        client.connect(hostname);
-        if (client.isConnected()) {
-            System.out.println("is connected");
+        DataStreamClient client2 = new DataStreamClient();
+        client2.connect(hostname);
+        if (client2.isConnected()) {
+            client2.disconnect();
         } else {
-            fail("The test case is a prototype.");
+            fail("connection failed!");
         }
+        client2.delete();
     }
 
     /**
      * Test of connectToMulticast method, of class DataStreamClient.
      */
-    @Test
+    /*@Test
     void testConnectToMulticast() {
         System.out.println("connectToMulticast");
         String multicastHostname = "";
         client.connectToMulticast(hostname, multicastHostname);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of startTransmittingMulticast method, of class DataStreamClient.
      */
-    @Test
+    /*@Test
     void testStartTransmittingMulticast() {
         System.out.println("startTransmittingMulticast");
         String serverIP = "";
@@ -84,12 +87,12 @@ class DataStreamClientTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of stopTransmittingMulticast method, of class ViconDataStreamSDKClient.
      */
-    @Test
+    /*@Test
     void testStopTransmittingMulticast() {
         System.out.println("stopTransmittingMulticast");
         DataStreamClient instance = new DataStreamClient();
@@ -98,20 +101,14 @@ class DataStreamClientTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
-    }
+    }*/
 
     /**
      * Test of isConnected method, of class ViconDataStreamSDKClient.
      */
     @Test
     void testIsConnected() {
-        System.out.println("isConnected");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.isConnected();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, client.isConnected());
     }
 
     /**
@@ -119,13 +116,9 @@ class DataStreamClientTest {
      */
     @Test
     void testDisconnect() {
-        System.out.println("disconnect");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.disconnect();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DataStreamClient client2 = new DataStreamClient();
+        client2.connect(hostname);
+        assertEquals(true, client2.disconnect());
     }
 
     /**
@@ -133,13 +126,8 @@ class DataStreamClientTest {
      */
     @Test
     void testGetVersion() {
-        System.out.println("getVersion");
-        DataStreamClient instance = new DataStreamClient();
-        Version expResult = null;
-        Version result = instance.getVersion();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Version result = client.getVersion();
+        System.out.println("Version "+result.toString());
     }
 
     /**
@@ -161,11 +149,11 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableDebugData() {
-        System.out.println("enableDebugData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableDebugData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableDebugData(); 
+        } catch (RuntimeException e){
+            fail("RuntimeEx: "+e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -173,11 +161,11 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableMarkerData() {
-        System.out.println("enableMarkerData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableMarkerData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableMarkerData();
+        } catch (RuntimeException e){
+            fail("RuntimeEx: "+e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -185,11 +173,11 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableDeviceData() {
-        System.out.println("enableDeviceData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableDeviceData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableDeviceData();
+        } catch (RuntimeException e){
+           fail("RuntimeEx: "+e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -197,11 +185,11 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableMarkerRayData() {
-        System.out.println("enableMarkerRayData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableMarkerRayData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableMarkerRayData();
+        } catch (RuntimeException e){
+           fail("RuntimeEx: "+e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -209,11 +197,11 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableSegmentData() {
-        System.out.println("enableSegmentData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableSegmentData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableSegmentData();
+        } catch (RuntimeException e){
+           fail("RuntimeEx: "+e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -221,11 +209,11 @@ class DataStreamClientTest {
      */
     @Test
     void testDisableSegmentData() {
-        System.out.println("disableSegmentData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.disableSegmentData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.disableSegmentData();
+        } catch (RuntimeException e){
+           fail("RuntimeEx: "+e.getLocalizedMessage());
+        }
     }
 
     /**

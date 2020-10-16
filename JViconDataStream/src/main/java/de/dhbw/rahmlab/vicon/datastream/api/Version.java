@@ -44,4 +44,9 @@ public class Version{
     public long getPoint(){
         return version.getPoint();
     }
+    
+    @Override
+    public String toString(){
+        return String.valueOf(getMajor())+"."+String.valueOf(getMinor())+"."+String.valueOf(getPoint());
+    }
 }

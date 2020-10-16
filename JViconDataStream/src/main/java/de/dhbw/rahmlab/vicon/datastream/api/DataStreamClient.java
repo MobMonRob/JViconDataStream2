@@ -139,6 +139,7 @@ import java.util.logging.Logger;
 public class DataStreamClient {
 
     private final Client client;
+    private String hostname;
 
     static {
         NativeLibLoader.load();	
@@ -172,6 +173,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException, if given hostname is invalid
      */
     public void connect(String hostname) {
+        this.hostname = hostname;
         int i = 0;
         while (!isConnected()) {
 
@@ -223,6 +225,7 @@ public class DataStreamClient {
      * @throws IllegalArgumentException if given hostname is invalid
      */
     public void connectToMulticast(String hostname, String multicastHostname) {
+        this.hostname = hostname;
         int i = 0;
         while (!isConnected()) {
 
@@ -230,19 +233,16 @@ public class DataStreamClient {
 
             // tritt seltsamerweise auch für localhost ab und zu auf
             if (result.getResult() == Result_Enum.InvalidHostName) {
-                    throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
-            }
-            if (result.getResult() == Result_Enum.Success) // ende der while schleife
-            {
-                    System.out.println("Client Connection sucess!");
-            }
-            if (result.getResult() == Result_Enum.ClientAlreadyConnected) // --> kann innerhalb der while schleife nicht auftreten
-            {
-                    System.out.println("Client already connected!");
-            }
-            if (result.getResult() == Result_Enum.ClientConnectionFailed) // --> dafür ist die while schleife da
-            {
-                    System.out.println("Client Connection failed!");
+                throw new IllegalArgumentException("connect() but invalid hostname \"" + hostname + "\"!");
+            // ende der while schleife
+            } else if (result.getResult() == Result_Enum.Success) {
+                System.out.println("Client Connection sucess!");
+            // --> kann innerhalb der while schleife nicht auftreten
+            } else if (result.getResult() == Result_Enum.ClientAlreadyConnected) {
+                System.out.println("Client already connected!");
+            // --> dafür ist die while schleife da
+            } else if (result.getResult() == Result_Enum.ClientConnectionFailed) {
+                System.out.println("Client Connection failed!");
             }
             //System.out.println("connect result = \""+result.getResult().toString()+"\"!");
             try {
@@ -313,10 +313,10 @@ public class DataStreamClient {
         boolean resultValue = true;
         Output_StopTransmittingMulticast result = client.StopTransmittingMulticast();
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
         } else if (result.getResult() == Result_Enum.ServerNotTransmittingMulticast) {
-                System.out.println("Server not transmitting multicast! ");
-                resultValue = false;
+            System.out.println("Server not transmitting multicast! ");
+            resultValue = false;
         }
         return resultValue;
     }
@@ -342,9 +342,10 @@ public class DataStreamClient {
     public boolean disconnect() {
         Output_Disconnect result = client.Disconnect();
         if (result.getResult().equals(Result_Enum.Success)) {
-                return true;
+            hostname = null;
+            return true;
         } else if (result.getResult().equals(Result_Enum.NotConnected)) {
-                System.out.println("disconnect: but client was not connected!");
+            System.out.println("disconnect: but client was not connected!");
         }
         return false;
     }
