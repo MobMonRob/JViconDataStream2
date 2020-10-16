@@ -12,7 +12,7 @@ git clean -d -ff -x &> /dev/null
 git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 
 #remove changes
-git stash
-git stash clear
+git stash /dev/null
+git stash clear /dev/null
 
 echo "JViconDataStream2 cleared hard"
