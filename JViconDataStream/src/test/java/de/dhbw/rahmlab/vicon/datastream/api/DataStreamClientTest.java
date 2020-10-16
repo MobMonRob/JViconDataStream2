@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.Timeout;
 
 /**
@@ -19,15 +21,17 @@ import org.junit.jupiter.api.Timeout;
  * 
  * @author Oliver Rettig
  */
+@TestInstance(Lifecycle.PER_CLASS)
 class DataStreamClientTest {
     
     DataStreamClient client = new DataStreamClient();
     
     //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
     String hostname = "192.168.10.1";
-       
-    DataStreamClientTest() {}
-    
+
+    DataStreamClientTest() {
+    }
+
     @BeforeAll
     void setUp() {
         Version version = client.getVersion();
@@ -37,19 +41,19 @@ class DataStreamClientTest {
     }
 
     @AfterAll
-    void close(){
-        if (client.isConnected()){
+    void close() {
+        if (client.isConnected()) {
             client.disconnect();
         }
         client.delete();
     }
-    
+
     /**
      * Test of connect method, of class DataStreamClient.
      */
     @Test
     @DisplayName("Connect to Vicon Data Stream")
-    @Timeout(60)
+    @Timeout(5)
     void testConnect() {
         DataStreamClient client2 = new DataStreamClient();
         client2.connect(hostname);
@@ -90,7 +94,8 @@ class DataStreamClientTest {
     }*/
 
     /**
-     * Test of stopTransmittingMulticast method, of class ViconDataStreamSDKClient.
+     * Test of stopTransmittingMulticast method, of class
+     * ViconDataStreamSDKClient.
      */
     /*@Test
     void testStopTransmittingMulticast() {
@@ -143,7 +148,6 @@ class DataStreamClientTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }*/
-
     /**
      * Test of enableDebugData method, of class ViconDataStreamSDKClient.
      */
@@ -217,7 +221,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of enableLightweightSegmentData method, of class ViconDataStreamSDKClient.
+     * Test of enableLightweightSegmentData method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testEnableLightweightSegmentData() {
@@ -229,7 +234,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of isLightweightSegmentDataEnabled method, of class ViconDataStreamSDKClient.
+     * Test of isLightweightSegmentDataEnabled method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testIsLightweightSegmentDataEnabled() {
@@ -243,7 +249,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of enableUnlabeledMarkerData method, of class ViconDataStreamSDKClient.
+     * Test of enableUnlabeledMarkerData method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testEnableUnlabeledMarkerData() {
@@ -297,7 +304,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of isUnlabeledMarkerDataEnabled method, of class ViconDataStreamSDKClient.
+     * Test of isUnlabeledMarkerDataEnabled method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testIsUnlabeledMarkerDataEnabled() {
@@ -368,7 +376,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getUnlabeledMarkerCount method, of class ViconDataStreamSDKClient.
+     * Test of getUnlabeledMarkerCount method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetUnlabeledMarkerCount() {
@@ -396,7 +405,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getUnlabeledMarkerGlobalTranslation method, of class ViconDataStreamSDKClient.
+     * Test of getUnlabeledMarkerGlobalTranslation method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetUnlabeledMarkerGlobalTranslation_long() {
@@ -440,7 +450,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSubjectRootSegmentName method, of class ViconDataStreamSDKClient.
+     * Test of getSubjectRootSegmentName method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSubjectRootSegmentName() {
@@ -535,7 +546,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentStaticTranslation method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentStaticTranslation method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentStaticTranslation() {
@@ -551,7 +563,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentStaticRotationHelical method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentStaticRotationHelical method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentStaticRotationHelical() {
@@ -567,7 +580,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentStaticRotationMatrix method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentStaticRotationMatrix method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentStaticRotationMatrix() {
@@ -583,7 +597,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentStaticRotationQuaternion method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentStaticRotationQuaternion method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentStaticRotationQuaternion() {
@@ -599,7 +614,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentStaticRotationEulerXYZ method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentStaticRotationEulerXYZ method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentStaticRotationEulerXYZ() {
@@ -615,7 +631,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentGlobalTranslation method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentGlobalTranslation method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentGlobalTranslation() {
@@ -631,7 +648,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentLocalRotationHelical method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentLocalRotationHelical method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentLocalRotationHelical() {
@@ -647,7 +665,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentGlobalRotationHelical method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentGlobalRotationHelical method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentGlobalRotationHelical() {
@@ -663,7 +682,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentGlobalRotationMatrix method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentGlobalRotationMatrix method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentGlobalRotationMatrix() {
@@ -679,7 +699,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentGlobalRotationQuaternion method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentGlobalRotationQuaternion method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentGlobalRotationQuaternion() {
@@ -695,7 +716,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentGlobalRotationEulerXYZ method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentGlobalRotationEulerXYZ method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentGlobalRotationEulerXYZ() {
@@ -711,7 +733,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentLocalTranslation method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentLocalTranslation method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentLocalTranslation() {
@@ -727,7 +750,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentLocalRotationQuaternion method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentLocalRotationQuaternion method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentLocalRotationQuaternion() {
@@ -743,7 +767,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentLocalRotationEulerXYZ method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentLocalRotationEulerXYZ method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentLocalRotationEulerXYZ() {
@@ -774,7 +799,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getMarkerGlobalTranslation method, of class ViconDataStreamSDKClient.
+     * Test of getMarkerGlobalTranslation method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetMarkerGlobalTranslation() {
@@ -790,7 +816,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getMarkerRayContributionCount method, of class ViconDataStreamSDKClient.
+     * Test of getMarkerRayContributionCount method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetMarkerRayContributionCount() {
@@ -806,7 +833,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getMarkerRayContribution method, of class ViconDataStreamSDKClient.
+     * Test of getMarkerRayContribution method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetMarkerRayContribution() {
@@ -838,7 +866,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getUnlabeledMarkerGlobalTranslation method, of class ViconDataStreamSDKClient.
+     * Test of getUnlabeledMarkerGlobalTranslation method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetUnlabeledMarkerGlobalTranslation_int() {
@@ -914,7 +943,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getDeviceOutputSubsamples method, of class ViconDataStreamSDKClient.
+     * Test of getDeviceOutputSubsamples method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetDeviceOutputSubsamples() {
@@ -974,7 +1004,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getGlobalCentreOfPressure method, of class ViconDataStreamSDKClient.
+     * Test of getGlobalCentreOfPressure method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetGlobalCentreOfPressure_int() {
@@ -989,7 +1020,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getForcePlateSubsamples method, of class ViconDataStreamSDKClient.
+     * Test of getForcePlateSubsamples method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetForcePlateSubsamples() {
@@ -1036,7 +1068,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getGlobalCentreOfPressure method, of class ViconDataStreamSDKClient.
+     * Test of getGlobalCentreOfPressure method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetGlobalCentreOfPressure_int_int() {
@@ -1066,7 +1099,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getEyeTrackerGlobalPosition method, of class ViconDataStreamSDKClient.
+     * Test of getEyeTrackerGlobalPosition method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetEyeTrackerGlobalPosition() {
@@ -1081,7 +1115,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getEyeTrackerGlobalGazeVector method, of class ViconDataStreamSDKClient.
+     * Test of getEyeTrackerGlobalGazeVector method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetEyeTrackerGlobalGazeVector() {
@@ -1232,7 +1267,8 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getSegmentLocalRotationMatrix method, of class ViconDataStreamSDKClient.
+     * Test of getSegmentLocalRotationMatrix method, of class
+     * ViconDataStreamSDKClient.
      */
     @Test
     void testGetSegmentLocalRotationMatrix() {
