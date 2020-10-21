@@ -23,7 +23,7 @@ public class Test {
         System.out.println("Version: " + version.getMajor() + "." + version.getMinor() + "." + version.getPoint());
 
         System.out.println("Try to connect to: " + hostname);
-        client.connect(hostname);
+        client.connect(hostname,4000l);
         if (client.isConnected()) {
             System.out.println("is conected");
         }

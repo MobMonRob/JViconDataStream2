@@ -27,7 +27,7 @@ public class ViconStringWrapperTest {
 
     public static void testtest() {
         DataStreamClient client = new DataStreamClient();
-        client.connect("192.168.10.1");
+        client.connect("192.168.10.1", 4000l);
         System.out.println(client.getCameraName(0));
     }
 

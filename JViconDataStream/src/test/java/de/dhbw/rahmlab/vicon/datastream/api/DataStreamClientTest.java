@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInstance;
@@ -19,6 +20,11 @@ import org.junit.jupiter.api.Timeout;
  * - Tests vervollständigen
  * - Tags einführen, um die Tests zu gruppieren
  * 
+ * - As of JUnit Jupiter 5.4, it is also possible to use methods from JUnit 4’s 
+ *   org.junit.Assume class for assumptions. Specifically, JUnit Jupiter supports 
+ *   JUnit 4’s AssumptionViolatedException to signal that a test should be aborted 
+ *   instead of marked as a failure. 
+ * 
  * @author Oliver Rettig
  */
 @TestInstance(Lifecycle.PER_CLASS)
@@ -29,15 +35,18 @@ class DataStreamClientTest {
     //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
     String hostname = "192.168.10.1";
 
-    DataStreamClientTest() {
-    }
+    String subjectName = "GLOBE";
+    String segmentName = "GLOBE";
+    String markerName = "GLOBE1";
+        
+    DataStreamClientTest() {}
 
     @BeforeAll
     void setUp() {
         Version version = client.getVersion();
         System.out.println("Version: " + version.getMajor() + "." + 
                 version.getMinor() + "." + version.getPoint());
-        client.connect(hostname);
+        client.connect(hostname, 4000l);
     }
 
     @AfterAll
@@ -56,7 +65,7 @@ class DataStreamClientTest {
     @Timeout(5)
     void testConnect() {
         DataStreamClient client2 = new DataStreamClient();
-        client2.connect(hostname);
+        client2.connect(hostname,4000l);
         if (client2.isConnected()) {
             client2.disconnect();
         } else {
@@ -113,7 +122,7 @@ class DataStreamClientTest {
      */
     @Test
     void testIsConnected() {
-        assertEquals(true, client.isConnected());
+        Assumptions.assumeTrue(client.isConnected(),"Client is not connected!");
     }
 
     /**
@@ -122,8 +131,10 @@ class DataStreamClientTest {
     @Test
     void testDisconnect() {
         DataStreamClient client2 = new DataStreamClient();
-        client2.connect(hostname);
+        client2.connect(hostname, 4000l);
+        Assumptions.assumeTrue(client2.isConnected(),"Client cauld not be connected!");
         assertEquals(true, client2.disconnect());
+        Assumptions.assumeFalse(client2.isConnected(),"Client cauld not be disconnected!");
     }
 
     /**
@@ -155,8 +166,9 @@ class DataStreamClientTest {
     void testEnableDebugData() {
         try {
             client.enableDebugData(); 
+        // client is not connected
         } catch (RuntimeException e){
-            fail("RuntimeEx: "+e.getLocalizedMessage());
+            Assumptions.assumeTrue(false, e.getLocalizedMessage());
         }
     }
 
@@ -167,8 +179,9 @@ class DataStreamClientTest {
     void testEnableMarkerData() {
         try {
             client.enableMarkerData();
+        // client is not connected
         } catch (RuntimeException e){
-            fail("RuntimeEx: "+e.getLocalizedMessage());
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
         }
     }
 
@@ -179,8 +192,9 @@ class DataStreamClientTest {
     void testEnableDeviceData() {
         try {
             client.enableDeviceData();
+        // client is not connected
         } catch (RuntimeException e){
-           fail("RuntimeEx: "+e.getLocalizedMessage());
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
         }
     }
 
@@ -191,8 +205,9 @@ class DataStreamClientTest {
     void testEnableMarkerRayData() {
         try {
             client.enableMarkerRayData();
+        // client is not connected
         } catch (RuntimeException e){
-           fail("RuntimeEx: "+e.getLocalizedMessage());
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
         }
     }
 
@@ -203,8 +218,9 @@ class DataStreamClientTest {
     void testEnableSegmentData() {
         try {
             client.enableSegmentData();
+        // client is not connected
         } catch (RuntimeException e){
-           fail("RuntimeEx: "+e.getLocalizedMessage());
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
         }
     }
 
@@ -215,8 +231,11 @@ class DataStreamClientTest {
     void testDisableSegmentData() {
         try {
             client.disableSegmentData();
+            // wie kann ich überprüfen, ob segment data dann wirklich ausgeschaltet sind?
+            //TODO
+        // client is not connected
         } catch (RuntimeException e){
-           fail("RuntimeEx: "+e.getLocalizedMessage());
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
         }
     }
 
@@ -226,11 +245,13 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableLightweightSegmentData() {
-        System.out.println("enableLightweightSegmentData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableLightweightSegmentData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableLightweightSegmentData();
+            assertEquals(true, client.isLightweightSegmentDataEnabled());
+        // client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -239,13 +260,12 @@ class DataStreamClientTest {
      */
     @Test
     void testIsLightweightSegmentDataEnabled() {
-        System.out.println("isLightweightSegmentDataEnabled");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.isLightweightSegmentDataEnabled();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.isLightweightSegmentDataEnabled();
+        // client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -254,11 +274,14 @@ class DataStreamClientTest {
      */
     @Test
     void testEnableUnlabeledMarkerData() {
-        System.out.println("enableUnlabeledMarkerData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableUnlabeledMarkerData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            client.enableUnlabeledMarkerData();
+            //TODO
+            // wie kann ich überprüfen, dass jetzt unlabeld markes enabled sind
+        // client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -266,13 +289,14 @@ class DataStreamClientTest {
      */
     @Test
     void testIsSegmentDataEnabled() {
-        System.out.println("isSegmentDataEnabled");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.isSegmentDataEnabled();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            boolean result = client.isSegmentDataEnabled();
+            //TODO
+            // wie kann ich überprüfen, dass jetzt segment data eingeschaltet ist
+        // client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -280,13 +304,13 @@ class DataStreamClientTest {
      */
     @Test
     void testIsDebugDataEnabled() {
-        System.out.println("isDebugDataEnabled");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.isDebugDataEnabled();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            boolean result = client.isDebugDataEnabled();
+            //TODO
+        // client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -294,13 +318,13 @@ class DataStreamClientTest {
      */
     @Test
     void testIsMarkerDataEnabled() {
-        System.out.println("isMarkerDataEnabled");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.isMarkerDataEnabled();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            boolean result = client.isMarkerDataEnabled();
+            //TODO
+        // client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -309,13 +333,11 @@ class DataStreamClientTest {
      */
     @Test
     void testIsUnlabeledMarkerDataEnabled() {
-        System.out.println("isUnlabeledMarkerDataEnabled");
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.isUnlabeledMarkerDataEnabled();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            boolean result = client.isUnlabeledMarkerDataEnabled();// client is not connected
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -323,12 +345,13 @@ class DataStreamClientTest {
      */
     @Test
     void testSetStreamMode() {
-        System.out.println("setStreamMode");
-        StreamMode_Enum mode = null;
-        DataStreamClient instance = new DataStreamClient();
-        instance.setStreamMode(mode);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //TODO
+        StreamMode_Enum mode = StreamMode_Enum.ClientPull;
+        try {
+            client.setStreamMode(mode);
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
     }
 
     /**
@@ -455,14 +478,15 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSubjectRootSegmentName() {
-        System.out.println("getSubjectRootSegmentName");
-        String subjectName = "";
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getSubjectRootSegmentName(subjectName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            String result = client.getSubjectRootSegmentName(subjectName);
+        // wrong subject name
+        } catch (IllegalArgumentException e){
+                
+        // not connected
+        } catch (RuntimeException e){
+        
+        }
     }
 
     /**
@@ -470,14 +494,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentCount() {
-        System.out.println("getSegmentCount");
-        String subjectName = "";
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getSegmentCount(subjectName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            long result = client.getSegmentCount(subjectName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -603,8 +627,6 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentStaticRotationQuaternion() {
         System.out.println("getSegmentStaticRotationQuaternion");
-        String subjectName = "";
-        String segmentName = "";
         DataStreamClient instance = new DataStreamClient();
         double[] expResult = null;
         double[] result = instance.getSegmentStaticRotationQuaternion(subjectName, segmentName);
@@ -619,15 +641,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentStaticRotationEulerXYZ() {
-        System.out.println("getSegmentStaticRotationEulerXYZ");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentStaticRotationEulerXYZ(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getSegmentStaticRotationEulerXYZ(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            fail(e.getMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        } 
     }
 
     /**
@@ -636,15 +657,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalTranslation() {
-        System.out.println("getSegmentGlobalTranslation");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentGlobalTranslation(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentGlobalTranslation(subjectName, segmentName);
     }
 
     /**
@@ -653,15 +666,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalRotationHelical() {
-        System.out.println("getSegmentLocalRotationHelical");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentLocalRotationHelical(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentLocalRotationHelical(subjectName, segmentName);
     }
 
     /**
@@ -670,15 +675,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalRotationHelical() {
-        System.out.println("getSegmentGlobalRotationHelical");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentGlobalRotationHelical(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentGlobalRotationHelical(subjectName, segmentName);
     }
 
     /**
@@ -687,15 +684,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalRotationMatrix() {
-        System.out.println("getSegmentGlobalRotationMatrix");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentGlobalRotationMatrix(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentGlobalRotationMatrix(subjectName, segmentName);
     }
 
     /**
@@ -704,15 +693,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalRotationQuaternion() {
-        System.out.println("getSegmentGlobalRotationQuaternion");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentGlobalRotationQuaternion(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentGlobalRotationQuaternion(subjectName, segmentName);
     }
 
     /**
@@ -721,15 +702,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalRotationEulerXYZ() {
-        System.out.println("getSegmentGlobalRotationEulerXYZ");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentGlobalRotationEulerXYZ(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentGlobalRotationEulerXYZ(subjectName, segmentName);
     }
 
     /**
@@ -738,15 +711,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalTranslation() {
-        System.out.println("getSegmentLocalTranslation");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentLocalTranslation(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentLocalTranslation(subjectName, segmentName);
     }
 
     /**
@@ -755,15 +720,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalRotationQuaternion() {
-        System.out.println("getSegmentLocalRotationQuaternion");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentLocalRotationQuaternion(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentLocalRotationQuaternion(subjectName, segmentName);
     }
 
     /**
@@ -772,15 +729,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalRotationEulerXYZ() {
-        System.out.println("getSegmentLocalRotationEulerXYZ");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentLocalRotationEulerXYZ(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentLocalRotationEulerXYZ(subjectName, segmentName);
     }
 
     /**
@@ -788,14 +737,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetObjectQuality() {
-        System.out.println("getObjectQuality");
-        String subjectName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double expResult = 0.0;
-        double result = instance.getObjectQuality(subjectName);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double result = client.getObjectQuality(subjectName);
     }
 
     /**
@@ -804,15 +746,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetMarkerGlobalTranslation() {
-        System.out.println("getMarkerGlobalTranslation");
-        String subjectName = "";
-        String markerName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getMarkerGlobalTranslation(subjectName, markerName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getMarkerGlobalTranslation(subjectName, markerName);
     }
 
     /**
@@ -821,15 +755,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetMarkerRayContributionCount() {
-        System.out.println("getMarkerRayContributionCount");
-        String subjectName = "";
-        String markerName = "";
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getMarkerRayContributionCount(subjectName, markerName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long result = client.getMarkerRayContributionCount(subjectName, markerName);
     }
 
     /**
@@ -838,16 +764,9 @@ class DataStreamClientTest {
      */
     @Test
     void testGetMarkerRayContribution() {
-        System.out.println("getMarkerRayContribution");
-        String subjectName = "";
-        String markerName = "";
+        //TODO was soll dieses Argument?
         int MarkerRayContributionIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getMarkerRayContribution(subjectName, markerName, MarkerRayContributionIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long result = client.getMarkerRayContribution(subjectName, markerName, MarkerRayContributionIndex);
     }
 
     /**
@@ -855,14 +774,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetMarkerCount() {
-        System.out.println("getMarkerCount");
-        String subjectName = "";
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getMarkerCount(subjectName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long result = client.getMarkerCount(subjectName);
     }
 
     /**
@@ -871,14 +783,13 @@ class DataStreamClientTest {
      */
     @Test
     void testGetUnlabeledMarkerGlobalTranslation_int() {
-        System.out.println("getUnlabeledMarkerGlobalTranslation");
         int markerIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getUnlabeledMarkerGlobalTranslation(markerIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getUnlabeledMarkerGlobalTranslation(markerIndex);
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        } 
     }
 
     /**
@@ -1073,15 +984,16 @@ class DataStreamClientTest {
      */
     @Test
     void testGetGlobalCentreOfPressure_int_int() {
-        System.out.println("getGlobalCentreOfPressure");
         int ForceplateIndex = 0;
         int subsample = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getGlobalCentreOfPressure(ForceplateIndex, subsample);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getGlobalCentreOfPressure(ForceplateIndex, subsample);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -1219,10 +1131,7 @@ class DataStreamClientTest {
         System.out.println("getFrameNumber");
         DataStreamClient instance = new DataStreamClient();
         long expResult = 0L;
-        long result = instance.getFrameNumber();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long result = client.getFrameNumber();
     }
 
     /**
@@ -1230,13 +1139,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetTimeCode() {
-        System.out.println("getTimeCode");
-        DataStreamClient instance = new DataStreamClient();
-        TimeCode expResult = null;
-        TimeCode result = instance.getTimeCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        TimeCode result = client.getTimeCode();
     }
 
     /**
@@ -1244,27 +1147,17 @@ class DataStreamClientTest {
      */
     @Test
     void testGetFrame() {
-        System.out.println("getFrame");
         boolean waiting = false;
-        DataStreamClient instance = new DataStreamClient();
-        boolean expResult = false;
-        boolean result = instance.getFrame(waiting);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = client.getFrame(waiting);
     }
 
     /**
      * Test of delete method, of class ViconDataStreamSDKClient.
      */
-    @Test
+    /*@Test
     void testDelete() {
-        System.out.println("delete");
-        DataStreamClient instance = new DataStreamClient();
-        instance.delete();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        client.delete();
+    }*/
 
     /**
      * Test of getSegmentLocalRotationMatrix method, of class
@@ -1272,14 +1165,6 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalRotationMatrix() {
-        System.out.println("getSegmentLocalRotationMatrix");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentLocalRotationMatrix(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        double[] result = client.getSegmentLocalRotationMatrix(subjectName, segmentName);
     }
 }

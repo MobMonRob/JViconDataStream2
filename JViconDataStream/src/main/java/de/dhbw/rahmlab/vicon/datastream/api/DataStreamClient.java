@@ -112,9 +112,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Result_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.StreamMode_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.VectorUint;
 import de.dhbw.rahmlab.vicon.datastream.impl.VectorVectorUchar;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -134,7 +132,7 @@ import java.util.logging.Logger;
  * TODO<p>
  * - Kommentare vervollständigen, Ex überprüfen
  * - throw messages in String const auslagern
- * - bis getCameraCount sind ist die Existenz der Methoden überprüft
+ * - bis getCameraCount ist die Existenz der Methoden überprüft worden
  */
 public class DataStreamClient {
 
@@ -154,15 +152,15 @@ public class DataStreamClient {
     }
 
     /**
-     * Establish a dedicated connection to a Vicon DataStream Server.
+     * Establish a dedicated connection to a Vicon DataStream Server.The function defaults to connecting on port 801.
      *
-     * The function defaults to connecting on port 801. You can specify an 
-     * alternate port number after a colon.<p>
+     * You can specify an alternate port number after a colon.<p>
      *
      * This is for future compatibility: current products serve data on port 801 
      * only. Additional clients can be added separated with a semicolon ’;’. 
      * These are used in combination to reduce temporal jitter.<p>
      *
+     * @param timeoutInMs
      * @see connectToMulticast
      * @see disconnect
      * @see isConnected
@@ -172,10 +170,11 @@ public class DataStreamClient {
      * "localhost" "MyViconPC:804", "10.0.0.2"
      * @throws IllegalArgumentException, if given hostname is invalid
      */
-    public void connect(String hostname) {
+    public void connect(String hostname, long timeoutInMs) {
         this.hostname = hostname;
-        int i = 0;
-        while (!isConnected()) {
+        Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
+        int trials = 0;
+        while (!isConnected() && Instant.now().isBefore(timeout)) {
 
             Output_Connect result = client.Connect(hostname);
 
@@ -193,8 +192,8 @@ public class DataStreamClient {
                 System.out.println("Client Connection failed!");
             }
             try {
-                Thread.sleep(1000);
-                System.out.println("...try to connect " + String.valueOf(i++));
+                Thread.sleep(500);
+                System.out.println("...try to connect " + String.valueOf(trials++));
             } catch (InterruptedException ex) {
                 //TODO
                 Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,6 +205,7 @@ public class DataStreamClient {
     /**
      * Connect to a Vicon DataStream Server’s Multicast stream.
      *
+     * @param timeoutInMs timeout in milliseconds
      * @see connect
      * @see disconnect
      * @see isConnected
@@ -224,10 +224,11 @@ public class DataStreamClient {
      * @throws RuntimeException if given hostname is invalid
      * @throws IllegalArgumentException if given hostname is invalid
      */
-    public void connectToMulticast(String hostname, String multicastHostname) {
+    public void connectToMulticast(String hostname, String multicastHostname, long timeoutInMs) {
         this.hostname = hostname;
-        int i = 0;
-        while (!isConnected()) {
+        Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
+        int trials = 0;
+        while (!isConnected()  && Instant.now().isBefore(timeout)) {
 
             Output_ConnectToMulticast result = client.ConnectToMulticast(hostname, multicastHostname);
 
@@ -246,10 +247,10 @@ public class DataStreamClient {
             }
             //System.out.println("connect result = \""+result.getResult().toString()+"\"!");
             try {
-                    Thread.sleep(1000);
-                    System.out.println("...try to connect " + String.valueOf(i++));
+                Thread.sleep(500);
+                System.out.println("...try to connect " + String.valueOf(trials++));
             } catch (InterruptedException ex) {
-                    Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         getFrame(true);
@@ -357,6 +358,15 @@ public class DataStreamClient {
      */
     public Version getVersion() {
         return new Version(client.GetVersion());
+    }
+    
+    /**
+     * Get hostname
+     * @return the hostname to which this client is connected or null, if the client
+     * is not connected.
+     */
+    public String getHostName(){
+        return hostname;
     }
 
     /**
@@ -1404,13 +1414,13 @@ public class DataStreamClient {
      * @see getSegmentName
      * @param subjectName name of the subject
      * @return segment count
-     * @throws RuntimeException if subjectName is invalid, client is not
-     * connected or no frame available.
+     * @throws IllegalArgumentException if subjectName is invalid
+     * @throws RuntimeException if client is not connected or no frame available.
      */
     public long getSegmentCount(String subjectName) {
         Output_GetSegmentCount result = client.GetSegmentCount(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new RuntimeException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
+                throw new IllegalArgumentException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
         }
         if (result.getResult() == Result_Enum.NoFrame) {
                 throw new RuntimeException("getSegmentCount() but no frame available!");
@@ -3344,20 +3354,20 @@ public class DataStreamClient {
     public boolean getFrame(boolean waiting) {
         Result_Enum result = client.GetFrame().getResult();
         if (waiting) {
-                // while not connected
-                while (result != Result_Enum.Success) {
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException ex) {
-                                Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        result = client.GetFrame().getResult();
+            // while not connected
+            while (result != Result_Enum.Success) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DataStreamClient.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                return true;
+                result = client.GetFrame().getResult();
+            }
+            return true;
         } else {
-                if (result == Result_Enum.Success) {
-                        return true;
-                }
+            if (result == Result_Enum.Success) {
+                    return true;
+            }
         }
         return false;
     }
