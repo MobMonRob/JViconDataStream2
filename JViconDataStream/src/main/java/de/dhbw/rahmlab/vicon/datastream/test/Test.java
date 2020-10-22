@@ -32,7 +32,7 @@ public class Test {
         } else {
             System.out.println("IsMarkerDataEnabled is not enabeled");
         }
-        client.getFrame(true);
+        client.getFrame();
         System.out.println("Subject Count = " + client.getSubjectCount());
 
         int SubjectIndex = 1;
@@ -50,7 +50,7 @@ public class Test {
         if (client.isUnlabeledMarkerDataEnabled()) {
             System.out.println("UnlabeledMarkerData is enabeled");
         }
-        client.getFrame(true);
+        client.getFrame();
         long FrameRateCount = client.getFrameRateCount();
         System.out.println("Frame rate Count is " + FrameRateCount);
         System.out.println("Unlabeled Marker Count is " + client.getUnlabeledMarkerCount());

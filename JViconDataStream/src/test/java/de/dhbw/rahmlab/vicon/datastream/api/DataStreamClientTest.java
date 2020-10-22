@@ -3,7 +3,6 @@ package de.dhbw.rahmlab.vicon.datastream.api;
 import de.dhbw.rahmlab.vicon.datastream.impl.StreamMode_Enum;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Assumptions;
@@ -16,14 +15,9 @@ import org.junit.jupiter.api.Timeout;
 /**
  * JUnit5 Test class.
  * 
- * TODO
+ * TODO<br>
  * - Tests vervollständigen
  * - Tags einführen, um die Tests zu gruppieren
- * 
- * - As of JUnit Jupiter 5.4, it is also possible to use methods from JUnit 4’s 
- *   org.junit.Assume class for assumptions. Specifically, JUnit Jupiter supports 
- *   JUnit 4’s AssumptionViolatedException to signal that a test should be aborted 
- *   instead of marked as a failure. 
  * 
  * @author Oliver Rettig
  */
@@ -359,28 +353,30 @@ class DataStreamClientTest {
      */
     @Test
     void testGetFrameRateCount() {
-        System.out.println("getFrameRateCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getFrameRateCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        getFrameRateCount();
     }
 
+    private long getFrameRateCount(){
+        try {
+            return client.getFrameRateCount();
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(true, e.getLocalizedMessage());
+        }
+        return -1;
+    }
     /**
      * Test of getFrameRateName method, of class ViconDataStreamSDKClient.
      */
     @Test
     void testGetFrameRateName() {
-        System.out.println("getFrameRateName");
-        long FrameRateIndex = 0L;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getFrameRateName(FrameRateIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long frameRateCount = getFrameRateCount();
+        for (int i=0;i<frameRateCount;i++){
+            try {
+                String result = client.getFrameRateName(i);
+            } catch (IllegalArgumentException e){
+                fail("Illegal frame rate type name index \""+String.valueOf(i)+"\"!");
+            }
+        }
     }
 
     /**
@@ -388,14 +384,16 @@ class DataStreamClientTest {
      */
     @Test
     void testGetFrameRateValue() {
-        System.out.println("getFrameRateValue");
         String FrameRateName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double expResult = 0.0;
-        double result = instance.getFrameRateValue(FrameRateName);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //TODO woher den frameRateName nehmen
+        try {
+            double result = client.getFrameRateValue(FrameRateName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        }
     }
 
     /**
@@ -404,13 +402,12 @@ class DataStreamClientTest {
      */
     @Test
     void testGetUnlabeledMarkerCount() {
-        System.out.println("getUnlabeledMarkerCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getUnlabeledMarkerCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            long result = client.getUnlabeledMarkerCount();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -418,13 +415,12 @@ class DataStreamClientTest {
      */
     @Test
     void testGetFrameRate() {
-        System.out.println("getFrameRate");
-        DataStreamClient instance = new DataStreamClient();
-        double expResult = 0.0;
-        double result = instance.getFrameRate();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double result = client.getFrameRate();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -433,14 +429,15 @@ class DataStreamClientTest {
      */
     @Test
     void testGetUnlabeledMarkerGlobalTranslation_long() {
-        System.out.println("getUnlabeledMarkerGlobalTranslation");
         long markerIndex = 0L;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getUnlabeledMarkerGlobalTranslation(markerIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getUnlabeledMarkerGlobalTranslation(markerIndex);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -448,13 +445,12 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSubjectCount() {
-        System.out.println("getSubjectCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getSubjectCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            long result = client.getSubjectCount();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -462,16 +458,19 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSubjectName() {
-        System.out.println("getSubjectName");
-        long subjectIndex = 0L;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getSubjectName(subjectIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long subjectIndex = 0;
+        //TODO
+        
+        try {
+            String result = client.getSubjectName(subjectIndex);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
-
+        
     /**
      * Test of getSubjectRootSegmentName method, of class
      * ViconDataStreamSDKClient.
@@ -480,13 +479,12 @@ class DataStreamClientTest {
     void testGetSubjectRootSegmentName() {
         try {
             String result = client.getSubjectRootSegmentName(subjectName);
-        // wrong subject name
         } catch (IllegalArgumentException e){
-                
-        // not connected
-        } catch (RuntimeException e){
-        
-        }
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -509,15 +507,16 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentName() {
-        System.out.println("getSegmentName");
-        String subjectName = "";
         long segmentIndex = 0L;
-        DataStreamClient instance = new DataStreamClient();
         String expResult = "";
-        String result = instance.getSegmentName(subjectName, segmentIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            String result = client.getSegmentName(subjectName, segmentIndex);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -525,15 +524,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentChildCount() {
-        System.out.println("getSegmentChildCount");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getSegmentChildCount(subjectName, segmentName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            long result = client.getSegmentChildCount(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        }
     }
 
     /**
@@ -541,16 +539,15 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentChildName() {
-        System.out.println("getSegmentChildName");
-        String subjectName = "";
-        String segmentName = "";
         long segmentIndex = 0L;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getSegmentChildName(subjectName, segmentName, segmentIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            String result = client.getSegmentChildName(subjectName, segmentName, segmentIndex);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        }
     }
 
     /**
@@ -558,15 +555,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentParentName() {
-        System.out.println("getSegmentParentName");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getSegmentParentName(subjectName, segmentName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            String result = client.getSegmentParentName(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        }
     }
 
     /**
@@ -575,15 +571,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentStaticTranslation() {
-        System.out.println("getSegmentStaticTranslation");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentStaticTranslation(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getSegmentStaticTranslation(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        }    
     }
 
     /**
@@ -592,15 +587,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentStaticRotationHelical() {
-        System.out.println("getSegmentStaticRotationHelical");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentStaticRotationHelical(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getSegmentStaticRotationHelical(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -609,15 +603,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentStaticRotationMatrix() {
-        System.out.println("getSegmentStaticRotationMatrix");
-        String subjectName = "";
-        String segmentName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentStaticRotationMatrix(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getSegmentStaticRotationMatrix(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -626,13 +619,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentStaticRotationQuaternion() {
-        System.out.println("getSegmentStaticRotationQuaternion");
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getSegmentStaticRotationQuaternion(subjectName, segmentName);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double[] result = client.getSegmentStaticRotationQuaternion(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -644,7 +638,7 @@ class DataStreamClientTest {
         try {
             double[] result = client.getSegmentStaticRotationEulerXYZ(subjectName, segmentName);
         } catch (IllegalArgumentException e){
-            fail(e.getMessage());
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
             Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
@@ -657,7 +651,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalTranslation() {
-        double[] result = client.getSegmentGlobalTranslation(subjectName, segmentName);
+        try {
+            double[] result = client.getSegmentGlobalTranslation(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        } 
     }
 
     /**
@@ -666,7 +667,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalRotationHelical() {
-        double[] result = client.getSegmentLocalRotationHelical(subjectName, segmentName);
+        try {
+            double[] result = client.getSegmentLocalRotationHelical(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        } 
     }
 
     /**
@@ -675,7 +683,14 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentGlobalRotationHelical() {
-        double[] result = client.getSegmentGlobalRotationHelical(subjectName, segmentName);
+        try {
+            double[] result = client.getSegmentGlobalRotationHelical(subjectName, segmentName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        }    
     }
 
     /**
@@ -792,49 +807,50 @@ class DataStreamClientTest {
         } 
     }
 
-    /**
+    /** 
      * Test of getDeviceCount method, of class ViconDataStreamSDKClient.
      */
     @Test
     void testGetDeviceCount() {
-        System.out.println("getDeviceCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getDeviceCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        getDeviceCount();
     }
 
+    private long getDeviceCount(){
+        try {
+            return client.getDeviceCount();
+        } catch (RuntimeException e){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        }
+        return -1;
+    }
     /**
      * Test of getDeviceName method, of class ViconDataStreamSDKClient.
      */
     @Test
+    @DisplayName("getDeviceName()")
     void testGetDeviceName_int() {
-        System.out.println("getDeviceName");
-        int deviceIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String[] result = instance.getDeviceName(deviceIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long deviceCount = getDeviceCount();
+        for (int i=0;i<deviceCount;i++){
+            try {
+                String[] result = client.getDeviceName(i);
+            } catch (IllegalArgumentException e){
+                fail("Invalid device index \""+String.valueOf(i)+"\"!");
+            }
+        }
     }
 
     /**
      * Test of getDeviceOutputName method, of class ViconDataStreamSDKClient.
      */
     @Test
+    @DisplayName("getDeviceOutputName()")
     void testGetDeviceOutputName() {
-        System.out.println("getDeviceOutputName");
         String deviceName = "";
-        int deviceIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String[] result = instance.getDeviceOutputName(deviceName, deviceIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //TODO woeher deviceName
+        int deviceOutputIndex = 0 ;
+        //TODO wobher bekomme ich den index?
+        String[] result = client.getDeviceOutputName(deviceName, deviceOutputIndex);
     }
 
     /**
@@ -842,15 +858,16 @@ class DataStreamClientTest {
      */
     @Test
     void testGetDeviceOutputValue() {
-        System.out.println("getDeviceOutputValue");
         String deviceName = "";
         String deviceOutputName = "";
-        DataStreamClient instance = new DataStreamClient();
-        double expResult = 0.0;
-        double result = instance.getDeviceOutputValue(deviceName, deviceOutputName);
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            double result = client.getDeviceOutputValue(deviceName, deviceOutputName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        }
     }
 
     /**
@@ -859,15 +876,16 @@ class DataStreamClientTest {
      */
     @Test
     void testGetDeviceOutputSubsamples() {
-        System.out.println("getDeviceOutputSubsamples");
         String deviceName = "";
         String deviceOutputName = "";
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getDeviceOutputSubsamples(deviceName, deviceOutputName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        try {
+            long result = client.getDeviceOutputSubsamples(deviceName, deviceOutputName);
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+        } 
     }
 
     /**
@@ -875,28 +893,28 @@ class DataStreamClientTest {
      */
     @Test
     void testGetForcePlateCount() {
-        System.out.println("getForcePlateCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getForcePlateCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        getForcePlateCount(); 
     }
 
+    private long getForcePlateCount(){
+        try {
+            return client.getForcePlateCount();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(true,"No frame available!");
+            return -1;
+        } 
+    }
     /**
      * Test of getForceVector method, of class ViconDataStreamSDKClient.
      */
     @Test
     void testGetForceVector() {
-        System.out.println("getForceVector");
-        int ForceplateIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getGlobalForceVector(ForceplateIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long forcePlateCount = getForcePlateCount();
+        if (forcePlateCount == 0) Assumptions.assumeTrue(true,"No force plates available!");
+        for (int i=0;i<forcePlateCount;i++){
+            double[] result = client.getGlobalForceVector(i);
+        }
     }
 
     /**
@@ -904,14 +922,11 @@ class DataStreamClientTest {
      */
     @Test
     void testGetGlobalMomentVector() {
-        System.out.println("getGlobalMomentVector");
-        int ForceplateIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getGlobalMomentVector(ForceplateIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long forcePlateCount = getForcePlateCount();
+        if (forcePlateCount == 0) Assumptions.assumeTrue(true,"No force plates available!");
+        for (int i=0;i<forcePlateCount;i++){
+            double[] result = client.getGlobalMomentVector(i);
+        }
     }
 
     /**
@@ -920,14 +935,11 @@ class DataStreamClientTest {
      */
     @Test
     void testGetGlobalCentreOfPressure_int() {
-        System.out.println("getGlobalCentreOfPressure");
-        int ForceplateIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getGlobalCentreOfPressure(ForceplateIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long forcePlateCount = getForcePlateCount();
+        if (forcePlateCount == 0) Assumptions.assumeTrue(true,"No force plates available!");
+        for (int i=0;i<forcePlateCount;i++){
+            double[] result = client.getGlobalCentreOfPressure(i);
+        }
     }
 
     /**
@@ -936,14 +948,11 @@ class DataStreamClientTest {
      */
     @Test
     void testGetForcePlateSubsamples() {
-        System.out.println("getForcePlateSubsamples");
-        int ForceplateIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getForcePlateSubsamples(ForceplateIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long forcePlateCount = getForcePlateCount();
+        if (forcePlateCount == 0) Assumptions.assumeTrue(true,"No force plates available!");
+        for (int i=0;i<forcePlateCount;i++){
+            long result = client.getForcePlateSubsamples(i);
+        }
     }
 
     /**
@@ -951,31 +960,12 @@ class DataStreamClientTest {
      */
     @Test
     void testGetGlobalForceVector() {
-        System.out.println("getGlobalForceVector");
-        int ForceplateIndex = 0;
         int Subsample = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getGlobalForceVector(ForceplateIndex, Subsample);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getGlobalMomentVecto method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetGlobalMomentVecto() {
-        System.out.println("getGlobalMomentVecto");
-        int ForceplateIndex = 0;
-        int Subsample = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getGlobalMomentVector(ForceplateIndex, Subsample);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        long forcePlateCount = getForcePlateCount();
+        if (forcePlateCount == 0) Assumptions.assumeTrue(true,"No force plates available!");
+        for (int i=0;i<forcePlateCount;i++){
+            double[] result = client.getGlobalForceVector(i, Subsample);
+        } 
     }
 
     /**
@@ -984,10 +974,139 @@ class DataStreamClientTest {
      */
     @Test
     void testGetGlobalCentreOfPressure_int_int() {
-        int ForceplateIndex = 0;
+        long forcePlateCount = getForcePlateCount();
+        if (forcePlateCount == 0) Assumptions.assumeTrue(true,"No force plates available!");
         int subsample = 0;
+        //TODO wie spiele ich hier subsamples durch?
+        for (int i=0;i<forcePlateCount;i++){
+            client.getGlobalCentreOfPressure(i, subsample);
+        }
+    }
+
+    /**
+     * Test of getEyeTrackerCount method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testGetEyeTrackerCount() {
+       getEyeTrackerCount();
+    }
+    
+    private long getEyeTrackerCount(){
         try {
-            double[] result = client.getGlobalCentreOfPressure(ForceplateIndex, subsample);
+            return client.getEyeTrackerCount();
+        } catch (IllegalArgumentException e){
+            Assumptions.assumeTrue(false,e.getLocalizedMessage());
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
+        return -1;
+    }
+
+    /**
+     * Test of getEyeTrackerGlobalPosition method, of class
+     * ViconDataStreamSDKClient.
+     */
+    @Test
+    void testGetEyeTrackerGlobalPosition() {
+        long eyeTrackerCount = getEyeTrackerCount();
+        for (int i=0;i<eyeTrackerCount;i++){
+            try {
+                double[] result = client.getEyeTrackerGlobalPosition(i);
+            } catch (IllegalArgumentException e){
+                fail("Invalid eye tracker index \""+String.valueOf(i)+"\"!");
+            }
+        } 
+    }
+
+    /**
+     * Test of getEyeTrackerGlobalGazeVector method, of class
+     * ViconDataStreamSDKClient.
+     */
+    @Test
+    void testGetEyeTrackerGlobalGazeVector() {
+        long eyeTrackerCount = getEyeTrackerCount();
+        for (int i=0;i<eyeTrackerCount;i++){
+            client.getEyeTrackerGlobalGazeVector(i);
+        }
+    }
+
+    /**
+     * Test of enableCentroidData method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testEnableCentroidData() {
+        try {
+            client.enableCentroidData();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+        } 
+    }
+
+    /**
+     * Test of enableGreyscaleData method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testEnableGreyscaleData() {
+        try {
+            client.enableGreyscaleData();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+        } 
+    }
+
+    /**
+     * Test of enableVideoData method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testEnableVideoData() {
+        try {
+            client.enableVideoData(); 
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+        } 
+    }
+
+    /**
+     * Test of getCameraCount method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testGetCameraCount() {
+        long result = getCameraCount();
+    }
+
+    private long getCameraCount(){
+        try {
+            return client.getCameraCount();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            return -1;
+        } 
+    }
+        
+    /**
+     * Test of getCameraName method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testGetCameraName() {
+        long cameraCount = getCameraCount();
+        for (int i=0;i<cameraCount;i++){
+            try {
+                String result = client.getCameraName(i);
+            } catch (IllegalArgumentException e){
+                fail("Wrong camera index \""+String.valueOf(i)+"\"!");
+            }
+        }
+    }
+
+    /**
+     * Test of getMarkerName method, of class ViconDataStreamSDKClient.
+     */
+    @Test
+    void testGetMarkerName() {
+        try {
+            long markerIndex = 0;
+            String result = client.getMarkerName(subjectName, markerIndex);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
@@ -997,141 +1116,16 @@ class DataStreamClientTest {
     }
 
     /**
-     * Test of getEyeTrackerCount method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetEyeTrackerCount() {
-        System.out.println("getEyeTrackerCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getEyeTrackerCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getEyeTrackerGlobalPosition method, of class
-     * ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetEyeTrackerGlobalPosition() {
-        System.out.println("getEyeTrackerGlobalPosition");
-        int EyeTrackerIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getEyeTrackerGlobalPosition(EyeTrackerIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getEyeTrackerGlobalGazeVector method, of class
-     * ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetEyeTrackerGlobalGazeVector() {
-        System.out.println("getEyeTrackerGlobalGazeVector");
-        int EyeTrackerIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        double[] expResult = null;
-        double[] result = instance.getEyeTrackerGlobalGazeVector(EyeTrackerIndex);
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of enableCentroidData method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testEnableCentroidData() {
-        System.out.println("enableCentroidData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableCentroidData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of enableGreyscaleData method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testEnableGreyscaleData() {
-        System.out.println("enableGreyscaleData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableGreyscaleData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of enableVideoData method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testEnableVideoData() {
-        System.out.println("enableVideoData");
-        DataStreamClient instance = new DataStreamClient();
-        instance.enableVideoData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getCameraCount method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetCameraCount() {
-        System.out.println("getCameraCount");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = instance.getCameraCount();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getCameraName method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetCameraName() {
-        System.out.println("getCameraName");
-        int CameraIndex = 0;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getCameraName(CameraIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getMarkerName method, of class ViconDataStreamSDKClient.
-     */
-    @Test
-    void testGetMarkerName() {
-        System.out.println("getMarkerName");
-        String subjectName = "";
-        long markerIndex = 0L;
-        DataStreamClient instance = new DataStreamClient();
-        String expResult = "";
-        String result = instance.getMarkerName(subjectName, markerIndex);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getFrameNumber method, of class ViconDataStreamSDKClient.
      */
     @Test
     void testGetFrameNumber() {
-        System.out.println("getFrameNumber");
-        DataStreamClient instance = new DataStreamClient();
-        long expResult = 0L;
-        long result = client.getFrameNumber();
+        try {
+            long result = client.getFrameNumber();
+        } catch (RuntimeException f){
+            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(false,"No frame available!");
+        } 
     }
 
     /**
@@ -1147,8 +1141,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetFrame() {
-        boolean waiting = false;
-        boolean result = client.getFrame(waiting);
+        boolean result = client.getFrame();
     }
 
     /**

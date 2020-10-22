@@ -16,7 +16,7 @@ public class TimeCode {
     
     private final Output_GetTimecode timeCode;
     
-    public TimeCode(Output_GetTimecode timeCode){
+    TimeCode(Output_GetTimecode timeCode){
         this.timeCode = timeCode;
     }
     
