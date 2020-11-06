@@ -18,7 +18,7 @@ public class ViconStringWrapperTest {
 
     public static void main(String argv[]) throws InterruptedException {
         //viconStringToJavaStringTest();
-        //javaStringToViconStringTest();
+        javaStringToViconStringTest();
         //viconConnectTest();
         //testtest();
 
