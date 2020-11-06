@@ -1,11 +1,23 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
 /**
- * TODO
- * - Methoden ergänzen die wirklich benötigt werden
  * 
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
 public class Centroid {
-    public Centroid(double[] position, double radius){}
+    
+    private double[] position;
+    private double radius;
+    
+    Centroid(double[] position, double radius){
+        this.position = position;
+        this.radius = radius;
+    }
+    
+    public double[] getPosition(){
+        return position;
+    }
+    public double getRadius(){
+        return radius;
+    }
 }

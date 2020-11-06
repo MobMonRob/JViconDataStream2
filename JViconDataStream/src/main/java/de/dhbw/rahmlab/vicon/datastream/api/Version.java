@@ -5,11 +5,11 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVersion;
 /**
  * @author Oliver Rettig
  */
-public class Version{
+public class Version {
     
     private final Output_GetVersion version;
     
-    public Version(Output_GetVersion version){
+    Version(Output_GetVersion version){
         this.version = version;
     }
     /**

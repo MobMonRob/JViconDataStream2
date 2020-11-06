@@ -1,12 +1,13 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
+import de.dhbw.rahmlab.vicon.datastream.impl.SharedPtrVectorUchar;
 
 /**
- *
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
-public class Frame {
+public class VideoFrame {
+    
     private final int height;
     private final int width;
     private final long format;
@@ -14,7 +15,7 @@ public class Frame {
     private final long offsetX;
     private final long offsetY;
     
-    public Frame(Output_GetVideoFrame result){
+    VideoFrame(Output_GetVideoFrame result){
         height = result.getM_Height();
         width = result.getM_Width();
         format = result.getM_Format();
@@ -22,8 +23,7 @@ public class Frame {
         offsetX = result.getM_OffsetX();
         offsetY = result.getM_OffsetY();
         
-        //TODO
-        result.getM_Data();
+        SharedPtrVectorUchar pointer = result.getM_Data();
         //TODO
         // vervollständigen
     }
