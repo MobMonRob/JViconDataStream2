@@ -1,48 +1,54 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
-import de.dhbw.rahmlab.vicon.datastream.impl.SharedPtrVectorUchar;
+import de.dhbw.rahmlab.vicon.datastream.impl.VectorUchar;
 
 /**
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
 public class VideoFrame {
-    
+
     private final int height;
     private final int width;
     private final long format;
     private final long id;
     private final long offsetX;
     private final long offsetY;
-    
-    VideoFrame(Output_GetVideoFrame result){
+
+    VideoFrame(Output_GetVideoFrame result) {
         height = result.getM_Height();
         width = result.getM_Width();
         format = result.getM_Format();
         id = result.getM_FrameID();
         offsetX = result.getM_OffsetX();
         offsetY = result.getM_OffsetY();
-        
-        SharedPtrVectorUchar pointer = result.getM_Data();
+
+        VectorUchar pointer = result.getM_Data();
         //TODO
         // vervollständigen
     }
-    public int getHeight(){
+
+    public int getHeight() {
         return height;
     }
-    public int getWidth(){
+
+    public int getWidth() {
         return width;
     }
-    public long getFormat(){
+
+    public long getFormat() {
         return format;
     }
-    public long getID(){
+
+    public long getID() {
         return id;
     }
-    public long getOffsetX(){
+
+    public long getOffsetX() {
         return offsetX;
     }
-    public long getOffsetY(){
+
+    public long getOffsetY() {
         return offsetY;
     }
 }

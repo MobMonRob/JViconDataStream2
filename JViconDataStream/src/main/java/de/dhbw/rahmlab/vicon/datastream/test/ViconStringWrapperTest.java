@@ -19,7 +19,7 @@ public class ViconStringWrapperTest {
     public static void main(String argv[]) throws InterruptedException {
         //viconStringToJavaStringTest();
         //javaStringToViconStringTest();
-        viconConnectTest();
+        //viconConnectTest();
         //testtest();
 
         //DeleteUnusedGluegenJavaFiles.delete();
@@ -45,7 +45,7 @@ public class ViconStringWrapperTest {
 
     public static void viconConnectTest() {
         System.out.println("enter viconConnectTest()");
-        
+
         ViconConnectTest connectTest = new ViconConnectTest();
         //Output_Connect output = connectTest.testConnect();
 
@@ -53,7 +53,7 @@ public class ViconStringWrapperTest {
         String output = connectTest.testConnectGiven("192.168.10.1:51001");
         //51001
         System.out.println("Result: " + output);
-        
+
         System.out.println("leave viconConnectTest()");
     }
 

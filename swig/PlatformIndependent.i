@@ -9,7 +9,12 @@
 //SWIG_JAVABODY_TYPEWRAPPER(public, public, public, SWIGTYPE)
 //SWIG_JAVABODY_METHODS(public, public, SWIGTYPE)
 
+//Make get_Cptr public
+//#define SWIG_SHARED_PTR_TYPEMAPS(CONST, TYPE...) SWIG_SHARED_PTR_TYPEMAPS_IMPLEMENTATION(public, public, CONST, TYPE)
 %include "std_shared_ptr.i";
+//Important: http://www.swig.org/Doc4.0/Library.html#Library_std_shared_ptr
+%shared_ptr(std::vector<unsigned char>) //Gebraucht von Output_GetVideoFrame
+
 %include "std_string.i";
 %include "arrays_java.i";
 %include "std_vector.i"
@@ -27,4 +32,4 @@
 %template(VectorUint) std::vector<unsigned int>; //Gebraucht von DataStreamClient
 %template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
 %template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
-%template(SharedPtrVectorUchar) std::shared_ptr<std::vector<unsigned char>>; //Gebraucht von Output_GetVideoFrame
+
