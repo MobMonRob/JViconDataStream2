@@ -141,7 +141,7 @@ import java.util.logging.Logger;
  */
 public class DataStreamClient {
 
-    private final Client client;
+    private  Client client;
     private String hostname;
 
     static {
@@ -179,24 +179,24 @@ public class DataStreamClient {
         this.hostname = hostname;
         Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
         int trials = 0;
+        System.out.println("connect() ...");
         while (!isConnected() && Instant.now().isBefore(timeout)) {
 
+            // Im Fehlerfall, also wenn kein Vicon-System gefunden wird, dann kehrt
+            // diese Methode sehr lange Zeit nicht zurück.
             Output_Connect result = client.Connect(hostname);
 
             // tritt seltsamerweise auch für localhost ab und zu auf
             if (result.getResult() == Result_Enum.InvalidHostName) {
-                System.out.println("connect() but invalid hostname \"" + hostname + "\"!");
+                System.out.println("Client connection failed ("+String.valueOf(trials++)+"): Invalid hostname \"" + hostname + "\"!");
                 sleep(500);
-                System.out.println("...try to connect " + String.valueOf(trials++));
             } else if (result.getResult() == Result_Enum.Success) { // -->ende der while schleife
                 System.out.println("Client Connection sucess!");
                 getFrame();
             //} else if (result.getResult() == Result_Enum.ClientAlreadyConnected) { // --> kann innerhalb der while schleife nicht auftreten
             //    System.out.println("Client already connected!");
             } else if (result.getResult() == Result_Enum.ClientConnectionFailed) { // --> dafür ist die while schleife da
-                System.out.println("Client Connection failed!");
-                sleep(500);
-                System.out.println("...try to connect " + String.valueOf(trials++));
+                System.out.println("Client Connection failed ("+String.valueOf(trials++)+")!");
             }
         }
     } 
@@ -1944,16 +1944,13 @@ public class DataStreamClient {
     public double[] getSegmentGlobalRotationMatrix(String subjectName, String segmentName) {
         Output_GetSegmentGlobalRotationMatrix result = client.GetSegmentGlobalRotationMatrix(subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getSegmentGlobalRotationMatrix() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getSegmentGlobalRotationMatrix() but no frame available!");
-        }
-        if (result.getResult() == Result_Enum.InvalidSegmentName) {
-                throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getSegmentGlobalRotationMatrix() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getSegmentGlobalRotationMatrix() but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
+            throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
         }
         return result.getRotation();
     }
@@ -2224,13 +2221,11 @@ public class DataStreamClient {
     public double getObjectQuality(String subjectName) {
         Output_GetObjectQuality result = client.GetObjectQuality(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getObjectQuality() but subjectName \"" + subjectName + "\" is invalid!");
-        }
-        if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("getObjectQuality() but client is not connected!!");
-        }
-        if (result.getResult() == Result_Enum.NoFrame) {
-                throw new RuntimeException("getObjectQuality() but no frame available!");
+            throw new IllegalArgumentException("getObjectQuality() but subjectName \"" + subjectName + "\" is invalid!");
+        } else if (result.getResult() == Result_Enum.NotConnected) {
+            throw new RuntimeException("getObjectQuality() but client is not connected!!");
+        } else if (result.getResult() == Result_Enum.NoFrame) {
+            throw new RuntimeException("getObjectQuality() but no frame available!");
         }
         return result.getQuality();
     }
