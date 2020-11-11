@@ -388,8 +388,9 @@ public final class NativeLibrary implements DynamicLookupHelper {
             
             String[] infixSplit = libBaseNameLC.split(suffixes[i]);
             if (infixSplit.length != 0) {
-                final int s = prefixes[prefixIdx].length();
-                return infixSplit[0].substring(s);
+                final int start = prefixes[prefixIdx].length();
+                final int end = infixSplit[0].length();
+                return libBaseName.substring(start, end);
             }
         }
     }
