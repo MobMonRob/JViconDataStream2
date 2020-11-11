@@ -15,16 +15,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <dependency.name>JViconDataStream-natives-linux-amd64.jar</dependency.name>
+        <dependency.path>${project.build.directory}/lib</dependency.path>
     </properties>
     <dependencies>
         <dependency>
             <groupId>de.dhbw.rahmlab</groupId>
-            <artifactId>JViconDataStream</artifactId>
+            <artifactId>${dependency.name}</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <!--
-<scope>system</scope>
-<systemPath>${project.build.directory}/lib/JViconDataStream-natives-linux-amd64.jar</systemPath>
-            -->
         </dependency>
     </dependencies>
     <build>
@@ -46,8 +44,8 @@
                                     <artifactId>JViconDataStream</artifactId>
                                     <version>1.0-SNAPSHOT</version>
                                     <type>jar</type>
-                                    <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                                    <destFileName>JViconDataStream-natives-linux-amd64.jar</destFileName>
+                                    <outputDirectory>${dependency.path}</outputDirectory>
+                                    <destFileName>${dependency.name}</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -61,11 +59,30 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
                             <mainClass>de.dhbw.rahmlab.jvicondatastreamtest.DebugJar</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>${dependency.path}/${dependency.name}</file>
+                            <groupId>de.dhbw.rahmlab</groupId>
+                            <artifactId>${dependency.name}</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                            <packaging>jar</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
