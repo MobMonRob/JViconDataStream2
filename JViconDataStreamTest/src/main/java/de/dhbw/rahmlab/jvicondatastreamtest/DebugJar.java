@@ -6,6 +6,9 @@
 package de.dhbw.rahmlab.jvicondatastreamtest;
 
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
+import com.jogamp.common.util.cache.TempJarCache;
+import com.jogamp.common.jvm.JNILibLoaderBase;
+import de.dhbw.rahmlab.vicon.datastream.impl.ViconDataStreamSDKSwigJNI;
 
 /**
  *
@@ -15,6 +18,16 @@ public class DebugJar {
 
     public static void main(String argv[]) {
         System.setProperty("jogamp.debug.JNILibLoader", "true");
+
+        //Sollten diese Aufrufe nicht in NativeLibLoader.load() drin sein?
+        //Gibt das keine Probleme, wenn man nicht aus der JAR aufruft, sondern von den .class Dateien in /target/ ?
+        
+        TempJarCache.initSingleton();
+
+        //Es sollte Teil der API sein, die native Klasse zusammen mit der Bibliothek (in JViconDataStreamBundleInfo) auszuliefern.
+        final Class[] classesFromJavaJars = new Class[]{ViconDataStreamSDKSwigJNI.class};
+        JNILibLoaderBase.addNativeJarLibs(classesFromJavaJars, null);
+
         NativeLibLoader.load();
     }
 }
