@@ -14,6 +14,7 @@ import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 public class DebugJar {
 
     public static void main(String argv[]) {
+        System.setProperty("jogamp.debug.JNILibLoader", "true");
         NativeLibLoader.load();
     }
 }
