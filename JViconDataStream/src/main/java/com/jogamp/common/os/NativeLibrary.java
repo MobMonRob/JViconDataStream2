@@ -376,10 +376,20 @@ public final class NativeLibrary implements DynamicLookupHelper {
     }
     if( 0 <= prefixIdx ) {
         for(int i=0; i<suffixes.length; i++) {
+        /*
             if (libBaseNameLC.endsWith(suffixes[i])) {
                 final int s = prefixes[prefixIdx].length();
                 final int e = suffixes[i].length();
                 return libBaseName.substring(s, libBaseName.length()-e);
+            }
+        */
+        
+        //.so files can also be named as follows: libboost_log-mt.so.1.58.0 !!
+            
+            String[] infixSplit = libBaseNameLC.split(suffixes[i]);
+            if (infixSplit.length != 0) {
+                final int s = prefixes[prefixIdx].length();
+                return infixSplit[0].substring(s);
             }
         }
     }

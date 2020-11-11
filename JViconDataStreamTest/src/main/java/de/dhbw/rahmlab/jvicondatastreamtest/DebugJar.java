@@ -17,7 +17,8 @@ import de.dhbw.rahmlab.vicon.datastream.impl.ViconDataStreamSDKSwigJNI;
 public class DebugJar {
 
     public static void main(String argv[]) {
-        System.setProperty("jogamp.debug.JNILibLoader", "true");
+        //System.setProperty("jogamp.debug.JNILibLoader", "true");
+        System.setProperty("jogamp.debug", "true");
 
         //Sollten diese Aufrufe nicht in NativeLibLoader.load() drin sein?
         //Gibt das keine Probleme, wenn man nicht aus der JAR aufruft, sondern von den .class Dateien in /target/ ?
