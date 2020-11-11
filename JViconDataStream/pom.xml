@@ -31,6 +31,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>JViconDataStream-natives-linux-amd64</finalName>
         <resources>
             <resource>
                 <targetPath>${basedir}/target/classes/natives</targetPath>
