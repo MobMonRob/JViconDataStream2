@@ -9,7 +9,7 @@ import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 import com.jogamp.common.jvm.JNILibLoaderBase;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconDataStreamSDKSwigJNI;
 import com.jogamp.common.os.Platform;
-import com.jogamp.common.util.cache.TempJarCache;
+import de.dhbw.rahmlab.vicon.datastream.test.ViconStringWrapperTest;
 
 /**
  *
@@ -18,7 +18,7 @@ import com.jogamp.common.util.cache.TempJarCache;
 public class DebugJar {
 
     public static void main(String argv[]) {
-        System.setProperty("jogamp.debug", "true"); //Extremely helpful!
+        //System.setProperty("jogamp.debug", "true"); //Extremely helpful!
 
         //Sollten diese Aufrufe nicht in NativeLibLoader.load() drin sein?
         //Gibt das keine Probleme, wenn man nicht aus der JAR aufruft, sondern von den .class Dateien in /target/ ?
@@ -27,11 +27,12 @@ public class DebugJar {
 
         //TempJarCache.initSingleton();
         //Es sollte Teil der API sein, die native Klasse zusammen mit der Bibliothek (in JViconDataStreamBundleInfo) auszuliefern.
+        //Ist das überhaupt noch notwendig nach Platform.initSingleton()?
         final Class[] classesFromJavaJars = new Class[]{ViconDataStreamSDKSwigJNI.class};
         JNILibLoaderBase.addNativeJarLibs(classesFromJavaJars, null);
 
-        System.out.println("tempCharCache: " + TempJarCache.isInitialized(true));
-        
         NativeLibLoader.load();
+
+        ViconStringWrapperTest.javaStringToViconStringTest();
     }
 }
