@@ -1,4 +1,9 @@
-package de.dhbw.rahmlab.vicon.datastream.nativelib;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package de.dhbw.rahmlab.nativelibloader.impl;
 
 import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.DynamicLibraryBundle;
 import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.DynamicLibraryBundleInfo;
@@ -6,16 +11,12 @@ import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.util.RunnableExecu
 import java.util.ArrayList;
 import java.util.List;
 
-public class JViconDataStreamBundleInfo implements DynamicLibraryBundleInfo {
+public class BundleInfoImpl implements DynamicLibraryBundleInfo {
 
-    private static final List<String> glueLibNames;
+    private final List<String> glueLibNames;
 
-    static {
-        glueLibNames = new ArrayList<>();
-        glueLibNames.add("jViconDataStreamSDK");
-    }
-
-    protected JViconDataStreamBundleInfo() {
+    public BundleInfoImpl(List<String> glueLibNames) {
+        this.glueLibNames = glueLibNames;
     }
 
     //Die Funktionalität gibt es nur für ToolLibraries
