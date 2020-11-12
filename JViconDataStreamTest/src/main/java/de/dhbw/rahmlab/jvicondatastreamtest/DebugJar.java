@@ -5,8 +5,9 @@
  */
 package de.dhbw.rahmlab.jvicondatastreamtest;
 
-import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
-import de.dhbw.rahmlab.vicon.datastream.test.ViconStringWrapperTest;
+import de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,10 +16,15 @@ import de.dhbw.rahmlab.vicon.datastream.test.ViconStringWrapperTest;
 public class DebugJar {
 
     static {
-        NativeLibLoader.load();
+        //NativeLibLoader.load("", DebugJar.class);
     }
 
     public static void main(String argv[]) {
-        ViconStringWrapperTest.javaStringToViconStringTest();
+        List<String> glueLibNames = new ArrayList<>();
+        glueLibNames.add("");
+
+        NativeLibLoader.load(glueLibNames, DebugJar.class);
+
+        //ViconStringWrapperTest.javaStringToViconStringTest();
     }
 }
