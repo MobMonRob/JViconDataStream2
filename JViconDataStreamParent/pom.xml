@@ -13,8 +13,8 @@
         <dependency.path>${project.build.directory}/lib</dependency.path>
     </properties>
     <modules>
-        <!-- <module>../JViconDataStream</module> -->
-        <module>../JViconDataStreamTest</module>
+        <module>../JViconDataStream</module>
+        <!-- <module>../JViconDataStreamTest</module> -->
     </modules>
     
     <build>
@@ -27,7 +27,7 @@
                 <executions>
                     <execution>
                         <id>copy-file</id>
-                        <phase>generate-sources</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -45,7 +45,7 @@
                 <version>3.0.0-M1</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>install-file</goal>
                         </goals>
