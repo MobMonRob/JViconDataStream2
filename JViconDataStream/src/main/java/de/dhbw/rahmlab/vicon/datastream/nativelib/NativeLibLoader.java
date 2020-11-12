@@ -1,9 +1,9 @@
 package de.dhbw.rahmlab.vicon.datastream.nativelib;
 
-import com.jogamp.common.jvm.JNILibLoaderBase;
-import com.jogamp.common.os.DynamicLibraryBundle;
-import com.jogamp.common.os.DynamicLibraryBundleInfo;
-import com.jogamp.common.os.Platform;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.jvm.JNILibLoaderBase;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.DynamicLibraryBundle;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.DynamicLibraryBundleInfo;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.Platform;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconDataStreamSDKSwigJNI;
 

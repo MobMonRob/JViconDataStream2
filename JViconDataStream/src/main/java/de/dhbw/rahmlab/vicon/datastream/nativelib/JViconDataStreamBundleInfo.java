@@ -1,8 +1,8 @@
 package de.dhbw.rahmlab.vicon.datastream.nativelib;
 
-import com.jogamp.common.os.DynamicLibraryBundle;
-import com.jogamp.common.os.DynamicLibraryBundleInfo;
-import com.jogamp.common.util.RunnableExecutor;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.DynamicLibraryBundle;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.os.DynamicLibraryBundleInfo;
+import de.dhbw.rahmlab.nativelibloader.impl.com.jogamp.common.util.RunnableExecutor;
 import java.util.ArrayList;
 import java.util.List;
 
