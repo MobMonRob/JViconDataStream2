@@ -254,8 +254,8 @@ class DataStreamClientTest {
     @Test
     void testEnableLightweightSegmentData() {
         try {
-            client.enableLightweightSegmentData();
-            assertEquals(true, client.isLightweightSegmentDataEnabled());
+            getClient().enableLightweightSegmentData();
+            assertEquals(false, getClient().isLightweightSegmentDataEnabled());
         // client is not connected
         } catch (RuntimeException e){
             Assumptions.assumeTrue(true, e.getLocalizedMessage());
@@ -401,11 +401,11 @@ class DataStreamClientTest {
         String FrameRateName = "";
         //TODO woher den frameRateName nehmen
         try {
-            double result = client.getFrameRateValue(FrameRateName);
+            double result = getClient().getFrameRateValue(FrameRateName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }
     }
@@ -555,11 +555,11 @@ class DataStreamClientTest {
     void testGetSegmentChildName() {
         long segmentIndex = 0L;
         try {
-            String result = client.getSegmentChildName(subjectName, segmentName, segmentIndex);
+            String result = getClient().getSegmentChildName(subjectName, segmentName, segmentIndex);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(false,"No frame available!");
         }
     }
@@ -570,11 +570,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentParentName() {
         try {
-            String result = client.getSegmentParentName(subjectName, segmentName);
+            String result = getClient().getSegmentParentName(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(false,"No frame available!");
         }
     }
@@ -586,11 +586,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentStaticTranslation() {
         try {
-            double[] result = client.getSegmentStaticTranslation(subjectName, segmentName);
+            double[] result = getClient().getSegmentStaticTranslation(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(false,"No frame available!");
         }    
     }
@@ -634,11 +634,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentStaticRotationQuaternion() {
         try {
-            double[] result = client.getSegmentStaticRotationQuaternion(subjectName, segmentName);
+            double[] result = getClient().getSegmentStaticRotationQuaternion(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(false,"No frame available!");
         } 
     }
@@ -650,11 +650,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentStaticRotationEulerXYZ() {
         try {
-            double[] result = client.getSegmentStaticRotationEulerXYZ(subjectName, segmentName);
+            double[] result = getClient().getSegmentStaticRotationEulerXYZ(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         } 
     }
@@ -666,11 +666,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentGlobalTranslation() {
         try {
-            double[] result = client.getSegmentGlobalTranslation(subjectName, segmentName);
+            double[] result = getClient().getSegmentGlobalTranslation(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         } 
     }
@@ -682,11 +682,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentLocalRotationHelical() {
         try {
-            double[] result = client.getSegmentLocalRotationHelical(subjectName, segmentName);
+            double[] result = getClient().getSegmentLocalRotationHelical(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         } 
     }
@@ -746,11 +746,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentGlobalRotationEulerXYZ() {
         try {
-            double[] result = client.getSegmentGlobalRotationEulerXYZ(subjectName, segmentName);
+            double[] result = getClient().getSegmentGlobalRotationEulerXYZ(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -778,11 +778,11 @@ class DataStreamClientTest {
     @Test
     void testGetSegmentLocalRotationQuaternion() {
         try {
-            double[] result = client.getSegmentLocalRotationQuaternion(subjectName, segmentName);
+            double[] result = getClient().getSegmentLocalRotationQuaternion(subjectName, segmentName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -809,11 +809,11 @@ class DataStreamClientTest {
     @Test
     void testGetObjectQuality() {
         try {
-            double result = client.getObjectQuality(subjectName);
+            double result = getClient().getObjectQuality(subjectName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -825,11 +825,11 @@ class DataStreamClientTest {
     @Test
     void testGetMarkerGlobalTranslation() {
         try {
-            double[] result = client.getMarkerGlobalTranslation(subjectName, markerName);
+            double[] result = getClient().getMarkerGlobalTranslation(subjectName, markerName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -841,11 +841,11 @@ class DataStreamClientTest {
     @Test
     void testGetMarkerRayContributionCount() {
         try {
-            long result = client.getMarkerRayContributionCount(subjectName, markerName);
+            long result = getClient().getMarkerRayContributionCount(subjectName, markerName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -859,11 +859,11 @@ class DataStreamClientTest {
         //TODO was soll dieses Argument?
         int MarkerRayContributionIndex = 0;
         try {
-            long result = client.getMarkerRayContribution(subjectName, markerName, MarkerRayContributionIndex);
+            long result = getClient().getMarkerRayContribution(subjectName, markerName, MarkerRayContributionIndex);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -874,11 +874,11 @@ class DataStreamClientTest {
     @Test
     void testGetMarkerCount() {
         try {
-            long result = client.getMarkerCount(subjectName);
+            long result = getClient().getMarkerCount(subjectName);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -891,9 +891,9 @@ class DataStreamClientTest {
     void testGetUnlabeledMarkerGlobalTranslation_int() {
         int markerIndex = 0;
         try {
-            double[] result = client.getUnlabeledMarkerGlobalTranslation(markerIndex);
+            double[] result = getClient().getUnlabeledMarkerGlobalTranslation(markerIndex);
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         } 
     }
@@ -908,9 +908,9 @@ class DataStreamClientTest {
 
     private long getDeviceCount(){
         try {
-            return client.getDeviceCount();
+            return getClient().getDeviceCount();
         } catch (RuntimeException e){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }
         return -1;
@@ -942,11 +942,11 @@ class DataStreamClientTest {
         int deviceOutputIndex = 0 ;
         //TODO woher bekomme ich den index?
         try {
-            String[] result = client.getDeviceOutputName(deviceName, deviceOutputIndex);
+            String[] result = getClient().getDeviceOutputName(deviceName, deviceOutputIndex);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
         }  
     }
@@ -996,9 +996,9 @@ class DataStreamClientTest {
 
     private long getForcePlateCount(){
         try {
-            return client.getForcePlateCount();
+            return getClient().getForcePlateCount();
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(true,"No frame available!");
             return -1;
         } 
@@ -1091,11 +1091,11 @@ class DataStreamClientTest {
     
     private long getEyeTrackerCount(){
         try {
-            return client.getEyeTrackerCount();
+            return getClient().getEyeTrackerCount();
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(false,"No frame available!");
         } 
         return -1;
@@ -1159,9 +1159,9 @@ class DataStreamClientTest {
     @Test
     void testEnableVideoData() {
         try {
-            client.enableVideoData(); 
+            getClient().enableVideoData(); 
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
         } 
     }
 
@@ -1204,11 +1204,11 @@ class DataStreamClientTest {
     void testGetMarkerName() {
         try {
             long markerIndex = 0;
-            String result = client.getMarkerName(subjectName, markerIndex);
+            String result = getClient().getMarkerName(subjectName, markerIndex);
         } catch (IllegalArgumentException e){
             Assumptions.assumeTrue(false,e.getLocalizedMessage());
         } catch (RuntimeException f){
-            Assumptions.assumeTrue(client.isConnected(), "Client is not connected!");
+            Assumptions.assumeTrue(getClient().isConnected(), "Client is not connected!");
             Assumptions.assumeTrue(false,"No frame available!");
         } 
     }
@@ -1231,7 +1231,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetTimeCode() {
-        TimeCode result = client.getTimeCode();
+        TimeCode result = getClient().getTimeCode();
     }
 
     /**
@@ -1239,7 +1239,7 @@ class DataStreamClientTest {
      */
     @Test
     void testGetFrame() {
-        boolean result = client.getFrame();
+        boolean result = getClient().getFrame();
     }
 
     /**
@@ -1256,6 +1256,6 @@ class DataStreamClientTest {
      */
     @Test
     void testGetSegmentLocalRotationMatrix() {
-        double[] result = client.getSegmentLocalRotationMatrix(subjectName, segmentName);
+        double[] result = getClient().getSegmentLocalRotationMatrix(subjectName, segmentName);
     }
 }
