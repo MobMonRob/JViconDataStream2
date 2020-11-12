@@ -10,7 +10,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <!-- <jar.finalName>JViconDataStream-natives-linux-amd64</jar.finalName> -->
     </properties>
     <dependencies>
         <dependency>
@@ -59,7 +58,7 @@
                 <executions>
                     <execution><!-- Run our version calculation script -->
                         <id>Build natives</id>
-                        <phase>post-clean</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
