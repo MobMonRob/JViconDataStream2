@@ -6,7 +6,7 @@ cd "$(dirname "$BASH_SOURCE")"
 
 mkdir -p ./target/
 
-gcc -shared -fPIC -x c -O3 -flto ./src/common/*.c ./src/unix/*.c -o libgluegen_rt.so -I./include/native -I./include/native/Unix -I./include/stub_includes/platform -I/usr/lib/jvm/default-java/include/linux -I/usr/lib/jvm/default-java/include -Wl,-rpath,'$ORIGIN/.'
+gcc -shared -fPIC -x c -O3 -flto ./src/common/*.c ./src/unix/*.c -o ./target/libgluegen_rt.so -I./include/native -I./include/native/Unix -I./include/stub_includes/platform -I/usr/lib/jvm/default-java/include/linux -I/usr/lib/jvm/default-java/include -Wl,-rpath,'$ORIGIN/.'
 
 #-LDataStreamSDK_1.10 -lViconDataStreamSDK_CPP
 
