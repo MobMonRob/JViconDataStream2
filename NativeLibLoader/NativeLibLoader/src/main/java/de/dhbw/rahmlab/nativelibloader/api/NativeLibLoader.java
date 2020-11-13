@@ -17,6 +17,13 @@ public class NativeLibLoader {
 
     private static final List<DynamicLibraryBundle> dynamicLibraryBundles = new ArrayList<>();
 
+    /**
+     * Loads native libs
+     *
+     * @param glueLibNames Names of native libs. -> "name" for libname.so
+     * @param MarkerClass A class which is in the same JAR as the native libs
+     * which are wanted to be loaded.
+     */
     public static void load(List<String> glueLibNames, Class MarkerClass) {
         //System.setProperty("jogamp.debug", "true"); //Extremely helpful for debugging!
 
