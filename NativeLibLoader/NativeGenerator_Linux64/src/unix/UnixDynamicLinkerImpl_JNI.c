@@ -52,7 +52,7 @@ Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dl
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused) {
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused) {
   char *  _res;
   _res = dlerror();
   if (_res == NULL) return NULL;  return (*env)->NewStringUTF(env, _res);
@@ -64,7 +64,7 @@ Java_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused)
  * Signature: (Ljava/lang/String;I)J
  */
 JNIEXPORT jlong JNICALL
-Java_jogamp_common_os_UnixDynamicLinkerImpl_dlopen(JNIEnv *env, jclass _unused, jstring arg0, jint arg1) {
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlopen(JNIEnv *env, jclass _unused, jstring arg0, jint arg1) {
   const char* _UTF8arg0 = NULL;
   void *  _res;
 #ifdef DEBUG_DLOPEN
