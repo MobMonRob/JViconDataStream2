@@ -24,10 +24,11 @@ public class NativeLibLoader {
 
         de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.load(glueLibNames, ViconDataStreamSDKSwigJNI.class);
     }
-
-    /*
-    static {
-            NativeLibLoader.load();
-    }
-     */
 }
+
+/*
+//Verwendung in Klassen, ide hiervon abhängen:
+    static {
+        NativeLibLoader.load();
+    }
+ */
