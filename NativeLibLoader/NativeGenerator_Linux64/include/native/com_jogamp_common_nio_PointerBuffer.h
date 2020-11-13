@@ -12,7 +12,7 @@ extern "C" {
  * Method:    getDirectBufferAddressImpl
  * Signature: (Ljava/lang/Object;)J
  */
-JNIEXPORT jlong JNICALL Java_com_jogamp_common_nio_PointerBuffer_getDirectBufferAddressImpl
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common_nio_PointerBuffer_getDirectBufferAddressImpl
   (JNIEnv *, jobject, jobject);
 
 #ifdef __cplusplus

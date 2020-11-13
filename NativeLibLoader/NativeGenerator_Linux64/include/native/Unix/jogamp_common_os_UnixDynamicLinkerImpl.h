@@ -12,7 +12,7 @@ extern "C" {
  * Method:    dlclose
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlclose
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlclose
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -20,7 +20,7 @@ JNIEXPORT jint JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlclose
  * Method:    dlerror
  * Signature: ()Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlerror
+JNIEXPORT jstring JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlerror
   (JNIEnv *, jclass);
 
 /*
@@ -28,7 +28,7 @@ JNIEXPORT jstring JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlerror
  * Method:    dlopen
  * Signature: (Ljava/lang/String;I)J
  */
-JNIEXPORT jlong JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlopen
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlopen
   (JNIEnv *, jclass, jstring, jint);
 
 /*
@@ -36,7 +36,7 @@ JNIEXPORT jlong JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlopen
  * Method:    dlsym
  * Signature: (JLjava/lang/String;)J
  */
-JNIEXPORT jlong JNICALL Java_jogamp_common_os_UnixDynamicLinkerImpl_dlsym
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlsym
   (JNIEnv *, jclass, jlong, jstring);
 
 #ifdef __cplusplus

@@ -16,7 +16,7 @@ extern "C" {
  * Method:    FreeLibrary
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_FreeLibrary
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_FreeLibrary
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -24,7 +24,7 @@ JNIEXPORT jint JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_FreeLibrar
  * Method:    GetLastError
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetLastError
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_GetLastError
   (JNIEnv *, jclass);
 
 /*
@@ -32,7 +32,7 @@ JNIEXPORT jint JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetLastErr
  * Method:    GetProcAddressA
  * Signature: (JLjava/lang/String;)J
  */
-JNIEXPORT jlong JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetProcAddressA
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_GetProcAddressA
   (JNIEnv *, jclass, jlong, jstring);
 
 /*
@@ -40,7 +40,7 @@ JNIEXPORT jlong JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetProcAd
  * Method:    LoadLibraryW
  * Signature: (Ljava/lang/String;)J
  */
-JNIEXPORT jlong JNICALL Java_jogamp_common_os_WindowsDynamicLinkerImpl_LoadLibraryW
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_LoadLibraryW
   (JNIEnv *, jclass, jstring);
 
 #ifdef __cplusplus

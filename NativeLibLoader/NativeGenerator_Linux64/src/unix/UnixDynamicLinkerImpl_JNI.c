@@ -16,7 +16,7 @@
 // #define DEBUG_DLOPEN 1
 
 #ifdef DEBUG_DLOPEN
-    typedef void *(*DLOPEN_FPTR_TYPE)(const char *filename, int flag); 
+    typedef void *(*DLOPEN_FPTR_TYPE)(const char *filename, int flag);
     #define VERBOSE_ON 1
 #endif
 
@@ -38,8 +38,8 @@
  * Method:    dlclose
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL 
-Java_jogamp_common_os_UnixDynamicLinkerImpl_dlclose(JNIEnv *env, jclass _unused, jlong arg0) {
+JNIEXPORT jint JNICALL
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlclose(JNIEnv *env, jclass _unused, jlong arg0) {
   int _res;
   _res = dlclose((void *) (intptr_t) arg0);
   return _res;
@@ -51,7 +51,7 @@ Java_jogamp_common_os_UnixDynamicLinkerImpl_dlclose(JNIEnv *env, jclass _unused,
  * Method:    dlerror
  * Signature: ()Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL 
+JNIEXPORT jstring JNICALL
 Java_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused) {
   char *  _res;
   _res = dlerror();
@@ -63,7 +63,7 @@ Java_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused)
  * Method:    dlopen
  * Signature: (Ljava/lang/String;I)J
  */
-JNIEXPORT jlong JNICALL 
+JNIEXPORT jlong JNICALL
 Java_jogamp_common_os_UnixDynamicLinkerImpl_dlopen(JNIEnv *env, jclass _unused, jstring arg0, jint arg1) {
   const char* _UTF8arg0 = NULL;
   void *  _res;
@@ -104,8 +104,8 @@ Java_jogamp_common_os_UnixDynamicLinkerImpl_dlopen(JNIEnv *env, jclass _unused, 
  * Method:    dlsym
  * Signature: (JLjava/lang/String;)J
  */
-JNIEXPORT jlong JNICALL 
-Java_jogamp_common_os_UnixDynamicLinkerImpl_dlsym(JNIEnv *env, jclass _unused, jlong arg0, jstring arg1) {
+JNIEXPORT jlong JNICALL
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlsym(JNIEnv *env, jclass _unused, jlong arg0, jstring arg1) {
   const char* _UTF8arg1 = NULL;
   void *  _res;
   if (arg1 != NULL) {

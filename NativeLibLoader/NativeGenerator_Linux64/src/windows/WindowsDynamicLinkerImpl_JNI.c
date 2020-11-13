@@ -23,8 +23,8 @@
  *    Java method: int FreeLibrary(long hLibModule)
  *     C function: BOOL FreeLibrary(HANDLE hLibModule);
  */
-JNIEXPORT jint JNICALL 
-Java_jogamp_common_os_WindowsDynamicLinkerImpl_FreeLibrary(JNIEnv *env, jclass _unused, jlong hLibModule) {
+JNIEXPORT jint JNICALL
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_FreeLibrary(JNIEnv *env, jclass _unused, jlong hLibModule) {
   BOOL _res;
   _res = FreeLibrary((HANDLE) (intptr_t) hLibModule);
   return _res;
@@ -36,8 +36,8 @@ Java_jogamp_common_os_WindowsDynamicLinkerImpl_FreeLibrary(JNIEnv *env, jclass _
  *    Java method: int GetLastError()
  *     C function: DWORD GetLastError(void);
  */
-JNIEXPORT jint JNICALL 
-Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetLastError(JNIEnv *env, jclass _unused) {
+JNIEXPORT jint JNICALL
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_GetLastError(JNIEnv *env, jclass _unused) {
   DWORD _res;
   _res = GetLastError();
   return _res;
@@ -49,8 +49,8 @@ Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetLastError(JNIEnv *env, jclass 
  *    Java method: long GetProcAddressA(long hModule, java.lang.String lpProcName)
  *     C function: PROC GetProcAddressA(HANDLE hModule, LPCSTR lpProcName);
  */
-JNIEXPORT jlong JNICALL 
-Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetProcAddressA(JNIEnv *env, jclass _unused, jlong hModule, jstring lpProcName) {
+JNIEXPORT jlong JNICALL
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_GetProcAddressA(JNIEnv *env, jclass _unused, jlong hModule, jstring lpProcName) {
   const char* _strchars_lpProcName = NULL;
   PROC _res;
   if (lpProcName != NULL) {
@@ -74,8 +74,8 @@ Java_jogamp_common_os_WindowsDynamicLinkerImpl_GetProcAddressA(JNIEnv *env, jcla
  *    Java method: long LoadLibraryW(java.lang.String lpLibFileName)
  *     C function: HANDLE LoadLibraryW(LPCWSTR lpLibFileName);
  */
-JNIEXPORT jlong JNICALL 
-Java_jogamp_common_os_WindowsDynamicLinkerImpl_LoadLibraryW(JNIEnv *env, jclass _unused, jstring lpLibFileName) {
+JNIEXPORT jlong JNICALL
+Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_WindowsDynamicLinkerImpl_LoadLibraryW(JNIEnv *env, jclass _unused, jstring lpLibFileName) {
   jchar* _strchars_lpLibFileName = NULL;
   HANDLE _res;
   if (lpLibFileName != NULL) {

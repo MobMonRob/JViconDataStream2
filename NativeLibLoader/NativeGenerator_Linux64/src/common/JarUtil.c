@@ -14,7 +14,7 @@
  * Method:    fixNativeLibAttribs
  * Signature: (Ljava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_com_jogamp_common_util_JarUtil_fixNativeLibAttribs
+JNIEXPORT jboolean JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common_util_JarUtil_fixNativeLibAttribs
   (JNIEnv *env, jclass _unused, jstring fname) {
   const char* _UTF8fname = NULL;
   int status = 0;
