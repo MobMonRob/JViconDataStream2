@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>de.dhbw.rahmlab</groupId>
-            <artifactId>${dependency.name}</artifactId>
+            <artifactId>${dependency.fullName}</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
