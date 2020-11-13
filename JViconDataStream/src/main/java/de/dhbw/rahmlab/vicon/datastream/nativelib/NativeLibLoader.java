@@ -27,7 +27,7 @@ public class NativeLibLoader {
 }
 
 /*
-//Verwendung in Klassen, ide hiervon abhängen:
+//Verwendung in Klassen, die hiervon abhängen:
     static {
         NativeLibLoader.load();
     }
