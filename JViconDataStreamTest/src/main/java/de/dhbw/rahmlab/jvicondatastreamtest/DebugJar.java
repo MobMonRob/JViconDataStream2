@@ -21,7 +21,7 @@ public class DebugJar {
 
     public static void main(String argv[]) {
         List<String> glueLibNames = new ArrayList<>();
-        glueLibNames.add("");
+        glueLibNames.add("gluegen_rt"); //Dann wird es halt zwei Mal geladen. Hauptsache, der Fehler liegt nicht hieran.
 
         NativeLibLoader.load(glueLibNames, DebugJar.class);
 

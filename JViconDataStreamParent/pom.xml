@@ -12,12 +12,12 @@
         <dependency.group>de.dhbw.rahmlab</dependency.group>
         <dependency.name>NativeLibLoader</dependency.name>
         <dependency.version>1.0-SNAPSHOT</dependency.version>
-        <dependency.fullName>${dependency.name}-natives-linux-amd64.jar</dependency.fullName>
+        <dependency.fullName>${dependency.name}-natives-linux-amd64</dependency.fullName>
         <dependency.path>${project.build.directory}/lib</dependency.path>
     </properties>
     <modules>
         <module>../${dependency.name}</module>
-        <module>../JViconDataStreamTest</module>
+        <module>../JViconDataStreamTest</module> <!-- ony for build testing needed -->
     </modules>
     
     <build>
@@ -29,14 +29,25 @@
                 <version>1.0</version>
                 <executions>
                     <execution>
-                        <id>copy-file</id>
+                        <id>copy-jar</id>
                         <phase>initialize</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
                         <configuration>
                             <sourceFile>${basedir}/../${dependency.name}/target/${dependency.name}-${dependency.version}.jar</sourceFile>
-                            <destinationFile>${dependency.path}/${dependency.fullName}</destinationFile>
+                            <destinationFile>${dependency.path}/${dependency.fullName}.jar</destinationFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-src-jar</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <sourceFile>${basedir}/../${dependency.name}/target/${dependency.name}-${dependency.version}-sources.jar</sourceFile>
+                            <destinationFile>${dependency.path}/${dependency.fullName}-sources.jar</destinationFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -53,11 +64,12 @@
                             <goal>install-file</goal>
                         </goals>
                         <configuration>
-                            <file>${dependency.path}/${dependency.fullName}</file>
+                            <file>${dependency.path}/${dependency.fullName}.jar</file>
                             <groupId>${dependency.group}</groupId>
                             <artifactId>${dependency.fullName}</artifactId>
                             <version>${dependency.version}</version>
                             <packaging>jar</packaging>
+                            <sources>${dependency.path}/${dependency.fullName}-sources.jar</sources>
                         </configuration>
                     </execution>
                 </executions>
