@@ -12,7 +12,7 @@ extern "C" {
  * Method:    currentTimeMillis
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common_os_Platform_currentTimeMillis
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_com_jogamp_common_os_Platform_currentTimeMillis
   (JNIEnv *, jclass);
 
 /*
@@ -20,7 +20,7 @@ JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common
  * Method:    currentTimeMicros
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common_os_Platform_currentTimeMicros
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_com_jogamp_common_os_Platform_currentTimeMicros
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus

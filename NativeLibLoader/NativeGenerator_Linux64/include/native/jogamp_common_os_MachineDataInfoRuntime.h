@@ -12,7 +12,7 @@ extern "C" {
  * Method:    getPointerSizeInBytesImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getPointerSizeInBytesImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getPointerSizeInBytesImpl
   (JNIEnv *, jclass);
 
 /*
@@ -20,7 +20,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getPageSizeInBytesImpl
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getPageSizeInBytesImpl
+JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getPageSizeInBytesImpl
   (JNIEnv *, jclass);
 
 /*
@@ -28,7 +28,7 @@ JNIEXPORT jlong JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_
  * Method:    getAlignmentInt8Impl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt8Impl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt8Impl
   (JNIEnv *, jclass);
 
 /*
@@ -36,7 +36,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentInt16Impl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt16Impl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt16Impl
   (JNIEnv *, jclass);
 
 /*
@@ -44,7 +44,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentInt32Impl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt32Impl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt32Impl
   (JNIEnv *, jclass);
 
 /*
@@ -52,7 +52,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentInt64Impl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt64Impl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentInt64Impl
   (JNIEnv *, jclass);
 
 /*
@@ -60,7 +60,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentIntImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentIntImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentIntImpl
   (JNIEnv *, jclass);
 
 /*
@@ -68,7 +68,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentLongImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentLongImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentLongImpl
   (JNIEnv *, jclass);
 
 /*
@@ -76,7 +76,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentPointerImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentPointerImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentPointerImpl
   (JNIEnv *, jclass);
 
 /*
@@ -84,7 +84,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentFloatImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentFloatImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentFloatImpl
   (JNIEnv *, jclass);
 
 /*
@@ -92,7 +92,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentDoubleImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentDoubleImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentDoubleImpl
   (JNIEnv *, jclass);
 
 /*
@@ -100,7 +100,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getAlignmentLongDoubleImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentLongDoubleImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getAlignmentLongDoubleImpl
   (JNIEnv *, jclass);
 
 /*
@@ -108,7 +108,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getSizeOfIntImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfIntImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfIntImpl
   (JNIEnv *, jclass);
 
 /*
@@ -116,7 +116,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getSizeOfLongImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfLongImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfLongImpl
   (JNIEnv *, jclass);
 
 /*
@@ -124,7 +124,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getSizeOfPointerImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfPointerImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfPointerImpl
   (JNIEnv *, jclass);
 
 /*
@@ -132,7 +132,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getSizeOfFloatImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfFloatImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfFloatImpl
   (JNIEnv *, jclass);
 
 /*
@@ -140,7 +140,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getSizeOfDoubleImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfDoubleImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfDoubleImpl
   (JNIEnv *, jclass);
 
 /*
@@ -148,7 +148,7 @@ JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_M
  * Method:    getSizeOfLongDoubleImpl
  * Signature: ()I
  */
-JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfLongDoubleImpl
+JNIEXPORT jint JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_MachineDataInfoRuntime_getSizeOfLongDoubleImpl
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus

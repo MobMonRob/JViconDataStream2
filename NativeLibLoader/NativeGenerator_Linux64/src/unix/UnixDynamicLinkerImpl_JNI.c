@@ -39,7 +39,7 @@
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL
-Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlclose(JNIEnv *env, jclass _unused, jlong arg0) {
+Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlclose(JNIEnv *env, jclass _unused, jlong arg0) {
   int _res;
   _res = dlclose((void *) (intptr_t) arg0);
   return _res;
@@ -52,7 +52,7 @@ Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dl
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused) {
+Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlerror(JNIEnv *env, jclass _unused) {
   char *  _res;
   _res = dlerror();
   if (_res == NULL) return NULL;  return (*env)->NewStringUTF(env, _res);
@@ -64,7 +64,7 @@ Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dl
  * Signature: (Ljava/lang/String;I)J
  */
 JNIEXPORT jlong JNICALL
-Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlopen(JNIEnv *env, jclass _unused, jstring arg0, jint arg1) {
+Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlopen(JNIEnv *env, jclass _unused, jstring arg0, jint arg1) {
   const char* _UTF8arg0 = NULL;
   void *  _res;
 #ifdef DEBUG_DLOPEN
@@ -105,7 +105,7 @@ Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dl
  * Signature: (JLjava/lang/String;)J
  */
 JNIEXPORT jlong JNICALL
-Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlsym(JNIEnv *env, jclass _unused, jlong arg0, jstring arg1) {
+Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_os_UnixDynamicLinkerImpl_dlsym(JNIEnv *env, jclass _unused, jlong arg0, jstring arg1) {
   const char* _UTF8arg1 = NULL;
   void *  _res;
   if (arg1 != NULL) {

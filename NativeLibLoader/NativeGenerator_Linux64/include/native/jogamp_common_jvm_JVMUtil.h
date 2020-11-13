@@ -12,7 +12,7 @@ extern "C" {
  * Method:    initialize
  * Signature: (Ljava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_jvm_JVMUtil_initialize
+JNIEXPORT jboolean JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_jvm_JVMUtil_initialize
   (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus

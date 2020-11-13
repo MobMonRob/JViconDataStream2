@@ -8,7 +8,7 @@
 #include "com_jogamp_common_nio_PointerBuffer.h"
 
 JNIEXPORT jlong JNICALL
-Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common_nio_PointerBuffer_getDirectBufferAddressImpl(JNIEnv *env, jclass _unused, jobject directBuffer) {
+Java_de_dhbw_rahmlab_nativelibloader_impl_com_jogamp_common_nio_PointerBuffer_getDirectBufferAddressImpl(JNIEnv *env, jclass _unused, jobject directBuffer) {
     return ( NULL != directBuffer ) ? (jlong) (intptr_t)  (*env)->GetDirectBufferAddress(env, directBuffer) : 0L ;
 }
 

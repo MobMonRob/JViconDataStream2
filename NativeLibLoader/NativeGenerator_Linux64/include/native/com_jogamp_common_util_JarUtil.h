@@ -14,7 +14,7 @@ extern "C" {
  * Method:    fixNativeLibAttribs
  * Signature: (Ljava/lang/String;)Z
  */
-JNIEXPORT jboolean JNICALL Java_de_dhbw_rahmlab_nativeloader_impl_com_jogamp_common_util_JarUtil_fixNativeLibAttribs
+JNIEXPORT jboolean JNICALL Java_de_dhbw_rahmlab_nativelibloader_impl_com_jogamp_common_util_JarUtil_fixNativeLibAttribs
   (JNIEnv *, jclass, jstring);
 
 #ifdef __cplusplus

@@ -49,7 +49,7 @@
  * Signature: (Ljava/nio/ByteBuffer;)Z
  */
 JNIEXPORT jboolean JNICALL
-Java_de_dhbw_rahmlab_nativeloader_impl_jogamp_common_jvm_JVMUtil_initialize(JNIEnv *env, jclass _unused, jobject nioBuffer) {
+Java_de_dhbw_rahmlab_nativelibloader_impl_jogamp_common_jvm_JVMUtil_initialize(JNIEnv *env, jclass _unused, jobject nioBuffer) {
   void * ptr = NULL;
   if (nioBuffer != NULL) {
         ptr = (void *) (*env)->GetDirectBufferAddress(env, nioBuffer);
