@@ -73,7 +73,8 @@ Das verhindert folgenden Fehler:
 > library:
 > `<path to project>`/`<project name>`/natives/linux-amd64/libgluegen_rt.so
 
-Die Ursache ist, dass Netbeans standardmäßig ("compile on save" aktiviert) die .class Dateien einer Dependency lädt, sofern die Dependency ein Netbeans Projekt ist. Mit der Deaktivierung dieser Funktion wird die JAR benutzt. Allerdings muss man darauf achten, dass das JAR Artefakt des NativeLibLoader Projekts erstellt worden ist.
+Die Ursache ist, dass Netbeans standardmäßig ("compile on save" aktiviert) die .class Dateien einer Dependency lädt, sofern die Dependency ein Netbeans Projekt ist. Mit der Deaktivierung dieser Funktion wird die JAR benutzt. \
+**Achtung: Man darauf achten, dass das JAR Artefakt des NativeLibLoader Projekts erstellt worden ist bevor man das aufrufende Projekt baut.**
 
 # Dokumentation für Entwickler
 #### Interessante ähnliche Projekte
