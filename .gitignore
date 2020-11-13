@@ -1,3 +1,6 @@
+#Kate temporäre Dateien ignorieren
+**/.*.kate-swp
+
 #Automatisch generierte Verzeichnisse entfernen
 **/.vs
 **/x64
