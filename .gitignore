@@ -1,3 +1,6 @@
+#Kate temporäre Dateien ignorieren
+**/.*.kate-swp
+
 #Automatisch generierte Verzeichnisse entfernen
 **/.vs
 **/x64
@@ -16,11 +19,3 @@
 /Linux64/libjViconDataStreamSDK.so
 **/.directory
 
-#jogamp gluegen Dateien entfernen außer .java
-/JViconDataStream/src/main/java/com/jogamp/**
-!/JViconDataStream/src/main/java/com/jogamp/**/*/
-!/JViconDataStream/src/main/java/com/jogamp/**/*.java
-
-/JViconDataStream/src/main/java/jogamp/**
-!/JViconDataStream/src/main/java/jogamp/**/*/
-!/JViconDataStream/src/main/java/jogamp/**/*.java
