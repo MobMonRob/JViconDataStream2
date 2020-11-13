@@ -15,24 +15,16 @@ import java.util.stream.Collectors;
  */
 public class NativeLibLoader {
 
-    private static boolean isLoaded = false;
-    private static List<DynamicLibraryBundle> dynamicLibraryBundles;
+    private static final List<DynamicLibraryBundle> dynamicLibraryBundles = new ArrayList<>();
 
     public static void load(List<String> glueLibNames, Class MarkerClass) {
-        if (!isLoaded) {
-            loadActually(glueLibNames, MarkerClass);
-            isLoaded = true;
-        }
-    }
-
-    private static void loadActually(List<String> glueLibNames, Class MarkerClass) {
         //System.setProperty("jogamp.debug", "true"); //Extremely helpful for debugging!
 
         List<DynamicLibraryBundleInfo> dynamicLibraryBundleInfos = new ArrayList<>();
         dynamicLibraryBundleInfos.add(new BundleInfoImpl(glueLibNames));
 
         //Inits JarCache. Fetches gluegen_rt.so
-        Platform.initSingleton();
+        Platform.initSingleton(); //Init wird nur beim ersten Aufruf tatsächlich ausgeführt
 
         /**
          * Hier werden die .so Dateien aus einem JAR in den JarCache geladen.
@@ -56,13 +48,14 @@ public class NativeLibLoader {
         final Class[] classesFromJavaJars = new Class[]{MarkerClass};
         JNILibLoaderBase.addNativeJarLibs(classesFromJavaJars, null);
 
-        dynamicLibraryBundles = dynamicLibraryBundleInfos
-            .stream()
-            .map(bi -> {
-                //Hier werden die .so Datein (vom JarCache) in die JVM geladen.
-                return new DynamicLibraryBundle(bi);
-            })
-            .collect(Collectors.toCollection(ArrayList::new));
+        dynamicLibraryBundles.addAll(
+            dynamicLibraryBundleInfos
+                .stream()
+                .map(bi -> {
+                    //Hier werden die .so Datein (vom JarCache) in die JVM geladen.
+                    return new DynamicLibraryBundle(bi);
+                })
+                .collect(Collectors.toCollection(ArrayList::new)));
 
         dynamicLibraryBundles.forEach(b -> {
             if (!b.isLibComplete()) {
@@ -72,10 +65,4 @@ public class NativeLibLoader {
             }
         });
     }
-
-    /*
-    static {
-            NativeLibLoader.load();
-    }
-     */
 }
