@@ -20,8 +20,10 @@ public class DebugJar {
     }
 
     public static void main(String argv[]) {
+        //System.setProperty("jogamp.debug", "true"); //Extremely helpful for debugging!
+
         List<String> glueLibNames = new ArrayList<>();
-        glueLibNames.add("gluegen_rt"); //Dann wird es halt zwei Mal geladen. Hauptsache, der Fehler liegt nicht hieran.
+        glueLibNames.add("gluegen_rt");
 
         NativeLibLoader.load(glueLibNames, DebugJar.class);
 
