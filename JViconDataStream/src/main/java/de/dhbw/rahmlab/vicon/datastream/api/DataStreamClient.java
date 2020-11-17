@@ -1355,9 +1355,10 @@ public class DataStreamClient {
      * @see getSubjectCount
      * @param subjectIndex between 0 and getSubjectCount()-1
      * @return The name of the subject.
-     * @throws RuntimeException if subject index is invalid, no frame available
+     * @throws RuntimeException if  no frame available
      * or not connected.
-     * @throws IllegalArgumentException if subjectIndex less than 0
+     * @throws IllegalArgumentException if subjectIndex less than 0, or >=subject count
+     * or further possibilities of invalid subject indizes,
      */
     public String getSubjectName(long subjectIndex) {
         if (subjectIndex < 0) {
@@ -1365,11 +1366,11 @@ public class DataStreamClient {
         }
         long subjectCount = getSubjectCount();
         if (subjectIndex >= subjectCount) {
-            throw new IllegalArgumentException("getSubjectName() subjectIndex >=subject count is needed!");
+            throw new IllegalArgumentException("getSubjectName() subjectIndex < subject count is needed!");
         }
         Output_GetSubjectName result = client.GetSubjectName(subjectIndex);
         if (result.getResult() == Result_Enum.InvalidIndex) {
-            throw new RuntimeException("getSubjectName() but subjectIndex is invalid!");
+            throw new IllegalArgumentException("getSubjectName() but subjectIndex is invalid!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getSubjectName() but no frame available!");
         } else if (result.getResult() == Result_Enum.NotConnected) {
