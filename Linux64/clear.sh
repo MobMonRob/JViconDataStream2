@@ -11,7 +11,6 @@ git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 echo "Linux64 cleared"
 
 ../swig/clear.sh &> /dev/null
-../JViconDataStream/clear.sh &> /dev/null
 
 echo "Linux64 touched folders cleared"
 
