@@ -1,5 +1,6 @@
-#Kate temporäre Dateien ignorieren
+#Temporäre Dateien ignorieren
 **/.*.kate-swp
+**/.directory
 
 #Automatisch generierte Verzeichnisse entfernen
 **/.vs
@@ -12,10 +13,4 @@
 #Inhalte von Verzeichnissen entfernen
 /JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/impl/
 /JViconDataStream/**/natives/
-
-#Dateien entfernen
-/swig/*.cpp
-/swig/gen*.i
-/Linux64/libjViconDataStreamSDK.so
-**/.directory
 

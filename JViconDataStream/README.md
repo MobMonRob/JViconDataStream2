@@ -38,4 +38,6 @@ Um die Änderungen zu übernehmen, muss Ubuntu neu gestartet werden.
 ## Anmerkungen
 * Java Dateien mit der Bezeichnung `SWIGTYPE[...].java` sind Fehler, da nur leere Klassenstummel!\
     Per `Find usages` in Netbeans kann man sehr schnell herausfinden, welche Klasse diese Datei benötigt und dann auch, wie man per SWIG `%rename` den Fehler beheben kann.
-* Wenn Netbeans die generierten Java Dateien ignoriert: Innerhalb der IDE `git` foglendermaßen deaktivieren: `Tools -> Plugins -> Installed -> Show Details` `Git` auswählen und auf  `Disable` klicken.
+* Wenn Netbeans die generierten Java Dateien ignoriert: Innerhalb der IDE `git` folgendermaßen deaktivieren: `Tools -> Plugins -> Installed -> Show Details` `Git` auswählen und auf  `Disable` klicken.
+* Achtung: recreate_natives.sh erkennt nicht, ob sich bei den natives etwas geändert hat. Es prüft lediglich, ob das impl Verzeichnis existiert!
+
