@@ -8,8 +8,8 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetTimecode;
  * <p>If the stream is valid but timecode is not available the Output will be 
  * Result.Success and the Standard will be None.</p>
  * 
- * @see getFrame
- * @see getFrameNumber
+ * @see de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient#getFrame()
+ * @see de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient#getFrameNumber()
  * @author Oliver Rettig
  */
 public class TimeCode {

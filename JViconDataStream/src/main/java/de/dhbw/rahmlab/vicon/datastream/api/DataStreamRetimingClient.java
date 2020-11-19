@@ -48,43 +48,42 @@ import java.util.logging.Logger;
 /**
  * @author Oliver Rettig
  *
- * Intended uses<p>
+ * <p>Intended uses</p>
  * 
- * The Vicon DataStream re-timing client provides calls to obtain subject data 
+ * <p>The Vicon DataStream re-timing client provides calls to obtain subject data 
  * from the DataStream with minimal latency and temporal jitter. When UpdateFrame() 
  * is called, the client uses re-timed data that has been linearly interpolated 
  * from an internal buffer to predict the position of each segment to the current
- * time.
+ * time.</p>
  * 
- * The system and network latencies are used when determining the amount of 
+ * <p>The system and network latencies are used when determining the amount of 
  * prediction required. If additional prediction is required, for example, for 
  * use in a VR system where an additional latency is present due to rendering 
- * and display latency; this may be requested in the call to UpdateFrame().
+ * and display latency; this may be requested in the call to UpdateFrame().</p>
  * 
- * The user will call UpdateFrame(), which will update the current frame state 
+ * <p>The user will call UpdateFrame(), which will update the current frame state 
  * to the time of calling and return immediately. This is intended for use in 
  * systems where you require subject data positions at times driven by an external 
- * clock.
+ * clock.</p>
  * 
- * If you do not have an external clock, and require behavior similar to that of 
+ * <p>If you do not have an external clock, and require behavior similar to that of 
  * the standard DataStream client running in ServerPush streaming mode, then 
  * the system may be configured to provide frame data at a consistent frame rate 
  * by providing a frame rate to the Connect() call. The user will then call Wait-
  * ForFrame(), which will block in a similar method to Client::GetFrame(), but 
- * using retimed data in order to keep the frame period very consistent.
+ * using retimed data in order to keep the frame period very consistent.</p>
  *
- * When a function has returned false, the output arguments are set to an 
- * appropriate default value:<p>
+ * <p>When a function has returned false, the output arguments are set to an 
+ * appropriate default value:</p>
  * 
- * • Booleans will be set to false.
+ * <p>• Booleans will be set to false.
  * • Integers will be set to zero.
  * • Doubles will be set to zero.
  * • Strings will be set to zero length.
- * • When the output argument is an array, all elements are set in this manner.<p>
+ * • When the output argument is an array, all elements are set in this manner.</p>
  *
- * By default the global coordinate system matches the server application; Z-Up, 
- * Y-Left. This can be changed by using setAxisMapping.<p>
- *
+ * <p>By default the global coordinate system matches the server application; Z-Up, 
+ * Y-Left. This can be changed by using setAxisMapping.</p>
  */
 public class DataStreamRetimingClient {
 
@@ -126,7 +125,7 @@ public class DataStreamRetimingClient {
      * hosting the DataStream server. The function defaults to connecting on
      * port 801. You can specify an alternate port number after a colon. E.g.:
      * "localhost" "MyViconPC:804", "10.0.0.2"
-     * @throws IllegalArgumentException, if given hostname is invalid
+     * @throws IllegalArgumentException if given hostname is invalid
      */
     public void connect(String hostname) {
         int i = 0;
