@@ -1095,8 +1095,8 @@ public class DataStreamClient {
     /**
      * Get the number of frame rate types that the server application reports.
      *
-     * @see GetFrameRateName(long frameRateIndex)
-     * @see GetFrameRateValue(String frameRateName)
+     * @see getFrameRateName(long)
+     * @see #getFrameRateValue(String frameRateName)
      * @return the number of frame rate types
      * @throws RuntimeException if the client is not connected.
      */
@@ -2800,8 +2800,8 @@ public class DataStreamClient {
      * 
      * @param cameraName the name of the camera
      * @return the blob count
-     * @see GetGreyscaleBlob(String cameraName, long blobIndex)
-     * @see EnableGreyscaleData
+     * @see getGreyscaleBlob(String cameraName, long blobIndex)
+     * @see enableGreyscaleData
      * @throws RuntimeException if the client is not connected
      * @throws IllegalArgumentException if no camera found for the given camera name
      */
@@ -2817,18 +2817,18 @@ public class DataStreamClient {
     /**
      * Obtains greyscale blob data for the specified camera and blob index.
      * 
-     * @see GetGreyscaleBlobCount
-     * @see EnableGreyscaleData
+     * @see #getGreyscaleBlobCount
+     * @see #enableGreyscaleData
      * 
-     * <p>A valid camera name may be obtained from GetCameraName(long cameraIndex)./p>
+     * <p>A valid camera name may be obtained from GetCameraName(long cameraIndex).</p>
      * 
      * <p>A valid blob index is between 0 and GetGreyscaleBlobCount() -1.</p>
      * 
-     * @param cameraName
-     * @param blobIndex
-     * @return blob
+     * @param cameraName name of the camera
+     * @param blobIndex blob index
+     * @return blob object
      * @throws IllegalArgumentException if the blobIndex is wrong
-     * @throw RuntimeException if the camera name is unknown or the client is not connected.
+     * @throws RuntimeException if the camera name is unknown or the client is not connected.
      */
     public GreyScaleBlob getGreyscaleBlob(String cameraName, long blobIndex){
         Output_GetGreyscaleBlob result = client.GetGreyscaleBlob(cameraName, blobIndex);
@@ -3025,9 +3025,9 @@ public class DataStreamClient {
      * 
      * <p>The centroid data needs to be enabled to get the centroid position and radius.</p>
      * 
-     * <p>A valid CameraName is obtained from GetCameraName( CameraIndex )<p>
+     * <p>A valid CameraName is obtained from getCameraName(int cameraIndex)</p>
      * 
-     * <p>A valid CentroidIndex is between 0 and GetCentroidCount( CameraName )-1</p>
+     * <p>A valid CentroidIndex is between 0 and getCentroidCount(String cameraName)-1</p>
      * 
      * @see getCameraCount
      * @see getCameraName 

@@ -111,14 +111,13 @@ public class DataStreamRetimingClient {
     /**
      * Establish a dedicated connection to a Vicon DataStream Server.
      *
-     * The function defaults to connecting on port 801. You can specify an 
-     * alternate port number after a colon.<p>
+     * <p>The function defaults to connecting on port 801. You can specify an 
+     * alternate port number after a colon.</p>
      *
-     * This is for future compatibility: Current products serve data on port 801 
+     * <p>This is for future compatibility: Current products serve data on port 801 
      * only. Additional clients can be added separated with a semicolon ’;’. 
-     * These are used in combination to reduce temporal jitter.<p>
+     * These are used in combination to reduce temporal jitter.</p>
      *
-     * @see connectToMulticast
      * @see disconnect
      * @see isConnected
      * @param hostname The DNS identifiable name, or IP address of the PC
@@ -169,14 +168,13 @@ public class DataStreamRetimingClient {
      *
      * @param frameRate The re-timing client’s internal frame output clock
      * will be active.
-     * @see connectToMulticast
      * @see disconnect
      * @see isConnected
      * @param hostname The DNS identifiable name, or IP address of the PC
      * hosting the DataStream server. The function defaults to connecting on
      * port 801. You can specify an alternate port number after a colon. E.g.:
      * "localhost" "MyViconPC:804", "10.0.0.2"
-     * @throws IllegalArgumentException, if given hostname is invalid
+     * @throws IllegalArgumentException if given hostname is invalid
      */
     public void connect(String hostname, double frameRate) {
         int i = 0;
@@ -259,12 +257,12 @@ public class DataStreamRetimingClient {
     /**
      * Disable kinematic segment data in the Vicon DataStream.
      *
-     * The implementation in this retiming client automatically enables normal 
+     * <p>The implementation in this retiming client automatically enables normal 
      * segment data; this is distinct to the non retiming client where the user 
-     * must do this themselves.<p>
+     * must do this themselves.</p>
      *
-     * @see EnableLightweightSegmentData()
-     * @see IsLightWeightSegmentDataEnabled()
+     * @see enableLightweightSegmentData()
+     * @see isLightweightSegmentDataEnabled()
      * @throws RuntimeException if the client is not connected.
      */
     public void disableLightweightSegmentData() {
@@ -277,13 +275,8 @@ public class DataStreamRetimingClient {
      * Disable the lightweight output mode for kinematic segment data in the
      * Vicon DataStream.
      *
-     * Calling this mode does not automatically enable any other data types.<p>
+     * <p>Calling this mode does not automatically enable any other data types.</p>
      *
-     * @see isSegmentDataEnabled
-     * @see enableSegmentData
-     * @see enableMarkerData
-     * @see enableUnlabeledMarkerData
-     * @see enableDeviceData
      * @see getSegmentCount
      * @see getSegmentName
      * @see getSegmentGlobalTranslation
@@ -300,45 +293,22 @@ public class DataStreamRetimingClient {
     }
 
     /**
-     * Disable labeled reconstructed marker data in the Vicon DataStream.
-     *
-     * @see isMarkerDataEnabled
-     * @see enableMarkerData
-     * @see enableSegmentData
-     * @see enableUnlabeledMarkerData
-     * @see enableDeviceData
-     * @see getMarkerCount
-     * @see getMarkerName
-     * @see getMarkerGlobalTranslation
-     * @throws RuntimeException if the client is not connected.
-     */
-    public void disableMarkerData() {
-        Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
-        if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
-        }
-    }
-
-   
-
-    /**
      * Enable a lightweight transmission protocol for kinematic segment data in
      * the Vicon DataStream.
      *
-     * This will reduce the network bandwidth required to transmit segment data
+     * <p>This will reduce the network bandwidth required to transmit segment data
      * to approximately a quarter of that required by the previous method, at
-     * the expense of a small amount of precision.<p>
+     * the expense of a small amount of precision.</p>
      *
-     * Use the existing methods such as GetSegmentGlobalTranslation() and
-     * GetSegmentGlobalRotationMatrix() as usual to obtain the segment data.<p>
+     * <p>Use the existing methods such as GetSegmentGlobalTranslation() and
+     * GetSegmentGlobalRotationMatrix() as usual to obtain the segment data.</p>
      *
-     * Calling this method will automatically disable all other conﬁgurable
-     * output types. These may be re-enabled after the call if required.<p>
+     * <p>Calling this method will automatically disable all other conﬁgurable
+     * output types. These may be re-enabled after the call if required.</p>
      *
-     * Call this function on startup, after connecting to the server, and before
-     * trying to read local or global segment data.<p>
+     * <p>Call this function on startup, after connecting to the server, and before
+     * trying to read local or global segment data.</p>
      *
-     * @see isSegmentDataEnabled
      * @see disableLightweightSegmentData
      * @throws RuntimeException if the client is not connected.
      */
@@ -397,10 +367,10 @@ public class DataStreamRetimingClient {
      * @param x x direction - Specify the direction of your X axis relative to yourself as the observer.
      * @param y y direction - Specify the direction of your Y axis relative to yourself as the observer.
      * @param z z direction - Specify the direction of your Z axis relative to yourself as the observer.
-     * @see getAxisMapping<p>
+     * @see getAxisMapping
      *
-     * TODO vielleicht ein besseres Argument einführen, also z.B. xyz, yxz, ...
-     * so wie in CalcML
+     * <p>TODO vielleicht ein besseres Argument einführen, also z.B. xyz, yxz, ...
+     * so wie in CalcML</p>
      */
     public void setAxisMapping(Direction x, Direction y, Direction z) {
         Direction_Enum x_enum = Direction_Enum.swigToEnum(x.swigValue());
@@ -551,7 +521,7 @@ public class DataStreamRetimingClient {
      * Return the name of a subject.
      *
      * <p>
-     * This can be passed into segment and marker functions.</p>
+     * This can be passed into segment functions.</p>
      *
      * @see getSubjectCount
      * @param subjectIndex between 0 and getSubjectCount()-1
