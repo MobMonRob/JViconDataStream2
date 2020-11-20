@@ -1,8 +1,0 @@
-#Automatisch generiert außerhalb
-**/.*.kate-swp
-**/.directory
-
-#Automatisch generiert build
-**/target
-/NativeLibLoader/natives/
-
