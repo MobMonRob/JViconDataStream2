@@ -15,6 +15,6 @@ git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 git stash &> /dev/null
 git stash clear &> /dev/null
 
-./JNativeLibLoader/hard_clear.sh
+echo "yes" | ./JNativeLibLoader/hard_clear.sh
 
 echo "JViconDataStream2 cleared hard"
