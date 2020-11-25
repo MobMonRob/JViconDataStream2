@@ -1,3 +1,5 @@
 [submodule "JNativeLibLoader"]
 	path = JNativeLibLoader
 	url = git@github.com:MobMonRob/JNativeLibLoader.git
+	branch = main
+
