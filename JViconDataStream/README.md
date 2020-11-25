@@ -40,4 +40,4 @@ Um die Änderungen zu übernehmen, muss Ubuntu neu gestartet werden.
     Per `Find usages` in Netbeans kann man sehr schnell herausfinden, welche Klasse diese Datei benötigt und dann auch, wie man per SWIG `%rename` den Fehler beheben kann.
 * Wenn Netbeans die generierten Java Dateien ignoriert: Innerhalb der IDE `git` folgendermaßen deaktivieren: `Tools -> Plugins -> Installed -> Show Details` `Git` auswählen und auf  `Disable` klicken.
 * Achtung: recreate_natives.sh erkennt nicht, ob sich bei den natives etwas geändert hat. Es prüft lediglich, ob das impl Verzeichnis existiert!
-* **Achtung: NativeLibLoader muss gebaut worden sein (und folglich im Lokalen Maven Cache Repository liegen), damit die Kompilation funktionier!**
+* **Achtung: NativeLibLoader muss gebaut worden sein (und folglich im Lokalen Maven Cache Repository liegen), damit die Kompilation funktioniert!**
