@@ -16,6 +16,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableDeviceData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableGreyscaleData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableLightweightSegmentData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableMarkerRayData;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableSegmentData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableUnlabeledMarkerData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableVideoData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_Disconnect;
@@ -546,17 +547,16 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationEulerXYZ
      * @throws RuntimeException if the client is not connected.
      */
-    public void disableLightwiechtSegmentData() {
+    public void disableLightweightSegmentData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
                 throw new RuntimeException("Client is not connected!");
         }
     }
     /**
-     * Disable the lightweight output mode for kinematic segment data in the
-     * Vicon DataStream.
+     * Disable kinematic segment data in the Vicon DataStream
      *
-     * Calling this mode does not automatically enable any other data types.<p>
+     * <p>Calling this mode does not automatically enable any other data types.</p>
      *
      * @see isSegmentDataEnabled
      * @see enableSegmentData
@@ -572,7 +572,7 @@ public class DataStreamClient {
      * @throws RuntimeException if the client is not connected.
      */
     public void disableSegmentData() {
-        Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
+        Output_DisableSegmentData result = client.DisableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
         }
@@ -2207,11 +2207,11 @@ public class DataStreamClient {
      *
      * <p>
      * This is only implemented by applications that use an object tracking
-     * graph such as Evoke and Tracker.</p>
+     * graph such as Evoke and Tracker (Especially Nexus does not support this feature.).</p>
      *
      * @see getSubjectCount
      * @see getSubjectName
-     * @param subjectName subject name
+     * @param subjectName name of the subject that contains the object/segment. This subject name must equal to the object/segment name.
      * @return the quality score for a speciﬁed Object (Subject).
      * @throws RuntimeException if client is not connectd or no frame is
      * available
