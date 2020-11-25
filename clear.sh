@@ -8,4 +8,6 @@ git clean -d -ff -X &> /dev/null
 #remove ignored tracked files and folders
 git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 
+./JNativeLibLoader/clear.sh
+
 echo "JViconDataStream2 cleared"
