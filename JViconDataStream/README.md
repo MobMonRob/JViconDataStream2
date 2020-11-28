@@ -41,3 +41,4 @@ Um die Änderungen zu übernehmen, muss Ubuntu neu gestartet werden.
 * Wenn Netbeans die generierten Java Dateien ignoriert: Innerhalb der IDE `git` folgendermaßen deaktivieren: `Tools -> Plugins -> Installed -> Show Details` `Git` auswählen und auf  `Disable` klicken.
 * Achtung: recreate_natives.sh erkennt nicht, ob sich bei den natives etwas geändert hat. Es prüft lediglich, ob das impl Verzeichnis existiert!
 * **Achtung: NativeLibLoader muss gebaut worden sein (und folglich im Lokalen Maven Cache Repository liegen), damit die Kompilation funktioniert!**
+* Wenn der Subfolder für das Submodule NativeLibLoader leer ist dann kann man das Submodule mit 'git submodule update --init --recursive' in dieses Verzeichnis hineinclonen. Vor Ausführung des Kommandos in das Verzeichnis wechseln.
