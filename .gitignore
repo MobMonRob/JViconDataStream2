@@ -1,8 +1,8 @@
-#Temporäre Dateien ignorieren
+#Ignore temporary files
 **/.*.kate-swp
 **/.directory
 
-#Automatisch generierte Verzeichnisse entfernen
+#Ignore generated folders
 **/.vs
 **/x64
 **/x32
@@ -10,10 +10,10 @@
 **/Release
 **/target
 
-#Automatisch generiert JViconDataStream
+#Ignore generated folders: JViconDataStream
 /JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/impl/
 /JViconDataStream/**/natives/
 
-#Automatisch generiert ViconDataStreamSDK
+#Ignore generated folders: ViconDataStreamSDK
 /ViconDataStreamSDK/20200407_123216h/Linux64/source/**/Release/
 
