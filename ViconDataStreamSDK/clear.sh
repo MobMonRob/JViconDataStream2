@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "$BASH_SOURCE")"
+cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
 #remove untracked AND ignored files and folders
 git clean -d -f -X &> /dev/null

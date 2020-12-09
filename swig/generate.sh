@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "$BASH_SOURCE")"
+cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
 ./clear.sh
 
