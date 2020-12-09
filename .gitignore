@@ -10,7 +10,10 @@
 **/Release
 **/target
 
-#Inhalte von Verzeichnissen entfernen
+#Automatisch generiert JViconDataStream
 /JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/impl/
 /JViconDataStream/**/natives/
+
+#Automatisch generiert ViconDataStreamSDK
+/ViconDataStreamSDK/20200407_123216h/Linux64/source/**/Release/
 
