@@ -6,7 +6,7 @@ cd "$scriptDir"
 ./clear.sh
 
 cd current_Linux64_source
-make ViconDataStreamSDK_CPP --jobs=2 CONFIG=Release
+make ViconDataStreamSDK_CPP --jobs="$((2*"$(nproc)"))" CONFIG=Release
 cd "$scriptDir"
 
 mkdir -p "./target/"
