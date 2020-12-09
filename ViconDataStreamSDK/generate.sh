@@ -15,5 +15,7 @@ cp -L -l ./current_Linux64_source/Vicon/CrossMarket/DataStream/ViconDataStreamSD
 cp -L -l ./current_Linux64_source/thirdparty/Boost/*/installed/lib/libboost_system-mt.so.* ./target/
 cp -L -l ./current_Linux64_source/thirdparty/Boost/*/installed/lib/libboost_thread-mt.so.* ./target/
 
+cp -l ./ViconStringTest.h ./target/
+
 echo "ViconDataStreamSDK generated"
 
