@@ -33,3 +33,20 @@
 %template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
 %template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
 
+%{
+//Includes the header files in the wrapper code
+#include <iostream> //Wichtig: Vor Vicon Headern!
+#include "IDataStreamClientBase.h"
+#include "DataStreamClient.h"
+#include "DataStreamRetimingClient.h"
+
+#include "ViconStringTest.h"
+%}
+
+//Parse the header files to generate wrappers
+%include "IDataStreamClientBase.h"
+%include "DataStreamClient.h"
+%include "DataStreamRetimingClient.h"
+
+%include "ViconStringTest.h"
+
