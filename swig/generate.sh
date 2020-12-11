@@ -4,7 +4,7 @@ cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
 ./clear.sh
 
-../ViconDataStreamSDK/generate.sh
+../ViconDataStreamSDK/ensure_Linux64.sh
 
 ./generate_wrapper.sh
 
