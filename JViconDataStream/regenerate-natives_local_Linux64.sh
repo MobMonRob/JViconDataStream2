@@ -7,10 +7,10 @@ cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 #Has to be: <Project Folder>/natives/<os-arch> !!
 mkdir -p ./natives/linux-amd64/
 
-cp ../Wrapper/target/Linux64/*.so* ./natives/linux-amd64/
-cp ../ViconDataStreamSDK/target/Linux64/*.so* ./natives/linux-amd64/
+cp -L -l ../Wrapper/target/Linux64/*.so* ./natives/linux-amd64/
+cp -L -l ../Wrapper/target/Linux64/ViconDataStreamSDK/*.so* ./natives/linux-amd64/
 
-cp -R ../Wrapper/target/Linux64/java/de/ ./src/main/java/
+cp -L -l -R ../Wrapper/target/Linux64/java/de/ ./src/main/java/
 
 echo "regenerate-natives finished"
 
