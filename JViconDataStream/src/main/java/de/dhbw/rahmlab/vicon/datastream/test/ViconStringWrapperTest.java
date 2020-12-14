@@ -34,7 +34,7 @@ public class ViconStringWrapperTest {
     public static void javaStringToViconStringTest() {
         JavaStringToViconStringTest test = new JavaStringToViconStringTest();
 
-        String javaInputString = "Input";
+        String javaInputString = "javaInputString";
 
         String output = test.testJavaStringInput(javaInputString);
         System.out.println("testJavaStringInput Output: " + output);
