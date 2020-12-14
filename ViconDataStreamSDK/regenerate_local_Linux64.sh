@@ -3,7 +3,7 @@
 scriptDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 cd "$scriptDir"
 
-./clear.sh
+./clear_local_all.sh
 
 cd current_Linux64_source
 make ViconDataStreamSDK_CPP --jobs="$((2*"$(nproc)"))" CONFIG=Release
