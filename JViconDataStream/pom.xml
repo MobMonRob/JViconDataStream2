@@ -92,9 +92,9 @@
                             <scripts>
                                 <script>
 <![CDATA[
-project.properties.setProperty('native_script', ${always_recreate_wrapper} == true ? '${basedir}/recreate_natives.sh' : '${basedir}/ensure_natives.sh');
+project.properties.setProperty('native_script', ${always_recreate_wrapper} == true ? '${basedir}/regenerate-natives_local_Linux64.sh' : '${basedir}/ensure-natives_dependency-recursive_Linux64.sh');
 //println ">>${always_recreate_wrapper}";
-]]>   
+]]>
                                 </script>
                             </scripts>
                         </configuration>
