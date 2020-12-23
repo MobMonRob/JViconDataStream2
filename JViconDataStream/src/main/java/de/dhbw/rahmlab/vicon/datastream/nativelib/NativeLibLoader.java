@@ -19,7 +19,7 @@ public class NativeLibLoader {
     }
 
     private static void loadActually() {
-        System.setProperty("jogamp.debug", "true");
+        //System.setProperty("jogamp.debug", "true");
         
         List<String> glueLibNames = new ArrayList<>();
         glueLibNames.add("jViconDataStreamSDK");

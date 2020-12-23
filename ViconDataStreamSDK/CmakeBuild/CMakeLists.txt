@@ -3,12 +3,18 @@ project(vicon-datastream-sdk
 	VERSION 1.10.20200407.123216 #same as Vicon SDK
 )
 
+
+#useful for debugging
+#SET(CMAKE_VERBOSE_MAKEFILE ON)
+
+
 #Vicon SDK file gcc.mk defines this as minimum required version
 set (CMAKE_CXX_STANDARD_REQUIRED 14)
 
-set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
+
+#set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+#set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+#find_package(Threads REQUIRED)
 
 SET (BOOST_ROOT "../current_Linux64_source/thirdparty/Boost/boost-1.58.0-dynamic-linux-x64/installed/")
 SET (BOOST_INCLUDEDIR "../current_Linux64_source/thirdparty/Boost/boost-1.58.0-dynamic-linux-x64/installed/include")
@@ -52,24 +58,17 @@ target_include_directories(ViconDataStreamSDK_CPP PRIVATE
 )
 
 
-set_target_properties(ViconDataStreamSDK_CPP PROPERTIES PUBLIC_HEADER
-	${VICON_ROOT}/DataStream/ViconDataStreamSDK_CPP/DataStreamClient.h
-	${VICON_ROOT}/DataStream/ViconDataStreamSDK_CPP/DataStreamRetimingClient.h
-	${VICON_ROOT}/DataStream/ViconDataStreamSDK_CPP/IDataStreamClientBase.h
-)
-
-
 target_link_libraries(ViconDataStreamSDK_CPP
-  #unbedingt benötigt scheinbar. (Ist in der API?)
+  #unbedingt benötigt, wenn man eine shared lib generiert
   #vielleicht braucht man nicht mehr, wenn man den Wrapper dazwischen schiebt?
   Boost::system
+
   #Boost::thread
 
   #Boost braucht pthread scheinbar so oder so
   #Gibt aber kein Fehler, wenn nicht dagegen gelinkt wird?
-  Threads::Threads
+  #Threads::Threads
 )
-
 
 
 if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.5.0)
@@ -86,7 +85,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 		-fPIC
 		-O3
 		-flto
-		-Wl,-rpath,'$ORIGIN/.'
 		#taken from Vicon SDK file gcc.mk
 		-m64 #x86_64
 		-mfpmath=sse
@@ -99,6 +97,15 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 		-funroll-loops
 		-Ofast
 	)
+
+	if(UNIX)
+		#possible error source: this sets .so RUNPATH, not RPATH.
+		#RUNPATH is possibly used after LD_LIBRARY_PATH system variable.
+		set_target_properties(ViconDataStreamSDK_CPP PROPERTIES
+			BUILD_WITH_INSTALL_RPATH TRUE
+			INSTALL_RPATH "$ORIGIN/."
+		)
+	endif()
 
 endif()
 
