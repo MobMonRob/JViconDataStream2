@@ -3,13 +3,25 @@
 scriptDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 cd "$scriptDir"
 
-rm -r "./target/"
+../clear_local_all.sh
 
-mkdir -p "./target/_tmp/"
+mkdir -p "../target/_tmp/Linux64/"
 
-cd "./target/_tmp/"
+cd "../target/_tmp/Linux64/"
 
-cmake ../..
+cmake ../../../CmakeBuild/
 
 make --jobs="$((2*"$(nproc)"))"
+
+cd "$scriptDir"
+
+mkdir -p "../target/Linux64/"
+
+cp -L -l ../target/_tmp/Linux64/libViconDataStreamSDK_CPP.so ../target/Linux64/
+
+cp -L -l ../current_Linux64_source/Vicon/CrossMarket/DataStream/ViconDataStreamSDK_CPP/*DataStream*Client*.h ../target/Linux64/
+
+cp -l ../ViconStringTest.h ../target/Linux64/
+
+echo "ViconDataStreamSDK regenerated"
 
