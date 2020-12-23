@@ -6,9 +6,9 @@ project(vicon-datastream-sdk
 #Vicon SDK file gcc.mk defines this as minimum required version
 set (CMAKE_CXX_STANDARD_REQUIRED 14)
 
-#set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-#set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-#find_package(Threads REQUIRED)
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+find_package(Threads REQUIRED)
 
 SET (BOOST_ROOT "../current_Linux64_source/thirdparty/Boost/boost-1.58.0-dynamic-linux-x64/installed/")
 SET (BOOST_INCLUDEDIR "../current_Linux64_source/thirdparty/Boost/boost-1.58.0-dynamic-linux-x64/installed/include")
@@ -60,12 +60,14 @@ set_target_properties(ViconDataStreamSDK_CPP PROPERTIES PUBLIC_HEADER
 
 
 target_link_libraries(ViconDataStreamSDK_CPP
-  #Boost::system
+  #unbedingt benötigt scheinbar. (Ist in der API?)
+  #vielleicht braucht man nicht mehr, wenn man den Wrapper dazwischen schiebt?
+  Boost::system
   #Boost::thread
 
   #Boost braucht pthread scheinbar so oder so
   #Gibt aber kein Fehler, wenn nicht dagegen gelinkt wird?
-  #Threads::Threads
+  Threads::Threads
 )
 
 
