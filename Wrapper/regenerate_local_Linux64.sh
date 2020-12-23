@@ -11,5 +11,5 @@ cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 mkdir -p "./target/Linux64/ViconDataStreamSDK/"
 cp -L -l ../ViconDataStreamSDK/target/Linux64/*.so* ./target/Linux64/ViconDataStreamSDK/
 
-echo "Wrapper finished"
+echo "Wrapper regenerated"
 
