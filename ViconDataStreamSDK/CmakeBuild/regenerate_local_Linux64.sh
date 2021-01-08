@@ -22,8 +22,7 @@ cp -L -l ../target/_tmp/Linux64/libViconDataStreamSDK_CPP.* ../target/Linux64/
 cp -L -l ../current_Linux64_source/thirdparty/Boost/*/installed/lib/*.a ../target/Linux64/
 
 #Statisch gelinkte files in eine shared lib linken. Innerhalb CMake gibt es Probleme.
-#gcc -shared -fPIC -O3 -flto -o ../target/Linux64/libViconDataStreamSDK.so -L../target/Linux64/ -Wl,--whole-archive -lViconDataStreamSDK_CPP -lboost_system -lboost_thread -Wl,--no-whole-archive -pthread -Wl,-rpath,'$ORIGIN/.'
-gcc -fPIC -O3 -flto -o ../target/Linux64/libViconDataStreamSDK.so -L../target/Linux64/ -Wl,--unresolved-symbols=ignore-in-object-files -Wl,--whole-archive -lViconDataStreamSDK_CPP -lboost_system -lboost_thread -Wl,--no-whole-archive -pthread -Wl,-rpath,'$ORIGIN/.'
+gcc -fPIC -O3 -flto -Wl,--unresolved-symbols=ignore-in-object-files -o ../target/Linux64/libViconDataStreamSDK.so -L../target/Linux64/ -Wl,--whole-archive -lViconDataStreamSDK_CPP -lboost_system -lboost_thread -Wl,--no-whole-archive -pthread -Wl,-rpath,'$ORIGIN/.' -rdynamic
 
 rm ../target/Linux64/*.a
 
