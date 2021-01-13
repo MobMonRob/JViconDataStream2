@@ -16,12 +16,27 @@ find_package(Threads REQUIRED)
 SET (VICON_ROOT "../current_Linux64_source/Vicon/CrossMarket")
 SET (DataStream_ROOT "${VICON_ROOT}/DataStream")
 SET (BOOST_ROOT "../../Boost/target/Linux64/")
-SET (LIB_TYPE STATIC)
+SET (LIB_TYPE STATIC) #SHARED / STATIC
 
 # Declare a cpp library
-add_library(ViconDataStreamSDK_CPP ${LIB_TYPE}
-	${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamClient.cpp
-	${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamRetimingClient.cpp
+add_library(ViconDataStreamSDK_CPP ${LIB_TYPE} ""
+)
+
+file(GLOB_RECURSE VICON_SRC FOLLOW_SYMLINKS ${VICON_ROOT} "${VICON_ROOT}/*.cpp")
+#file(GLOB_RECURSE BOOST_SRC FOLLOW_SYMLINKS ${BOOST_ROOT} "${BOOST_ROOT}/*.c*")
+
+message("--------------------------------")
+message("${GLOB_VAR}")
+
+target_sources(ViconDataStreamSDK_CPP
+	PUBLIC
+		${DataStream_ROOT}/ViconDataStreamSDK_CPP/IDataStreamClientBase.h
+		${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamClient.h
+		${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamRetimingClient.h
+	PRIVATE
+		#${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamClient.cpp
+		#${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamRetimingClient.cpp
+		${VICON_SRC}
 )
 
 target_include_directories(ViconDataStreamSDK_CPP PRIVATE
@@ -52,20 +67,26 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 
 	target_compile_options(ViconDataStreamSDK_CPP PRIVATE
 		## Own Options
+		-fdata-sections
+		-ffunction-sections
+		-Wl,--gc-sections
 		-fPIC
 		#-O3
 		-flto
+		-fwhole-program
+		-fvisibility=hidden
+		-fvisibility-inlines-hidden
 		## Taken from Vicon SDK file gcc.mk
 		-m64 #x86_64
 		-mfpmath=sse
 		#-msse2
-		-fvisibility-inlines-hidden
-		-D_GLIBCXX_HAVE_GTHR_DEFAULT
+		#-fvisibility-inlines-hidden
+		#-D_GLIBCXX_HAVE_GTHR_DEFAULT
 		-D_GLIBCXX_USE_CXX11_ABI=0
 		## Unsafe optimization. Comment out if problems occur.
 		-mavx2
 		-funroll-loops
-		-Ofast
+		###-Ofast
 	)
 
 	if(UNIX AND (${LIB_TYPE} STREQUAL SHARED))

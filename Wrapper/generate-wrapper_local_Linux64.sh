@@ -2,10 +2,16 @@
 
 cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
-mkdir -p "./target/Linux64/java/de/dhbw/rahmlab/vicon/datastream/impl/"
+localTmp="./target/_tmp/Linux64"
+localTarget="./target/Linux64"
+viconTarget="../ViconDataStreamSDK/target/Linux64"
+swigJavaOutDir="$localTarget/java/de/dhbw/rahmlab/vicon/datastream/impl/"
+
+mkdir -p "$swigJavaOutDir"
+mkdir -p "$localTmp"
 
 #-debug-tmsearch
-swig -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "./target/Linux64/java/de/dhbw/rahmlab/vicon/datastream/impl" -o ./target/Linux64/ViconDataStreamSDK_wrap.cpp -I../ViconDataStreamSDK/target/Linux64/ ./PlatformIndependent.i
+swig -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "$swigJavaOutDir" -o "$localTmp/ViconDataStreamSDK_wrap.cpp" -I"$viconTarget" ./PlatformIndependent.i
 
 echo "swig wrapper generation finished"
 
