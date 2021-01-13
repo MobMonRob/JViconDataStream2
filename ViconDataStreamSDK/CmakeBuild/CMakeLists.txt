@@ -15,7 +15,7 @@ find_package(Threads REQUIRED)
 
 SET (VICON_ROOT "../current_Linux64_source/Vicon/CrossMarket")
 SET (DataStream_ROOT "${VICON_ROOT}/DataStream")
-SET (BOOST_ROOT "../target/_tmp/Linux64/")
+SET (BOOST_ROOT "../../Boost/target/Linux64/")
 SET (LIB_TYPE STATIC)
 
 # Declare a cpp library

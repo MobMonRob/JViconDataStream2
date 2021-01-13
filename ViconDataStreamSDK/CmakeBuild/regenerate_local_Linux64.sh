@@ -5,8 +5,6 @@ cd "$scriptDir"
 
 ../clear_local_all.sh
 
-./generate_boost_dir.sh
-
 mkdir -p "../target/_tmp/Linux64/"
 
 cd "../target/_tmp/Linux64/"

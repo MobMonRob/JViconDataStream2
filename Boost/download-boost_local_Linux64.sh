@@ -3,7 +3,7 @@
 scriptDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 cd "$scriptDir"
 
-boostLibDir="./target/_tmp/boost"
+boostLibDir="./target/_tmp/Linux64/boost"
 
 mkdir -p "$boostLibDir"
 

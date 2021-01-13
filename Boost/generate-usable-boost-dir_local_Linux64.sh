@@ -6,9 +6,11 @@ cd "$scriptDir"
 oldBoostDir="./target/_tmp/Linux64/boost"
 newBoostDir="./target/Linux64/boost"
 
+rm -rdf "$newBoostDir"
+
 mkdir -p "$newBoostDir"
 
-for libpath in `find $oldBoostDir -maxdepth 1 -mindepth 1 -type d`; do
+for libpath in `find "$oldBoostDir/libs" -maxdepth 1 -mindepth 1 -type d`; do
 	libname=$(basename $libpath)
 
 	oldIncludeDir="$libpath/include/boost"
