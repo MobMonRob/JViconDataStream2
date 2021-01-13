@@ -1,3 +1,4 @@
 /src/main/java/de/dhbw/rahmlab/vicon/datastream/impl
 **/natives
+*.log
 
