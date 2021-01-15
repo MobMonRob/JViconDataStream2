@@ -8,5 +8,5 @@ cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 #./regenerate_local_Linux64.sh
 ./ensure_dependency-recursive_Linux64.sh
 
-echo "Boost src regenerated dependency-recursive"
+echo "Boost regenerated dependency-recursive"
 

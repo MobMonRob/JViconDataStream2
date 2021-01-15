@@ -9,5 +9,5 @@ then
     ./regenerate_local_Linux64.sh
 fi
 
-echo "Boost src ensured dependency-recursive"
+echo "Boost ensured dependency-recursive"
 
