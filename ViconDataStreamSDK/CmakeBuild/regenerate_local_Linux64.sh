@@ -16,7 +16,7 @@ cd "$scriptDir"
 
 mkdir -p "../target/Linux64/"
 
-cp -L -l ../target/_tmp/Linux64/libViconDataStreamSDK_CPP.* ../target/Linux64/
+cp -L -l ../target/_tmp/Linux64/*.a ../target/Linux64/
 
 cp -L -l ../current_Linux64_source/Vicon/CrossMarket/DataStream/ViconDataStreamSDK_CPP/*DataStream*Client*.h ../target/Linux64/
 
