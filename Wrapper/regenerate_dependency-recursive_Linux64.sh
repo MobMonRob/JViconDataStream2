@@ -2,7 +2,7 @@
 
 cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
-../ViconDataStreamSDK/regenerate_local_Linux64.sh
+../ViconDataStreamSDK/regenerate_dependency-recursive_Linux64.sh
 
 ./regenerate_local_Linux64.sh
 
