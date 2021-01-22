@@ -9,6 +9,8 @@ project(vicon-datastream-sdk
 #Vicon SDK file gcc.mk defines this as minimum required version
 set (CMAKE_CXX_STANDARD_REQUIRED 14)
 
+SET (LIB_TYPE STATIC) #SHARED / STATIC
+
 if(${LIB_TYPE} STREQUAL SHARED)
 	set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 	set(THREADS_PREFER_PTHREAD_FLAG TRUE)
@@ -19,7 +21,6 @@ SET (VICON_ROOT "${CMAKE_SOURCE_DIR}/../current_Linux64_source/Vicon/CrossMarket
 SET (DataStream_ROOT "${VICON_ROOT}/DataStream")
 SET (BOOST_INCLUDE "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64/include")
 SET (BOOST_LIB "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64/lib")
-SET (LIB_TYPE STATIC) #SHARED / STATIC
 
 # Declare a cpp library
 add_library(ViconDataStreamSDK_CPP ${LIB_TYPE} ""
@@ -43,11 +44,12 @@ target_sources(ViconDataStreamSDK_CPP
 		${VICON_SRC}
 )
 
-target_link_libraries(ViconDataStreamSDK_CPP
-	if(${LIB_TYPE} STREQUAL SHARED)
+if(${LIB_TYPE} STREQUAL SHARED)
+	target_link_libraries(ViconDataStreamSDK_CPP
 		Threads::Threads
-	endif()
-)
+		#${BOOST_LIB}
+	)
+endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.5.0)
     message(FATAL_ERROR "Not tested with gcc version lower than gcc-7.5.0. Change CMakeLists.txt if you can assure a lower version works!")
