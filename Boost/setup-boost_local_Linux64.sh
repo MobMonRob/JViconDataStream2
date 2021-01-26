@@ -23,8 +23,9 @@ else
 	rm -rdf "$boostLibDir"
 fi
 
-#define=flto
-./b2 -q --jobs="$((3*"$(nproc)"))" --layout=tagged --toolset=gcc architecture=x86 address-model=64 target-os=linux optimization=speed cflags="-fPIC -flto" cxxflags="-fPIC -flto" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
+#-q to stop at first error
+#1 target fails but seems to be not important for us.
+./b2 --jobs="$((3*"$(nproc)"))" --layout=tagged --toolset=gcc architecture=x86 address-model=64 target-os=linux optimization=speed cflags="-fPIC -flto" cxxflags="-fPIC -flto" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
 
 cd "$scriptDir"
 }
