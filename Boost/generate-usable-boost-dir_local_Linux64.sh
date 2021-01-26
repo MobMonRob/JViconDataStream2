@@ -7,16 +7,9 @@ boostRepoRoot="./target/_tmp/Linux64/boost"
 targetDir="./target/Linux64"
 targetIncludeDir="$targetDir/include/boost"
 
-rm -rdf "$targetDir"
-
-mkdir -p "$targetDir"
-cp -u -r -L -l $boostRepoRoot/stage/lib "$targetDir"
-
-## not sufficient – unclear why
-#mkdir -p "$targetDir/include/boost"
-#cp -u -r -L -l $boostRepoRoot/boost "$targetDir/include"
-
-## workaround
+## Naive copying is not sufficient - unclear why some files are missing in that case.
+## Workaround:
+rm -rdf "$targetIncludeDir"
 mkdir -p "$targetIncludeDir"
 includes_rekursive()
 {
@@ -44,5 +37,5 @@ done
 includes_rekursive "$boostRepoRoot/libs"
 
 
-echo "Boost generated"
+echo "Boost includes generated"
 

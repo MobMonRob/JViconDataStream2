@@ -6,10 +6,9 @@ cd "$scriptDir"
 boostLibDir="./target/_tmp/Linux64/boost"
 
 rm -rdf "$boostLibDir"
-
 mkdir -p "$boostLibDir"
 
-git clone https://github.com/boostorg/boost.git --branch=boost-1.58.0 --depth=1 --recursive -j8 --shallow-submodules "$boostLibDir"
+git clone https://github.com/boostorg/boost.git --branch=boost-1.58.0 --depth=1 --recursive --jobs="$((2*"$(nproc)"))" --shallow-submodules "$boostLibDir"
 
 echo "Boost downloaded"
 

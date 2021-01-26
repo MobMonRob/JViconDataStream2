@@ -6,9 +6,7 @@ cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
 ./download-boost_local_Linux64.sh
 
-./setup-boost_local_Linux64.sh
-
-./generate-usable-boost-dir_local_Linux64.sh
+./regenerate-soft_local_Linux64.sh
 
 echo "Boost regenerated local"
 
