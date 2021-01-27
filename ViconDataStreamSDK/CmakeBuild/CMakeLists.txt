@@ -28,6 +28,8 @@ add_library(ViconDataStreamSDK_CPP ${LIB_TYPE} ""
 
 file(GLOB_RECURSE VICON_SRC FOLLOW_SYMLINKS ${VICON_ROOT} "${VICON_ROOT}/*.cpp")
 
+file(GLOB_RECURSE VICON_H FOLLOW_SYMLINKS ${VICON_ROOT} "${VICON_ROOT}/*.h")
+
 target_include_directories(ViconDataStreamSDK_CPP PRIVATE
 	${BOOST}/include
 	${VICON_ROOT}
@@ -43,6 +45,7 @@ target_sources(ViconDataStreamSDK_CPP
 		${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamRetimingClient.h
 		${VICON_STRING_TEST}/ViconStringTest.h
 	PRIVATE
+		${VICON_H}
 		${VICON_SRC}
 		${VICON_STRING_TEST}/ViconStringTest.cpp
 )
@@ -51,6 +54,9 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	target_link_libraries(ViconDataStreamSDK_CPP
 		PRIVATE Threads::Threads
 		PRIVATE "${BOOST}/libboost.so"
+		-Wl,--as-needed
+		-Wl,--no-undefined
+		-Wl,--no-allow-shlib-undefined
 	)
 endif()
 
@@ -69,26 +75,17 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 
 	target_compile_options(ViconDataStreamSDK_CPP PRIVATE
 		## Own Options
-		-fdata-sections
-		-ffunction-sections
-		-Wl,--gc-sections
 		-fPIC
-		#-O3
+		-std=c++14
 		-flto
-		-fwhole-program
-		-fvisibility=hidden
-		-fvisibility-inlines-hidden
 		## Taken from Vicon SDK file gcc.mk
 		-m64 #x86_64
 		-mfpmath=sse
 		#-msse2
-		#-fvisibility-inlines-hidden
-		#-D_GLIBCXX_HAVE_GTHR_DEFAULT
-		-D_GLIBCXX_USE_CXX11_ABI=0
 		## Unsafe optimization. Comment out if problems occur.
 		-mavx2
 		-funroll-loops
-		###-Ofast
+		-Ofast
 	)
 
 	if(UNIX AND (${LIB_TYPE} STREQUAL SHARED))

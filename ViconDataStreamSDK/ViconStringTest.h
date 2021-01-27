@@ -15,7 +15,7 @@ namespace CPP
 class ViconStringToJavaStringTest
 {
 public:
-	ViconDataStreamSDK::CPP::String getViconStringHallo();
+	String getViconStringHallo();
 
 	const char* getCharStringHallo();
 
@@ -27,9 +27,9 @@ public:
 class JavaStringToViconStringTest
 {
 public:
-	std::string testJavaStringInput(ViconDataStreamSDK::CPP::String javaString);
+	std::string testJavaStringInput(String javaString);
 
-	std::string testJavaStringReferenceInput(const ViconDataStreamSDK::CPP::String& javaString);
+	std::string testJavaStringReferenceInput(const String& javaString);
 };
 ///////////////////////////////////////////
 
@@ -39,7 +39,7 @@ class ViconConnectTest
 public:
 	Output_Connect testConnect();
 
-	std::string testConnectGiven(const ViconDataStreamSDK::CPP::String& javaString);
+	std::string testConnectGiven(const String& javaString);
 };
 ///////////////////////////////////////////
 

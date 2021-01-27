@@ -11,33 +11,29 @@
 #include "DataStreamClient.h"
 
 
-using namespace ViconDataStreamSDK;
-using namespace CPP;
-
-
 ///////////////////////////////////////////
-String ViconStringToJavaStringTest::getViconStringHallo() {
-	return String("ViconStringHallo");
+ViconDataStreamSDK::CPP::String ViconDataStreamSDK::CPP::ViconStringToJavaStringTest::getViconStringHallo() {
+	return ViconDataStreamSDK::CPP::String("ViconStringHallo");
 }
 
-const char* ViconStringToJavaStringTest::getCharStringHallo() {
+const char* ViconDataStreamSDK::CPP::ViconStringToJavaStringTest::getCharStringHallo() {
 	return "CharStringHallo";
 }
 
-std::string ViconStringToJavaStringTest::getStdStringHallo() {
+std::string ViconDataStreamSDK::CPP::ViconStringToJavaStringTest::getStdStringHallo() {
 	return std::string("StdStringHallo");
 }
 ///////////////////////////////////////////
 
 
 ///////////////////////////////////////////
-std::string JavaStringToViconStringTest::testJavaStringInput(String javaString)
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringInput(ViconDataStreamSDK::CPP::String javaString)
 {
 	std::string stdString = javaString;
 	return stdString;
 }
 
-std::string JavaStringToViconStringTest::testJavaStringReferenceInput(const String& javaString)
+std::string ViconDataStreamSDK::CPP::JavaStringToViconStringTest::testJavaStringReferenceInput(const ViconDataStreamSDK::CPP::String& javaString)
 {
 	std::string stdString = javaString;
 	return stdString;
@@ -46,23 +42,23 @@ std::string JavaStringToViconStringTest::testJavaStringReferenceInput(const Stri
 
 
 ///////////////////////////////////////////
-Output_Connect ViconConnectTest::testConnect()
+ViconDataStreamSDK::CPP::Output_Connect ViconDataStreamSDK::CPP::ViconConnectTest::testConnect()
 {
-	Client client;
-	Output_Connect result = client.Connect("192.168.10.1:51001");
+	ViconDataStreamSDK::CPP::Client client;
+	ViconDataStreamSDK::CPP::Output_Connect result = client.Connect("192.168.10.1:51001");
 	client.Disconnect();
 	return result;
 }
 
-std::string ViconConnectTest::testConnectGiven(const String& javaString)
+std::string ViconDataStreamSDK::CPP::ViconConnectTest::testConnectGiven(const ViconDataStreamSDK::CPP::String& javaString)
 {
-	Client client;
-	Output_Connect result;
+	ViconDataStreamSDK::CPP::Client client;
+	ViconDataStreamSDK::CPP::Output_Connect result;
 	std::string output;
 
 	try {
 		result = client.Connect(javaString);
-		if (result.Result == Result::Success)
+		if (result.Result == ViconDataStreamSDK::CPP::Result::Success)
 		{
 			output = "success";
 		}
