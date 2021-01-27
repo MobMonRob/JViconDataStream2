@@ -17,7 +17,7 @@ gcc -c -fPIC -O3 -flto -cpp -std=c++14 "$localTmp/ViconDataStreamSDK_wrap.cpp" \
 -I"$javaInclude/linux" -I"$javaInclude" -I"$viconTarget" \
 -o "$localTmp/libViconDataStreamSDK_wrap.o"
 
-gcc -shared -flto "$localTmp/libViconDataStreamSDK_wrap.o" -L"$viconTarget" -lViconDataStreamSDK_CPP -o "$localTarget/libjViconDataStreamSDK.so"
+gcc -shared -flto "$localTmp/libViconDataStreamSDK_wrap.o" -L"$viconTarget" -lViconDataStreamSDK_CPP -Wl,-rpath,'$ORIGIN/.' -o "$localTarget/libjViconDataStreamSDK.so"
 
 echo "gcc finished"
 
