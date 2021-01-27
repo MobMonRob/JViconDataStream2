@@ -9,7 +9,7 @@ project(vicon-datastream-sdk
 #Vicon SDK file gcc.mk defines this as minimum required version
 set (CMAKE_CXX_STANDARD_REQUIRED 14)
 
-SET (LIB_TYPE STATIC) #SHARED / STATIC
+SET (LIB_TYPE SHARED) #SHARED / STATIC
 
 if(${LIB_TYPE} STREQUAL SHARED)
 	set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
@@ -19,8 +19,8 @@ endif()
 
 SET (VICON_ROOT "${CMAKE_SOURCE_DIR}/../current_Linux64_source/Vicon/CrossMarket")
 SET (DataStream_ROOT "${VICON_ROOT}/DataStream")
-SET (BOOST_INCLUDE "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64/include")
-SET (BOOST_LIB "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64/lib")
+SET (BOOST "${CMAKE_SOURCE_DIR}/../../Boost/target/Linux64")
+SET (VICON_STRING_TEST "${CMAKE_SOURCE_DIR}/..")
 
 # Declare a cpp library
 add_library(ViconDataStreamSDK_CPP ${LIB_TYPE} ""
@@ -29,10 +29,11 @@ add_library(ViconDataStreamSDK_CPP ${LIB_TYPE} ""
 file(GLOB_RECURSE VICON_SRC FOLLOW_SYMLINKS ${VICON_ROOT} "${VICON_ROOT}/*.cpp")
 
 target_include_directories(ViconDataStreamSDK_CPP PRIVATE
-	${BOOST_INCLUDE}
+	${BOOST}/include
 	${VICON_ROOT}
 	${DataStream_ROOT}
 	${DataStream_ROOT}/ViconDataStreamSDK_CPP
+	${VICON_STRING_TEST}
 )
 
 target_sources(ViconDataStreamSDK_CPP
@@ -40,14 +41,16 @@ target_sources(ViconDataStreamSDK_CPP
 		${DataStream_ROOT}/ViconDataStreamSDK_CPP/IDataStreamClientBase.h
 		${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamClient.h
 		${DataStream_ROOT}/ViconDataStreamSDK_CPP/DataStreamRetimingClient.h
+		${VICON_STRING_TEST}/ViconStringTest.h
 	PRIVATE
 		${VICON_SRC}
+		${VICON_STRING_TEST}/ViconStringTest.cpp
 )
 
 if(${LIB_TYPE} STREQUAL SHARED)
 	target_link_libraries(ViconDataStreamSDK_CPP
-		Threads::Threads
-		#${BOOST_LIB}
+		PRIVATE Threads::Threads
+		PRIVATE "${BOOST}/libboost.so"
 	)
 endif()
 
