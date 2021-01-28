@@ -1,10 +1,16 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-../Wrapper/regenerate_dependency-recursive_Linux64.sh
+source "./_bash_config.sh"
 
-./regenerate-natives_local_Linux64.sh
+run() {
+	../Wrapper/regenerate_dependency-recursive_Linux64.sh
 
-echo "regenerate-natives finished"
+	./regenerate-natives_local_Linux64.sh
+}
+
+run_bash run $@
 

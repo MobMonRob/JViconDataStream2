@@ -41,6 +41,5 @@ copy() {
 	cp -L -l ../ViconStringTest.h $targetDir
 }
 
-
 run_bash run $@
 

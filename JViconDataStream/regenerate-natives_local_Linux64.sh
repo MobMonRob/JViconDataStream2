@@ -1,15 +1,21 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-./clear_local_all.sh
+source "./_bash_config.sh"
 
-#Has to be: <Project Folder>/natives/<os-arch> !!
-mkdir -p ./natives/linux-amd64/
+run() {
+	./clear_local_all.sh
 
-cp -L -l ../Wrapper/target/Linux64/*.so* ./natives/linux-amd64/
+	#Has to be: <Project Folder>/natives/<os-arch> !!
+	mkdir -p ./natives/linux-amd64/
 
-cp -L -l -R ../Wrapper/target/Linux64/java/de/ ./src/main/java/
+	cp -L -l ../Wrapper/target/Linux64/*.so* ./natives/linux-amd64/
 
-echo "regenerate-natives finished"
+	cp -L -l -R ../Wrapper/target/Linux64/java/de/ ./src/main/java/
+}
+
+run_bash run $@
 
