@@ -1,14 +1,19 @@
 #!/bin/bash
 
-scriptDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
 cd "$scriptDir"
 
-boostLibDir="./target/_tmp/Linux64/boost"
+source "./_bash_config.sh"
 
-rm -rdf "$boostLibDir"
-mkdir -p "$boostLibDir"
+run() {
+	boostLibDir="$localTmp/boost"
 
-git clone https://github.com/boostorg/boost.git --branch=boost-1.58.0 --depth=1 --recursive --jobs="$((2*"$(nproc)"))" --shallow-submodules "$boostLibDir"
+	rm -rdf "$boostLibDir"
+	mkdir -p "$boostLibDir"
 
-echo "Boost downloaded"
+	git clone https://github.com/boostorg/boost.git --branch=boost-1.58.0 --depth=1 --recursive --jobs="$((2*"$(nproc)"))" --shallow-submodules "$boostLibDir"
+}
+
+run_bash run $@
 

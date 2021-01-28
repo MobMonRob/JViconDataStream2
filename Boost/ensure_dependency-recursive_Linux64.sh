@@ -1,15 +1,21 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-if [[ ! -d "./target/_tmp/Linux64/boost" ]]; then
-	# Dependencies here
+source "./_bash_config.sh"
 
-    ./regenerate_local_Linux64.sh
+run() {
+	if [[ ! -d "$localTmp/boost" ]]; then
+		# Dependencies here
 
-elif [[ ! -d "./target/Linux64" ]]; then
-	./regenerate-soft_local_Linux64.sh
-fi
+		./regenerate_local_Linux64.sh
 
-echo "Boost ensured dependency-recursive"
+	elif [[ ! -d "$localTarget" ]]; then
+		./regenerate-soft_local_Linux64.sh
+	fi
+}
+
+run_bash run $@
 

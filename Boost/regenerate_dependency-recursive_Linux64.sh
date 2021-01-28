@@ -1,17 +1,22 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-# Dependencies beforehand
+source "./_bash_config.sh"
 
-# We usually don't want to redownload boost.
-# Use ./clear_local_all.sh instead if necessary.
-if [[ ! -d "./target/_tmp/Linux64/boost" ]]; then
-    ./regenerate_local_Linux64.sh
+run() {
+	# Dependencies beforehand
 
-else
-	./regenerate-soft_local_Linux64.sh
-fi
+	# We usually don't want to redownload boost.
+	# Use ./clear_local_all.sh manually instead if necessary.
+	if [[ ! -d "./target/_tmp/Linux64/boost" ]]; then
+		./regenerate_local_Linux64.sh
+	else
+		./regenerate-soft_local_Linux64.sh
+	fi
+}
 
-echo "Boost regenerated dependency-recursive"
+run_bash run $@
 

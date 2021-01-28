@@ -1,14 +1,19 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-targetDir="./target/Linux64"
-rm -rdf "$targetDir"
-mkdir -p "$targetDir"
+source "./_bash_config.sh"
 
-./setup-boost_local_Linux64.sh
+run() {
+	rm -rdf "$targetDir"
+	mkdir -p "$targetDir"
 
-./generate-usable-boost-dir_local_Linux64.sh
+	./setup-boost_local_Linux64.sh
 
-echo "Boost soft regenerated local"
+	./generate-usable-boost-dir_local_Linux64.sh
+}
+
+run_bash run $@
 

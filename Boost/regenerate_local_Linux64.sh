@@ -1,12 +1,18 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-./clear_local_all.sh
+source "./_bash_config.sh"
 
-./download-boost_local_Linux64.sh
+run() {
+	./clear_local_all.sh
 
-./regenerate-soft_local_Linux64.sh
+	./download-boost_local_Linux64.sh
 
-echo "Boost regenerated local"
+	./regenerate-soft_local_Linux64.sh
+}
+
+run_bash run $@
 
