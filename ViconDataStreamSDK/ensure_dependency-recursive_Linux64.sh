@@ -1,13 +1,19 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-if [ ! -d "./target/Linux64/" ]
-then
-	../Boost/ensure_dependency-recursive_Linux64.sh
+source "./_bash_config.sh"
 
-    ./regenerate_local_Linux64.sh
-fi
+run() {
+	if [ ! -d "./target/Linux64/" ]
+	then
+		../Boost/ensure_dependency-recursive_Linux64.sh
 
-echo "ViconDataStreamSDK ensured"
+		./regenerate_local_Linux64.sh
+	fi
+}
+
+run_bash run $@
 

@@ -1,17 +1,23 @@
 #!/bin/bash
 
-scriptDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
 cd "$scriptDir"
 
-../clear_local_all.sh
+source "./_bash_config.sh"
 
-targetDir="../target/Linux64"
-tmpDir="../target/_tmp/Linux64"
-boostLibDir="../../Boost/target/Linux64"
+run() {
+	../clear_local_all.sh
 
-mkdir -p "$tmpDir"
+	tmpDir="../$localTmp"
+
+	build
+	copy
+}
+
 
 build() {
+	mkdir -p "$tmpDir"
 	cd "$tmpDir"
 
 	cmake ../../../CmakeBuild/
@@ -19,20 +25,22 @@ build() {
 
 	cd "$scriptDir"
 }
-build
 
-mkdir -p "$targetDir"
 
 copy() {
-	cp -L -l $boostLibDir/lib* $targetDir
+	boostTargeDir="$BoostDir/$localTarget"
+	targetDir="../$localTarget"
+
+	mkdir -p "$targetDir"
+
+	cp -L -l $boostTargetDir/lib* $targetDir
 	cp -L -l $tmpDir/lib* $targetDir
 
 	cp -L -l ../current_Linux64_source/Vicon/CrossMarket/DataStream/ViconDataStreamSDK_CPP/*DataStream*Client*.h $targetDir
 
 	cp -L -l ../ViconStringTest.h $targetDir
 }
-copy
 
 
-echo "ViconDataStreamSDK regenerated"
+run_bash run $@
 

@@ -1,7 +1,14 @@
 #!/bin/bash
 
-scriptDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
 cd "$scriptDir"
 
-./current_build/regenerate_local_Linux64.sh
+source "./_bash_config.sh"
+
+run() {
+	./current_build/regenerate_local_Linux64.sh
+}
+
+run_bash run $@
 
