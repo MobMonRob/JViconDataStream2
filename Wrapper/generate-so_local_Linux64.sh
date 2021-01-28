@@ -1,26 +1,26 @@
 #!/bin/bash
 
+#Ersetzen
 cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
 
-mkdir -p "./target/Linux64/"
+source "./_bash_config.sh"
 
-echo "gcc started"
+run() {
+	mkdir -p "$localTarget"
 
-localTmp="./target/_tmp/Linux64"
-localTarget="./target/Linux64"
-viconTarget="../ViconDataStreamSDK/target/Linux64"
-javaInclude="/usr/lib/jvm/default-java/include"
+	viconTarget="$ViconDir/$localTarget"
+	javaInclude="/usr/lib/jvm/default-java/include"
 
-#-c für nicht linken (nur .o erzeugen)
-#-shared .so muss tun, damit sicher der Fehler nicht hier liegt.
-g++ -c -fPIC -O3 -flto -cpp -std=c++14 "$localTmp/ViconDataStreamSDK_wrap.cpp" \
--I"$javaInclude/linux" -I"$javaInclude" -I"$viconTarget" \
--o "$localTmp/libViconDataStreamSDK_wrap.o"
+	#-c für nicht linken (nur .o erzeugen)
+	#-shared .so muss tun, damit sicher der Fehler nicht hier liegt.
+	g++ -c -fPIC -O3 -flto -cpp -std=c++14 "$localTmp/ViconDataStreamSDK_wrap.cpp" \
+	-I"$javaInclude/linux" -I"$javaInclude" -I"$viconTarget" \
+	-o "$localTmp/libViconDataStreamSDK_wrap.o"
 
-g++ -shared -flto "$localTmp/libViconDataStreamSDK_wrap.o" -L"$viconTarget" -lViconDataStreamSDK_CPP -Wl,-rpath,'$ORIGIN/.' -o "$localTarget/libjViconDataStreamSDK.so" \
--Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
+	g++ -shared -flto "$localTmp/libViconDataStreamSDK_wrap.o" -L"$viconTarget" -lViconDataStreamSDK_CPP -Wl,-rpath,'$ORIGIN/.' -o "$localTarget/libjViconDataStreamSDK.so" \
+	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
+}
 
-echo "gcc finished"
-
-echo "Wrapper so generation finished"
+#Unnötig machen, indem per Konvention diese Methode so heißen muss.
+run_bash run $*
 
