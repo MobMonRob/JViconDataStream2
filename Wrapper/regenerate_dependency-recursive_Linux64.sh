@@ -1,10 +1,16 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-../ViconDataStreamSDK/regenerate_dependency-recursive_Linux64.sh
+source "./_bash_config.sh"
 
-./regenerate_local_Linux64.sh
+run() {
+	../ViconDataStreamSDK/regenerate_dependency-recursive_Linux64.sh
 
-echo "Wrapper regenerated"
+	./regenerate_local_Linux64.sh
+}
+
+run_bash run $@
 

@@ -1,17 +1,21 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-localTmp="./target/_tmp/Linux64"
-localTarget="./target/Linux64"
-viconTarget="../ViconDataStreamSDK/target/Linux64"
-swigJavaOutDir="$localTarget/java/de/dhbw/rahmlab/vicon/datastream/impl/"
+source "./_bash_config.sh"
 
-mkdir -p "$swigJavaOutDir"
-mkdir -p "$localTmp"
+run() {
+	viconTarget="$ViconDir/$localTarget"
+	swigJavaOutDir="$localTarget/java/de/dhbw/rahmlab/vicon/datastream/impl/"
 
-#-debug-tmsearch
-swig -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "$swigJavaOutDir" -o "$localTmp/ViconDataStreamSDK_wrap.cpp" -I"$viconTarget" ./PlatformIndependent.i
+	mkdir -p "$swigJavaOutDir"
+	mkdir -p "$localTmp"
 
-echo "swig wrapper generation finished"
+	#-debug-tmsearch
+	swig -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "$swigJavaOutDir" -o "$localTmp/ViconDataStreamSDK_wrap.cpp" -I"$viconTarget" ./PlatformIndependent.i
+}
+
+run_bash run $@
 

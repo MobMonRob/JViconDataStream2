@@ -1,17 +1,22 @@
 #!/bin/bash
 
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
+scriptPath="$(realpath "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
 
-targetDir="./target/Linux64"
-viconLibDir="../ViconDataStreamSDK/target/Linux64"
+source "./_bash_config.sh"
 
-./clear_local_all.sh
+run() {
+	local -r viconLibDir="$ViconDir/$localTarget"
 
-./generate-wrapper_local_Linux64.sh
+	./clear_local_all.sh
 
-./generate-so_local_Linux64.sh
+	./generate-wrapper_local_Linux64.sh
 
-cp -L -l $viconLibDir/lib* $targetDir
+	./generate-so_local_Linux64.sh
 
-echo "Wrapper regenerated"
+	cp -L -l $viconLibDir/lib* $targetDir
+}
+
+run_bash run $@
 
