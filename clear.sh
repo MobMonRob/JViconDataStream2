@@ -11,3 +11,4 @@ git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 ./JNativeLibLoader/clear.sh
 
 echo "JViconDataStream2 cleared"
+

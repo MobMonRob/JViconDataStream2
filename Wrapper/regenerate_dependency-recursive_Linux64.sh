@@ -1,6 +1,6 @@
 #!/bin/bash
 
-scriptPath="$(realpath "${BASH_SOURCE[0]}")"
+scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
 scriptDir="$(dirname "$scriptPath")"
 cd "$scriptDir"
 
