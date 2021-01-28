@@ -1,7 +1,10 @@
 #!/bin/bash
 
+scriptPath="$(realpath "${BASH_SOURCE[0]}")"
+scriptDir="$(dirname "$scriptPath")"
+cd "$scriptDir"
+
 source "./_bash_config.sh"
-setScriptDir "${BASH_SOURCE[0]}"
 
 run() {
 	mkdir -p "$localTarget"
@@ -19,6 +22,5 @@ run() {
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 }
 
-#Unnötig machen, indem per Konvention diese Methode so heißen muss.
 run_bash run $@
 

@@ -17,14 +17,6 @@ run_bash() {
 }
 
 
-setScriptDir() {
-	local -r bash_source="$1"
-	scriptPath="$(realpath "$bash_source")"
-	scriptDir="$(dirname "$scriptPath")"
-	cd "$scriptDir"
-}
-
-
 loadProjectConfig() {
 	local -r configDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 	source "$configDir/_project_config.sh"
