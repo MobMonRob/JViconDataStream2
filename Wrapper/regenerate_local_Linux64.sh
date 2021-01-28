@@ -15,7 +15,7 @@ run() {
 
 	./generate-so_local_Linux64.sh
 
-	cp -L -l $viconLibDir/lib* $targetDir
+	cp -L -l $viconLibDir/lib* $localTarget
 }
 
 run_bash run $@

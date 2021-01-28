@@ -7,8 +7,8 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	viconTarget="$ViconDir/$localTarget"
-	swigJavaOutDir="$localTarget/java/de/dhbw/rahmlab/vicon/datastream/impl/"
+	local -r viconTarget="$ViconDir/$localTarget"
+	local -r swigJavaOutDir="$localTarget/java/de/dhbw/rahmlab/vicon/datastream/impl/"
 
 	mkdir -p "$swigJavaOutDir"
 	mkdir -p "$localTmp"

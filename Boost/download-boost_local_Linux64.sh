@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	boostLibDir="$localTmp/boost"
+	local -r boostLibDir="$localTmp/boost"
 
 	rm -rdf "$boostLibDir"
 	mkdir -p "$boostLibDir"

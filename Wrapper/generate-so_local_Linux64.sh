@@ -9,8 +9,8 @@ source "./_bash_config.sh"
 run() {
 	mkdir -p "$localTarget"
 
-	viconTarget="$ViconDir/$localTarget"
-	javaInclude="/usr/lib/jvm/default-java/include"
+	local -r viconTarget="$ViconDir/$localTarget"
+	local -r javaInclude="/usr/lib/jvm/default-java/include"
 
 	#-c für nicht linken (nur .o erzeugen)
 	#-shared .so muss tun, damit sicher der Fehler nicht hier liegt.

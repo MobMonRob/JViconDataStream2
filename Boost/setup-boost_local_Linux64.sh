@@ -28,7 +28,7 @@ build_boost() {
 	rm -rdf "$buildDir"
 	./bootstrap.sh
 
-	compilerArgs="-fPIC -flto"
+	local -r compilerArgs="-fPIC -flto"
 
 	#https://www.boost.org/doc/libs/1_54_0/libs/iostreams/doc/installation.html
 	./b2 -q -sNO_BZIP2=1 --jobs="$((3*"$(nproc)"))" --layout=tagged --toolset=gcc architecture=x86 address-model=64 target-os=linux optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
@@ -46,7 +46,7 @@ link_so() {
 	#ToDo: Fix boost python lib runtime dependency
 	rm -f $boostLibDir/*python*.a
 
-	boostLibs=$(find "$boostLibDir" -maxdepth 1 -mindepth 1 -type f)
+	local -r boostLibs=$(find "$boostLibDir" -maxdepth 1 -mindepth 1 -type f)
 
 	echo "linking... (needs some time)"
 

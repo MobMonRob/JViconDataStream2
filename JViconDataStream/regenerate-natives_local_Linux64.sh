@@ -12,9 +12,11 @@ run() {
 	#Has to be: <Project Folder>/natives/<os-arch> !!
 	mkdir -p ./natives/linux-amd64/
 
-	cp -L -l ../Wrapper/target/Linux64/*.so* ./natives/linux-amd64/
+	local -r WrapperTarget="$(realpath "$WrapperDir/$localTarget")"
 
-	cp -L -l -R ../Wrapper/target/Linux64/java/de/ ./src/main/java/
+	cp -L -l $WrapperTarget/*.so* ./natives/linux-amd64/
+
+	cp -L -l -R $WrapperTarget/java/de/ ./src/main/java/
 }
 
 run_bash run $@

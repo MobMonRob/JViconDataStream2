@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "./target/Linux64/" ]
+	if [ ! -d "$localTarget" ]
 	then
 		../Boost/ensure_dependency-recursive_Linux64.sh
 
