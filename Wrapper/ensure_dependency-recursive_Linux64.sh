@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	if [ ! -d "$localTarget" ]
 	then
-		../ViconDataStreamSDK/ensure_local_Linux64.sh
+		$ViconDir/ensure_dependency-recursive_Linux64.sh
 
 		./regenerate_local_Linux64.sh
 	fi
