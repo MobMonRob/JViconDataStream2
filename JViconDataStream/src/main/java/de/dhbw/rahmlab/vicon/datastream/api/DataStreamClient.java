@@ -267,9 +267,9 @@ public class DataStreamClient {
      * Ask the DataStreamServer to start transmitting the data you are receiving
      * directly to aMulticast address as well.
      *
-     * This allows multiple clients to connect to your stream (via
+     * <p>This allows multiple clients to connect to your stream (via
      * ConnectToMulticast()), whilst minimizing network bandwidth use and frame
-     * delivery latency.<p>
+     * delivery latency.</p>
      *
      * @see connect
      * @see connectToMulticast
@@ -369,6 +369,7 @@ public class DataStreamClient {
     
     /**
      * Get hostname
+     *
      * @return the hostname to which this client is connected or null, if the client
      * is not connected.
      */
@@ -379,11 +380,11 @@ public class DataStreamClient {
     /**
      * Return the name and type of a device.
      *
-     * This name can be passed into device functions.
+     * <p>This name can be passed into device functions.</p>
      *
-     * The possible device types are:
-     * <p>
-     * Unknown ForcePlate EyeTracker
+     * <p>The possible device types are:</p>
+     * 
+     * <p>Unknown ForcePlate EyeTracker</p>
      *
      * @see getDeviceCount
      * @see getDeviceOutputCount
@@ -411,7 +412,7 @@ public class DataStreamClient {
      * Enable debug data in the Vicon DataStream.
      *
      * <p>In order to receive debug data, call this function on startup, after
-     * connecting to the server.<p>
+     * connecting to the server.</p>
      *
      * @see isDebugDataEnabled
      * @see disableDebugData
@@ -427,8 +428,8 @@ public class DataStreamClient {
     /**
      * Enable labeled reconstructed marker data in the Vicon DataStream.
      *
-     * Call this function on startup, after connecting to the server, and before
-     * trying to read labeled marker data.<p>
+     * <p>Call this function on startup, after connecting to the server, and before
+     * trying to read labeled marker data.</p>
      *
      * @see isMarkerDataEnabled
      * @see disableMarkerData
@@ -529,7 +530,6 @@ public class DataStreamClient {
             throw new RuntimeException("Client is not connected!");
         }
     }
-
     
     /**
      * Disable kinematic segment data in the Vicon DataStream.
