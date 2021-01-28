@@ -49,6 +49,7 @@ getRelativeScriptPath() {
 
 
 init_bash() {
+	#add -x for debugging
 	set -Eeuo pipefail
 	trap on_err ERR INT TERM
 }

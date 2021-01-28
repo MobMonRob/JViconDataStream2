@@ -4,8 +4,6 @@ scriptPath="$(realpath -s "${BASH_SOURCE[0]}")"
 scriptDir="$(dirname "$scriptPath")"
 cd "$scriptDir"
 
-echo "$scriptPath"
-
 source "./_bash_config.sh"
 
 run() {
