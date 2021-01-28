@@ -1,9 +1,7 @@
 #!/bin/bash
 
-#Ersetzen
-cd $(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
-
 source "./_bash_config.sh"
+setScriptDir "${BASH_SOURCE[0]}"
 
 run() {
 	mkdir -p "$localTarget"
@@ -22,5 +20,5 @@ run() {
 }
 
 #Unnötig machen, indem per Konvention diese Methode so heißen muss.
-run_bash run $*
+run_bash run $@
 

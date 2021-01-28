@@ -1,10 +1,7 @@
 #!/bin/bash
 
-#Totally generic
-#Only depends on ./project_config.sh
 
-run_bash()
-{
+run_bash() {
 	loadProjectConfig
 
 	local -r relativeScriptPath=$(getRelativeScriptPath)
@@ -13,26 +10,31 @@ run_bash()
 
 	echo "started: $relativeScriptPath"
 
-	local -r the_run=$@
+	local -r the_run="$@"
 	$the_run
 
 	echo "finished: $relativeScriptPath"
 }
 
 
-loadProjectConfig()
-{
-	configDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+setScriptDir() {
+	local -r bash_source="$1"
+	scriptPath="$(realpath "$bash_source")"
+	scriptDir="$(dirname "$scriptPath")"
+	cd "$scriptDir"
+}
+
+
+loadProjectConfig() {
+	local -r configDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
 	source "$configDir/_project_config.sh"
 }
 
 
-getRelativeScriptPath()
-{
-	local -r scriptName="$(basename "$0")"
-	local -r scriptPath="$(dirname "$(readlink -f "$0")")"
+getRelativeScriptPath() {
+	local -r scriptName="$(basename "$scriptPath")"
 
-	local -r relativeScriptDirList=$(echo $scriptPath| tr '/' '\n')
+	local -r relativeScriptDirList=$(echo $scriptDir| tr '/' '\n')
 	local relativeScriptDir=""
 	local afterProjectFolder="false"
 
