@@ -28,7 +28,7 @@ build() {
 
 
 copy() {
-	local -r boostTargeDir="$BoostDir/$localTarget"
+	local -r boostTargetDir="$BoostDir/$localTarget"
 	local -r targetDir="../$localTarget"
 
 	mkdir -p "$targetDir"
