@@ -6,9 +6,10 @@ cd "$scriptDir"
 
 source "./_bash_config.sh"
 
+
 run() {
-	local -r localTmp="$(realpath "$localTmp")"
-	local -r localTarget="$(realpath "$localTarget")"
+	local localTmp="$(realpath "$localTmp")"
+	local localTarget="$(realpath "$localTarget")"
 	local -r boostDir="$localTmp/boost"
 	local -r stageDir="$localTmp/stage"
 	local -r buildDir="$localTmp/build"
