@@ -11,7 +11,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <always_recreate_wrapper>false</always_recreate_wrapper>
-        <skipTests>true</skipTests>
+        <skipTests>false</skipTests>
     </properties>
     <dependencies>
         <dependency>
