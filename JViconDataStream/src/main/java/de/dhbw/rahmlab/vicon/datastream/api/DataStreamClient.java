@@ -267,9 +267,9 @@ public class DataStreamClient {
      * Ask the DataStreamServer to start transmitting the data you are receiving
      * directly to aMulticast address as well.
      *
-     * This allows multiple clients to connect to your stream (via
+     * <p>This allows multiple clients to connect to your stream (via
      * ConnectToMulticast()), whilst minimizing network bandwidth use and frame
-     * delivery latency.<p>
+     * delivery latency.</p>
      *
      * @see connect
      * @see connectToMulticast
@@ -304,11 +304,11 @@ public class DataStreamClient {
 
     /**
      * Ask the DataStreamServer to stop transmitting the data you are receiving
-     * directly to aMulticast address as well.
+     * directly to a Multicast address as well.
      *
-     * You must previously have started a transmission via
+     * <p>You must previously have started a transmission via
      * StartTransmittingMulticast.
-     * <p>
+     * </p>
      *
      * @see connect
      * @see connectToMulticast
@@ -369,6 +369,7 @@ public class DataStreamClient {
     
     /**
      * Get hostname
+     *
      * @return the hostname to which this client is connected or null, if the client
      * is not connected.
      */
@@ -379,11 +380,11 @@ public class DataStreamClient {
     /**
      * Return the name and type of a device.
      *
-     * This name can be passed into device functions.
+     * <p>This name can be passed into device functions.</p>
      *
-     * The possible device types are:
-     * <p>
-     * Unknown ForcePlate EyeTracker
+     * <p>The possible device types are:</p>
+     * 
+     * <p>Unknown ForcePlate EyeTracker</p>
      *
      * @see getDeviceCount
      * @see getDeviceOutputCount
@@ -411,7 +412,7 @@ public class DataStreamClient {
      * Enable debug data in the Vicon DataStream.
      *
      * <p>In order to receive debug data, call this function on startup, after
-     * connecting to the server.<p>
+     * connecting to the server.</p>
      *
      * @see isDebugDataEnabled
      * @see disableDebugData
@@ -427,8 +428,8 @@ public class DataStreamClient {
     /**
      * Enable labeled reconstructed marker data in the Vicon DataStream.
      *
-     * Call this function on startup, after connecting to the server, and before
-     * trying to read labeled marker data.<p>
+     * <p>Call this function on startup, after connecting to the server, and before
+     * trying to read labeled marker data.</p>
      *
      * @see isMarkerDataEnabled
      * @see disableMarkerData
@@ -451,9 +452,9 @@ public class DataStreamClient {
     /**
      * Enable force plate, EMG, and other device data in the Vicon DataStream.
      *
-     * Call this function on startup, after connecting to the server, and before
+     * <p>Call this function on startup, after connecting to the server, and before
      * trying to read device information.
-     * <p>
+     * </p>
      *
      * @see isDeviceDataEnabled
      * @see disableDeviceData
@@ -479,8 +480,8 @@ public class DataStreamClient {
      * Enable information about the rays contributing to each labeled marker in
      * the Vicon DataStream.
      *
-     * Call this function on startup, after connecting to the server, and before
-     * trying to read global unlabeled marker data.<p>
+     * <p>Call this function on startup, after connecting to the server, and before
+     * trying to read global unlabeled marker data.</p>
      *
      * @see isMarkerRayDataEnabled
      * @see disableMarkerRayData()
@@ -529,7 +530,6 @@ public class DataStreamClient {
             throw new RuntimeException("Client is not connected!");
         }
     }
-
     
     /**
      * Disable kinematic segment data in the Vicon DataStream.
@@ -755,18 +755,18 @@ public class DataStreamClient {
      * Enable a lightweight transmission protocol for kinematic segment data in
      * the Vicon DataStream.
      *
-     * This will reduce the network bandwidth required to transmit segment data
+     * <p>This will reduce the network bandwidth required to transmit segment data
      * to approximately a quarter of that required by the previous method, at
-     * the expense of a small amount of precision.<p>
+     * the expense of a small amount of precision.</p>
      *
-     * Use the existing methods such as GetSegmentGlobalTranslation() and
-     * GetSegmentGlobalRotationMatrix() as usual to obtain the segment data.<p>
+     * <p>Use the existing methods such as GetSegmentGlobalTranslation() and
+     * GetSegmentGlobalRotationMatrix() as usual to obtain the segment data.</p>
      *
-     * Calling this method will automatically disable all other conﬁgurable
-     * output types. These may be re-enabled after the call if required.<p>
+     * <p>Calling this method will automatically disable all other conﬁgurable
+     * output types. These may be re-enabled after the call if required.</p>
      *
-     * Call this function on startup, after connecting to the server, and before
-     * trying to read local or global segment data.<p>
+     * <p>Call this function on startup, after connecting to the server, and before
+     * trying to read local or global segment data.</p>
      *
      * @see isSegmentDataEnabled
      * @see disableSegmentData
@@ -807,8 +807,8 @@ public class DataStreamClient {
     /**
      * Enable unlabeled reconstructed marker data in the Vicon DataStream.
      *
-     * You should call this function on startup, after connecting to the server,
-     * and before trying to read global unlabeled marker data.<p>
+     * <p>You should call this function on startup, after connecting to the server,
+     * and before trying to read global unlabeled marker data.</p>
      *
      * @see isUnlabeledMarkerDataEnabled
      * @see disableUnlabeledMarkerData
@@ -965,10 +965,10 @@ public class DataStreamClient {
     }
 
     /**
-     * There are three modes that the SDK can operate in.Each mode has a
+     * There are three modes that the SDK can operate in. Each mode has a
      * different impact on the Client, Server, and network resources used.
      *
-     * • ServerPush In "ServerPush" mode, the Server pushes every new frame of
+     * <p>• ServerPush In "ServerPush" mode, the Server pushes every new frame of
      * data over the network to the Client. The Server will try not to drop any
      * frames. This results in the lowest latency that can be achieved. If the
      * Client is unable to read data at the rate it is being sent, then it is
@@ -977,9 +977,9 @@ public class DataStreamClient {
      * at the Server and the performance of the Server may be affected. The
      * GetFrame() method returns the most recently received frame if available,
      * or blocks the calling thread if the most recently received frame has
-     * already been processed.<p>
+     * already been processed.</p>
      *
-     * • ClientPull In "ClientPull" mode, the Client waits for a call to
+     * <p>• ClientPull In "ClientPull" mode, the Client waits for a call to
      * GetFrame(), and then requests the latest frame of data from the Server.
      * This increases latency, because a request must be sent over the network
      * to the Server, the Server has to prepare the frame of data for the
@@ -987,9 +987,9 @@ public class DataStreamClient {
      * bandwidth is kept to a minimum, because the Server only sends what you
      * need. The buffers are very unlikely to be ﬁlled, and Server performance
      * is unlikely to be affected. The GetFrame() method blocks the calling
-     * thread until the frame has been received.<p>
+     * thread until the frame has been received.</p>
      *
-     * • ClientPullPreFetch "ClientPullPreFetch" is an enhancement to the
+     * <p>• ClientPullPreFetch "ClientPullPreFetch" is an enhancement to the
      * "ClientPull" mode. A thread in the SDK continuously and preemptively does
      * a "ClientPull" on your behalf, storing the latest requested frame in
      * memory. When you next call GetFrame(), the SDK returns the last requested
@@ -1000,7 +1000,7 @@ public class DataStreamClient {
      * on behalf of the Client which are never used. The stream defaults to
      * "ClientPull" mode as this is considered the safest option. If performance
      * is a problem, try "ClientPullPreFetch" followed by "ServerPush".
-     * <p>
+     * </p>
      *
      * @see getFrame
      * @see getLatencyTotal
@@ -1298,8 +1298,8 @@ public class DataStreamClient {
     /**
      * Return the translation of an unlabeled marker in global coordinates.
      *
-     * The Translation is of the form (x, y, z) where x, y and z are in
-     * millimeters with respect to the global origin.<p>
+     * <p>The Translation is of the form (x, y, z) where x, y and z are in
+     * millimeters with respect to the global origin.</p>
      *
      * @see getUnlabeledMarkerCount
      * @param markerIndex marker index
@@ -1380,8 +1380,8 @@ public class DataStreamClient {
     /**
      * Return the name of the root segment for a specified subject.
      *
-     * This can be passed into segment functions. The root segment is the
-     * ancestor of all other segments in the subject.
+     * <p>This can be passed into segment functions. The root segment is the
+     * ancestor of all other segments in the subject.</p>
      *
      * @see getSegmentCount
      * @see getSegmentParentName
@@ -1392,7 +1392,6 @@ public class DataStreamClient {
      * @throws RuntimeException if no frame is available, client is not
      * connected
      * @throws IllegalArgumentException subject name is invalid.
-     *
      */
     public String getSubjectRootSegmentName(String subjectName) {
         Output_GetSubjectRootSegmentName result = client.GetSubjectRootSegmentName(subjectName);
@@ -1958,10 +1957,9 @@ public class DataStreamClient {
      * Return the rotation of a subject segment in global quaternion
      * coordinates.
      *
-     * The quaternion is of the form (x, y, z, w) where w is the real component
+     * <p>The quaternion is of the form (x, y, z, w) where w is the real component
      * and x, y and z are the imaginary components. N.B. This is different from
-     * that used in many other applications, which use (w, x, y, z)
-     * .<p>
+     * that used in many other applications, which use (w, x, y, z).</p>
      *
      * @see getSegmentGlobalTranslation
      * @see getSegmentGlobalRotationHelical
@@ -2077,10 +2075,9 @@ public class DataStreamClient {
      * Return the rotation of a subject segment in local quaternion coordinates
      * relative to its parent segment.
      *
-     * The quaternion is of the form (x, y, z, w) where w is the real component
+     * <p>The quaternion is of the form (x, y, z, w) where w is the real component
      * and x, y and z are the imaginary components. N.B. This is different from
-     * that used in many other applications, which use (w, x, y, z)
-     * .<p>
+     * that used in many other applications, which use (w, x, y, z).</p>
      *
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationHelical
@@ -2120,12 +2117,10 @@ public class DataStreamClient {
     /**
      * Return the rotation row-major matrix of a subject segment in local 
      * coordinates relative to its parent segment.
-
      *
-     * The quaternion is of the form (x, y, z, w) where w is the real component
+     * <p>The quaternion is of the form (x, y, z, w) where w is the real component
      * and x, y and z are the imaginary components. N.B. This is different from
-     * that used in many other applications, which use (w, x, y, z)
-     * .<p>
+     * that used in many other applications, which use (w, x, y, z).<p>
      *
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationHelical
@@ -2232,8 +2227,8 @@ public class DataStreamClient {
     /**
      * Return the translation of a subject marker in global coordinates.
      *
-     * The Translation is of the form ( x, y, z ) where x, y and z are in
-     * millimeters with respect to the global origin.<p>
+     * <p>The Translation is of the form ( x, y, z ) where x, y and z are in
+     * millimeters with respect to the global origin.</p>
      *
      * @see getMarkerName
      * @param subjectName subject name
@@ -2486,13 +2481,13 @@ public class DataStreamClient {
     /**
      * Return the value of a device output.
      *
-     * If there are multiple samples for a frame, then the first sample is
+     * <p>If there are multiple samples for a frame, then the first sample is
      * returned. The force plate data provided in the individual device channels
      * is in a coordinate system local to the force plate aligned Z upwards, Y
      * towards the front of the force plate. This coordinate system is located
      * at the center of the top surface of the force plate. Any plate origin
      * offset has been accounted for in the moment data. These are forces not
-     * reactions.<p>
+     * reactions.</p>
      *
      * @see getDeviceCount
      * @see getDeviceOutputCount
@@ -2526,9 +2521,9 @@ public class DataStreamClient {
      * Return the number of samples available for the specified device at the
      * current frame.
      *
-     * If an analog device is sampling at 1000 Hz and the system is running at
+     * <p>If an analog device is sampling at 1000 Hz and the system is running at
      * 100 Hz then this function will return 10. The samples can be accessed by
-     * supplying the subsample index to GetDeviceOutputValue.
+     * supplying the subsample index to GetDeviceOutputValue.</p>
      *
      * @see getDeviceOutputCount
      * @see getDeviceOutputValue
@@ -2581,10 +2576,10 @@ public class DataStreamClient {
      * Return the force vector for the force plate in global coordinates. This
      * version takes a subsample index that allows access to all of the force
      * information. The vector is in Newtons and is with respect to the global
-     * coordinate system, regardless of the orientation of the plate.<p>
+     * coordinate system, regardless of the orientation of the plate.
      *
-     * The vector represents the force exerted upon the force plate, not the
-     * reaction force.
+     * <p>The vector represents the force exerted upon the force plate, not the
+     * reaction force.</p>
      *
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
@@ -2609,13 +2604,13 @@ public class DataStreamClient {
     /**
      * Return the moment vector for the force plate in global coordinates.
      *
-     * This version takes a subsample index that allows access to all of the
+     * <p>This version takes a subsample index that allows access to all of the
      * force information. The vector is in Newton-meters and is with respect to
      * the global coordinate system, regardless of the orientation of the plate.
      * The vector represents the moment exerted upon the force plate, not the
      * reaction moment. Any force plate origin offset is accounted for in the
      * moments so they are acting about the exact center of the top surface of
-     * the force plate.<p>
+     * the force plate.</p>
      *
      * @see getGlobalForceVector
      * @see getGlobalCentreOfPressure
@@ -2642,9 +2637,9 @@ public class DataStreamClient {
     /**
      * Return the center of pressure for the force plate in global coordinates.
      *
-     * This version takes a subsample index that allows access to all of the
+     * <p>This version takes a subsample index that allows access to all of the
      * force information. The position is in millimeters and is with respect to
-     * the global coordinate system.<p>
+     * the global coordinate system.</p>
      *
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
@@ -2672,9 +2667,9 @@ public class DataStreamClient {
      * Return the number of subsamples available for a specified force plate in
      * the current frame.
      *
-     * Additional versions of GetGlobalForceVector, GetGlobalMomentVector and
+     * <p>Additional versions of GetGlobalForceVector, GetGlobalMomentVector and
      * GetGlobalCentreOfPressure take the subsample index to allow access to all
-     * the force plate data.<p>
+     * the force plate data.</p>
      *
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
@@ -2703,12 +2698,12 @@ public class DataStreamClient {
     /**
      * Return the force vector for the force plate in global coordinates.
      *
-     * The vector is in Newtons and is with respect to the global coordinate
+     * <p>The vector is in Newtons and is with respect to the global coordinate
      * system regardless of the orientation of the force plate. The vector
      * represents the force exerted upon the force plate, not the reaction
      * force. If multiple subsamples are available, this function returns the
      * first subsample. See the alternate version of this function to access all
-     * of the analog data.
+     * of the analog data.</p>
      *
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
@@ -2734,14 +2729,14 @@ public class DataStreamClient {
     /**
      * Return the moment vector for the force plate in global coordinates.
      *
-     * The vector is in Newton-meters and is with respect to the global
+     * <p>The vector is in Newton-meters and is with respect to the global
      * coordinate system regardless of the orientation of the force plate. The
      * vector represents the moment exerted upon the force plate, not the
      * reaction moment. Any force plate origin offset is accounted for in the
      * moments so they are acting about the exact center of the top surface of
      * the force plate. If multiple subsamples are available, this function
      * returns the first subsample. See the alternate version of this function
-     * to access all of the analog data.
+     * to access all of the analog data.</p>
      *
      * @see getGlobalForceVector
      * @see getGlobalCentreOfPressure

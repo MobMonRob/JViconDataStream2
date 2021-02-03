@@ -3,10 +3,7 @@ package de.dhbw.rahmlab.vicon.datastream.api;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetTimecode;
 
 /**
- * Return the timecode information for the last frame retrieved from the DataStream. 
- * 
- * <p>If the stream is valid but timecode is not available the Output will be 
- * Result.Success and the Standard will be None.</p>
+ * Represents the timecode information for a frame retrieved from the DataStream. 
  * 
  * @see de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient#getFrame()
  * @see de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient#getFrameNumber()
