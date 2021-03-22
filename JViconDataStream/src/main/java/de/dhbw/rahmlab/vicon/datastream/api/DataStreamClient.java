@@ -193,6 +193,7 @@ public class DataStreamClient {
                 sleep(500);
             } else if (result.getResult() == Result_Enum.Success) { // -->ende der while schleife
                 System.out.println("Client Connection sucess!");
+                // throws RuntimeException if client is not connected, sollte aber nicht vorkommen
                 getFrame();
             //} else if (result.getResult() == Result_Enum.ClientAlreadyConnected) { // --> kann innerhalb der while schleife nicht auftreten
             //    System.out.println("Client already connected!");
@@ -965,10 +966,10 @@ public class DataStreamClient {
     }
 
     /**
-     * There are three modes that the SDK can operate in.Each mode has a
+     * There are three modes that the SDK can operate in. Each mode has a
      * different impact on the Client, Server, and network resources used.
      *
-     * • ServerPush In "ServerPush" mode, the Server pushes every new frame of
+     * <p>• ServerPush In "ServerPush" mode, the Server pushes every new frame of
      * data over the network to the Client. The Server will try not to drop any
      * frames. This results in the lowest latency that can be achieved. If the
      * Client is unable to read data at the rate it is being sent, then it is
@@ -977,9 +978,9 @@ public class DataStreamClient {
      * at the Server and the performance of the Server may be affected. The
      * GetFrame() method returns the most recently received frame if available,
      * or blocks the calling thread if the most recently received frame has
-     * already been processed.<p>
+     * already been processed.</p>
      *
-     * • ClientPull In "ClientPull" mode, the Client waits for a call to
+     * <p>• ClientPull In "ClientPull" mode, the Client waits for a call to
      * GetFrame(), and then requests the latest frame of data from the Server.
      * This increases latency, because a request must be sent over the network
      * to the Server, the Server has to prepare the frame of data for the
@@ -987,9 +988,9 @@ public class DataStreamClient {
      * bandwidth is kept to a minimum, because the Server only sends what you
      * need. The buffers are very unlikely to be ﬁlled, and Server performance
      * is unlikely to be affected. The GetFrame() method blocks the calling
-     * thread until the frame has been received.<p>
+     * thread until the frame has been received.</p>
      *
-     * • ClientPullPreFetch "ClientPullPreFetch" is an enhancement to the
+     * <p>• ClientPullPreFetch "ClientPullPreFetch" is an enhancement to the
      * "ClientPull" mode. A thread in the SDK continuously and preemptively does
      * a "ClientPull" on your behalf, storing the latest requested frame in
      * memory. When you next call GetFrame(), the SDK returns the last requested
@@ -997,10 +998,12 @@ public class DataStreamClient {
      * calling thread. As with normal "ClientPull", buffers are unlikely to ﬁll
      * up, and Server performance is unlikely to be affected. Latency is
      * slightly reduced, but network trafﬁc may increase if you request frames
-     * on behalf of the Client which are never used. The stream defaults to
+     * on behalf of the Client which are never used.</p>
+     * 
+     * <p>The stream defaults to
      * "ClientPull" mode as this is considered the safest option. If performance
      * is a problem, try "ClientPullPreFetch" followed by "ServerPush".
-     * <p>
+     * </p>
      *
      * @see getFrame
      * @see getLatencyTotal
@@ -3232,9 +3235,12 @@ public class DataStreamClient {
     /**
      * Request a new frame to be fetched from the Vicon DataStream Server.
      *
-     * @return false if client is not connected.
+     * @return true 
      * @throws RuntimeException if client is not connected.
      * @see setStreamMode
+     * 
+     * TODO
+     * Rückgabewert entfernen
      */
     public boolean getFrame() {
         Output_GetFrame res = client.GetFrame();
