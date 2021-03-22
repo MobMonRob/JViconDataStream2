@@ -1,16 +1,12 @@
-#Temporäre Dateien ignorieren
+#Ignore temporary files
 **/.*.kate-swp
 **/.directory
 
-#Automatisch generierte Verzeichnisse entfernen
+#Ignore generated folders
 **/.vs
 **/x64
 **/x32
 **/Debug
 **/Release
 **/target
-
-#Inhalte von Verzeichnissen entfernen
-/JViconDataStream/src/main/java/de/dhbw/rahmlab/vicon/datastream/impl/
-/JViconDataStream/**/natives/
 
