@@ -21,7 +21,7 @@ build() {
 	cd "$tmpDir"
 
 	cmake ../../../CmakeBuild/
-	make --jobs="$((2*"$(nproc)"))"
+	make --jobs="$((2*$(nproc)))"
 
 	cd "$scriptDir"
 }

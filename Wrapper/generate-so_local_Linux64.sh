@@ -18,7 +18,7 @@ run() {
 	-I"$javaInclude/linux" -I"$javaInclude" -I"$viconTarget" \
 	-o "$localTmp/libViconDataStreamSDK_wrap.o"
 
-	g++ -shared -flto "$localTmp/libViconDataStreamSDK_wrap.o" -L"$viconTarget" -lViconDataStreamSDK_CPP -Wl,-rpath,'$ORIGIN/.' -o "$localTarget/libjViconDataStreamSDK.so" \
+	g++ -shared -flto "$localTmp/libViconDataStreamSDK_wrap.o" -L"$viconTarget" -lboost -lViconDataStreamSDK_CPP -Wl,-rpath,'$ORIGIN/.' -o "$localTarget/libjViconDataStreamSDK.so" \
 	-Wl,--as-needed -Wl,--no-undefined -Wl,--no-allow-shlib-undefined
 }
 

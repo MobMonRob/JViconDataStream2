@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5.1 FATAL_ERROR)
 project(vicon-datastream-sdk
 	VERSION 1.10.20200407.123216 #same as Vicon SDK
 )
@@ -60,7 +60,7 @@ if(${LIB_TYPE} STREQUAL SHARED)
 	)
 endif()
 
-if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.5.0)
+if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.5.0)
     message(FATAL_ERROR "Not tested with gcc version lower than gcc-7.5.0. Change CMakeLists.txt if you can assure a lower version works!")
 endif()
 

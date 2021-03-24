@@ -32,7 +32,7 @@ build_boost() {
 	local -r compilerArgs="-fPIC -flto"
 
 	#https://www.boost.org/doc/libs/1_54_0/libs/iostreams/doc/installation.html
-	./b2 -q -sNO_BZIP2=1 --jobs="$((3*"$(nproc)"))" --layout=tagged --toolset=gcc architecture=x86 address-model=64 target-os=linux optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
+	./b2 -q -sNO_BZIP2=1 --jobs="$((3*$(nproc)))" --layout=tagged --toolset=gcc architecture=x86 address-model=64 target-os=linux optimization=speed cflags="$compilerArgs" cxxflags="$compilerArgs" variant=release threading=multi link=static runtime-link=shared --stagedir="$stageDir" --build-dir="$buildDir" variant=release stage
 
 	cd "$scriptDir"
 }
