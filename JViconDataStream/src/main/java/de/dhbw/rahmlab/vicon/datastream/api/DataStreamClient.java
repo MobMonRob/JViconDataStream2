@@ -193,7 +193,6 @@ public class DataStreamClient {
                 sleep(500);
             } else if (result.getResult() == Result_Enum.Success) { // -->ende der while schleife
                 System.out.println("Client Connection sucess!");
-                // throws RuntimeException if client is not connected, sollte aber nicht vorkommen
                 getFrame();
             //} else if (result.getResult() == Result_Enum.ClientAlreadyConnected) { // --> kann innerhalb der while schleife nicht auftreten
             //    System.out.println("Client already connected!");
