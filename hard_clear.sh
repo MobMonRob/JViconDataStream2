@@ -16,5 +16,7 @@ git stash &> /dev/null
 git stash clear &> /dev/null
 
 echo "yes" | ./JNativeLibLoader/hard_clear.sh
+echo "yes" | ./ViconDataStreamNative/hard_clear.sh
 
 echo "JViconDataStream2 cleared hard"
+

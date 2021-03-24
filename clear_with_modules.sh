@@ -9,6 +9,7 @@ git clean -d -ff -X &> /dev/null
 git ls-files -i --exclude-standard --directory -z| xargs -0 rm -r &> /dev/null
 
 ./JNativeLibLoader/clear.sh
+./ViconDataStreamNative/clear.sh
 
 echo "JViconDataStream2 cleared"
 
