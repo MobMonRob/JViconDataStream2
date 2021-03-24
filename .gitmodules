@@ -3,3 +3,7 @@
 	url = git@github.com:MobMonRob/JNativeLibLoader.git
 	branch = main
 
+[submodule "ViconDataStreamNative"]
+	path = ViconDataStreamNative
+	url = git@github.com:MobMonRob/ViconDataStreamNative.git
+	branch = main
