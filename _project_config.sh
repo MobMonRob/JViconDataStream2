@@ -14,5 +14,4 @@ localTmp="./target/_tmp/Linux64"
 localTarget="./target/Linux64"
 WrapperDir="$projectDir/Wrapper"
 ViconDir="$projectDir/ViconDataStreamNative"
-BoostDir="$projectDir/Boost"
 
