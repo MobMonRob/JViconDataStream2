@@ -18,4 +18,5 @@ ViconDir="$projectDir/DataStreamSDK_1.10"
 ViconLibDir="$ViconDir"
 ViconIncludeDir="$ViconDir"
 javaIncludeDir="$projectDir/jdk/include"
+ViconStringTestDir="$projectDir/ViconStringTest"
 
