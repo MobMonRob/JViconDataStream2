@@ -7,12 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "$localTarget" ]
-	then
-		$ViconDir/ensure_dependency-recursive_Linux64.sh
+	$viconDir/_regenerate_dependency-recursive_Multiarch.sh
 
-		./regenerate_local_Linux64.sh
-	fi
+	./_regenerate_local_Multiarch.sh
 }
 
 run_bash run $@
