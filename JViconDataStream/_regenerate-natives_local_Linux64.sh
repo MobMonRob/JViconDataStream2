@@ -7,12 +7,13 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	./clear_local_all.sh
+	./_clear_local_all.sh
 
 	#Has to be: <Project Folder>/natives/<os-arch> !!
 	mkdir -p ./natives/linux-amd64/
+	#windows-amd64
 
-	local -r WrapperTarget="$(realpath "$WrapperDir/$localTarget")"
+	local -r WrapperTarget="$(realpath "$wrapperDir/$linuxTarget")"
 
 	cp -L -l $WrapperTarget/*.so* ./natives/linux-amd64/
 

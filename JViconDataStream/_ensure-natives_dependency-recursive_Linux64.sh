@@ -9,9 +9,9 @@ source "./_bash_config.sh"
 run() {
 	if [ ! -d "./natives/linux-amd64/" ]
 	then
-		$WrapperDir/ensure_dependency-recursive_Linux64.sh
+		$WrapperDir/_ensure_dependency-recursive_Multiarch.sh
 
-		./regenerate-natives_local_Linux64.sh
+		./_regenerate-natives_local_Linux64.sh
 	fi
 }
 
