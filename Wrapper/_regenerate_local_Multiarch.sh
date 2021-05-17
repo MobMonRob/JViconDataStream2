@@ -9,12 +9,15 @@ source "./_bash_config.sh"
 run() {
 	./_clear_local_all.sh
 
-	./generate-wrapper_Linux64.sh
+	./generate-wrapper_Multiarch.sh
 
-	./generate-so_Linux64.sh
+	bash "./generate-dynlib_$currentPlatform.sh"
 
-	local -r viconLibDir="$viconDir/$currentTarget"
-	cp -L -l $viconLibDir/lib* $currentTarget
+	./copy-deps_Multiarch.sh
+
+	if [[ "$currentPlatform" == "$platformWindows" ]]; then
+		./copy-mingW-deps_Windows64.sh
+	fi
 }
 
 run_bash run $@
