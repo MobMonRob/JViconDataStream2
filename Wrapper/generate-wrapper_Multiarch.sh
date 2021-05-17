@@ -11,7 +11,7 @@ run() {
 	local -r swigJavaOutDir="$currentTarget/java/de/dhbw/rahmlab/vicon/datastream/impl/"
 
 	mkdir -p "$swigJavaOutDir"
-	mkdir -p "$localTmp"
+	mkdir -p "$currentTmp"
 
 	#-debug-tmsearch
 	swig -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "$swigJavaOutDir" -o "$currentTmp/ViconDataStreamSDK_wrap.cpp" -I"$viconTarget" ./PlatformIndependent.i
