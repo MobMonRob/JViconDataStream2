@@ -7,12 +7,9 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
-	if [ ! -d "./natives/linux-amd64/" ]
-	then
-		$WrapperDir/_ensure_dependency-recursive_Multiarch.sh
+	./_clear_local_all.sh
 
-		./_regenerate-natives_local_Linux64.sh
-	fi
+	./copy-deps_Multiarch.sh
 }
 
 run_bash run $@

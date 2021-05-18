@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	$wrapperDir/_regenerate_dependency-recursive_Multiarch.sh
 
-	./_regenerate-natives_local_Linux64.sh
+	./_regenerate-natives_local_Multiarch.sh
 }
 
 run_bash run $@
