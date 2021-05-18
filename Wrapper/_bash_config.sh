@@ -21,7 +21,7 @@ setSuccessToken() {
 
 
 # Only allowed within run_bash
-# Useage: if [[ "$(isSuccessTokenSet)" == "true" ]]; then
+# Usage: if [[ "$(isSuccessTokenSet)" == "false" ]]; then
 isSuccessTokenSet() {
 	local -r succesToken="$currentTmp/successToken"
 	if [[ -e "$succesToken" ]]; then
