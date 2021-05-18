@@ -8,7 +8,7 @@ source "./_bash_config.sh"
 
 run() {
 	if [[ ! -d "$currentNativesPath" ]]; then
-		$WrapperDir/_ensure_dependency-recursive_Multiarch.sh
+		$wrapperDir/_ensure_dependency-recursive_Multiarch.sh
 
 		./_regenerate-natives_local_Multiarch.sh
 	fi
