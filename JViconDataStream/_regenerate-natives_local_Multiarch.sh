@@ -10,6 +10,8 @@ run() {
 	./_clear_local_all.sh
 
 	./copy-deps_Multiarch.sh
+
+	setSuccessToken
 }
 
 run_bash run $@
