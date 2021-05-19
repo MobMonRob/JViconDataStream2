@@ -9,7 +9,7 @@ source "./_bash_config.sh"
 run() {
 	mkdir -p "$linuxTarget"
 
-	local -r viconTarget="$ViconDir/$linuxTarget"
+	local -r viconTarget="$viconDir/$linuxTarget"
 
 	#-c für nicht linken (nur .o erzeugen)
 	#-shared .so muss tun, damit sicher der Fehler nicht hier liegt.
