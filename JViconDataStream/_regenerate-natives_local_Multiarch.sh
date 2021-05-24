@@ -8,6 +8,8 @@ source "./_bash_config.sh"
 
 run() {
 	clearCurrentPlatform
+	rm -rdf "$currentNativesPath"
+	mkdir -p "$currentNativesPath"
 
 	./copy-deps_Multiarch.sh
 
