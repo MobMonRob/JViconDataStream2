@@ -17,3 +17,5 @@ else
 	exit 1
 fi
 
+implPackageDir="java/de/dhbw/rahmlab/vicon/datastream/impl/"
+

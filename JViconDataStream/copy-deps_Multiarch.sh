@@ -7,13 +7,18 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 run() {
+	rm -rdf $currentNativesPath
 	mkdir -p $currentNativesPath
 
-	local -r WrapperTarget="$(realpath "$wrapperDir/$currentTarget")"
+	local -r wrapperTarget="$(realpath "$wrapperDir/$currentTarget")"
 
-	cp -L -l $WrapperTarget/lib* $currentNativesPath
+	cp -L -l $wrapperTarget/lib* $currentNativesPath
 
-	cp -L -l -R $WrapperTarget/java/de/ ./src/main/java/
+	local -r localImplPackageDir="./src/main/$implPackageDir"
+	rm -rdf $localImplPackageDir
+	mkdir -p $localImplPackageDir
+
+	cp -L -l -R $wrapperTarget/$implPackageDir -T $localImplPackageDir
 }
 
 run_bash run $@
