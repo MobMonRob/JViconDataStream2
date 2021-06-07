@@ -61,7 +61,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader.ViconStringWrapperTest</mainClass>
+                                    <mainClass>de.dhbw.rahmlab.vicon.datastream.test.ViconStringWrapperTest</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
