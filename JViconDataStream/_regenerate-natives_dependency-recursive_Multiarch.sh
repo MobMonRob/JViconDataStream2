@@ -7,7 +7,7 @@ cd "$scriptDir"
 source "./_bash_config.sh"
 
 perPlatform() {
-	$wrapperDir/_regenerate_dependency-recursive_Multiarch.sh
+	bash "$wrapperDir/_regenerate_dependency-recursive_Multiarch.sh"
 
 	./_regenerate-natives_local_Multiarch.sh
 }
