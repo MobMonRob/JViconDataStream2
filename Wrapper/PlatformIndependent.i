@@ -33,6 +33,21 @@
 %template(VectorVectorUchar) std::vector<std::vector<unsigned char>>; //Gebraucht von Output_GetGreyscaleBlob
 %template(VectorUchar) std::vector<unsigned char>; //Gebraucht von VectorVectorUchar
 
+//IDataStreamClientBase cannot be instantiated
+%include <swiginterface.i>
+%interface_impl(ViconDataStreamSDK::CPP::IDataStreamClientBase);
+
+//Fixes [...]SwigJNI class to invoke NativeLibLoader
+%pragma(java) jniclassimports=%{
+import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
+%}
+
+%pragma(java) jniclasscode=%{
+static {
+	NativeLibLoader.load();
+}
+%}
+
 %{
 //Includes the header files in the wrapper code
 #include <iostream> //Wichtig: Vor Vicon Headern!
@@ -49,14 +64,4 @@
 %include "DataStreamRetimingClient.h"
 
 %include "ViconStringTest.h"
-
-%pragma(java) jniclassimports=%{
-import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
-%}
-
-%pragma(java) jniclasscode=%{
-static {
-	NativeLibLoader.load();
-}
-%}
 
