@@ -145,10 +145,6 @@ public class DataStreamClient {
     private  Client client;
     private String hostname;
 
-    static {
-        NativeLibLoader.load();	
-    }
-
     /**
      * You can create many instances of the Vicon DataStream Client, which can
      * connect to multiple Vicon DataStream Servers.

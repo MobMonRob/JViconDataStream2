@@ -50,3 +50,13 @@
 
 %include "ViconStringTest.h"
 
+%pragma(java) jniclassimports=%{
+import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
+%}
+
+%pragma(java) jniclasscode=%{
+static {
+	NativeLibLoader.load();
+}
+%}
+

@@ -12,10 +12,6 @@ import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
  */
 public class ViconStringWrapperTest {
 
-    static {
-        NativeLibLoader.load();
-    }
-
     public static void main(String argv[]) throws InterruptedException {
         //viconStringToJavaStringTest();
         javaStringToViconStringTest();
