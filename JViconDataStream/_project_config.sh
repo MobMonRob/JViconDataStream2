@@ -2,7 +2,7 @@
 
 
 projectDir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-wrapperDir="$projectDir/../Wrapper"
+wrapperDir="$projectDir/_dependencies/Wrapper"
 
 #Has to be: <Project Folder>/natives/<os-arch> !!
 linuxNativesPath="./natives/linux-amd64"
