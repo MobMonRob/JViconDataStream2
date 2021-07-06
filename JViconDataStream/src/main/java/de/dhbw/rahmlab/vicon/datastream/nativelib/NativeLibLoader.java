@@ -42,13 +42,11 @@ public class NativeLibLoader {
             System.exit(1);
         }
 
-        nativeLibLoader.load(Arrays.asList(libNames), ViconDataStreamSDKSwigJNI.class);
+        try {
+            nativeLibLoader.load(Arrays.asList(libNames), ViconDataStreamSDKSwigJNI.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }
-
-/*
-//Verwendung in Klassen, die hiervon abhängen:
-    static {
-        NativeLibLoader.load();
-    }
- */
