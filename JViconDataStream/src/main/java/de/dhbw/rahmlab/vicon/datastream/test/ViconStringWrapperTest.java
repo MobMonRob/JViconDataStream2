@@ -1,6 +1,5 @@
 package de.dhbw.rahmlab.vicon.datastream.test;
 
-import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconStringToJavaStringTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconConnectTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.JavaStringToViconStringTest;
