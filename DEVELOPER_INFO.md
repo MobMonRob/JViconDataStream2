@@ -7,7 +7,7 @@ After each step in which you change code, test it and fix occuring errors. Begin
 [Download](https://www.vicon.com/software/datastream-sdk/?section=downloads) the newest Vicon DataStream SDK.
 
 * CustomBoostBuild: Change the version in `_project_config.sh` so that it meets the requirement of the new SDK.
-* ViconDataStreamNative: Replace the old source code with the new one. Remove every other path than `Linux64/source`. Remove tests. Update Link “current_Vicon_source”
+* ViconDataStreamNative: Replace the old source code with the new one. Remove every other path than `Linux64/source/Vicon`. Remove test folders. Update Link “current_Vicon_source”
 * Wrapper: Just test and fix.
 * JViconDataStream: Test, fix and then update the facade.
 
