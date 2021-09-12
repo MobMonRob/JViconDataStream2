@@ -134,11 +134,6 @@ import java.util.logging.Logger;
  * Y-Left. This can be changed by using setAxisMapping.</p>
  *
  * <p>Positions are expressed in millimeters. Rotation is expressed in radians.</p>
- *
- * <p>TODO</p>
- * - Kommentare vervollständigen, Ex überprüfen
- * - throw messages in String const auslagern
- * - bis getCameraCount ist die Existenz der Methoden überprüft worden
  */
 public class DataStreamClient {
 
@@ -180,7 +175,7 @@ public class DataStreamClient {
         this.hostname = hostname;
         Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
         int trials = 0;
-        System.out.println("connect() ...");
+        //System.out.println("connect() ...");
         while (!isConnected() && Instant.now().isBefore(timeout)) {
 
             // Im Fehlerfall, also wenn kein Vicon-System gefunden wird, dann kehrt
