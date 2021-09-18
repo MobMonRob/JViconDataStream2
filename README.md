@@ -12,8 +12,8 @@ Supported build systems: Linux
 * Easy deployment with a single jar file.
 
 ## Limitations 
-* Unitested API methods: setApexDeviceFeedback(),
-* 
+* Unitested API methods: setApexDeviceFeedback(), getGreyscaleBlob(), get/setEyeTracker...(), configureWireless()
+
 ## Tested prerequisites
 * Kubuntu 18.04 x64
 * git 2.17.1: `sudo apt install git`
