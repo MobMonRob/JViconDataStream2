@@ -1,4 +1,4 @@
-package de.dhbw.rahmlab.vicon.datastream.api;
+package de.orat.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 import de.dhbw.rahmlab.vicon.datastream.impl.Direction_Enum;

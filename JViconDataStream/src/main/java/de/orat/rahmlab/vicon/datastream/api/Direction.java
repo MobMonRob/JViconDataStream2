@@ -1,4 +1,4 @@
-package de.dhbw.rahmlab.vicon.datastream.api;
+package de.orat.rahmlab.vicon.datastream.api;
 
 /**
  * 
