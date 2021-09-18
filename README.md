@@ -13,6 +13,7 @@ Supported build systems: Linux
 
 ## Limitations 
 * Unitested API methods: setApexDeviceFeedback(), getGreyscaleBlob(), get/setEyeTracker...(), configureWireless()
+* GreyScaleBlob: public methods not yet implemented
 
 ## Tested prerequisites
 * Kubuntu 18.04 x64
