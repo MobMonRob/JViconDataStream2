@@ -89,10 +89,6 @@ public class DataStreamRetimingClient {
 
     private final RetimingClient client;
 
-    static {
-        NativeLibLoader.load();	
-    }
-
     /**
      * Instances of the Vicon Data Stream RetimingClient create a DataStreamClient 
      * internally that manages the connection to the data stream.

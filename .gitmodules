@@ -6,3 +6,7 @@
 	path = ViconDataStreamNative
 	url = git@github.com:MobMonRob/ViconDataStreamNative.git
 	branch = main
+[submodule "CustomBoostBuild"]
+	path = CustomBoostBuild
+	url = git@github.com:MobMonRob/CustomBoostBuild.git
+	branch = main

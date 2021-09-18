@@ -11,7 +11,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <always_recreate_wrapper>false</always_recreate_wrapper>
-        <skipTests>false</skipTests>
+        <skipTests>true</skipTests>
     </properties>
     <developers>
         <developer>
@@ -57,6 +57,7 @@
             <groupId>de.dhbw.rahmlab</groupId>
             <artifactId>NativeLibLoader</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
@@ -74,6 +75,29 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>de.dhbw.rahmlab.vicon.datastream.test.ViconStringWrapperTest</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -119,7 +143,7 @@
                             <scripts>
                                 <script>
 <![CDATA[
-project.properties.setProperty('native_script', ${always_recreate_wrapper} == true ? '${basedir}/regenerate-natives_dependency-recursive_Linux64.sh' : '${basedir}/ensure-natives_dependency-recursive_Linux64.sh');
+project.properties.setProperty('native_script', ${always_recreate_wrapper} == true ? '"${basedir}"/_regenerate-natives_dependency-recursive_Multiarch.sh' : '"${basedir}"/_ensure-natives_dependency-recursive_Multiarch.sh');
 //println ">>${always_recreate_wrapper}";
 ]]>
                                 </script>
