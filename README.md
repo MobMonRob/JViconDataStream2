@@ -11,7 +11,9 @@ Supported build systems: Linux
 * A neat manually optimized java facade around automatically generated java wrap code.
 * Easy deployment with a single jar file.
 
-
+## Limitations 
+* Unitested API methods: setApexDeviceFeedback(),
+* 
 ## Tested prerequisites
 * Kubuntu 18.04 x64
 * git 2.17.1: `sudo apt install git`
