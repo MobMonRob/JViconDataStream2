@@ -1,7 +1,6 @@
 package de.orat.rahmlab.vicon.datastream.api;
 
 /**
- * 
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
 public class Centroid {
