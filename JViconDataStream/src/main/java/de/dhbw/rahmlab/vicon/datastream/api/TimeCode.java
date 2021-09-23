@@ -1,4 +1,4 @@
-package de.orat.rahmlab.vicon.datastream.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetTimecode;
 import de.dhbw.rahmlab.vicon.datastream.impl.TimecodeStandard_Enum;
