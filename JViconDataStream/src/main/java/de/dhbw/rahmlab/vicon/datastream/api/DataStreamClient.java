@@ -1006,12 +1006,12 @@ public class DataStreamClient {
      * @see getFrame
      * @see getLatencyTotal
      * @param mode streaming mode
-     * @throws RuntimeException if the client is connected connected.
+     * @throws RuntimeException if the client is connected.
      */
     public void setStreamMode(StreamMode_Enum mode) {
         Output_SetStreamMode result = client.SetStreamMode(mode);
-        if (!result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("setStreamMode() only allowed if the client is not connected!");
+        if (result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("setStreamMode() only allowed if the client is connected!");
         }
     }
 
