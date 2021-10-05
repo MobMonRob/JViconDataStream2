@@ -42,9 +42,6 @@ The deployable jar should now be in the following path: `./JViconDataStream/targ
 If Netbeans ignores the automatically generated java files, it helps to deactivate git within the IDE: Navigate `Tools -> Plugins -> Installed -> Show Details`, Select `Git`, right-click on it and click `Deactivate`.
 
 For more details be free to consult the README's in the folder of the subprojects.
-* [CustomBoostBuild](CustomBoostBuild/README.md)
-* [JNativeLibLoader](JNativeLibLoader/README.md)
-* [ViconDataStreamNative](ViconDataStreamNative/README.md)
 
 More Developer Info [here](DEVELOPER_INFO.md).
 
