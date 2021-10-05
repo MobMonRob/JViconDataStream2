@@ -31,6 +31,7 @@ Supported build systems: Linux
 
 ## Prepare build
 Ensure you checked out all needed submodules properly. To do that, open a terminal and execute `./_git_pull_remote_super_repo_with_current_submodules.sh`.
+Sometimes the previous command fails silently. It is therefore recommended to have a look into the submodule folders to ensure they are properly filled. If this is not the case, try to delete the respective submodule folder an re-run the command.
 
 Build the Netbeans Maven project `./JNativeLibLoader/NativeLibLoader`. You will need to rebuild it if it's codebase has changed and if you want to use the changes in JViconDataStream2.
 
@@ -47,5 +48,4 @@ If Netbeans ignores the automatically generated java files, it helps to deactiva
 For more details be free to consult the README's in the folder of the subprojects.
 
 More Developer Info [here](DEVELOPER_INFO.md).
-
 
