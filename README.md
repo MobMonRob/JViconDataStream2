@@ -11,9 +11,11 @@ Supported build systems: Linux
 * A neat manually optimized java facade around automatically generated java wrap code.
 * Easy deployment with a single jar file.
 
+
 ## Limitations 
 * Untested API methods: setApexDeviceFeedback(), getGreyscaleBlob(), get/setEyeTracker...(), configureWireless()
 * SetTimingLogFile() is not supported
+
 
 ## Tested prerequisites
 * Kubuntu 20.04 x64 LTS
@@ -25,6 +27,7 @@ Supported build systems: Linux
 * openjdk 11 LTS: `sudo apt install openjdk-11-jdk openjdk-11-demo openjdk-11-doc openjdk-11-jre-headless openjdk-11-source`
 * Snap 2.51.7 `sudo apt install snap`
 * Netbeans 12.0 LTS `sudo snap install netbeans --channel=12.0/stable --classic`
+
 
 ## Prepare build
 Ensure you checked out all needed submodules properly. To do that, open a terminal and execute `./_git_pull_remote_super_repo_with_current_submodules.sh`.
