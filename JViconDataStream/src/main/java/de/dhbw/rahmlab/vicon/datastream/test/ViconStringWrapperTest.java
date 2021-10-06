@@ -12,12 +12,10 @@ import de.orat.rahmlab.vicon.datastream.api.DataStreamClient;
 public class ViconStringWrapperTest {
 
     public static void main(String argv[]) throws InterruptedException {
-        //viconStringToJavaStringTest();
+        viconStringToJavaStringTest();
         javaStringToViconStringTest();
         //viconConnectTest();
         //testtest();
-
-        //DeleteUnusedGluegenJavaFiles.delete();
     }
 
     public static void testtest() {
