@@ -1,7 +1,6 @@
-package de.dhbw.rahmlab.vicon.datastream.api;
+package de.orat.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
-import de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader;
 import de.dhbw.rahmlab.vicon.datastream.impl.Client;
 import de.dhbw.rahmlab.vicon.datastream.impl.DeviceType_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.Direction_Enum;
@@ -134,11 +133,6 @@ import java.util.logging.Logger;
  * Y-Left. This can be changed by using setAxisMapping.</p>
  *
  * <p>Positions are expressed in millimeters. Rotation is expressed in radians.</p>
- *
- * <p>TODO</p>
- * - Kommentare vervollständigen, Ex überprüfen
- * - throw messages in String const auslagern
- * - bis getCameraCount ist die Existenz der Methoden überprüft worden
  */
 public class DataStreamClient {
 
@@ -176,7 +170,7 @@ public class DataStreamClient {
         this.hostname = hostname;
         Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
         int trials = 0;
-        System.out.println("connect() ...");
+        //System.out.println("connect() ...");
         while (!isConnected() && Instant.now().isBefore(timeout)) {
 
             // Im Fehlerfall, also wenn kein Vicon-System gefunden wird, dann kehrt
@@ -1003,12 +997,12 @@ public class DataStreamClient {
      * @see getFrame
      * @see getLatencyTotal
      * @param mode streaming mode
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is connected connected.
      */
     public void setStreamMode(StreamMode_Enum mode) {
         Output_SetStreamMode result = client.SetStreamMode(mode);
-        if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("GetFrameRateCount() but client was not connected!");
+        if (!result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("setStreamMode() only allowed if the client is not connected!");
         }
     }
 
@@ -1025,7 +1019,6 @@ public class DataStreamClient {
      * @throws IllegalArgumentException for wrong deviceName or Haptic is alread set.
      */
     public void setApexDeviceFeedback(String deviceName, boolean on) {
-        // TODO
         Output_SetApexDeviceFeedback result = client.SetApexDeviceFeedback(deviceName, on);
         if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("setApexDeviceFeedback() invoked but no frame available!");
@@ -1061,7 +1054,8 @@ public class DataStreamClient {
      * or this same direction is used in more than one argument
      *
      * <p>TODO vielleicht ein besseres Argument einführen, also z.B. xyz, yxz, ...
-     * so wie in CalcML</p>
+     * so wie in CalcML, damit falsche Kombinationen gar nicht mehr möglich
+     * sind und damit entsprechende Exceptions nicht mehr gebraucht werden</p>
      */
     public void setAxisMapping(Direction x, Direction y, Direction z) {
         Direction_Enum x_enum = Direction_Enum.swigToEnum(x.swigValue());
@@ -2810,8 +2804,8 @@ public class DataStreamClient {
     /**
      * Obtains greyscale blob data for the specified camera and blob index.
      * 
-     * @see #getGreyscaleBlobCount
-     * @see #enableGreyscaleData
+     * @see getGreyscaleBlobCount(String cameraName)
+     * @see enableGreyscaleData()
      * 
      * <p>A valid camera name may be obtained from GetCameraName(long cameraIndex).</p>
      * 
@@ -2833,19 +2827,6 @@ public class DataStreamClient {
             throw new IllegalArgumentException("getGreyscaleBlob() with invalid blobindex \""+String.valueOf(blobIndex)+"\"!");
         }
         return new GreyScaleBlob(result);
-    }
-    
-    // TODO
-    // Objektstruktur, Methoden müssen noch überlegt werden
-    // bessere Benennung
-    // unklar ob für Tracker und/oder Nexus verfügbar ist
-    // raus aus der class in eine eigene datei
-    public class GreyScaleBlob {
-        private GreyScaleBlob(Output_GetGreyscaleBlob blob){
-            VectorUint posx = blob.getBlobLinePositionsX();
-            VectorUint posy = blob.getBlobLinePositionsY();
-            VectorVectorUchar  values = blob.getBlobLinePixelValues();
-        }
     }
     
     /**
@@ -3225,20 +3206,16 @@ public class DataStreamClient {
     /**
      * Request a new frame to be fetched from the Vicon DataStream Server.
      *
-     * @return true 
      * @throws RuntimeException if client is not connected.
      * @see setStreamMode
      * 
-     * TODO
-     * Rückgabewert entfernen
      */
-    public boolean getFrame() {
+    public void getFrame() {
         Output_GetFrame res = client.GetFrame();
         Result_Enum result = res.getResult();
         if (result == Result_Enum.NotConnected){
             throw new RuntimeException("getFrame() but client is not connected!");
         }
-        return true;
     }
     
     /**

@@ -3,7 +3,7 @@ package de.dhbw.rahmlab.vicon.datastream.test;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconStringToJavaStringTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.ViconConnectTest;
 import de.dhbw.rahmlab.vicon.datastream.impl.JavaStringToViconStringTest;
-import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
+import de.orat.rahmlab.vicon.datastream.api.DataStreamClient;
 
 /**
  *
@@ -12,12 +12,10 @@ import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
 public class ViconStringWrapperTest {
 
     public static void main(String argv[]) throws InterruptedException {
-        //viconStringToJavaStringTest();
+        viconStringToJavaStringTest();
         javaStringToViconStringTest();
         //viconConnectTest();
         //testtest();
-
-        //DeleteUnusedGluegenJavaFiles.delete();
     }
 
     public static void testtest() {

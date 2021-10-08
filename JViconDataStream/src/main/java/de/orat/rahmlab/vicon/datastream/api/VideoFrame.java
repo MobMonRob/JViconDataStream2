@@ -1,4 +1,4 @@
-package de.dhbw.rahmlab.vicon.datastream.api;
+package de.orat.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
 import de.dhbw.rahmlab.vicon.datastream.impl.VectorUchar;
@@ -9,7 +9,6 @@ import java.util.stream.Stream;
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
 public class VideoFrame {
-
     private final int height;
     private final int width;
     private final long format;
