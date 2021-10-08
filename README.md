@@ -12,8 +12,8 @@ Supported build systems: Linux
 * Easy deployment with a single jar file.
 
 ## Limitations 
-* Unitested API methods: setApexDeviceFeedback(), getGreyscaleBlob(), get/setEyeTracker...(), configureWireless()
-* SetTimingLogFile() not supported
+* Untested API methods: setApexDeviceFeedback(), getGreyscaleBlob(), get/setEyeTracker...(), configureWireless()
+* SetTimingLogFile() is not supported
 
 ## Tested prerequisites
 * Kubuntu 18.04 x64
