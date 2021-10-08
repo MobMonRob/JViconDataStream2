@@ -1,7 +1,6 @@
-package de.orat.rahmlab.vicon.datastream.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
 /**
- * 
  * @author Oliver Rettig (Oliver.Rettig@orat.de)
  */
 public class Centroid {
@@ -13,6 +12,7 @@ public class Centroid {
         this.position = position;
         this.radius = radius;
     }
+    
     
     public double[] getPosition(){
         return position;

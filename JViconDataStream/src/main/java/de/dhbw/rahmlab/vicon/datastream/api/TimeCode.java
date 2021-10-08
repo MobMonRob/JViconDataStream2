@@ -1,6 +1,7 @@
-package de.orat.rahmlab.vicon.datastream.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetTimecode;
+import de.dhbw.rahmlab.vicon.datastream.impl.TimecodeStandard_Enum;
 
 /**
  * Represents the timecode information for a frame retrieved from the DataStream. 
@@ -40,5 +41,28 @@ public class TimeCode {
     }
     public long getUserBits(){
         return timeCode.getUserBits();
+    }
+    /**
+     * Get timecode standard.
+     * 
+     * @return time code standard
+     * @throws RuntimeException if the determined time code standard is unknwon
+     */
+    public String getStandard(){
+        TimecodeStandard_Enum code = timeCode.getStandard();
+        if (code.equals(TimecodeStandard_Enum.ATSC)){
+           return "ATSC";
+        } else if (code.equals(TimecodeStandard_Enum.Film)){
+            return "Film";
+        } else if (code.equals(TimecodeStandard_Enum.NTSC)){
+            return "NTSC";
+        } else if (code.equals(TimecodeStandard_Enum.NTSCDrop)){
+            return "NTSDrop";
+        } else if (code.equals(TimecodeStandard_Enum.NTSCFilm)){
+            return "NTSFilm";
+        } else if (code.equals(TimecodeStandard_Enum.PAL)){
+            return "PAL";
+        }
+        throw new RuntimeException("TimeCode.getStandard(): Unknown result value \""+code.toString()+"!");
     }
 }

@@ -1,4 +1,4 @@
-package de.orat.rahmlab.vicon.datastream.api;
+package de.dhbw.rahmlab.vicon.datastream.api;
 
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetVideoFrame;
 import de.dhbw.rahmlab.vicon.datastream.impl.Client;
@@ -148,17 +148,23 @@ public class DataStreamClient {
     }
 
     /**
-     * Establish a dedicated connection to a Vicon DataStream Server.The function defaults to connecting on port 801.
+     * Establish a dedicated connection to a Vicon DataStream Server.
+     * 
+     * The function defaults to connecting on port 801.
      *
      * <p>You can specify an alternate port number after a colon.</p>
      *
-     * This is for future compatibility: current products serve data on port 801 
+     * <p>This is for future compatibility: current products serve data on port 801 
      * only. Additional clients can be added separated with a semicolon ’;’. 
-     * These are used in combination to reduce temporal jitter.<p>
+     * These are used in combination to reduce temporal jitter.</p>
      *
+     * <p>This method invokdes getFrame() as workaround, after successfull connection, because the
+     * first invocation of getFrame() does load incorrect data. </p>
+     * 
      * @param timeoutInMs timeout in milliseconds
      * @see connectToMulticast
      * @see disconnect
+     *
      * @see isConnected
      * @param hostname The DNS identifiable name, or IP address of the PC
      * hosting the DataStream server. The function defaults to connecting on
@@ -947,7 +953,10 @@ public class DataStreamClient {
      * The default value is 1, which always supplies the latest frame. Choose
      * higher values to reduce the risk of missing frames between calls.</p>
      *
+     * <p>It looks like the buffer is used only for the ServerPush-method.</p>
+     * 
      * @see getFrame
+     * @see setStreamMode
      * @param bufferSize The maximum number of frames to buffer.
      */
     public void setBufferSize(long bufferSize) {
@@ -997,12 +1006,12 @@ public class DataStreamClient {
      * @see getFrame
      * @see getLatencyTotal
      * @param mode streaming mode
-     * @throws RuntimeException if the client is connected connected.
+     * @throws RuntimeException if the client is connected.
      */
     public void setStreamMode(StreamMode_Enum mode) {
         Output_SetStreamMode result = client.SetStreamMode(mode);
-        if (!result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("setStreamMode() only allowed if the client is not connected!");
+        if (result.getResult().equals(Result_Enum.NotConnected)) {
+            throw new RuntimeException("setStreamMode() only allowed if the client is connected!");
         }
     }
 

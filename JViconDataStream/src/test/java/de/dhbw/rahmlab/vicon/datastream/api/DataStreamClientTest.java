@@ -1,8 +1,5 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 
-import de.orat.rahmlab.vicon.datastream.api.TimeCode;
-import de.orat.rahmlab.vicon.datastream.api.DataStreamClient;
-import de.orat.rahmlab.vicon.datastream.api.Version;
 import de.dhbw.rahmlab.vicon.datastream.impl.StreamMode_Enum;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;

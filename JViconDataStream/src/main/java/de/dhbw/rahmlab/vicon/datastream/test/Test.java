@@ -1,7 +1,7 @@
 package de.dhbw.rahmlab.vicon.datastream.test;
 
-import de.orat.rahmlab.vicon.datastream.api.Version;
-import de.orat.rahmlab.vicon.datastream.api.DataStreamClient;
+import de.dhbw.rahmlab.vicon.datastream.api.Version;
+import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
 
 /**
  *
