@@ -13,6 +13,7 @@ public class Centroid {
         this.radius = radius;
     }
     
+    
     public double[] getPosition(){
         return position;
     }
