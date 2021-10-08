@@ -31,6 +31,13 @@ public class ViconStringWrapperTest {
 
         String javaInputString = "javaInputString";
 
+        // Achtung: scheint aktuell zumindest auf einigen Windows-Systemen nicht zu funktionieren...
+        // Ausgabe bleibt dann leer, auf Fabians Windows-System reproduzierbar
+        //FIXME
+        // einziger Unterschied zur funktionsfähigen Version: 
+        // Versionssprung im Crosscompiler hat stattgefunden 
+        // - unter linux geht es 
+        // - swig-Konfiguration falsch?
         String output = test.testJavaStringInput(javaInputString);
         System.out.println("testJavaStringInput Output: " + output);
 
