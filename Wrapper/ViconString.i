@@ -2,151 +2,177 @@
 %ignore ViconDataStreamSDK::CPP::IStringFactory;
 %ignore ViconDataStreamSDK::CPP::operator<<;
 
-namespace ViconDataStreamSDK
-{
-namespace CPP
-{
+//namespace ViconDataStreamSDK
+//{
+//namespace CPP
+//{
 
-%naturalvar String;
+%naturalvar ViconDataStreamSDK::CPP::String;
 
-class String;
+//class String;
 
 //Typemap ViconDataStreamSDK::CPP::String <-> java.lang.String
 //Angelehnt an https://github.com/swig/swig/blob/master/Lib/java/std_string.i
 
+
+%{
+    //std::unique_ptr
+    #include <memory>
+    
+    //theStringFactory
+    #include "IDataStreamClientBase.h"
+    #include "StringFactory.h"
+    ViconDataStreamSDK::CPP::VStringFactory theVStringFactory;
+    ViconDataStreamSDK::CPP::IStringFactory & theStringFactory = theVStringFactory;
+%}
+
+
+%fragment("ViconString", "header")
+%{
+    std::unique_ptr<ViconDataStreamSDK::CPP::String> toViconString(JNIEnv* jenv, jstring theJavaString)
+    {
+        if(!theJavaString)
+        {
+            SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
+            return 0;
+        }
+  
+        const char *javaStringChars = (const char *)jenv->GetStringUTFChars(theJavaString, 0);
+        if (!javaStringChars)
+        {
+            SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "GetStringUTFChars returned null");
+            return 0;
+        }
+  
+        ViconDataStreamSDK::CPP::String* viconString = new ViconDataStreamSDK::CPP::String();
+        viconString->Set(javaStringChars, theStringFactory);
+        
+        jenv->ReleaseStringUTFChars(theJavaString, javaStringChars);
+        
+        return std::unique_ptr<ViconDataStreamSDK::CPP::String>(viconString);
+    }
+%}
+
+
+/////////////////////////////////////////////////////
+// C++ Typemaps : in
+/////////////////////////////////////////////////////
+
+
+//Java -> C++
+// const version auto generated
+//$1: ViconDataStreamSDK::CPP::String
+//$input: java.lang.String
+%typemap(in, fragment="ViconString") ViconDataStreamSDK::CPP::String
+%{
+    //Typemap: in
+    
+    $1 = *(toViconString(jenv, $input).get());
+%}
+
+
+//Java -> C++
+// const version auto generated
+//tmpViconString is needed because it still lives after the end
+//of the typemap and in that way we ensure that a pointer to it
+//is still valid when passed to a function.
+%typemap(in) ViconDataStreamSDK::CPP::String & (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
+%{
+    //Typemap: in&
+    
+    tmpViconString = toViconString(jenv, $input);
+    $1 = tmpViconString.get();
+%}
+
+
+//Java -> C++
+// const version auto generated
+//tmpViconString is needed because it still lives after the end
+//of the typemap and in that way we ensure that a pointer to it
+//is still valid when passed to a function.
+%typemap(in) ViconDataStreamSDK::CPP::String * (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
+%{
+    //Typemap: in*
+    
+    tmpViconString = toViconString(jenv, $input);
+    $1 = tmpViconString.get();
+%}
+
+
+/////////////////////////////////////////////////////
+// C++ Typemaps : out
+/////////////////////////////////////////////////////
+
+
+//C++ -> Java
+// const version auto generated
+%typemap(out) ViconDataStreamSDK::CPP::String
+%{
+    $result = jenv->NewStringUTF($1.operator std::string().c_str());
+%}
+
+
+//Functions should not return pointer. If them do: clarify who shall delete.
+//Maybe checkout in the SWIG documentation: "newfree" typemap
+/*
+//C++ -> Java
+// const version auto generated
+%typemap(out) ViconDataStreamSDK::CPP::String &
+%{
+    $result = jenv->NewStringUTF($1->operator std::string().c_str());
+%}
+*/
+
+
+//Functions should not return pointer. If them do: clarify who shall delete.
+//Maybe checkout in the SWIG documentation: "newfree" typemap
+/*
+//C++ -> Java
+// const version auto generated
+%typemap(out) ViconDataStreamSDK::CPP::String *
+%{
+    $result = jenv->NewStringUTF($1->operator std::string().c_str());
+%}
+*/
+
+
+/////////////////////////////////////////////////////
+// Java Typemaps
+/////////////////////////////////////////////////////
+
+
+//http://www.swig.org/Doc4.0/SWIGDocumentation.html#Java_typemaps_c_to_java_types
+
+
 // String
+// const version auto generated
 %typemap(jni) ViconDataStreamSDK::CPP::String "jstring"
 %typemap(jtype) ViconDataStreamSDK::CPP::String "String"
 %typemap(jstype) ViconDataStreamSDK::CPP::String "String"
-%typemap(javadirectorin) ViconDataStreamSDK::CPP::String "$jniinput"
-%typemap(javadirectorout) ViconDataStreamSDK::CPP::String "$javacall"
-
-
-//Java -> C++
-//$1: ViconDataStreamSDK::CPP::String
-//$input: java.lang.String
-%typemap(in) ViconDataStreamSDK::CPP::String
-%{ if(!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
-     return $null;
-    }
-    const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
-    if (!$1_pstr) return $null;
-
-    $1 = ViconDataStreamSDK::CPP::String(std::string($1_pstr));
-    jenv->ReleaseStringUTFChars($input, $1_pstr); %}
-//std::string copies, ViconString does not!
-
-//Java -> C++
-//$result: return ViconDataStreamSDK::CPP::String
-%typemap(directorout) ViconDataStreamSDK::CPP::String
-%{ if(!$input) {
-     if (!jenv->ExceptionCheck()) {
-       SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
-     }
-     return $null;
-   }
-   const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
-   if (!$1_pstr) return $null;
-   $result = ViconDataStreamSDK::CPP::String(std::string($1_pstr));
-   jenv->ReleaseStringUTFChars($input, $1_pstr); %}
-
-
-//C++ -> Java
-%typemap(directorin,descriptor="Ljava/lang/String;") ViconDataStreamSDK::CPP::String
-%{ $input = jenv->NewStringUTF($1.operator std::string().c_str());
-   Swig::LocalRefGuard $1_refguard(jenv, $input); %}
-
-
-//C++ -> Java
-%typemap(out) ViconDataStreamSDK::CPP::String
-%{ $result = jenv->NewStringUTF($1.operator std::string().c_str()); %}
-
-
 %typemap(javain) ViconDataStreamSDK::CPP::String "$javainput"
-
-
 %typemap(javaout) ViconDataStreamSDK::CPP::String {
     return $jnicall;
-  }
-
-
-%typemap(typecheck) ViconDataStreamSDK::CPP::String = char *;
-
-
-%typemap(throws) ViconDataStreamSDK::CPP::String
-%{ SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, $1.operator std::string().c_str());
-   return $null; %}
-
-
-// const String &
-%typemap(jni) const ViconDataStreamSDK::CPP::String & "jstring"
-%typemap(jtype) const ViconDataStreamSDK::CPP::String & "String"
-%typemap(jstype) const ViconDataStreamSDK::CPP::String & "String"
-%typemap(javadirectorin) const ViconDataStreamSDK::CPP::String & "$jniinput"
-%typemap(javadirectorout) const ViconDataStreamSDK::CPP::String & "$javacall"
-
-//Java -> C++
-%typemap(in) const ViconDataStreamSDK::CPP::String &
-%{ if(!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
-     return $null;
-   }
-   const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
-   if (!$1_pstr) return $null;
-
-   std::string $1_stdString = std::string($1_pstr);
-
-   $*1_ltype $1_str($1_stdString);
-   //$*1_ltype $1_str(std::string($1_pstr)); //does not work?
-
-   $1 = &$1_str;
-   jenv->ReleaseStringUTFChars($input, $1_pstr); %}
-
-//Java -> C++
-%typemap(directorout,warning=SWIGWARN_TYPEMAP_THREAD_UNSAFE_MSG) const ViconDataStreamSDK::CPP::String &
-%{ if(!$input) {
-     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
-     return $null;
-   }
-   const char *$1_pstr = (const char *)jenv->GetStringUTFChars($input, 0);
-   if (!$1_pstr) return $null;
-
-   std::string $1_stdString = std::string($1_pstr);
-
-   //possible thread/reentrant code problem
-   static $*1_ltype $1_str;
-
-   $1_str = $*1_ltype($1_stdString);
-
-   $result = &$1_str;
-   jenv->ReleaseStringUTFChars($input, $1_pstr); %}
-
-
-%typemap(directorin,descriptor="Ljava/lang/String;") const ViconDataStreamSDK::CPP::String &
-%{ $input = jenv->NewStringUTF($1.operator std::string().c_str());
-   Swig::LocalRefGuard $1_refguard(jenv, $input); %}
-
-
-%typemap(out) const ViconDataStreamSDK::CPP::String &
-%{ $result = jenv->NewStringUTF($1->operator std::string().c_str()); %}
-
-
-%typemap(javain) const ViconDataStreamSDK::CPP::String & "$javainput"
-
-
-%typemap(javaout) const ViconDataStreamSDK::CPP::String & {
-    return $jnicall;
-  }
-
-
-%typemap(typecheck) const ViconDataStreamSDK::CPP::String & = char *;
-
-
-%typemap(throws) const ViconDataStreamSDK::CPP::String &
-%{ SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, $1.operator std::string().c_str());
-   return $null; %}
-
-
 }
-}
+
+
+// String &
+// const version auto generated
+%typemap(jni) ViconDataStreamSDK::CPP::String & = ViconDataStreamSDK::CPP::String;
+%typemap(jtype) ViconDataStreamSDK::CPP::String & = ViconDataStreamSDK::CPP::String;
+%typemap(jstype) ViconDataStreamSDK::CPP::String & = ViconDataStreamSDK::CPP::String;
+%typemap(javain) ViconDataStreamSDK::CPP::String & = ViconDataStreamSDK::CPP::String;
+%typemap(javaout) ViconDataStreamSDK::CPP::String & = ViconDataStreamSDK::CPP::String;
+
+
+// String *
+// const version auto generated
+%typemap(jni) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
+%typemap(jtype) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
+%typemap(jstype) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
+%typemap(javain) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
+%typemap(javaout) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
+
+
+//}
+//}
+

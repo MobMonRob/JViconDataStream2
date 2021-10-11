@@ -12,16 +12,8 @@ import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
 public class ViconStringWrapperTest {
 
     public static void main(String argv[]) throws InterruptedException {
-        viconStringToJavaStringTest();
+        //viconStringToJavaStringTest();
         javaStringToViconStringTest();
-        //viconConnectTest();
-        //testtest();
-    }
-
-    public static void testtest() {
-        DataStreamClient client = new DataStreamClient();
-        client.connect("192.168.10.1", 4000l);
-        System.out.println(client.getCameraName(0));
     }
 
     public static void javaStringToViconStringTest() {
@@ -29,32 +21,23 @@ public class ViconStringWrapperTest {
 
         String javaInputString = "javaInputString";
 
-        // Achtung: scheint aktuell zumindest auf einigen Windows-Systemen nicht zu funktionieren...
-        // Ausgabe bleibt dann leer, auf Fabians Windows-System reproduzierbar
-        //FIXME
-        // einziger Unterschied zur funktionsfähigen Version: 
-        // Versionssprung im Crosscompiler hat stattgefunden 
-        // - unter linux geht es 
-        // - swig-Konfiguration falsch?
-        String output = test.testJavaStringInput(javaInputString);
-        System.out.println("testJavaStringInput Output: " + output);
+        String testJavaStringInput = test.testJavaStringInput(javaInputString);
+        System.out.println("testJavaStringInput Output: " + testJavaStringInput);
 
-        String referenceOutput = test.testJavaStringReferenceInput(javaInputString);
-        System.out.println("testJavaStringReferenceInput Output: " + referenceOutput);
-    }
+        String testJavaStringInputConst = test.testJavaStringInputConst(javaInputString);
+        System.out.println("testJavaStringInputConst Output: " + testJavaStringInputConst);
 
-    public static void viconConnectTest() {
-        System.out.println("enter viconConnectTest()");
+        String testJavaStringInputPointer = test.testJavaStringInputPointer(javaInputString);
+        System.out.println("testJavaStringInputPointer Output: " + testJavaStringInputPointer);
 
-        ViconConnectTest connectTest = new ViconConnectTest();
-        //Output_Connect output = connectTest.testConnect();
+        String testJavaStringInputPointerConst = test.testJavaStringInputPointerConst(javaInputString);
+        System.out.println("testJavaStringInputPointerConst Output: " + testJavaStringInputPointerConst);
 
-        //Nur falscher Port gibt clientConnectionFailed
-        String output = connectTest.testConnectGiven("192.168.10.1:51001");
-        //51001
-        System.out.println("Result: " + output);
+        String testJavaStringInputReference = test.testJavaStringInputReference(javaInputString);
+        System.out.println("testJavaStringInputReference Output: " + testJavaStringInputReference);
 
-        System.out.println("leave viconConnectTest()");
+        String testJavaStringInputReferenceConst = test.testJavaStringInputReferenceConst(javaInputString);
+        System.out.println("testJavaStringInputReferenceConst Output: " + testJavaStringInputReferenceConst);
     }
 
     public static void viconStringToJavaStringTest() {
