@@ -44,12 +44,12 @@
             return 0;
         }
   
-        ViconDataStreamSDK::CPP::String* viconString = new ViconDataStreamSDK::CPP::String();
+        std::unique_ptr<ViconDataStreamSDK::CPP::String> viconString = std::make_unique<ViconDataStreamSDK::CPP::String>();
         viconString->Set(javaStringChars, theStringFactory);
-        
+
         jenv->ReleaseStringUTFChars(theJavaString, javaStringChars);
         
-        return std::unique_ptr<ViconDataStreamSDK::CPP::String>(viconString);
+        return viconString;
     }
 %}
 
@@ -76,7 +76,7 @@
 //tmpViconString is needed because it still lives after the end
 //of the typemap and in that way we ensure that a pointer to it
 //is still valid when passed to a function.
-%typemap(in) ViconDataStreamSDK::CPP::String & (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
+%typemap(in, fragment="ViconString") ViconDataStreamSDK::CPP::String & (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
 %{
     //Typemap: in&
     
@@ -90,7 +90,7 @@
 //tmpViconString is needed because it still lives after the end
 //of the typemap and in that way we ensure that a pointer to it
 //is still valid when passed to a function.
-%typemap(in) ViconDataStreamSDK::CPP::String * (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
+%typemap(in, fragment="ViconString") ViconDataStreamSDK::CPP::String * (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
 %{
     //Typemap: in*
     
