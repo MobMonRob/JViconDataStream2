@@ -22,7 +22,7 @@
     //std::string
     #include <string>
 
-    std::unique_ptr<std::string> toCppString(JNIEnv* jenv, jstring theJavaString)
+    static std::unique_ptr<std::string> toCppString(JNIEnv* jenv, jstring theJavaString)
     {
         if(!theJavaString)
         {
