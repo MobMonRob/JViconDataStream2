@@ -12,44 +12,36 @@
 //class String;
 
 //Typemap ViconDataStreamSDK::CPP::String <-> java.lang.String
-//Angelehnt an https://github.com/swig/swig/blob/master/Lib/java/std_string.i
+//Inspired by: https://github.com/swig/swig/blob/master/Lib/java/std_string.i
 
 
+%fragment("CppString", "header")
 %{
     //std::unique_ptr
     #include <memory>
-    
-    //theStringFactory
-    #include "IDataStreamClientBase.h"
-    #include "StringFactory.h"
-    ViconDataStreamSDK::CPP::VStringFactory theVStringFactory;
-    ViconDataStreamSDK::CPP::IStringFactory & theStringFactory = theVStringFactory;
-%}
+    //std::string
+    #include <string>
 
-
-%fragment("ViconString", "header")
-%{
-    std::unique_ptr<ViconDataStreamSDK::CPP::String> toViconString(JNIEnv* jenv, jstring theJavaString)
+    std::unique_ptr<std::string> toCppString(JNIEnv* jenv, jstring theJavaString)
     {
         if(!theJavaString)
         {
-            SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null String");
-            return 0;
+            SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "theJavaString is null.");
+            return nullptr;
         }
   
-        const char *javaStringChars = (const char *)jenv->GetStringUTFChars(theJavaString, 0);
+        const char* javaStringChars = jenv->GetStringUTFChars(theJavaString, 0);
         if (!javaStringChars)
         {
-            SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "GetStringUTFChars returned null");
-            return 0;
+            SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "GetStringUTFChars returned null.");
+            return nullptr;
         }
   
-        std::unique_ptr<ViconDataStreamSDK::CPP::String> viconString = std::make_unique<ViconDataStreamSDK::CPP::String>();
-        viconString->Set(javaStringChars, theStringFactory);
+        std::unique_ptr<std::string> cppString = std::make_unique<std::string>(javaStringChars);
 
         jenv->ReleaseStringUTFChars(theJavaString, javaStringChars);
         
-        return viconString;
+        return cppString;
     }
 %}
 
@@ -63,39 +55,42 @@
 // const version auto generated
 //$1: ViconDataStreamSDK::CPP::String
 //$input: java.lang.String
-%typemap(in, fragment="ViconString") ViconDataStreamSDK::CPP::String
+//cppString is needed to ensure all pointers are still valid after the typemap when the wrapped cpp function is called.
+%typemap(in, fragment="CppString") ViconDataStreamSDK::CPP::String (std::unique_ptr<std::string> cppString)
 %{
-    //Typemap: in
-    
-    $1 = *(toViconString(jenv, $input).get());
+    //Begin typemap: in
+    cppString = toCppString(jenv, $input);
+    if (!cppString) return $null;
+    $1 = ViconDataStreamSDK::CPP::String(cppString->c_str());
+    //End typemap: in
 %}
 
 
 //Java -> C++
 // const version auto generated
-//tmpViconString is needed because it still lives after the end
-//of the typemap and in that way we ensure that a pointer to it
-//is still valid when passed to a function.
-%typemap(in, fragment="ViconString") ViconDataStreamSDK::CPP::String & (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
+//cppString, viconString are needed to ensure all pointers are still valid after the typemap when the wrapped cpp function is called.
+%typemap(in, fragment="CppString") ViconDataStreamSDK::CPP::String & (std::unique_ptr<std::string> cppString, std::unique_ptr<ViconDataStreamSDK::CPP::String> viconString)
 %{
-    //Typemap: in&
-    
-    tmpViconString = toViconString(jenv, $input);
-    $1 = tmpViconString.get();
+    //Begin typemap: in&
+    cppString = toCppString(jenv, $input);
+    if (!cppString) return $null;
+    viconString = std::make_unique<ViconDataStreamSDK::CPP::String>(cppString->c_str());
+    $1 = viconString.get();
+    //End typemap: in&
 %}
 
 
 //Java -> C++
 // const version auto generated
-//tmpViconString is needed because it still lives after the end
-//of the typemap and in that way we ensure that a pointer to it
-//is still valid when passed to a function.
-%typemap(in, fragment="ViconString") ViconDataStreamSDK::CPP::String * (std::unique_ptr<ViconDataStreamSDK::CPP::String> tmpViconString)
+//cppString, viconString are needed to ensure all pointers are still valid after the typemap when the wrapped cpp function is called.
+%typemap(in, fragment="CppString") ViconDataStreamSDK::CPP::String * (std::unique_ptr<std::string> cppString, std::unique_ptr<ViconDataStreamSDK::CPP::String> viconString)
 %{
-    //Typemap: in*
-    
-    tmpViconString = toViconString(jenv, $input);
-    $1 = tmpViconString.get();
+    //Begin typemap: in*
+    cppString = toCppString(jenv, $input);
+    if (!cppString) return $null;
+    viconString = std::make_unique<ViconDataStreamSDK::CPP::String>(cppString->c_str());
+    $1 = viconString.get();
+    //End typemap: in*
 %}
 
 
