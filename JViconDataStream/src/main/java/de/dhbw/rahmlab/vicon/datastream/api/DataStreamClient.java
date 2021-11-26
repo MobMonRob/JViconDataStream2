@@ -107,6 +107,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsGreyscaleDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_IsMarkerRayDataEnabled;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_SetApexDeviceFeedback;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_SetAxisMapping;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_SetCameraFilter;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_SetStreamMode;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_StartTransmittingMulticast;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_StopTransmittingMulticast;
@@ -3256,11 +3257,39 @@ public class DataStreamClient {
     }
     
     /**
+     * Add a filter to allow centroid, blob or video data to be transmitted for 
+     * the specified cameras only.
+     *
+     * <p>A valid camera name may be obtained from getCameraName(cameraIndex)</p>
+     * <p>A valid camera id may be obtained from GetCameraId(cameraName)</p>
+     * 
+     * @see getGreyscaleBlobCount
+     * @see getGreyscaleBlob
+     * @see getCentroidCount
+     * @see getCentroidPosition
+     * @see getCentroidWeight
+     * @param cameraIds4Centroids array of cameraids centroids are transmitted
+     * @param cameraIds4Blobs arry of cameraids blobs are transmitted
+     * @param cameraIds4Video array of cameraids video is transmitted
+     * @throws RuntimeException if something goes wrong
+     */
+    public void setCameraFilter(long[] cameraIds4Centroids, long[] cameraIds4Blobs,
+            long[] cameraIds4Video){
+        VectorUint cameraIdsForCentroids = new VectorUint(cameraIds4Centroids);
+        VectorUint cameraIdsForBlobs = new VectorUint(cameraIds4Blobs);
+        VectorUint cameraIdsForVideo = new VectorUint(cameraIds4Video);
+        Output_SetCameraFilter result = client.SetCameraFilter(cameraIdsForCentroids, 
+                cameraIdsForBlobs, cameraIdsForVideo);
+        if (result.getResult() != Result_Enum.Success){
+            throw new RuntimeException("Camera filter not set!");
+        }
+    }
+        
+    /**
      * Request that the wireless adapters will be optionally configured for streaming data.
      * 
      * On windows this will disable background scan and enable streaming. The call 
      * does not need the client to be connected.
-     * 
      */
     public void configureWireless(){
         Output_ConfigureWireless result = client.ConfigureWireless();
