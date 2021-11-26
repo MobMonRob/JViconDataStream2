@@ -18,8 +18,8 @@ public class NativeLibLoader {
 
     private static void loadActually() {
         try {
-            de.orat.rahmlab.nativelibloader.api.NativeLibLoader.init(true);
-            de.orat.rahmlab.nativelibloader.api.NativeLibLoader nativeLibLoader = de.orat.rahmlab.nativelibloader.api.NativeLibLoader.getInstance();
+            de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.init(true);
+            de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader nativeLibLoader = de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.getInstance();
             nativeLibLoader.load(ViconDataStreamSDKSwigJNI.class);
         } catch (Exception e) {
             e.printStackTrace();
