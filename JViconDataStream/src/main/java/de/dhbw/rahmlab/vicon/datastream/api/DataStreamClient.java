@@ -32,9 +32,11 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableVideoData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetAxisMapping;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraCount;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraDisplayName;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraId;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraName;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraResolution;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraType;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraUserId;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidCount;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidPosition;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidWeight;
@@ -3158,6 +3160,9 @@ public class DataStreamClient {
      * @throws IllegalArgumentException if no camera found for the given camera name
      */
     public long[] getCameraResolution(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
         Output_GetCameraResolution result = client.GetCameraResolution(cameraName);
         if (result.getResult() == Result_Enum.NotConnected){
             throw new RuntimeException ("getCameraResolution(): Camera \""+cameraName+"\" not connected!");
@@ -3165,6 +3170,73 @@ public class DataStreamClient {
             throw new IllegalArgumentException("getCameraResolution(): Invalid camera name \""+cameraName+"\"!");
         }
         return new long[]{result.getResolutionX(), result.getResolutionY()};
+    }
+    
+   
+    /**
+     * Gets the sensor mode of the specified camera, whether it is binning, subsampling or normal.
+     * 
+     * This information is only available from Vicon applications released after DSSDK 1.11<p>
+     * 
+     * @see getCameraName
+     * @param cameraName
+     * @return 
+     */
+    /*public long[] getCameraSensorMode(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
+        Output_GetCameraSensorMode result = client.GetCameraSensorMode(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException ("getCameraResolution(): Camera \""+cameraName+"\" not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new IllegalArgumentException("getCameraResolution(): Invalid camera name \""+cameraName+"\"!");
+        }
+        return new long[]{result.getResolutionX(), result.getResolutionY()};
+    }*/
+    
+    /**
+     * get camera id.
+     * 
+     * @see getCameraName
+     * @param cameraName the name of the camera
+     * @return camera id
+     * @throws RuntimeException if the client is not connected
+     * @throws IllegalArgumentException if no camera found for the given camera name
+     */
+    public long getCameraId(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
+        Output_GetCameraId result = client.GetCameraId(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException ("getCameraId(): Camera \""+cameraName+"\" not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new IllegalArgumentException("getCameraId(): Invalid camera name \""+cameraName+"\"!");
+        }
+        return result.getCameraId();
+    }
+    
+    /**
+     * get camera id.
+     * 
+     * @see getCameraName
+     * @param cameraName the name of the camera
+     * @return camera id
+     * @throws RuntimeException if the client is not connected
+     * @throws IllegalArgumentException if no camera found for the given camera name
+     */
+    public long getCameraUserId(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
+        Output_GetCameraUserId result = client.GetCameraUserId(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException ("getCameraUserId(): Camera \""+cameraName+"\" not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new IllegalArgumentException("getCameraUserId(): Invalid camera name \""+cameraName+"\"!");
+        }
+        return result.getCameraUserId();
     }
     
     /** 
