@@ -2385,7 +2385,7 @@ public class DataStreamClient {
      * @return the number of outputs for a device in the DataStream.
      * @throws RuntimeException if client is not connected or no frame is
      * available
-     * @throws IllegalArgumentException if the device name is not available
+     * @throws IllegalArgumentException if the device with the given name is not available or the given name is null
      */
     public long getDeviceOutputCount(String deviceName) {
         if (deviceName == null) {
@@ -2396,6 +2396,8 @@ public class DataStreamClient {
             throw new RuntimeException("getDeviceOutputCount() but client is not connected!!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getDeviceOutputCount () but no frame available!");
+        } else if (result.getResult() == Result_Enum.InvalidDeviceName){
+            throw new IllegalArgumentException("getDeviceOutputCount() but invalid device name \""+deviceName+"\"!");
         }
         return result.getDeviceOutputCount();
     }
@@ -3251,9 +3253,14 @@ public class DataStreamClient {
      * <p>This will result in all subjects beeing sent.</p>
      * 
      * @see addToSubjectFilter
+     * @throws RuntimeException
      */
     public void clearSubjectFilter(){
         Output_ClearSubjectFilter result = client.ClearSubjectFilter();
+        if (result.getResult() != Result_Enum.Success){
+            // it is not clear if it is possible that this happens 
+            throw new RuntimeException("Subjects filter not cleared!");
+        }
     }
     
     /**
@@ -3281,6 +3288,7 @@ public class DataStreamClient {
         Output_SetCameraFilter result = client.SetCameraFilter(cameraIdsForCentroids, 
                 cameraIdsForBlobs, cameraIdsForVideo);
         if (result.getResult() != Result_Enum.Success){
+            // it is not clear if it is possible that this happens 
             throw new RuntimeException("Camera filter not set!");
         }
     }
@@ -3288,15 +3296,15 @@ public class DataStreamClient {
     /**
      * Request that the wireless adapters will be optionally configured for streaming data.
      * 
-     * On windows this will disable background scan and enable streaming. The call 
-     * does not need the client to be connected.
+     * <p>On windows this will disable background scan and enable streaming. The call 
+     * does not need the client to be connected.</p>
      */
     public void configureWireless(){
         Output_ConfigureWireless result = client.ConfigureWireless();
         if (result.getResult() == Result_Enum.NotSupported){
-            throw new RuntimeException("configureWireless() invoked but the OS does not support this function1");
+            throw new RuntimeException("configureWireless() invoked but the OS does not support this function!");
         } else if (result.getResult() == Result_Enum.ConfigurationFailed){
-            throw new RuntimeException("configurateWireless failed: \""+result.getError().toString()+"\"!");
+            throw new RuntimeException("configurateWireless failed: \""+result.getError()+"\"!");
         } 
     }
 
