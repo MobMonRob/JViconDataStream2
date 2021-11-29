@@ -31,6 +31,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableUnlabeledMarkerData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_EnableVideoData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetAxisMapping;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraCount;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraDisplayName;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraName;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraResolution;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraType;
@@ -3123,6 +3124,28 @@ public class DataStreamClient {
                     cameraName+"!");
         } 
         return result.getCameraType();
+    }
+    
+    /**
+     * Get camera type.
+     * 
+     * @param cameraName
+     * @return camera type
+     * @throws IllegalArgumentException if the camerName is unknown or null
+     * @throws RuntimeException if the client is not connected or no frame is available
+     */
+    public String getCameraDisplayName(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
+        Output_GetCameraDisplayName result = client.GetCameraDisplayName(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException("getCameraDisplayName() but client is not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new IllegalArgumentException("getCameraDisplayName() but unknown camera name \"" + 
+                    cameraName+"!");
+        } 
+        return result.getCameraDisplayName();
     }
     
     /**
