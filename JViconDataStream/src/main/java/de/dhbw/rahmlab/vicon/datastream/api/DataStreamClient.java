@@ -3196,6 +3196,23 @@ public class DataStreamClient {
     }*/
     
     /**
+     * Returns the sensor windowing size for the camera.
+This information is only available from Vicon applications released after DSSDK 1.11
+     */
+    /*public long[] getCameraWindowSize(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
+        Output_GetCameraWindowSize result = client.GetCameraWindowSize(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException ("getCameraWindowSize(): Camera \""+cameraName+"\" not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new IllegalArgumentException("getCameraWindowSize(): Invalid camera name \""+cameraName+"\"!");
+        }
+        return new long[]{result.getResolutionX(), result.getResolutionY()};
+    }*/
+    
+    /**
      * get camera id.
      * 
      * @see getCameraName
@@ -3207,7 +3224,7 @@ public class DataStreamClient {
     public long getCameraId(String cameraName){
         if (cameraName == null){
             throw new IllegalArgumentException("cameraName == null!");
-        }
+        } 
         Output_GetCameraId result = client.GetCameraId(cameraName);
         if (result.getResult() == Result_Enum.NotConnected){
             throw new RuntimeException ("getCameraId(): Camera \""+cameraName+"\" not connected!");
