@@ -33,6 +33,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetAxisMapping;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraCount;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraName;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraResolution;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCameraType;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidCount;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidPosition;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetCentroidWeight;
@@ -2444,6 +2445,10 @@ public class DataStreamClient {
      * Moment Y "Mz" - Moment Z "Cx" - Center Of Pressure X "Cy" - Center Of
      * Pressure Y "Cz" - Center Of Pressure Z "Pin1" - Analog Input 1 "Pin2" -
      * Analog Input 2</p>
+     * 
+     * Vermutlich doch nur:
+     * Force, Moment, Center Of Pressure, Analog Input und obiges sind
+     * vermutlich die componentNames
      *
      * <p>The Device Output Unit will be:</p>
      *
@@ -2460,17 +2465,17 @@ public class DataStreamClient {
      * @see getDeviceOutputCount
      * @see getDeviceOutputValue
      * @param deviceName device name
-     * @param deviceIndex index of the device output
+     * @param deviceOutputIndex index of the device output
      * @return the name and SI unit of a device output.
      * @throws IllegalArgumentException if the device index does not exist
      * @throws RuntimeException if the client is not connected or no frame
      * available
      */
-    public String[] getDeviceOutputName(String deviceName, int deviceIndex) {
-        if (deviceIndex < 0) {
+    public String[] getDeviceOutputName(String deviceName, int deviceOutputIndex) {
+        if (deviceOutputIndex < 0) {
             throw new IllegalArgumentException("getSubjectName() deviceIndex >=0 is needed!");
         }
-        Output_GetDeviceOutputName result = client.GetDeviceOutputName(deviceName, deviceIndex);
+        Output_GetDeviceOutputName result = client.GetDeviceOutputName(deviceName, deviceOutputIndex);
         if (result.getResult() == Result_Enum.InvalidIndex) {
             throw new IllegalArgumentException("getDeviceOutputName() but deviceIndex is invalid!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
@@ -2497,16 +2502,16 @@ public class DataStreamClient {
      * @see getDeviceOutputCount
      * @see getDeviceOutputName
      * @param deviceName device name
-     * @param deviceOutputName device output name
+     * @param deviceOutputComponentName device output name
      * @return the value of a device output or NaN if occluded
      * @throws IllegalArgumentException if the device name or the
-     * deviceOutputName does not exist
+ deviceOutputComponentName does not exist
      * @throws RuntimeException if the client is not connected or no frame
      * available
      */
-    public double getDeviceOutputValue(String deviceName, String deviceOutputName){
+    public double getDeviceOutputValue(String deviceName, String deviceOutputComponentName){
         Output_GetDeviceOutputValue result = client.GetDeviceOutputValue(deviceName,
-                deviceOutputName);
+                deviceOutputComponentName);
         if (result.getResult() == Result_Enum.InvalidIndex) {
             throw new IllegalArgumentException("getDeviceOutputName() but deviceName is invalid!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
@@ -3098,6 +3103,28 @@ public class DataStreamClient {
         return Result.getCameraName();
     }
 
+    /**
+     * Get camera type.
+     * 
+     * @param cameraName
+     * @return camera type
+     * @throws IllegalArgumentException if the camerName is unknown or null
+     * @throws RuntimeException if the client is not connected or no frame is available
+     */
+    public String getCameraType(String cameraName){
+        if (cameraName == null){
+            throw new IllegalArgumentException("cameraName == null!");
+        }
+        Output_GetCameraType result = client.GetCameraType(cameraName);
+        if (result.getResult() == Result_Enum.NotConnected){
+            throw new RuntimeException("getCameraName() but client is not connected!");
+        } else if (result.getResult() == Result_Enum.InvalidCameraName){
+            throw new IllegalArgumentException("getCameraType() but unknown camera name \"" + 
+                    cameraName+"!");
+        } 
+        return result.getCameraType();
+    }
+    
     /**
      * Returns the sensor resolution of the camera with the specified name.
      * 
