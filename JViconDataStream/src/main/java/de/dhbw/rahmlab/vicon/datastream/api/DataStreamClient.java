@@ -1431,6 +1431,9 @@ public class DataStreamClient {
      * @throws RuntimeException if client is not connected or no frame available.
      */
     public long getSegmentCount(String subjectName) {
+        if (subjectName == null){
+            throw new IllegalArgumentException("getSegmentCount() but subjectName==null!");
+        }
         Output_GetSegmentCount result = client.GetSegmentCount(subjectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
                 throw new IllegalArgumentException("getSegmentCount() but subjectName \"" + subjectName + "\" is invalid!");
@@ -2212,16 +2215,16 @@ public class DataStreamClient {
      *
      * @see getSubjectCount
      * @see getSubjectName
-     * @param subjectName name of the subject that contains the object/segment. This subject name must equal to the object/segment name.
-     * @return the quality score for a speciﬁed Object (Subject).
-     * @throws RuntimeException if client is not connectd or no frame is
+     * @param objectName name of the object/segment. 
+     * @return the quality score for a speciﬁed Object.
+     * @throws RuntimeException if client is not connected or no frame is
      * available
-     * @throws IllegalArgumentException if subject name in invalid
+     * @throws IllegalArgumentException if object name in invalid
      */
-    public double getObjectQuality(String subjectName) {
-        Output_GetObjectQuality result = client.GetObjectQuality(subjectName);
+    public double getObjectQuality(String objectName) {
+        Output_GetObjectQuality result = client.GetObjectQuality(objectName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            throw new IllegalArgumentException("getObjectQuality() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getObjectQuality() but objectName \"" + objectName + "\" is invalid!");
         } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getObjectQuality() but client is not connected!!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
@@ -2298,9 +2301,6 @@ public class DataStreamClient {
     /**
      * Return the camera ID for an indexed ray that is contributing to a labeled
      * marker in the DataStream.
-     *
-     * <p>This information can be used in conjunction with
-     * GetMarkerRayContributionCount.</p>
      *
      * @see getMarkerRayContributionCount
      * @see enableMarkerRayData
@@ -3110,6 +3110,7 @@ public class DataStreamClient {
      * Get camera type.
      * 
      * @param cameraName
+     * @see getCameraName
      * @return camera type
      * @throws IllegalArgumentException if the camerName is unknown or null
      * @throws RuntimeException if the client is not connected or no frame is available
@@ -3132,6 +3133,7 @@ public class DataStreamClient {
      * Get camera type.
      * 
      * @param cameraName
+     * @see getCameraName
      * @return camera type
      * @throws IllegalArgumentException if the camerName is unknown or null
      * @throws RuntimeException if the client is not connected or no frame is available
@@ -3196,6 +3198,7 @@ public class DataStreamClient {
     }*/
     
     /**
+     * @see getCameraName
      * Returns the sensor windowing size for the camera.
 This information is only available from Vicon applications released after DSSDK 1.11
      */
