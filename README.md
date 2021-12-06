@@ -45,6 +45,9 @@ The deployable jar should now be in the following path: `./JViconDataStream/targ
 ## Problems, Details, Developer information
 If Netbeans ignores the automatically generated java files, it helps to deactivate git within the IDE: Navigate `Tools -> Plugins -> Installed -> Show Details`, Select `Git`, right-click on it and click `Deactivate`.
 
+If something is wrong with native lib loading, writing log messages can be switched on in the class `de.dhbw.rahmlab.vicon.datastream.nativelib.NativeLibLoader`. Set the parameter given in the method `de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.init(false)` from `false` to `true`. It can be found inside the method
+`private static void loadActually()`.
+
 For more details be free to consult the README's in the folder of the subprojects.
 
 More Developer Info [here](DEVELOPER_INFO.md).
