@@ -2,17 +2,9 @@
 %ignore ViconDataStreamSDK::CPP::IStringFactory;
 %ignore ViconDataStreamSDK::CPP::operator<<;
 
-//namespace ViconDataStreamSDK
-//{
-//namespace CPP
-//{
-
 %naturalvar ViconDataStreamSDK::CPP::String;
 
-//class String;
-
 //Typemap ViconDataStreamSDK::CPP::String <-> java.lang.String
-//Inspired by: https://github.com/swig/swig/blob/master/Lib/java/std_string.i
 
 
 %fragment("CppString", "header")
@@ -107,28 +99,25 @@
 %}
 
 
-//Functions should not return pointer. If them do: clarify who shall delete.
-//Maybe checkout in the SWIG documentation: "newfree" typemap
-/*
+// Needed for Output_[...] classes' members wrapping.
 //C++ -> Java
 // const version auto generated
 %typemap(out) ViconDataStreamSDK::CPP::String &
 %{
     $result = jenv->NewStringUTF($1->operator std::string().c_str());
 %}
-*/
 
 
-//Functions should not return pointer. If them do: clarify who shall delete.
-//Maybe checkout in the SWIG documentation: "newfree" typemap
-/*
+// Two cases could occur:
+// Pointer holds ownership: should be deleted after the typemap
+// Pointer holds no ownership: should only be copied
 //C++ -> Java
 // const version auto generated
 %typemap(out) ViconDataStreamSDK::CPP::String *
 %{
-    $result = jenv->NewStringUTF($1->operator std::string().c_str());
+    #error (%typemap(out) ViconDataStreamSDK::CPP::String *) : Unclear ownership
+    //$result = jenv->NewStringUTF($1->operator std::string().c_str());
 %}
-*/
 
 
 /////////////////////////////////////////////////////
@@ -139,8 +128,6 @@
 //http://www.swig.org/Doc4.0/SWIGDocumentation.html#Java_typemaps_c_to_java_types
 
 
-// String
-// const version auto generated
 %typemap(jni) ViconDataStreamSDK::CPP::String "jstring"
 %typemap(jtype) ViconDataStreamSDK::CPP::String "String"
 %typemap(jstype) ViconDataStreamSDK::CPP::String "String"
@@ -166,8 +153,4 @@
 %typemap(jstype) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
 %typemap(javain) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
 %typemap(javaout) ViconDataStreamSDK::CPP::String * = ViconDataStreamSDK::CPP::String;
-
-
-//}
-//}
 
