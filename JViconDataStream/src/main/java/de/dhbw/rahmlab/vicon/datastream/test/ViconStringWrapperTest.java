@@ -10,7 +10,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.JavaStringToViconStringTest;
 public class ViconStringWrapperTest {
 
     public static void main(String argv[]) throws InterruptedException {
-        //viconStringToJavaStringTest();
+        viconStringToJavaStringTest();
         javaStringToViconStringTest();
     }
 
