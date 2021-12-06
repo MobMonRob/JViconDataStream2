@@ -18,7 +18,8 @@ public class NativeLibLoader {
 
     private static void loadActually() {
         try {
-            de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.init(true);
+            // set to true if log messages are needed
+            de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.init(false);
             de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader nativeLibLoader = de.dhbw.rahmlab.nativelibloader.api.NativeLibLoader.getInstance();
             nativeLibLoader.load(ViconDataStreamSDKSwigJNI.class);
         } catch (Exception e) {
