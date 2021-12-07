@@ -179,6 +179,9 @@ public class DataStreamClient {
      */
     public void connect(String hostname, long timeoutInMs) {
         this.hostname = hostname;
+        if (hostname == null){
+            throw new IllegalArgumentException("connect() with argument==null not allowed!");
+        }
         Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
         int trials = 0;
         //System.out.println("connect() ...");
@@ -234,6 +237,12 @@ public class DataStreamClient {
      */
     public void connectToMulticast(String hostname, String multicastHostname, long timeoutInMs) {
         this.hostname = hostname;
+        if (hostname == null){
+            throw new IllegalArgumentException("connect() with argument hostname==null not allowed!");
+        }
+        if (multicastHostname == null){
+            throw new IllegalArgumentException("connect() with argument multicastHostname==null not allowed!");
+        }
         Instant timeout = java.time.Instant.now().plusMillis(timeoutInMs);
         int trials = 0;
         while (!isConnected()  && Instant.now().isBefore(timeout)) {
@@ -1356,6 +1365,10 @@ public class DataStreamClient {
      * <p>
      * This can be passed into segment and marker functions.</p>
      *
+     * <p>If the software "Tracker" is used than there is a subject for each cluster
+     * with the same name. In the case of the software "Nexus" cluster can be atteched to 
+     * a subject with different name.</p>
+     * 
      * @see getSubjectCount
      * @param subjectIndex between 0 and getSubjectCount()-1
      * @return The name of the subject.
