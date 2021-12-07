@@ -21,18 +21,18 @@
             SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "theJavaString is null.");
             return nullptr;
         }
-  
+
         const char* javaStringChars = jenv->GetStringUTFChars(theJavaString, 0);
         if (!javaStringChars)
         {
             SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "GetStringUTFChars returned null.");
             return nullptr;
         }
-  
+
         std::unique_ptr<std::string> cppString = std::make_unique<std::string>(javaStringChars);
 
         jenv->ReleaseStringUTFChars(theJavaString, javaStringChars);
-        
+
         return cppString;
     }
 %}
@@ -93,18 +93,20 @@
 
 //C++ -> Java
 // const version auto generated
-%typemap(out) ViconDataStreamSDK::CPP::String
+%typemap(out) ViconDataStreamSDK::CPP::String (std::string tmpString)
 %{
-    $result = jenv->NewStringUTF($1.operator std::string().c_str());
+	tmpString = $1.operator std::string();
+    $result = jenv->NewStringUTF(tmpString.c_str());
 %}
 
 
 // Needed for Output_[...] classes' members wrapping.
 //C++ -> Java
 // const version auto generated
-%typemap(out) ViconDataStreamSDK::CPP::String &
+%typemap(out) ViconDataStreamSDK::CPP::String & (std::string tmpString)
 %{
-    $result = jenv->NewStringUTF($1->operator std::string().c_str());
+	tmpString = $1->operator std::string();
+    $result = jenv->NewStringUTF(tmpString.c_str());
 %}
 
 
@@ -116,7 +118,6 @@
 %typemap(out) ViconDataStreamSDK::CPP::String *
 %{
     #error (%typemap(out) ViconDataStreamSDK::CPP::String *) : Unclear ownership
-    //$result = jenv->NewStringUTF($1->operator std::string().c_str());
 %}
 
 
