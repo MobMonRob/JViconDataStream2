@@ -1611,7 +1611,8 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationEulerXYZ
      * @param subjectName subject name
      * @param segmentName segment name
-     * @return the static pose translation of a subject segment.
+     * @return the static pose translation of a subject segment. 0d-values if streaming
+     * segment data is disabled.
      * @throws IllegalArgumentException if subject- or segment name is invalid
      * @throws RuntimeException if client is not connected or no frame is
      * available.
@@ -1658,7 +1659,8 @@ public class DataStreamClient {
      * @param subjectName name of the subject
      * @param segmentName name of the segment
      * @return the static pose rotation of a subject segment in helical
-     * coordinates.
+     * coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if the client is not connected, no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -1700,7 +1702,8 @@ public class DataStreamClient {
      * @param subjectName name of the subject
      * @param segmentName name of the segment
      * @return the static pose rotation of a subject segment as a 3x3 row-major
-     * matrix.
+     * matrix. 0d-values if streaming
+     * segment data is disabled.
      * @throws IllegalArgumentException for invalid subject- or segment name,
      * @throws RuntimeException if client is not connected or no frame is
      * available
@@ -1744,7 +1747,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the static pose rotation of a subject segment in quaternion
-     * coordinates.
+     * coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws IllegalArgumentException for invalid subject- or segment name
      * @throws RuntimeException if client is not connected or no frame is
      * available
@@ -1768,7 +1772,8 @@ public class DataStreamClient {
      *
      * @param subjectName subject name
      * @param segmentName segment name
-     * @return a 3D Scale of a subject segment if present.
+     * @return a 3D Scale of a subject segment if present. 0d-values if streaming
+     * segment data is disabled.
      * @throws IllegalArgumentException for invalid subject- or segment name
      * @throws RuntimeException if client is not connected or no frame is
      * available
@@ -1809,7 +1814,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the static pose rotation of a subject segment in Euler XYZ
-     * coordinates.
+     * coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws IllegalArgumentException for invalid subject- or segment name
      * @throws RuntimeException if client is not connected or no frame is
      * available
@@ -1849,7 +1855,8 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationEulerXYZ
      * @param subjectName subject name
      * @param segmentName segment name
-     * @return the translation of a subject segment in global coordinates.
+     * @return the translation of a subject segment in global coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws IllegalArgumentException for invalid subject- or segment name, or null values
      * @throws RuntimeException if client is not connected or no frame is
      * available
@@ -1892,7 +1899,8 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationEulerXYZ
      * @param subjectName subject name
      * @param segmentName segment name
-     * @return the translation of a subject segment in global coordinates.
+     * @return the translation of a subject segment in global coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -1926,7 +1934,8 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationEulerXYZ
      * @param subjectName subject name
      * @param segmentName segment name
-     * @return the rotation of a subject segment in global helical coordinates.
+     * @return the rotation of a subject segment in global helical coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -1961,7 +1970,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the rotation of a subject segment as a 3x3 row-major matrix in
-     * global coordinates.
+     * global coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -2000,7 +2010,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the rotation of a subject segment in global quaternion
-     * coordinates.
+     * coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -2037,7 +2048,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the rotation of a subject segment in global Euler XYZ
-     * coordinates.
+     * coordinates. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -2078,7 +2090,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the translation of a subject segment in local coordinates
-     * relative to its parent segment.
+     * relative to its parent segment. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -2121,7 +2134,9 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the rotation of a subject segment in local quaternion coordinates
-     * relative to its parent segment.
+     * relative to its parent segment. 0d-values if streaming
+     * segment data is disabled. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -2165,7 +2180,8 @@ public class DataStreamClient {
      * @param segmentName segment name
      * @return An Output_GetSegmentLocalRotationMatrix class containing the 
      * result of the operation, the rotation of the segment, and whether the 
-     * segment is occluded.
+     * segment is occluded. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
@@ -2204,7 +2220,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the rotation of a subject segment in local Euler XYZ coordinates
-     * relative to its parent segment.
+     * relative to its parent segment. 0d-values if streaming
+     * segment data is disabled.
      * @throws RuntimeException if client is not connected or no frame is
      * available
      * @throws IllegalArgumentException for invalid subject- or segment name
