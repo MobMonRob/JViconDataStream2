@@ -35,9 +35,9 @@ public class Test {
         client.getFrame();
         System.out.println("Subject Count = " + client.getSubjectCount());
 
-        int SubjectIndex = 1;
+        int SubjectIndex = 0;
         String SubjectName = client.getSubjectName(SubjectIndex);
-        System.out.println("subject name= " + SubjectName);
+        System.out.println("Subject name of "+String.valueOf(SubjectIndex)+" = " + SubjectName);
         
         client.enableMarkerData();
         client.enableSegmentData();
@@ -62,7 +62,7 @@ public class Test {
         long segmentCount = client.getSegmentCount(SubjectName);
         for (long i = 0; i < segmentCount; i++) {
             String SegmentName = client.getSegmentName(SubjectName, i);
-            System.out.println("Segment Name Is´" + SegmentName);
+            System.out.println("Segment Name of "+String.valueOf(i)+" is" + SegmentName);
             
             long segmentChildCount = client.getSegmentChildCount(SubjectName, SegmentName);
             System.out.println("Segment Child Count is " + segmentChildCount);
@@ -88,6 +88,38 @@ public class Test {
         System.out.println("frame " + frameNumber);
 
         printSubjectHierarchie(client);
+        
+        
+        // verwende das erste subject und den ersten cluster, diese sollten identisch sein!
+        SubjectIndex = 0;
+        SubjectName = client.getSubjectName(SubjectIndex);
+        System.out.println("Subject name of "+String.valueOf(SubjectIndex)+" = " + SubjectName);
+        int SegmentIndex = 0;
+        String SegmentName = client.getSegmentName(SubjectName, SegmentIndex);
+        System.out.println("Segment name of "+String.valueOf(SegmentIndex)+" = " + SegmentName);
+        
+        while(true){
+            client.getFrame();
+            
+            // framenumber bestimmen
+            frameNumber = client.getFrameNumber();
+            
+            try {
+               // getSegmentLocalRotationMatrix
+                double[] m = client.getSegmentGlobalRotationQuaternion("TCP", "TCP");
+                
+                if (m== null){
+                    System.out.println("m==null");
+                } else {
+                    System.out.println("frame "+frameNumber+": q0="+m[0]+" q1="+m[1]+" q2="+m[2]+" q3="+m[3]);
+                }
+                 
+            } catch (RuntimeException e){
+                System.out.println(e);
+            }
+        }
+
+
         
         //printSubjectHierarchie(client);
         /*for (int markerIndex = 0; markerIndex < client.getUnlabeledMarkerCount(); markerIndex++){

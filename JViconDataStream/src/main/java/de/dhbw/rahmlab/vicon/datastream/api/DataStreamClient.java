@@ -978,8 +978,10 @@ public class DataStreamClient {
     }
 
     /**
-     * There are three modes that the SDK can operate in. Each mode has a
-     * different impact on the Client, Server, and network resources used.
+     * Sets the stream mode.
+     * 
+     * <p>There are three modes that the SDK can operate in. Each mode has a
+     * different impact on the Client, Server, and network resources used.</p>
      *
      * <p>• ServerPush In "ServerPush" mode, the Server pushes every new frame of
      * data over the network to the Client. The Server will try not to drop any
@@ -1848,7 +1850,7 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the translation of a subject segment in global coordinates.
-     * @throws IllegalArgumentException for invalid subject- or segment name
+     * @throws IllegalArgumentException for invalid subject- or segment name, or null values
      * @throws RuntimeException if client is not connected or no frame is
      * available
      */
@@ -1863,6 +1865,9 @@ public class DataStreamClient {
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalTranslation() but segmentName \"" + segmentName + "\" is invalid!");
         }
+        boolean occluded = result.getOccluded();
+        //TODO
+        // eventuell null zurückliefern, if occluded == null?
         return result.getTranslation();
     }
 
@@ -2011,6 +2016,9 @@ public class DataStreamClient {
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but segmentName\"" + segmentName + "\" is invalid!");
         }
+        boolean occluded = result.getOccluded();
+        //TODO
+        // eventuell null zurückliefern, if occluded==true
         return result.getRotation();
     }
 
