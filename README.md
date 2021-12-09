@@ -56,7 +56,7 @@ More Developer Info [here](DEVELOPER_INFO.md).
 
 ```DataStreamClient client = new DataStreamClient();
         
-String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
+String hostname = "192.168.10.1:801"; 
 
 Version version = client.getVersion();
 System.out.println("Version: " + version.getMajor() + "." + version.getMinor() + "." + version.getPoint());
@@ -71,8 +71,6 @@ if (client.isMarkerDataEnabled()) {
 } else {
     System.out.println("IsMarkerDataEnabled is not enabeled");
 }
-client.getFrame();
-System.out.println("Subject Count = " + client.getSubjectCount());
 
 client.enableMarkerData();
 client.enableSegmentData();
@@ -88,7 +86,9 @@ if (client.isUnlabeledMarkerDataEnabled()) {
 long FrameRateCount = client.getFrameRateCount();
 System.out.println("Frame rate Count is " + FrameRateCount);
 System.out.println("Unlabeled Marker Count is " + client.getUnlabeledMarkerCount());
+
+client.getFrame();
+
 long MarkerIndex = 0;
 double[] Translation = client.getUnlabeledMarkerGlobalTranslation(MarkerIndex);
-System.out.println("Unlabeled Marker Global Translation x= " + Translation[0] + "Y= " + Translation[1] + "Z= " + Translation[2]);
-System.out.println("Subject Count = " + client.getSubjectCount());```
+System.out.println("Unlabeled Marker Global Translation x= " + Translation[0] + "Y= " + Translation[1] + "Z= " + Translation[2]);```
