@@ -52,7 +52,7 @@ For more details be free to consult the README's in the folder of the subproject
 
 More Developer Info [here](DEVELOPER_INFO.md).
 
-## How to Use
+## How to Use the Java Wrapper
 
 ```DataStreamClient client = new DataStreamClient();
         
