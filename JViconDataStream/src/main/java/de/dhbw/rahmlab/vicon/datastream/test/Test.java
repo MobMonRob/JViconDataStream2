@@ -9,13 +9,10 @@ import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
  */
 public class Test {
 
-    //-Djava.library.path="C:\Users\mobmonrob\Documents\jdk-12\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Python27\;C:\Program Files\OpenNI\Bin64;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\swigwin-3.0.12\swigwin-3.0.12;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\jdk-12\bin;C:\Users\mobmonrob\AppData\Local\Microsoft\WindowsApps;C:\Users\mobmonrob\AppData\Local\GitHubDesktop\bin;C:\Users\mobmonrob\Documents\NetBeansProjects\JViconDataStream2\lib;."
     public static void main(String argv[]) throws InterruptedException {
 
         DataStreamClient client = new DataStreamClient();
-        // ViconDataStreamSDKRetimingClient retimingClient = new ViconDataStreamSDKRetimingClient();
-
-        //String hostname ="192.168.10.1:51001";//127.0.0.2:801";"192.168.10.1:51001"
+        
         String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
 
         Version version = client.getVersion();
@@ -72,15 +69,6 @@ public class Test {
             for (long j = 0; j < segmentChildCount; j++){
                 System.out.println("Segment Child Name is " + client.getSegmentChildName(SubjectName, SegmentName, j));
             }
-            
-            /*double[] SST = client.getSegmentStaticTranslation(SubjectName, SegmentName);
-            System.out.println("Segment Static Translation is X= " + SST[0] + "Y= " + SST[1] + "Z= " + SST[2]);
-            double[] SSRH = client.getSegmentStaticRotationHelical(SubjectName, SegmentName);
-            System.out.println("Segment Static Rotation Helicalis X= " + SSRH[0] + "Y= " + SSRH[1] + "Z= " + SSRH[2]);
-            double[] SSRM = client.getSegmentStaticRotationMatrix(SubjectName, SegmentName);
-            System.out.println("Segment Static Rotation Matrix X= " + SSRM[0] + "Y= " + SSRM[1] + "Z= " + SSRM[2]);
-            double[] SSRQ = client.getSegmentStaticRotationQuaternion(SubjectName, SegmentName);
-            System.out.println("Segment Static Rotation Quaternion X= " + SSRQ[0] + "Y= " + SSRQ[1] + "Z= " + SSRQ[2]);*/
         }
 
         System.out.println("Frame rate is " + client.getFrameRate());
@@ -89,8 +77,6 @@ public class Test {
 
         printSubjectHierarchie(client);
         
-        
-        // verwende das erste subject und den ersten cluster, diese sollten identisch sein!
         SubjectIndex = 0;
         SubjectName = client.getSubjectName(SubjectIndex);
         System.out.println("Subject name of "+String.valueOf(SubjectIndex)+" = " + SubjectName);
@@ -98,14 +84,13 @@ public class Test {
         String SegmentName = client.getSegmentName(SubjectName, SegmentIndex);
         System.out.println("Segment name of "+String.valueOf(SegmentIndex)+" = " + SegmentName);
         
-        while(true){
+        /*while(true){
             client.getFrame();
             
             // framenumber bestimmen
             frameNumber = client.getFrameNumber();
             
             try {
-               // getSegmentLocalRotationMatrix
                 double[] m = client.getSegmentGlobalRotationQuaternion("TCP", "TCP");
                 
                 if (m== null){
@@ -117,10 +102,8 @@ public class Test {
             } catch (RuntimeException e){
                 System.out.println(e);
             }
-        }
+        }*/
 
-
-        
         //printSubjectHierarchie(client);
         /*for (int markerIndex = 0; markerIndex < client.getUnlabeledMarkerCount(); markerIndex++){
             double[] translation = client.getUnlabeledMarkerGlobalTranslation(markerIndex);
