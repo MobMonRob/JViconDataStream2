@@ -54,7 +54,7 @@ More Developer Info [here](DEVELOPER_INFO.md).
 
 ## How to Use
 
-DataStreamClient client = new DataStreamClient();
+`DataStreamClient client = new DataStreamClient();
         
 String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
 
@@ -91,4 +91,4 @@ System.out.println("Unlabeled Marker Count is " + client.getUnlabeledMarkerCount
 long MarkerIndex = 0;
 double[] Translation = client.getUnlabeledMarkerGlobalTranslation(MarkerIndex);
 System.out.println("Unlabeled Marker Global Translation x= " + Translation[0] + "Y= " + Translation[1] + "Z= " + Translation[2]);
-System.out.println("Subject Count = " + client.getSubjectCount());
+System.out.println("Subject Count = " + client.getSubjectCount());`
