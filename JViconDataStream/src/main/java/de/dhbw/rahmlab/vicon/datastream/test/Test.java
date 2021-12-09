@@ -82,7 +82,21 @@ public class Test {
             double[] SSRQ = client.getSegmentStaticRotationQuaternion(SubjectName, SegmentName);
             System.out.println("Segment Static Rotation Quaternion X= " + SSRQ[0] + "Y= " + SSRQ[1] + "Z= " + SSRQ[2]);*/
         }
+        
+        
 
+        client.enableDeviceData();
+        if (client.isDeviceDataEnabled()){
+            System.out.println("Device data enabled!");
+        }
+        client.enableDebugData();
+        long devices = client.getDeviceCount();
+        for (long i=0;i<devices;i++){
+            String[] deviceName = client.getDeviceName(i);
+            for (int j=0;j<deviceName.length;j++){
+                System.out.println("Device "+String.valueOf(i)+": "+deviceName[j]);
+            }
+        }
         System.out.println("Frame rate is " + client.getFrameRate());
         long frameNumber = client.getFrameNumber();
         System.out.println("frame " + frameNumber);
@@ -98,7 +112,7 @@ public class Test {
         String SegmentName = client.getSegmentName(SubjectName, SegmentIndex);
         System.out.println("Segment name of "+String.valueOf(SegmentIndex)+" = " + SegmentName);
         
-        while(true){
+        /*while(true){
             client.getFrame();
             
             // framenumber bestimmen
@@ -117,7 +131,7 @@ public class Test {
             } catch (RuntimeException e){
                 System.out.println(e);
             }
-        }
+        }*/
 
 
         

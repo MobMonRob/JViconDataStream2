@@ -88,6 +88,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGlobalForceVector;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGlobalMomentVector;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGreyscaleBlob;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGreyscaleBlobCount;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetHardwareFrameNumber;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetIsVideoCamera;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetLatencySampleCount;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetLatencySampleName;
@@ -2546,7 +2547,7 @@ public class DataStreamClient {
      * @param deviceOutputComponentName device output name
      * @return the value of a device output or NaN if occluded
      * @throws IllegalArgumentException if the device name or the
- deviceOutputComponentName does not exist
+     *         deviceOutputComponentName does not exist
      * @throws RuntimeException if the client is not connected or no frame
      * available
      */
@@ -3366,7 +3367,22 @@ This information is only available from Vicon applications released after DSSDK 
         }
         return frameNumber.getFrameNumber();
     }
-
+    /**
+     * Return the hardware frame number of the last frame retrieved from the DataStream.
+     *
+     * @see getFrame
+     * @see getFrameNumber
+     * @see getTimeCode
+     * @return number of the last frame.
+     * @throws RuntimeException if client not connected or no frame available.
+     */
+    public long getHardwareFrameNumber(){
+        Output_GetHardwareFrameNumber frameNumber = client.GetHardwareFrameNumber();
+        if (frameNumber.getResult() == Result_Enum.NotConnected){
+             throw new RuntimeException("getHardwareFrameNumber() but client not connected!");
+        }
+        return frameNumber.getHardwareFrameNumber();
+    }
     /**
      * Return the timecode information for the last frame retrieved from the
      * DataStream.
