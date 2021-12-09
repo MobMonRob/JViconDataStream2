@@ -53,3 +53,42 @@ For more details be free to consult the README's in the folder of the subproject
 More Developer Info [here](DEVELOPER_INFO.md).
 
 ## How to Use
+
+DataStreamClient client = new DataStreamClient();
+        
+String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
+
+Version version = client.getVersion();
+System.out.println("Version: " + version.getMajor() + "." + version.getMinor() + "." + version.getPoint());
+
+System.out.println("Try to connect to: " + hostname);
+client.connect(hostname,4000l);
+if (client.isConnected()) {
+    System.out.println("is conected");
+}
+if (client.isMarkerDataEnabled()) {
+    System.out.println("IsMarkerDataEnabled is enabeled");
+} else {
+    System.out.println("IsMarkerDataEnabled is not enabeled");
+}
+client.getFrame();
+System.out.println("Subject Count = " + client.getSubjectCount());
+
+client.enableMarkerData();
+client.enableSegmentData();
+if (client.isMarkerDataEnabled()) {
+    System.out.println("IsMarkerDataEnabled is enabeled");
+} else {
+    System.out.println("IsMarkerDataEnabled is not enabeled");
+}
+client.enableUnlabeledMarkerData();
+if (client.isUnlabeledMarkerDataEnabled()) {
+    System.out.println("UnlabeledMarkerData is enabeled");
+}
+long FrameRateCount = client.getFrameRateCount();
+System.out.println("Frame rate Count is " + FrameRateCount);
+System.out.println("Unlabeled Marker Count is " + client.getUnlabeledMarkerCount());
+long MarkerIndex = 0;
+double[] Translation = client.getUnlabeledMarkerGlobalTranslation(MarkerIndex);
+System.out.println("Unlabeled Marker Global Translation x= " + Translation[0] + "Y= " + Translation[1] + "Z= " + Translation[2]);
+System.out.println("Subject Count = " + client.getSubjectCount());
