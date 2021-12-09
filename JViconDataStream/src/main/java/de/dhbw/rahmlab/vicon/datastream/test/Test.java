@@ -4,7 +4,6 @@ import de.dhbw.rahmlab.vicon.datastream.api.Version;
 import de.dhbw.rahmlab.vicon.datastream.api.DataStreamClient;
 
 /**
- *
  * @author Oliver Rettig
  */
 public class Test {
@@ -16,7 +15,6 @@ public class Test {
         String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
 
         Version version = client.getVersion();
-
         System.out.println("Version: " + version.getMajor() + "." + version.getMinor() + "." + version.getPoint());
 
         System.out.println("Try to connect to: " + hostname);
