@@ -2401,6 +2401,8 @@ public class DataStreamClient {
      * DataStream.
      *
      * <p>This information can be used in conjunction with GetDeviceName.</p>
+     * <p>Precondition: After enableDeviceData() the method getFrame() must be invoked. If this
+     * is missed the result value is 0l;</p>
      *
      * @see getDeviceName
      * @return number of devices
@@ -2891,6 +2893,9 @@ public class DataStreamClient {
     /**
      * Return the number of eye trackers available in the DataStream.
      *
+     * <p>Precondition: The method getFrame() must be invoked before. If this
+     * is missed the result value is 0l;</p>
+     * 
      * @see getEyeTrackerGlobalGazeVector
      * @return the number of eye trackers available in the DataStream.
      * @throws RuntimeException if the client is not connected or no frame
@@ -3014,6 +3019,9 @@ public class DataStreamClient {
     /**
      * Return the number of cameras available in the DataStream.
      *
+     * <p>Precondition: The method getFrame() must be invoked before If this
+     * is missed the result value is 0l;</p>
+     * 
      * @see getCameraName
      * @see getCentroidCount
      * @see getCentroidPosition
@@ -3035,6 +3043,9 @@ public class DataStreamClient {
      * Return the number of centroids reported by a named camera.
      * 
      * <p>The centroid data needs to be enabled to get the number of centroids.</p>
+     * 
+     * <p>Precondition: The method getFrame() must be invoked before. If this
+     * is missed the result value is 0l;</p>
      * 
      * @see getCameraCount
      * @see getCameraName
@@ -3373,7 +3384,7 @@ This information is only available from Vicon applications released after DSSDK 
      * @see getFrame
      * @see getFrameNumber
      * @see getTimeCode
-     * @return number of the last frame.
+     * @return hardware number of the last frame.
      * @throws RuntimeException if client not connected or no frame available.
      */
     public long getHardwareFrameNumber(){
@@ -3383,6 +3394,7 @@ This information is only available from Vicon applications released after DSSDK 
         }
         return frameNumber.getHardwareFrameNumber();
     }
+    
     /**
      * Return the timecode information for the last frame retrieved from the
      * DataStream.
