@@ -14,7 +14,7 @@ run() {
 	mkdir -p "$currentTmp"
 
 	#-debug-tmsearch
-	swig -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "$swigJavaOutDir" -o "$currentTmp/ViconDataStreamSDK_wrap.cpp" -I"$viconTarget" ./PlatformIndependent.i
+	swig -doxygen -Wall -c++ -java -package de.dhbw.rahmlab.vicon.datastream.impl -outdir "$swigJavaOutDir" -o "$currentTmp/ViconDataStreamSDK_wrap.cpp" -I"$viconTarget" ./PlatformIndependent.i
 }
 
 run_bash run $@
