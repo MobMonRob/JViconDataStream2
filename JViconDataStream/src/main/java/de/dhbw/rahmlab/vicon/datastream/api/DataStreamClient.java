@@ -2283,19 +2283,25 @@ public class DataStreamClient {
      * @param markerName marker name
      * @return translation with respect to the global origin
      * @throws IllegalArgumentException if subject name or marker name is
-     * invalid
+     * null or invalid by other reason.
      * @throws RuntimeException if no frame is available or the client is not
      * connected.
      */
     public double[] getMarkerGlobalTranslation(String subjectName, String markerName) {
+        if (subjectName == null){
+            throw new IllegalArgumentException("getMarkerGlobalTranslation() but subjectName==null!");
+        }
+        if (markerName == null){
+            throw new IllegalArgumentException("getMarkerGlobalTranslation() but markerName==null!");
+        }
         Output_GetMarkerGlobalTranslation result = client.GetMarkerGlobalTranslation(
                 subjectName, markerName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-            throw new IllegalArgumentException("getMarkerGlobalTranslation () but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getMarkerGlobalTranslation() but subjectName \"" + subjectName + "\" is invalid!");
         } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getMarkerGlobalTranslation() but client is not connected!!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
-            throw new RuntimeException("getMarkerGlobalTranslation () but no frame available!");
+            throw new RuntimeException("getMarkerGlobalTranslation() but no frame available!");
         } else if (result.getResult() == Result_Enum.InvalidMarkerName) {
             throw new IllegalArgumentException("getMarkerGlobalTranslation () but markerName \"" + markerName + "\" is invalid!");
         }
@@ -3179,7 +3185,7 @@ public class DataStreamClient {
      * 
      * @param cameraName
      * @see getCameraName
-     * @return camera type
+     * @return camera type name
      * @throws IllegalArgumentException if the camerName is unknown or null
      * @throws RuntimeException if the client is not connected or no frame is available
      */
@@ -3198,7 +3204,7 @@ public class DataStreamClient {
     }
     
     /**
-     * Get camera type.
+     * Get camera display name.
      * 
      * @param cameraName
      * @see getCameraName
@@ -3306,7 +3312,7 @@ This information is only available from Vicon applications released after DSSDK 
     }
     
     /**
-     * get camera id.
+     * get camera user id.
      * 
      * @see getCameraName
      * @param cameraName the name of the camera
@@ -3328,7 +3334,7 @@ This information is only available from Vicon applications released after DSSDK 
     }
     
     /** 
-     * Return the name of a marker for a specified subject. 
+     * Return the name of a marker from a specified subject. 
      * 
      * <p>This can be passed into GetMarkerGlobalTranslation.</p>
      * 
@@ -3362,7 +3368,7 @@ This information is only available from Vicon applications released after DSSDK 
      * @see getMarkerGlobalTranslation
      * @param subjectName subject name
      * @param markerName marker name
-     * @return the name of the segment that is the parent of this marker.
+     * @return the name of the parent segment that is the parent of this marker.
      * @throws RuntimeException if the client is not connected or no frame is available.
      * @throws IllegalArgumentException for invalid subject or marker name
      */

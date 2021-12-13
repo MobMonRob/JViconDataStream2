@@ -16,6 +16,10 @@ public class GreyScaleBlob {
         this.blob = blob;
     }
     
+    //TODO
+    // wie gross ist das long[]? Vielleicht nur 2 und ich bekomme auf diese
+    // weise quasi die Position x,y diagonal gegenüberliegender Ecken eines
+    // Rechtecks?
     public long[] getLinePositionsX(){
         VectorUint values = blob.getBlobLinePositionsX();
         long[] result = new long[values.size()];
