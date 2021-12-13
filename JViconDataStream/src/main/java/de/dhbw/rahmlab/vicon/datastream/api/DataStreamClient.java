@@ -3019,7 +3019,8 @@ public class DataStreamClient {
     /**
      * Return the number of cameras available in the DataStream.
      *
-     * <p>Precondition: The method getFrame() must be invoked before If this
+     * <p>Precondition: The methods enableCentroidData() and after this the method
+     * getFrame() must be invoked before. If this
      * is missed the result value is 0l;</p>
      * 
      * @see getCameraName
