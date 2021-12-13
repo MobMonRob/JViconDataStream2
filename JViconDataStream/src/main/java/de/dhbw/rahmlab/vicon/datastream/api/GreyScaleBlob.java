@@ -1,5 +1,6 @@
 package de.dhbw.rahmlab.vicon.datastream.api;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_GetGreyscaleBlob;
+import de.dhbw.rahmlab.vicon.datastream.impl.VectorUint;
 
 /**
  * A Greyscale blob respresents the smallest rectangular which contains all pixels
@@ -13,6 +14,23 @@ public class GreyScaleBlob {
     private final Output_GetGreyscaleBlob blob;
     GreyScaleBlob(Output_GetGreyscaleBlob blob){
         this.blob = blob;
+    }
+    
+    public long[] getLinePositionsX(){
+        VectorUint values = blob.getBlobLinePositionsX();
+        long[] result = new long[values.size()];
+        for (int i=0;i<values.size();i++){
+            result[i] = values.get(i);
+        }
+        return result;
+    }
+    public long[] getLinePositionsY(){
+        VectorUint values = blob.getBlobLinePositionsY();
+        long[] result = new long[values.size()];
+        for (int i=0;i<values.size();i++){
+            result[i] = values.get(i);
+        }
+        return result;
     }
     /**
      * Get value of a single pixel.

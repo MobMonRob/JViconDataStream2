@@ -2608,6 +2608,8 @@ public class DataStreamClient {
     /**
      * Return the number of force plates available in the DataStream.
      *
+     * <p>Values >0 not available for Vicon Tracker.</p>
+     * 
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
@@ -2626,11 +2628,14 @@ public class DataStreamClient {
     }
 
     /**
-     * Return the force vector for the force plate in global coordinates. This
-     * version takes a subsample index that allows access to all of the force
+     * Return the force vector for the force plate in global coordinates. 
+     * 
+     * <p>This version takes a subsample index that allows access to all of the force
      * information. The vector is in Newtons and is with respect to the global
-     * coordinate system, regardless of the orientation of the plate.
+     * coordinate system, regardless of the orientation of the plate.</p>
      *
+     * <p> Not available for Vicon Tracker.</p>
+     * 
      * <p>The vector represents the force exerted upon the force plate, not the
      * reaction force.</p>
      *
@@ -2665,6 +2670,8 @@ public class DataStreamClient {
      * moments so they are acting about the exact center of the top surface of
      * the force plate.</p>
      *
+     * <p>Not available for Vicon Tracker.</p>
+     * 
      * @see getGlobalForceVector
      * @see getGlobalCentreOfPressure
      * @param forceplateIndex force plate index
@@ -2694,6 +2701,8 @@ public class DataStreamClient {
      * force information. The position is in millimeters and is with respect to
      * the global coordinate system.</p>
      *
+     * <p>Not available for Vicon Tracker.</p>
+     * 
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
      * @param forceplateIndex force plate index
@@ -2724,6 +2733,8 @@ public class DataStreamClient {
      * GetGlobalCentreOfPressure take the subsample index to allow access to all
      * the force plate data.</p>
      *
+     * <p>Not available for Vicon Tracker.</p>
+     * 
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
@@ -2758,6 +2769,8 @@ public class DataStreamClient {
      * first subsample. See the alternate version of this function to access all
      * of the analog data.</p>
      *
+     * <p>Not available for Vicon Tracker.</p>
+     * 
      * @see getGlobalMomentVector
      * @see getGlobalCentreOfPressure
      * @param forceplateIndex force plate index
@@ -2791,6 +2804,8 @@ public class DataStreamClient {
      * returns the first subsample. See the alternate version of this function
      * to access all of the analog data.</p>
      *
+     * <p>Not available for Vicon Tracker./<p>
+     * 
      * @see getGlobalForceVector
      * @see getGlobalCentreOfPressure
      * @param forceplateIndex force plate index
@@ -2822,6 +2837,8 @@ public class DataStreamClient {
      * returns the first subsample. See the alternate version of this function
      * to access all of the analog data.</p>
      *
+     * <p>Not available for Vicon Tracker.</p>
+     * 
      * @see getGlobalForceVector
      * @see getGlobalMomentVector
      * @param forceplateIndex force plate index
