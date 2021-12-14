@@ -25,6 +25,7 @@ public class Test {
         if (client.isMarkerDataEnabled()) {
             System.out.println("IsMarkerDataEnabled is enabeled");
         } else {
+            // ich lande hier, d.h. streaming von marker data muss aktiv eingeschaltet werden
             System.out.println("IsMarkerDataEnabled is not enabeled");
         }
         client.getFrame();
@@ -37,6 +38,8 @@ public class Test {
         client.enableMarkerData();
         client.enableSegmentData();
         if (client.isMarkerDataEnabled()) {
+            // Ich lande hier, d.h. nach einem enableMarkerData() bekomme ich hier true
+            // obwohl erst nach getFrame() dem Methoden zum Lesen von Daten Werte ungleich 0 zurückliefern
             System.out.println("IsMarkerDataEnabled is enabeled");
         } else {
             System.out.println("IsMarkerDataEnabled is not enabeled");
@@ -96,7 +99,22 @@ public class Test {
         String SegmentName = client.getSegmentName(SubjectName, SegmentIndex);
         System.out.println("Segment name of "+String.valueOf(SegmentIndex)+" = " + SegmentName);
         
-        /*while(true){
+        client.enableGreyscaleData(); //ok
+        client.disableGreyscaleData(); //ok
+        client.disableUnlabeledMarkerData(); //ok
+        client.enableUnlabeledMarkerData(); // ok
+        client.disableVideoData(); // ok
+        client.enableVideoData(); // ok
+        client.disableLightweightSegmentData(); //ok
+        //client.enableLightweightSegmentData(); // damit bekomme ich keine marker daten mehr
+        client.disableDeviceData(); // ok
+        client.enableDeviceData(); // ok
+        client.disableCentroidData(); // ok
+        //client.enableCentroidData(); // da fliege ich mit ex raus, wegen low jitter mode
+        client.disableMarkerRayData(); //ok
+        client.enableMarkerRayData(); // ok
+        int frames = 100;
+        while(frames >9){
             client.getFrame();
             
             // framenumber bestimmen
@@ -104,7 +122,11 @@ public class Test {
             
             try {
                 double[] m = client.getSegmentGlobalRotationQuaternion("TCP", "TCP");
+                double[] t = client.getMarkerGlobalTranslation("GLOBE", "GLOBE1");
                 
+                if (t!= null){
+                    System.out.println("frame "+frameNumber+": t0="+t[0]+" t1="+t[1]+" t2="+t[2]);
+                }
                 if (m== null){
                     System.out.println("m==null");
                 } else {
@@ -114,7 +136,9 @@ public class Test {
             } catch (RuntimeException e){
                 System.out.println(e);
             }
-        }*/
+            frames--;
+        }
+              
 
         //printSubjectHierarchie(client);
         /*for (int markerIndex = 0; markerIndex < client.getUnlabeledMarkerCount(); markerIndex++){

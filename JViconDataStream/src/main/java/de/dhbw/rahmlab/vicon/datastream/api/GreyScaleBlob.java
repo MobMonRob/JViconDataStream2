@@ -16,6 +16,8 @@ public class GreyScaleBlob {
         this.blob = blob;
     }
     
+    // edge coordinates data
+    
     //TODO
     // wie gross ist das long[]? Vielleicht nur 2 und ich bekomme auf diese
     // weise quasi die Position x,y diagonal gegenüberliegender Ecken eines
@@ -36,6 +38,10 @@ public class GreyScaleBlob {
         }
         return result;
     }
+    
+    
+    // grayscale and coordinates data
+    
     /**
      * Get value of a single pixel.
      * 

@@ -14,6 +14,7 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableDebugData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableDeviceData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableGreyscaleData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableLightweightSegmentData;
+import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableMarkerData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableMarkerRayData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableSegmentData;
 import de.dhbw.rahmlab.vicon.datastream.impl.Output_DisableUnlabeledMarkerData;
@@ -433,6 +434,8 @@ public class DataStreamClient {
         Output_EnableDebugData result = client.EnableDebugData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable debug data failed due to unknown reason!");
         }
     }
 
@@ -457,6 +460,8 @@ public class DataStreamClient {
         //System.out.println("Enable marker data: "+result.getResult().toString());
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable marker data failed due to unknown reason!");
         }
     }
 
@@ -477,13 +482,15 @@ public class DataStreamClient {
      * @see getDeviceOutputCount
      * @see getDeviceOutputName
      * @see getDeviceOutputValue
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void enableDeviceData() {
         Output_EnableDeviceData result = client.EnableDeviceData();
         //System.out.println("Enable marker data: "+result.getResult().toString());
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable device data failed due to unknown reason!");
         }
     }
 
@@ -501,12 +508,14 @@ public class DataStreamClient {
      * @see enableDeviceData()
      * @see getUnlabeledMarkerCount
      * @see getUnlabeledMarkerGlobalTranslation
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void enableMarkerRayData() {
         Output_EnableMarkerRayData result = client.EnableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enabled marker ray data failed due to unknown reason!");
         }
     }
 
@@ -533,12 +542,14 @@ public class DataStreamClient {
      * @see getSegmentLocalRotationMatrix
      * @see getSegmentLocalRotationQuaternion
      * @see getSegmentLocalRotationEulerXYZ
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons
      */
     public void enableSegmentData() {
         Output_EnableSegmentData result = client.EnableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enabled segment data failed due to unknown reason!");
         }
     }
     
@@ -556,12 +567,14 @@ public class DataStreamClient {
      * @see getSegmentGlobalRotationEulerXYZ
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationEulerXYZ
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void disableLightweightSegmentData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable lightweight segment data failed due to unknown reasons!");
         }
     }
     /**
@@ -580,12 +593,14 @@ public class DataStreamClient {
      * @see getSegmentGlobalRotationEulerXYZ
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationEulerXYZ
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void disableSegmentData() {
         Output_DisableSegmentData result = client.DisableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable segment data failed due to unknown reasons!");
         }
     }
 
@@ -600,12 +615,14 @@ public class DataStreamClient {
      * @see getMarkerCount
      * @see getMarkerName
      * @see getMarkerGlobalTranslation
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void disableMarkerData() {
-        Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
+        Output_DisableMarkerData result = client.DisableMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable marker data failed due to unknown reasons!");
         }
     }
 
@@ -619,12 +636,14 @@ public class DataStreamClient {
      * @see enableDeviceData
      * @see getUnlabeledMarkerCount
      * @see getUnlabeledMarkerGlobalTranslation
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknwon reasons.
      */
     public void disableUnlabeledMarkerData() {
         Output_DisableUnlabeledMarkerData result = client.DisableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable unlabeled marker data failed, due to unknwon reasons!");
         }
     }
 
@@ -644,6 +663,8 @@ public class DataStreamClient {
         Output_DisableMarkerRayData result = client.DisableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable marker ray data failed, due to unknwon reasons!");
         }
     }
 
@@ -660,12 +681,14 @@ public class DataStreamClient {
      * @see getDeviceOutputCount
      * @see getDeviceOutputName
      * @see getDeviceOutputValue
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to other reasons.
      */
     public void disableDeviceData() {
         Output_DisableDeviceData result = client.DisableDeviceData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
            throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable device data failed, due to unknwon reasons!");
         }
     }
 
@@ -679,7 +702,9 @@ public class DataStreamClient {
     public void disableCentroidData() {
         Output_DisableCentroidData result = client.DisableCentroidData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-                throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable centroid data failed due to unknown reason!");
         }
     }
 
@@ -688,12 +713,14 @@ public class DataStreamClient {
      *
      * @see isGreyscaleDataEnabled
      * @see enableGreyscaleData
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void disableGreyscaleData() {
         Output_DisableGreyscaleData result = client.DisableGreyscaleData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable greyscale data failed, due to unknwon reasons!");
         }
     }
 
@@ -702,12 +729,14 @@ public class DataStreamClient {
      *
      * @see isVideoDataEnabled
      * @see enableVideoData
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknwon reasons.
      */
     public void disableVideoData() {
         Output_DisableVideoData result = client.DisableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable video data failed, due to unknwon reasons!");
         }
     }
     
@@ -739,7 +768,6 @@ public class DataStreamClient {
      * @return frame
      */
     public VideoFrame getVideoFrame(String cameraName){
-        // A valid blob index is between 0 and GetGreyscaleBlobCount() - 1
         Output_GetVideoFrame result = client.GetVideoFrame(cameraName);
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("getVideoFrame(): Client is not connected!");
@@ -759,6 +787,8 @@ public class DataStreamClient {
         Output_DisableDebugData result = client.DisableDebugData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("Client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Disable debug data failed, due to unknwon reasons!");
         }
     }
 
@@ -790,12 +820,14 @@ public class DataStreamClient {
      * @see getSegmentGlobalRotationEulerXYZ
      * @see getSegmentLocalTranslation
      * @see getSegmentLocalRotationEulerXYZ
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void enableLightweightSegmentData() {
         Output_EnableLightweightSegmentData result = client.EnableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable lightweight segment data failed due to unknown reasons!");
         }
     }
 
@@ -828,12 +860,14 @@ public class DataStreamClient {
      * @see enableDeviceData
      * @see getUnlabeledMarkerCount
      * @see getUnlabeledMarkerGlobalTranslation
-     * @throws RuntimeException if client not connected.
+     * @throws RuntimeException if client not connected or due to unknwon reasons.
      */
     public void enableUnlabeledMarkerData() {
         Output_EnableUnlabeledMarkerData result = client.EnableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable unlabeled marker data failed due to unknown reason!");
         }
     }
 
@@ -1005,7 +1039,7 @@ public class DataStreamClient {
      * is unlikely to be affected. The GetFrame() method blocks the calling
      * thread until the frame has been received.</p>
      *
-     * <p>• ClientPullPreFetch "ClientPullPreFetch" is an enhancement to the
+     * <p>• "ClientPullPreFetch" is an enhancement to the
      * "ClientPull" mode. A thread in the SDK continuously and preemptively does
      * a "ClientPull" on your behalf, storing the latest requested frame in
      * memory. When you next call GetFrame(), the SDK returns the last requested
@@ -1670,7 +1704,7 @@ public class DataStreamClient {
         Output_GetSegmentStaticRotationHelical result = client.GetSegmentStaticRotationHelical(
                 subjectName, segmentName);
         if (result.getResult() == Result_Enum.InvalidSubjectName) {
-                throw new IllegalArgumentException("getSegmentStaticRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
+            throw new IllegalArgumentException("getSegmentStaticRotationHelical() but subjectName \"" + subjectName + "\" is invalid!");
         } else if (result.getResult() == Result_Enum.NotConnected) {
                 throw new RuntimeException("getSegmentStaticRotationHelical() but client is not connected!!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
@@ -2281,7 +2315,8 @@ public class DataStreamClient {
      * @see getMarkerName
      * @param subjectName subject name
      * @param markerName marker name
-     * @return translation with respect to the global origin
+     * @return translation with respect to the global origin, [0d,0d,0d] if marker data
+     * is not enabled by invocation of enableMarkerData() followed by getFrame().
      * @throws IllegalArgumentException if subject name or marker name is
      * null or invalid by other reason.
      * @throws RuntimeException if no frame is available or the client is not
@@ -2895,6 +2930,18 @@ public class DataStreamClient {
      * 
      * <p>A valid blob index is between 0 and GetGreyscaleBlobCount() -1.</p>
      * 
+     * <p>The content of a GreyScaleBlob depends on the GreyScale Mode:<br>
+     * - None Send no grayscale data; send only centroid data (i.e, x, y,
+     * and radius data). Any ambiguous grayscale data will be discarded.<br>
+     * - Only Send all grayscale and coordinates data; send no centroid
+     *   data. This setting is useful when focusing or making other
+     *   adjustments to the cameras themselves as you see
+     *   exactly the image recorded on the sensor.
+     * 
+     * </p>
+     * The greyscale model is set automatically to Only, if low-jitter switch is
+     * set in the Vicon Tracker software.</p>
+     * 
      * @param cameraName name of the camera
      * @param blobIndex blob index
      * @return blob object
@@ -2993,15 +3040,20 @@ public class DataStreamClient {
      * <p>
      * Call this function on startup, after connecting to the server, and before
      * trying to read centroid information.</p>
+     * 
+     * <p>If low jitter mode is set in the Vicon Tracker software than centroid data
+     * is not available</p>
      *
      * @see isCentroidDataEnabled
      * @see disableCentroidData
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or if low jitter mode is active
      */
     public void enableCentroidData() {
         Output_EnableCentroidData result = client.EnableCentroidData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("enableCentroidData but client is not connected!");
+            throw new RuntimeException("enableCentroidData failed due to client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+             throw new RuntimeException("enableCentroidData failed due to unknown reason!");
         }
     }
 
@@ -3013,12 +3065,14 @@ public class DataStreamClient {
      *
      * @see isGreyscaleDataEnabled
      * @see disableGreyscaleData
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      */
     public void enableGreyscaleData() {
         Output_EnableGreyscaleData result = client.EnableGreyscaleData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-           throw new RuntimeException("The client is not connected!");
+            throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable greyscale mode failed due to unknown reasons!");
         }
     }
 
@@ -3030,12 +3084,14 @@ public class DataStreamClient {
      *
      * @see isVideoDataEnabled
      * @see disableVideoData
-     * @throws RuntimeException if the client is not connected.
+     * @throws RuntimeException if the client is not connected or due to unknwon reasons.
      */
     public void enableVideoData() {
         Output_EnableVideoData result = client.EnableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The client is not connected!");
+        } else if (!result.getResult().equals(Result_Enum.Success)){
+            throw new RuntimeException("Enable video data failed due to unknown reasons!");
         }
     }
 
@@ -3071,6 +3127,9 @@ public class DataStreamClient {
      * <p>Precondition: The method getFrame() must be invoked before. If this
      * is missed the result value is 0l;</p>
      * 
+     * <p>If low jitter mode is set in the Vicon Tracker software, centroid data
+     * is not available.</p>
+     * 
      * @see getCameraCount
      * @see getCameraName
      * @see getCentroidPosition
@@ -3096,6 +3155,9 @@ public class DataStreamClient {
      * <p>A valid CameraName is obtained from getCameraName(int cameraIndex)</p>
      * 
      * <p>A valid CentroidIndex is between 0 and getCentroidCount(String cameraName)-1</p>
+     * 
+     * <p>If low jitter mode is set in the Vicon Tracker software, centroid data
+     * is not available.</p>
      * 
      * @see getCameraCount
      * @see getCameraName 
@@ -3127,6 +3189,9 @@ public class DataStreamClient {
      * <p>The centroid data needs to be enabled to get the centroid weight. Only 
      * supported by Tracker - weights will be 1.0 for all centroids, if low jitter
      * mode is not enabled.</p>
+     * 
+     * <p>If low jitter mode is set in the Vicon Tracker software, centroid data
+     * is not available.</p>
      * 
      * @see getCameraCount
      * @see getCameraName
