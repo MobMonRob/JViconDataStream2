@@ -1208,6 +1208,9 @@ public class DataStreamClient {
      * This information can be used in conjunction with
      * GetGlobalUnlabeledMarkerTranslation</p>
      *
+     * <p>After enableing unlabled markerd count getFrame() has to be invoked. Otherwise
+     * this methods returns 0.</p>
+     * 
      * @see getUnlabeledMarkerGlobalTranslation
      * @return the number of unlabeled markers in the DataStream.
      * @throws RuntimeException if no frame is available or the client is not
@@ -1891,7 +1894,7 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param segmentName segment name
      * @return the translation of a subject segment in global coordinates. 0d-values if streaming
-     * segment data is disabled.
+     * segment data is disabled. [NaN, NaN, NaN] if the segment is occluded.
      * @throws IllegalArgumentException for invalid subject- or segment name, or null values
      * @throws RuntimeException if client is not connected or no frame is
      * available
@@ -1907,9 +1910,9 @@ public class DataStreamClient {
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalTranslation() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        boolean occluded = result.getOccluded();
-        //TODO
-        // eventuell null zurückliefern, if occluded == null?
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN};
+        }
         return result.getTranslation();
     }
 
@@ -1952,6 +1955,9 @@ public class DataStreamClient {
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
         }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN,Double.NaN};
+        }
         return result.getRotation();
     }
 
@@ -1987,6 +1993,9 @@ public class DataStreamClient {
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalRotationHelical() but segmentName \"" + segmentName + "\" is invalid!");
         }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN,Double.NaN};
+        }
         return result.getRotation();
     }
 
@@ -2021,6 +2030,10 @@ public class DataStreamClient {
             throw new RuntimeException("getSegmentGlobalRotationMatrix() but no frame available!");
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalRotationMatrix() but segmentName \"" + segmentName + "\" is invalid!");
+        }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN, Double.NaN,
+                                Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN};
         }
         return result.getRotation();
     }
@@ -2062,9 +2075,9 @@ public class DataStreamClient {
         } else if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentGlobalRotationQuaternion() but segmentName\"" + segmentName + "\" is invalid!");
         }
-        boolean occluded = result.getOccluded();
-        //TODO
-        // eventuell null zurückliefern, if occluded==true
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN, Double.NaN};
+        }
         return result.getRotation();
     }
 
@@ -2104,9 +2117,10 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
                 throw new IllegalArgumentException("getSegmentGlobalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
         }
-        double[] Rotation = result.getRotation();
-        //System.out.println("Get segment name: "+SegmentName);
-        return Rotation;
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN};
+        }
+        return result.getRotation();
     }
 
     /**
@@ -2145,6 +2159,9 @@ public class DataStreamClient {
         }
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
                 throw new IllegalArgumentException("getSegmentLocalTranslation () but segmentName \"" + segmentName + "\" is invalid!");
+        }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN};
         }
         return result.getTranslation();
     }
@@ -2191,6 +2208,9 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
         }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN, Double.NaN};
+        }
         return result.getRotation();
     }
 
@@ -2236,6 +2256,10 @@ public class DataStreamClient {
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
             throw new IllegalArgumentException("getSegmentLocalRotationQuaternion() but segmentName \"" + segmentName + "\" is invalid!");
         }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN, Double.NaN,
+                                Double.NaN, Double.NaN, Double.NaN, Double.NaN, Double.NaN};
+        }
         return result.getRotation();
     }
     
@@ -2275,6 +2299,9 @@ public class DataStreamClient {
         }
         if (result.getResult() == Result_Enum.InvalidSegmentName) {
                 throw new IllegalArgumentException("getSegmentLocalRotationEulerXYZ() but segmentName \"" + segmentName + "\" is invalid!");
+        }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN};
         }
         return result.getRotation();
     }
@@ -2316,7 +2343,8 @@ public class DataStreamClient {
      * @param subjectName subject name
      * @param markerName marker name
      * @return translation with respect to the global origin, [0d,0d,0d] if marker data
-     * is not enabled by invocation of enableMarkerData() followed by getFrame().
+     * is not enabled by invocation of enableMarkerData() followed by getFrame().or 
+     * [NaN, NaN, NaN] if the marker es occluded.
      * @throws IllegalArgumentException if subject name or marker name is
      * null or invalid by other reason.
      * @throws RuntimeException if no frame is available or the client is not
@@ -2339,6 +2367,9 @@ public class DataStreamClient {
             throw new RuntimeException("getMarkerGlobalTranslation() but no frame available!");
         } else if (result.getResult() == Result_Enum.InvalidMarkerName) {
             throw new IllegalArgumentException("getMarkerGlobalTranslation () but markerName \"" + markerName + "\" is invalid!");
+        }
+        if (result.getOccluded()){
+            return new double[]{Double.NaN, Double.NaN, Double.NaN};
         }
         return result.getTranslation();
     }

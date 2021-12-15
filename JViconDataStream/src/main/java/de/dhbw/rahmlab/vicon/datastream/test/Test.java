@@ -78,7 +78,7 @@ public class Test {
         if (client.isDeviceDataEnabled()){
             System.out.println("Device data enabled!");
         }
-        client.enableDebugData();
+        //client.enableDebugData();
         long devices = client.getDeviceCount();
         for (long i=0;i<devices;i++){
             String[] deviceName = client.getDeviceName(i);
@@ -99,20 +99,20 @@ public class Test {
         String SegmentName = client.getSegmentName(SubjectName, SegmentIndex);
         System.out.println("Segment name of "+String.valueOf(SegmentIndex)+" = " + SegmentName);
         
-        client.enableGreyscaleData(); //ok
+        //client.enableGreyscaleData(); //ok
         client.disableGreyscaleData(); //ok
         client.disableUnlabeledMarkerData(); //ok
-        client.enableUnlabeledMarkerData(); // ok
+        //client.enableUnlabeledMarkerData(); // ok
         client.disableVideoData(); // ok
-        client.enableVideoData(); // ok
+        //client.enableVideoData(); // ok
         client.disableLightweightSegmentData(); //ok
         //client.enableLightweightSegmentData(); // damit bekomme ich keine marker daten mehr
         client.disableDeviceData(); // ok
-        client.enableDeviceData(); // ok
+        //client.enableDeviceData(); // ok
         client.disableCentroidData(); // ok
         //client.enableCentroidData(); // da fliege ich mit ex raus, wegen low jitter mode
         client.disableMarkerRayData(); //ok
-        client.enableMarkerRayData(); // ok
+        //client.enableMarkerRayData(); // ok
         int frames = 100;
         while(frames >9){
             client.getFrame();
