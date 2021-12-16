@@ -195,15 +195,15 @@ public class DataStreamClient {
 
             // tritt seltsamerweise auch für localhost ab und zu auf
             if (result.getResult() == Result_Enum.InvalidHostName) {
-                System.out.println("Client connection failed ("+String.valueOf(trials++)+"): Invalid hostname \"" + hostname + "\"!");
+                System.out.println("Vicon DataStream client connection failed ("+String.valueOf(trials++)+"): Invalid hostname \"" + hostname + "\"!");
                 sleep(500);
             } else if (result.getResult() == Result_Enum.Success) { // -->ende der while schleife
-                System.out.println("Client Connection sucess!");
+                System.out.println("Vicon DataStream client connected!");
                 getFrame();
             //} else if (result.getResult() == Result_Enum.ClientAlreadyConnected) { // --> kann innerhalb der while schleife nicht auftreten
             //    System.out.println("Client already connected!");
             } else if (result.getResult() == Result_Enum.ClientConnectionFailed) { // --> dafür ist die while schleife da
-                System.out.println("Client Connection failed ("+String.valueOf(trials++)+")!");
+                System.out.println("Vicon client connection failed ("+String.valueOf(trials++)+")!");
             }
         }
     } 
