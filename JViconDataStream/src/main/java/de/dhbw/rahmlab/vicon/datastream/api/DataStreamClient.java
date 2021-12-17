@@ -304,7 +304,7 @@ public class DataStreamClient {
         Output_StartTransmittingMulticast result = client.StartTransmittingMulticast(
                 serverIP, multicastIP);
         if (result.getResult() == Result_Enum.NotConnected) {
-                throw new RuntimeException("Client is not connected!");
+                throw new RuntimeException("The Vicon data stream Client is not connected!");
         } else if (result.getResult() == Result_Enum.InvalidMulticastIP) {
                 throw new IllegalArgumentException("Multicast IP is invalid! ");
         } else if (result.getResult() == Result_Enum.ServerAlreadyTransmittingMulticast) {
@@ -333,7 +333,7 @@ public class DataStreamClient {
         boolean resultValue = true;
         Output_StopTransmittingMulticast result = client.StopTransmittingMulticast();
         if (result.getResult() == Result_Enum.NotConnected) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (result.getResult() == Result_Enum.ServerNotTransmittingMulticast) {
             System.out.println("Server not transmitting multicast! ");
             resultValue = false;
@@ -547,7 +547,7 @@ public class DataStreamClient {
     public void enableSegmentData() {
         Output_EnableSegmentData result = client.EnableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Enabled segment data failed due to unknown reason!");
         }
@@ -572,7 +572,7 @@ public class DataStreamClient {
     public void disableLightweightSegmentData() {
         Output_DisableLightweightSegmentData result = client.DisableLightweightSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable lightweight segment data failed due to unknown reasons!");
         }
@@ -598,7 +598,7 @@ public class DataStreamClient {
     public void disableSegmentData() {
         Output_DisableSegmentData result = client.DisableSegmentData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable segment data failed due to unknown reasons!");
         }
@@ -620,7 +620,7 @@ public class DataStreamClient {
     public void disableMarkerData() {
         Output_DisableMarkerData result = client.DisableMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable marker data failed due to unknown reasons!");
         }
@@ -641,7 +641,7 @@ public class DataStreamClient {
     public void disableUnlabeledMarkerData() {
         Output_DisableUnlabeledMarkerData result = client.DisableUnlabeledMarkerData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable unlabeled marker data failed, due to unknwon reasons!");
         }
@@ -662,7 +662,7 @@ public class DataStreamClient {
     public void disableMarkerRayData() {
         Output_DisableMarkerRayData result = client.DisableMarkerRayData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable marker ray data failed, due to unknwon reasons!");
         }
@@ -686,7 +686,7 @@ public class DataStreamClient {
     public void disableDeviceData() {
         Output_DisableDeviceData result = client.DisableDeviceData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-           throw new RuntimeException("Client is not connected!");
+           throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable device data failed, due to unknwon reasons!");
         }
@@ -702,9 +702,9 @@ public class DataStreamClient {
     public void disableCentroidData() {
         Output_DisableCentroidData result = client.DisableCentroidData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
-            throw new RuntimeException("Enable centroid data failed due to unknown reason!");
+            throw new RuntimeException("Disable centroid data failed due to unknown reason!");
         }
     }
 
@@ -718,7 +718,7 @@ public class DataStreamClient {
     public void disableGreyscaleData() {
         Output_DisableGreyscaleData result = client.DisableGreyscaleData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable greyscale data failed, due to unknwon reasons!");
         }
@@ -734,7 +734,7 @@ public class DataStreamClient {
     public void disableVideoData() {
         Output_DisableVideoData result = client.DisableVideoData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable video data failed, due to unknwon reasons!");
         }
@@ -752,7 +752,7 @@ public class DataStreamClient {
     public boolean isVideoCamera(String cameraName){
         Output_GetIsVideoCamera result = client.GetIsVideoCamera(cameraName);
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (result.getResult().equals(Result_Enum.InvalidCameraName)){
             throw new IllegalArgumentException("isVideoCamera() with invalid camera name \""+cameraName+"\"!");
         }
@@ -786,7 +786,7 @@ public class DataStreamClient {
     public void disableDebugData() {
         Output_DisableDebugData result = client.DisableDebugData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("Client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
             throw new RuntimeException("Disable debug data failed, due to unknwon reasons!");
         }
@@ -1381,6 +1381,7 @@ public class DataStreamClient {
      * precondition: invoke GetFrame(); if this is not invoked before you can
      * get the error "NO FRAME AVAILABLE".</p>
      *
+     * <p>Even works if all markers are occluded or all vicon cameras are disabled!</p>
      * @see getSubjectName
      * @return subject count bigger or equal 0
      * @throws RuntimeException if no frame available or not connected.
@@ -1476,6 +1477,8 @@ public class DataStreamClient {
      * <p>
      * This information can be used in conjunction with GetSegmentName</p>
      *
+     * <p>Even works if all markers are occluded or all cameras are disabled!</p>
+     * 
      * @see getSubjectName
      * @see getSegmentName
      * @param subjectName name of the subject
@@ -2448,6 +2451,8 @@ public class DataStreamClient {
      * <p>
      * This information can be used in conjunction with GetMarkerName</p>
      *
+     * <p>Event works if all markers are occluded or all cameras are disabled!</p>
+     * 
      * @see getSubjectName
      * @see getMarkerName
      * @param subjectName The name of the subject
@@ -2458,14 +2463,17 @@ public class DataStreamClient {
      */
     public long getMarkerCount(String subjectName) {
         Output_GetMarkerCount result = client.GetMarkerCount(subjectName);
-        if (result.getResult() == Result_Enum.InvalidSubjectName) {
+        if (result.getResult() == Result_Enum.Success){
+            return result.getMarkerCount();
+        } else if (result.getResult() == Result_Enum.InvalidSubjectName) {
             throw new IllegalArgumentException("getMarkerCount() but segmentName \"" + subjectName + "\" is invalid!");
         } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getMarkerCount() but client is not connected!!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
             throw new RuntimeException("getMarkerCount() but no frame available!");
+        } else {
+            throw new RuntimeException("getMarkerCount() failed due to unknown reason!");
         }
-        return result.getMarkerCount();
     }
 
     /**
@@ -2478,17 +2486,20 @@ public class DataStreamClient {
      *
      * @see getDeviceName
      * @return number of devices
-     * @throws RuntimeException if the client is not connected or no frame is
-     * available.
+     * @throws RuntimeException if the client is not connected, no frame is
+     * available or unknown reasons.
      */
     public long getDeviceCount() {
         Output_GetDeviceCount result = client.GetDeviceCount();
-        if (result.getResult() == Result_Enum.NotConnected) {
+        if (result.getResult() == Result_Enum.Success){
+            return result.getDeviceCount();
+        } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getDeviceCount() but client is not connected!!");
         } else if (result.getResult() == Result_Enum.NoFrame) {
-            throw new RuntimeException("getDeviceCount () but no frame available!");
+            throw new RuntimeException("getDeviceCount() but no frame available!");
+        } else {
+            throw new RuntimeException("getDeviceCount() failed, due to unknown reasons!");
         }
-        return result.getDeviceCount();
     }
 
     /**
@@ -3082,9 +3093,9 @@ public class DataStreamClient {
     public void enableCentroidData() {
         Output_EnableCentroidData result = client.EnableCentroidData();
         if (result.getResult().equals(Result_Enum.NotConnected)) {
-            throw new RuntimeException("enableCentroidData failed due to client is not connected!");
+            throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (!result.getResult().equals(Result_Enum.Success)){
-             throw new RuntimeException("enableCentroidData failed due to unknown reason!");
+             throw new RuntimeException("Enable centroid data failed due to unknown reason!");
         }
     }
 
