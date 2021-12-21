@@ -499,7 +499,7 @@ public class DataStreamClient {
      * the Vicon DataStream.
      *
      * <p>Call this function on startup, after connecting to the server, and before
-     * trying to read global unlabeled marker data.</p>
+     * trying to read camera data.</p>
      *
      * @see isMarkerRayDataEnabled
      * @see disableMarkerRayData()
@@ -650,6 +650,8 @@ public class DataStreamClient {
     /**
      * Disable ray contribution data for markers in the Vicon DataStream.
      *
+     * <p>If this method is invocated getCameraCount()==0</p>
+     * 
      * @see isMarkerRayDataEnabled
      * @see enableMarkerRayData
      * @see enableSegmentData
@@ -746,17 +748,22 @@ public class DataStreamClient {
      * @see getCameraName
      * @param cameraName name of the camera
      * @return true, if the camera with the specified name is a video camera.
-     * @throws RuntimeException if the client is not connected
+     * @throws RuntimeException if the client is not connected or due to unknown reasons.
      * @throws IllegalArgumentException for invalid cameraName
      */
     public boolean isVideoCamera(String cameraName){
         Output_GetIsVideoCamera result = client.GetIsVideoCamera(cameraName);
+        if (result.getResult().equals(Result_Enum.Success)){
+           return result.getIsVideoCamera();
+        }
         if (result.getResult().equals(Result_Enum.NotConnected)) {
             throw new RuntimeException("The Vicon data stream client is not connected!");
         } else if (result.getResult().equals(Result_Enum.InvalidCameraName)){
             throw new IllegalArgumentException("isVideoCamera() with invalid camera name \""+cameraName+"\"!");
+        } else {
+            throw new RuntimeException("isVideoCamera() failed due to unknown reasons!");
         }
-        return result.getIsVideoCamera();
+       
     }
     
     /**
@@ -3140,11 +3147,14 @@ public class DataStreamClient {
     /**
      * Return the number of cameras available in the DataStream.
      *
-     * <p>Precondition: The methods enableCentroidData() and after this the method
-     * getFrame() must be invoked before. If this
-     * is missed the result value is 0l;</p>
+     * <p>Precondition: One of the methods enableCentroidData(), 
+     * enableGreyscaleData(), enableVideoData() followed by invocation of the method
+     * getFrame(). If this is missed the result value is 0l;</p>
      * 
      * @see getCameraName
+     * @see enableCentroidData
+     * @see enableVideoData
+     * @see enableGreyscaleData
      * @see getCentroidCount
      * @see getCentroidPosition
      * @return number of cameras
