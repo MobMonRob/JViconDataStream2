@@ -12,6 +12,7 @@ public class Test {
 
         DataStreamClient client = new DataStreamClient();
         
+        // auch mit OSC-Stream statt UDP und dem Port 51001 funktioniert es nicht
         String hostname = "192.168.10.1:801"; //Port 51001 ClientConnectionFailed after 2 Minutes
 
         Version version = client.getVersion();
@@ -40,9 +41,9 @@ public class Test {
         if (client.isMarkerDataEnabled()) {
             // Ich lande hier, d.h. nach einem enableMarkerData() bekomme ich hier true
             // obwohl erst nach getFrame() dem Methoden zum Lesen von Daten Werte ungleich 0 zurückliefern
-            System.out.println("IsMarkerDataEnabled is enabeled");
+            System.out.println("MarkerDataEnabled is enabeled");
         } else {
-            System.out.println("IsMarkerDataEnabled is not enabeled");
+            System.out.println("MarkerDataEnabled disabled");
         }
         client.enableUnlabeledMarkerData();
         if (client.isUnlabeledMarkerDataEnabled()) {
@@ -60,7 +61,7 @@ public class Test {
         long segmentCount = client.getSegmentCount(SubjectName);
         for (long i = 0; i < segmentCount; i++) {
             String SegmentName = client.getSegmentName(SubjectName, i);
-            System.out.println("Segment Name of "+String.valueOf(i)+" is" + SegmentName);
+            System.out.println("Segment Name of "+String.valueOf(i)+" is \"" + SegmentName+"\"!");
             
             long segmentChildCount = client.getSegmentChildCount(SubjectName, SegmentName);
             System.out.println("Segment Child Count is " + segmentChildCount);
@@ -72,20 +73,6 @@ public class Test {
             }
         }
         
-        
-
-        client.enableDeviceData();
-        if (client.isDeviceDataEnabled()){
-            System.out.println("Device data enabled!");
-        }
-        //client.enableDebugData();
-        long devices = client.getDeviceCount();
-        for (long i=0;i<devices;i++){
-            String[] deviceName = client.getDeviceName(i);
-            for (int j=0;j<deviceName.length;j++){
-                System.out.println("Device "+String.valueOf(i)+": "+deviceName[j]);
-            }
-        }
         System.out.println("Frame rate is " + client.getFrameRate());
         long frameNumber = client.getFrameNumber();
         System.out.println("frame " + frameNumber);
@@ -98,6 +85,39 @@ public class Test {
         int SegmentIndex = 0;
         String SegmentName = client.getSegmentName(SubjectName, SegmentIndex);
         System.out.println("Segment name of "+String.valueOf(SegmentIndex)+" = " + SegmentName);
+        
+        
+
+        // devices 
+        
+        System.out.println();
+        
+        client.enableDeviceData();
+        if (client.isDeviceDataEnabled()){
+            System.out.println("Device data enabled!");
+        }
+        long devices = client.getDeviceCount();
+        System.out.println("found "+String.valueOf(devices)+" devices!");
+        //client.getFrame();
+        //devices = client.getDeviceCount();
+        System.out.println("found "+String.valueOf(devices)+" devices!");
+        for (long i=0;i<devices;i++){
+            // z.B. RobotSync
+            String[] deviceName = client.getDeviceName(i);
+            for (int j=0;j<deviceName.length;j++){
+                System.out.println("Device "+String.valueOf(i)+": "+deviceName[j]);
+            }
+            long deviceOutputCount = client.getDeviceOutputCount(SubjectName);
+            for (int k=0;k<deviceOutputCount;k++){
+                String[] deviceOutputName = client.getDeviceOutputName(SubjectName, k);
+                // z.B. Status
+                for (int l=0;l<deviceOutputName.length;l++){
+                    System.out.println("  output names :"+deviceOutputName[l]);
+                }
+                
+                double value = client.getDeviceOutputValue(deviceName[0], deviceOutputName[0]);
+            }
+        }
         
         //client.enableGreyscaleData(); //ok
         client.disableGreyscaleData(); //ok
@@ -113,6 +133,7 @@ public class Test {
         //client.enableCentroidData(); // da fliege ich mit ex raus, wegen low jitter mode
         client.disableMarkerRayData(); //ok
         //client.enableMarkerRayData(); // ok
+        
         int frames = 100;
         while(frames >9){
             client.getFrame();
@@ -125,12 +146,12 @@ public class Test {
                 double[] t = client.getMarkerGlobalTranslation("GLOBE", "GLOBE1");
                 
                 if (t!= null){
-                    System.out.println("frame "+frameNumber+": t0="+t[0]+" t1="+t[1]+" t2="+t[2]);
+                    System.out.println("frame "+frameNumber+": Markerposition von GLOBE1 t0="+t[0]+" t1="+t[1]+" t2="+t[2]);
                 }
                 if (m== null){
                     System.out.println("m==null");
                 } else {
-                    System.out.println("frame "+frameNumber+": q0="+m[0]+" q1="+m[1]+" q2="+m[2]+" q3="+m[3]);
+                    System.out.println("frame "+frameNumber+": Segmentorientation von TCP q0="+m[0]+" q1="+m[1]+" q2="+m[2]+" q3="+m[3]);
                 }
                  
             } catch (RuntimeException e){

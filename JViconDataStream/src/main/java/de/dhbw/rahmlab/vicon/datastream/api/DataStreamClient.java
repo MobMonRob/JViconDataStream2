@@ -2484,10 +2484,10 @@ public class DataStreamClient {
     }
 
     /**
-     * Return the number of force plates, EMGs, and other devices in the
+     * Return the number of force plates, EMG-Systems, and other devices in the
      * DataStream.
      *
-     * <p>This information can be used in conjunction with GetDeviceName.</p>
+     * <p>ThgetDeviceCountis information can be used in conjunction with GetDeviceName.</p>
      * <p>Precondition: After enableDeviceData() the method getFrame() must be invoked. If this
      * is missed the result value is 0l;</p>
      *
