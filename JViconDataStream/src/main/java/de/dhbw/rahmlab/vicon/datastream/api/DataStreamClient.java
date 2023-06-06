@@ -121,7 +121,6 @@ import de.dhbw.rahmlab.vicon.datastream.impl.Result_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.StreamMode_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.TimecodeStandard_Enum;
 import de.dhbw.rahmlab.vicon.datastream.impl.VectorUint;
-import de.dhbw.rahmlab.vicon.datastream.impl.VectorVectorUchar;
 import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -144,7 +143,7 @@ import java.util.logging.Logger;
 public class DataStreamClient {
 
     private  Client client;
-    private String hostname;
+	private String hostname;
 
     /**
      * You can create many instances of the Vicon DataStream Client, which can
@@ -2652,13 +2651,50 @@ public class DataStreamClient {
             throw new RuntimeException("getDeviceOutputName() but no frame available!");
         } else if (result.getResult() == Result_Enum.NotConnected) {
             throw new RuntimeException("getDeviceOutputName but client is not connected!!");
-        }
+		}
         double DeviceOutputValue = result.getValue();
         if (result.getOccluded()) {
             return Double.NaN;
         }
         return DeviceOutputValue;
-    }
+	}
+
+	/**
+	 * Return the value of a device output.
+	 *
+	 * <p>
+	 * This override allows access to the individual subsamples for the current frame of data. See GetDevice-
+	 * OutputValue for information about the meaning of the force plate channels.
+	 * </p>
+	 *
+	 * @see getDeviceCount
+	 * @see getDeviceOutputCount
+	 * @see getDeviceOutputName
+	 * @param deviceName device name
+	 * @param deviceOutputComponentName device output name
+	 * @param subsample subsample
+	 * @return the value of a device output or NaN if occluded
+	 * @throws IllegalArgumentException if the device name or the deviceOutputComponentName does not exist
+	 * @throws RuntimeException if the client is not connected or no frame available
+	 */
+	public double getDeviceOutputValue(String deviceName, String deviceOutputComponentName, long subsample) {
+		Output_GetDeviceOutputValue result = client.GetDeviceOutputValue(deviceName,
+			deviceOutputComponentName, subsample);
+		if (result.getResult() == Result_Enum.InvalidIndex) {
+			throw new IllegalArgumentException("getDeviceOutputName() but deviceName is invalid!");
+		} else if (result.getResult() == Result_Enum.NoFrame) {
+			throw new RuntimeException("getDeviceOutputName() but no frame available!");
+		} else if (result.getResult() == Result_Enum.NotConnected) {
+			throw new RuntimeException("getDeviceOutputName() but client is not connected!");
+		} else if (result.getResult() != Result_Enum.Success) {
+			throw new RuntimeException("getDeviceOutputName() but no success!");
+		}
+		double DeviceOutputValue = result.getValue();
+		if (result.getOccluded()) {
+			return Double.NaN;
+		}
+		return DeviceOutputValue;
+	}
 
     /**
      * Return the number of samples available for the specified device at the
