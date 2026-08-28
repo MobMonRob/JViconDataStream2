@@ -15,11 +15,6 @@
     </properties>
     <developers>
         <developer>
-            <id>codedeedope</id>
-            <name>Fabian Hinderer</name>
-            <email>f.hinderer.privat@gmail.com</email>
-        </developer>
-        <developer>
             <id>orat</id>
             <name>Oliver Rettig</name>
             <email>Oliver.Rettig@orat.de</email>
@@ -32,13 +27,13 @@
         <url>https://github.com/MobMonRob/JViconDataStrea/tree/${project.scm.tag}</url>
         <tag>master</tag>
     </scm-->
-        <licenses>
-    <license>
-        <name>Apache License, Version 2.0</name>
-        <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-        <comments>A business-friendly OSS license</comments>
-      </license>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
     </licenses>
     <dependencies>
         <dependency>
@@ -155,4 +150,3 @@ project.properties.setProperty('native_script', ${always_recreate_wrapper} == tr
         </plugins>
     </build>
 </project>
-
